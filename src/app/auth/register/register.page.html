@@ -1,0 +1,77 @@
+<ion-header color="dark">
+</ion-header>
+
+<ion-content padding color="dark">
+    <ion-img src="assets/veriprof-logo.png"></ion-img>
+    <br>
+    <h2 style="margin-top: 10px;">New {{UserTypes[currentUserType].title}}</h2>
+    <br>
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="tryRegister(validations_form.value)">
+        <ion-item color="medium">
+            <ion-label position="floating" color="medium" class="inner">Name</ion-label>
+            <ion-input type="text" formControlName="full_name" color="medium" class="inner"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.full_name">
+                <div class="error-message"
+                    *ngIf="validations_form.get('full_name').hasError(validation.type) && (validations_form.get('full_name').dirty || validations_form.get('full_name').touched)"
+                    class="inner">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+        <ion-item color="medium">
+            <ion-label position="floating" color="medium" class="inner">Phone Number</ion-label>
+            <ion-input type="text" formControlName="mobile" color="medium" class="inner"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.mobile">
+                <div class="error-message"
+                    *ngIf="validations_form.get('mobile').hasError(validation.type) && (validations_form.get('mobile').dirty || validations_form.get('mobile').touched)"
+                    class="inner">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+        <ion-item color="medium">
+            <ion-label position="floating" color="medium" class="inner">Email</ion-label>
+            <ion-input type="text" formControlName="email" color="medium" class="inner"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.email">
+                <div class="error-message"
+                    *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)"
+                    class="inner">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+        <ion-item color="medium">
+            <ion-label position="floating" color="medium" class="inner">Password</ion-label>
+            <ion-input type="password" formControlName="password" class="form-controll" required color="medium"
+                class="inner"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.password">
+                <div class="error-message"
+                    *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)"
+                    class="inner">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+        <ion-button class="submit-btn" type="submit" [disabled]="!validations_form.valid" color="dark">Create Account
+        </ion-button>
+        <br>
+        <p></p>
+        <label class="error-message" color="danger">{{errorMessage}}</label>
+        <label class="success-message" color="danger">{{successMessage}}</label>
+    </form>
+    <p class="go-to-login" style="margin-top:5px;">Already have an account? <a (click)="goLoginPage()"
+            style="color:#DC143C;">Try to Log In.</a></p>
+</ion-content>
+<ion-footer color="dark" class="footer">
+    <ion-toolbar color="dark">
+        <ion-title class="footer">Copyright SIVAGO </ion-title>
+    </ion-toolbar>
+</ion-footer>

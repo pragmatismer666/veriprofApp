@@ -1,0 +1,37 @@
+.schedule_line{
+    margin-top: 25px !important; 
+    margin-left:30px !important;
+    margin-right:30px !important;
+}
+
+.table{
+    margin: auto;
+    margin-top: 25px;
+    font-size: 10px;
+    min-width: 90%;
+    th{
+        background: #8a8a8a;
+        padding: 5px;
+        color: #fff;
+        border: 1px solid #fff;
+    }
+
+    td{
+        background: #ccc;
+        padding: 5px;
+        color: #000;
+        border: 1px solid #fff;
+    }
+}
+
+.scrollH {
+    overflow-x: auto;
+}
+.validation-errors{
+    color: #000;
+}
+
+.footer {
+    font-size: 12px;
+    color: rgb(109, 109, 109);
+}

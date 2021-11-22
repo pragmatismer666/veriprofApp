@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Schedules</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="schedule_line" [formGroup]="schedule_form" (ngSubmit)="schedule_confirm(schedule_form.value)">
+    <ion-item color="" class="" style="margin-top:30px">
+      <ion-label  position="floating" color="" class="inner"></ion-label>
+      <ion-input type="text" formControlName="name" color="" class="inner" [readonly]="true" value={{this.authService.userDetails().name}}></ion-input>
+    </ion-item>
+    <br>
+    <br>
+    <ion-item color="" class="">
+      <ion-label  position="floating" color="" class="inner">Verify Target Email</ion-label>
+      <ion-input type="text" formControlName="verify_target" color="" class="inner" value={{schedule_form.verify_target}}></ion-input>
+    </ion-item>
+    <br>
+    <br>
+    <ion-item color="">
+      <ion-label  position="floating" color="" class="inner">Location</ion-label>
+      <ion-input type="text" formControlName="location" color="" class="inner" value={{schedule_form.location}}></ion-input>
+    </ion-item>
+    <br>
+    <br>
+    <ion-segment>
+      <ion-item color="">
+        <ion-label position="floating" color="" class="inner">Meet DateTime</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DDTHH:mm" formControlName="date" class="inner" placeholder="YYYY-MM-DDTHH:mm" value={{schedule_form.date}}></ion-datetime>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.profess">
+          <div class="error-message" *ngIf="schedule_form.get('location').hasError(validation.type) && (schedule_form.get('location').dirty)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-button color="submit-btn schedule_btn" style="margin-top:15px;" type="submit" [disabled]="!schedule_form.valid" color="success">Confirm</ion-button>
+    </ion-segment>
+  </form>
+    
+    <table class="table" style="width:96%;margin: 2%;margin-top:40px; font-size: 11px;">
+      <tr>
+        <th>Name</th>
+        <th>Verify Target</th>
+        <th>DateTime</th>
+        <th>Location</th>
+      </tr>
+      <tr *ngFor="let x of objs">
+        <td>{{x.name}}</td>
+        <td>{{x.verify_target}}</td>
+        <td>{{x.date.split('.')[0]}}</td>
+        <td>{{x.location}}</td>
+      </tr>
+    </table>
+</ion-content>

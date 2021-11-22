@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar color="dark">
+        <ion-title>Report</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="scrollH">
+        <table class="table">
+            <tr>
+                <th>Project Title</th>
+                <th>Accessor</th>
+                <th>Type</th>
+                <th>Download</th>
+            </tr>
+            <tr *ngFor="let x of objs">
+                <td>{{x.report_title}}</td>
+                <td>{{x.accessor}}</td>
+                <td>{{x.report_type}}</td>
+                <td class="d-flex">
+                    <ion-button size="small" color="success" (click)="download(x.filename)" style="font-size: 10px;">
+                        Download</ion-button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</ion-content>

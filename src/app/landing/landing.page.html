@@ -1,0 +1,89 @@
+<ion-header color="dark" style="height: 30%;border: none;">
+    <ion-content color="dark" >
+        <ion-img src="assets/veriprof-logo2.png" class="headerImage"></ion-img>
+        <h2 text-center color="light">Welcome</h2>
+    </ion-content>
+</ion-header>
+
+<ion-content color="dark" no-border>
+    <div [ngSwitch]="land_seg" class="segPart">
+        <ion-card *ngSwitchCase="'homep'" >
+            <ion-item-sliding id="item100" color="dark">
+                <ion-item lines="none" color="dark">
+                    <ion-note slot="end" style="color: rgb(255, 0, 0);">24/7 available</ion-note>
+                </ion-item>
+                <ion-item lines="none" color="dark" style="margin-bottom: 10px;">
+                  <ion-label><h1 text-center>Service Contact</h1></ion-label>
+                </ion-item>
+                <ion-item color="dark">
+                  <ion-label>Company Title:</ion-label>
+                  <ion-label>{{title}}</ion-label>
+                </ion-item>
+                <ion-item color="dark">
+                  <ion-label>Contact Email:</ion-label>
+                  <ion-label>{{email}}</ion-label>
+                </ion-item>
+                <ion-item color="dark">
+                  <ion-label>Phone Number:</ion-label>
+                  <ion-label>{{phone}}</ion-label>
+                </ion-item>
+                <ion-item color="dark">
+                  <ion-label>Address:</ion-label>
+                  <ion-label>{{address}}</ion-label>
+                </ion-item>
+                <ion-item color="dark">
+                  <ion-label>Latest News:</ion-label>
+                  <ion-label>{{Alarm}}</ion-label>
+                </ion-item>
+              </ion-item-sliding>
+        </ion-card>
+        <ion-card *ngSwitchCase="'quickp'">
+            <ion-card>
+                <ion-item color="dark" style="margin-bottom: 10px;">
+                    <ion-label  position="floating" color="dark" class="inner">Key Word</ion-label>
+                    <ion-input type="text" [(ngModel)]="keyword" color="dark" class="inner"></ion-input>
+                    <ion-button class="inner" color="success" slot="end" style="margin:0px; margin-top: 16px;" (click)="searchContent()">Search</ion-button>
+                </ion-item>   
+                <ion-item color="dark" lines="none" style="font-size: 13px;">
+                    <ng-container *ngIf="valArray != null">
+                        <tr *ngFor="let eachVal of valArray">
+                            <td data-th="">{{eachVal.key}}</td>
+                            <td data-th="">{{eachVal.val}}</td>
+                        </tr>
+                    </ng-container>
+                </ion-item>
+            </ion-card>
+        </ion-card>
+        <ion-card *ngSwitchCase="'newsp'">
+        </ion-card>
+        <ion-card *ngSwitchCase="'loginp'">
+            <ion-card padding>
+                <ion-button color="danger" expand="block" (click)="accessor()" style="margin-top: 15%;">
+                    <ion-icon slot="start" name="Construct"></ion-icon>
+                    As An Accessor
+                </ion-button>
+                <br>
+                <ion-button color="danger" expand="block" (click)="professional()" style="margin-top: 25%;">
+                    <ion-icon slot="start" name="switch"></ion-icon>
+                    As A Professional
+                </ion-button>
+            </ion-card>
+        </ion-card>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-segment [(ngModel)]="land_seg" color="light" class="landTabs">
+        <ion-segment-button value="homep">
+            <ion-label class="landtab">Home</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="quickp">
+            <ion-label class="landtab">Quick Verify</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="newsp">
+            <ion-label class="landtab">News</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="loginp">
+            <ion-label class="landtab">Login</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-footer>

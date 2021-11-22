@@ -1,0 +1,22 @@
+<ion-menu contentId="content" side="start">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>VeriProf - Quick Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-menu-toggle>
+                <ion-item (click)="goHome()">Dashboard</ion-item>
+                <!-- //<ion-item (click)="goContact()">Contact</ion-item> -->
+                <ion-item (click)="logout()">Log Out</ion-item>
+            </ion-menu-toggle>
+        </ion-list>
+    </ion-content>
+    <ion-footer color="dark" class="footer">
+        <ion-toolbar color="">
+            <div class="footer" text-align="center">Copyright SIVAGO </div>
+        </ion-toolbar>
+    </ion-footer>
+</ion-menu>
+<ion-router-outlet id="content" main></ion-router-outlet>

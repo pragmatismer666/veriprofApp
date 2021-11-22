@@ -1,0 +1,220 @@
+<ion-header>
+    <ion-toolbar color="dark">
+        <ion-title>My Projects</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <br>
+    <ion-segment [(ngModel)]="segment" color="light">
+        <ion-segment-button value="add-circle">
+            <ion-icon name="add-circle" color="dark"></ion-icon>
+            <ion-label color="dark">Add New</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="paper">
+            <ion-icon name="paper" color="dark"></ion-icon>
+            <ion-label color="dark">Projects</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="segment">
+        <ion-card *ngSwitchCase="'paper'">
+            <ion-card-content>
+                <h1>My Projects</h1>
+                <table class="rwd-table">
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Project Type</th>
+                        <th>ERF / Lot No</th>
+                        <th>GPS Coordinates</th>
+                        <th>Street Address</th>
+                        <th>Project Location</th>
+                        <th>Project Province</th>
+                        <th>Portal Code</th>
+                        <th>Description</th>
+                        <th>Service Rendered</th>
+                        <th>Construction Cost</th>
+                        <th>Final Cost</th>
+                        <th>Cost Variance</th>
+                        <th>Professional Fees</th>
+                        <th>Client Name</th>
+                        <th>Project Leader</th>
+                        <th>Leader Email</th>
+                        <th>Leader Phone</th>
+                        <th>Project Status</th>
+                        <th>Start Year</th>
+                        <th>Date Completed</th>
+                        <th></th>
+                    </tr>
+                    <ng-container *ngIf="loadData.length > 0">
+                        <tr *ngFor="let x of loadData">
+                            <td data-th="Project Title">{{x.title}}</td>
+                            <td data-th="Project Type">{{x.type}}</td>
+                            <td data-th="ERF / Lot No">{{x.proj_street1}}</td>
+                            <td data-th="GPS Coordinates">{{x.proj_street2}}</td>
+                            <td data-th="Street Address">{{x.proj_street3}}</td>
+                            <td data-th="Project Location">R {{x.proj_city}}</td>
+                            <td data-th="Project State">{{x.proj_state}}</td>
+                            <td data-th="Portal Code">{{x.proj_zip}}</td>
+                            <td data-th="Description">{{x.description}}</td>
+                            <td data-th="Service Rendered">{{x.prof_type}}</td>
+                            <td data-th="Construction Cost">R{{x.const_cost}}</td>
+                            <td data-th="Final Cost">R{{x.final_cost}}</td>
+                            <td data-th="Cost Variance">{{x.variable}}% over budget</td>
+                            <td data-th="Professional Fees">R{{x.prof_cost}}</td>
+                            <td data-th="Client Name">{{x.client_name}}</td>
+                            <td data-th="Project Leader">{{x.pl_name}}</td>
+                            <td data-th="Leader Email">{{x.pl_email}}</td>
+                            <td data-th="Leader Phone">{{x.pl_phone}}</td>
+                            <td data-th="Start Year">{{x.year}}</td>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <td data-th="Completed Date" style="color: blue;">{{x.completed_at}}</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Ongoing'">
+                                <td data-th="Completed Date" style="color: rgb(0, 0, 0);">{{x.status}}</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Cancelled'">
+                                <td data-th="Cancelled Date" style="color: rgb(255, 0, 0);">{{x.completed_at}}</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <td data-th="Project Status" style="color: blue;">{{x.status}}</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Ongoing'">
+                                <td data-th="Project Status" style="color: rgb(0, 0, 0);">{{x.status}}</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Cancelled'">
+                                <td data-th="Project Status" style="color: rgb(255, 0, 0);">{{x.status}}</td>
+                            </ng-container>
+                            <ion-button size="small" color="success" class="project_verify"
+                                (click)="action(x, 'Completed')">Complete</ion-button>
+                            <ion-button size="small" style="color: blue;" class="project_verify"
+                                (click)="action(x, 'Ongoing')">Ongoing</ion-button>
+                            <ion-button size="small" color="danger" class="project_verify"
+                                (click)="action(x, 'Cancelled')">Cancelled</ion-button>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="loadData.length == 0">
+                        <div class="text-center">No Project</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+        <ion-card *ngSwitchCase="'add-circle'">
+            <ion-card-content>
+                <ion-item>
+                    <ion-label position="stacked">New Project Title </ion-label>
+                    <ion-input type="text" name="title" [(ngModel)]="form.title"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Description</ion-label>
+                    <ion-textarea [(ngModel)]="form.description"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Service Rendered</ion-label>
+                    <ion-select multiple="false" [(ngModel)]="form.prof_type">
+                        <ion-select-option value="Project Manager">Project Manager</ion-select-option>
+                        <ion-select-option value="Principal Agent">Principal Agent</ion-select-option>
+                        <ion-select-option value="Architect">Architect</ion-select-option>
+                        <ion-select-option value="Quantity Surveyor">Quantity Surveyor</ion-select-option>
+                        <ion-select-option value="Civil Eng">Civil Eng</ion-select-option>
+                        <ion-select-option value="Structural Eng">Structural Eng</ion-select-option>
+                        <ion-select-option value="Mechanical Eng">Mechanical Eng</ion-select-option>
+                        <ion-select-option value="Electrical Eng">Electrical Eng</ion-select-option>
+                        <ion-select-option value="OHS agent">OHS agent</ion-select-option>
+                        <ion-select-option value="Plumber">Plumber</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Select Project Type</ion-label>
+                    <ion-select multiple="false" [(ngModel)]="form.type">
+                        <ion-select-option value="Residential">Residential</ion-select-option>
+                        <ion-select-option value="Multi-residential">Multi-residential</ion-select-option>
+                        <ion-select-option value="Interior">Interior</ion-select-option>
+                        <ion-select-option value="Library">Library</ion-select-option>
+                        <ion-select-option value="Hospital">Hospital</ion-select-option>
+                        <ion-select-option value="Office Parks">Office Parks</ion-select-option>
+                        <ion-select-option value="Guest House">Guest House</ion-select-option>
+                        <ion-select-option value="Multi purpose Hall">Multi purpose Hall</ion-select-option>
+                        <ion-select-option value="Mall">Mall</ion-select-option>
+                        <ion-select-option value="RDP Housing">RDP Housing</ion-select-option>
+                        <ion-select-option value="Township Market Development">Township Market Development
+                        </ion-select-option>
+                        <ion-select-option value="Road Paving">Road Paving</ion-select-option>
+                        <ion-select-option value="Road Construction">Road Construction</ion-select-option>
+                        <ion-select-option value="Bridge">Bridge</ion-select-option>
+                        <ion-select-option value="Sport Center Development">Sport Center Development</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Construction Cost(R, Input Only Number) : </ion-label>
+                    <ion-input type="text" [(ngModel)]="form.const_cost" min="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Final Cost(R, Input Only Number) : </ion-label>
+                    <ion-input type="text" [(ngModel)]="form.final_cost" min="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Professional Fees(R, Input Only Number) : </ion-label>
+                    <ion-input type="text" [(ngModel)]="form.prof_cost" min="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Start Date</ion-label>
+                    <ion-input type="date" placeholder="Mon/Day/Year" [(ngModel)]="form.year"></ion-input>
+                    <!-- <ion-label>Select Year Of Project</ion-label>
+          <ion-select multiple="false" [(ngModel)]="form.year">
+            <ion-select-option value="2023">2023</ion-select-option>
+            <ion-select-option value="2022">2022</ion-select-option>
+            <ion-select-option value="2021">2021</ion-select-option>
+            <ion-select-option value="2020">2020</ion-select-option>
+            <ion-select-option value="2019">2019</ion-select-option>
+            <ion-select-option value="2018">2018</ion-select-option>
+            <ion-select-option value="2017">2017</ion-select-option>
+          </ion-select> -->
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Construction Complete Date</ion-label>
+                    <ion-input type="date" placeholder="Mon/Day/Year" [(ngModel)]="form.completed_at"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Client Name</ion-label>
+                    <ion-input name="client_name" [(ngModel)]="form.client_name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Project Leader Name</ion-label>
+                    <ion-input name="pl_name" [(ngModel)]="form.pl_name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Project Leader Email</ion-label>
+                    <ion-input name="pl_email" [(ngModel)]="form.pl_email"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Project Leader Phone Number</ion-label>
+                    <ion-input name="pl_phone" minlength="11" [(ngModel)]="form.pl_phone">+</ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Project Location</ion-label>
+                    <ion-item>
+                        <ion-label position="stacked"></ion-label>
+                        <ion-input placeholder="ERF /Lot No" name="proj_street1" [(ngModel)]="form.proj_street1">
+                        </ion-input>
+                        <ion-input placeholder="GPS Coordinates" name="proj_street2" [(ngModel)]="form.proj_street2">
+                        </ion-input>
+                        <ion-input placeholder="Street Address" name="proj_street3" [(ngModel)]="form.proj_street3">
+                        </ion-input>
+                        <ion-input placeholder="City" name="proj_city" [(ngModel)]="form.proj_city"></ion-input>
+                        <ion-input placeholder="State" name="proj_state" [(ngModel)]="form.proj_state"></ion-input>
+                        <ion-input placeholder="Postal Code" name="proj_zip" [(ngModel)]="form.proj_zip"></ion-input>
+                    </ion-item>
+                </ion-item>
+                <ion-button (click)="addProjects()" style="width: 90%;margin: 10px;">Save Project</ion-button>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <br />
+</ion-content>
+<ion-footer color="dark" class="footer">
+    <ion-toolbar color="">
+        <ion-title class="footer">Copyright SIVAGO </ion-title>
+    </ion-toolbar>
+</ion-footer>
