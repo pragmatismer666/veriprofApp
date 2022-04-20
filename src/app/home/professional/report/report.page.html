@@ -11,15 +11,15 @@
     <div class="scrollH">
         <table class="table">
             <tr>
-                <th>Project Title</th>
-                <th>Accessor</th>
+                <th>ID</th>
+                <th>Assessor</th>
                 <th>Type</th>
                 <th>Download</th>
             </tr>
             <tr *ngFor="let x of objs">
-                <td>{{x.report_title}}</td>
+                <td>{{x.id}}</td>
                 <td>{{x.accessor}}</td>
-                <td>{{x.report_type}}</td>
+                <td>{{x.report_type}} Submission</td>
                 <td class="d-flex">
                     <ion-button size="small" color="success" (click)="download(x.filename)" style="font-size: 10px;">
                         Download</ion-button>

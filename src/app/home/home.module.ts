@@ -13,7 +13,7 @@ const routes: Routes = [
         component: HomePage,
         children: [
             { path: 'professional', loadChildren: './professional/professional.module#ProfessionalPageModule' },
-            { path: 'accessor', loadChildren: './accessor/accessor.module#AccessorPageModule' },
+            { path: 'assessor', loadChildren: './assessor/assessor.module#AssessorPageModule' },
         ]
     }
 ];

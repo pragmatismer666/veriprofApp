@@ -1,6 +1,6 @@
 <ion-header color="dark" style="background: black;height: 25%;">
     <ion-content color="dark">
-        <ion-img src="assets/veriprof-logo2.png" class="headerImage"></ion-img>
+        <ion-img src="../../../assets/veriprof-logo2.png" class="headerImage"></ion-img>
         <h3 text-center color="light">Welcome : {{userName}}</h3>
     </ion-content>
 </ion-header>
@@ -11,29 +11,29 @@
             <ion-card>
                 <ion-segment scrollable>
                     <ion-segment-button (click)="project()">
-                        <ion-img src="assets/myproj.png"></ion-img>
+                        <ion-img src="../../../assets/myproj.png"></ion-img>
                         <ion-label class="inner">My Projects</ion-label>
                     </ion-segment-button>
                     <ion-segment-button (click)="profile()">
-                        <ion-img src="assets/prof.png"></ion-img>
+                        <ion-img src="../../../assets/prof.png"></ion-img>
                         <ion-label class="inner">My Profile</ion-label>
                     </ion-segment-button>
                 </ion-segment>
                 <br>
                 <ion-segment scrollable>
                     <ion-segment-button (click)="plans()">
-                        <ion-img src="assets/plans.png"></ion-img>
+                        <ion-img src="../../../assets/plans.png"></ion-img>
                         <ion-label class="inner">ePlan Filling</ion-label>
                     </ion-segment-button>
                     <ion-segment-button (click)="report()">
-                        <ion-img src="assets/reports.png"></ion-img>
+                        <ion-img src="../../../assets/reports.png"></ion-img>
                         <ion-label class="inner">Reporting</ion-label>
                     </ion-segment-button>
                 </ion-segment>
                 <br>
                 <ion-segment scrollable>
                     <ion-segment-button (click)="bids()" style="width: 50%;">
-                        <ion-img src="assets/accreport.png"></ion-img>
+                        <ion-img src="../../../assets/accreport.png"></ion-img>
                         <ion-label class="inner">Tender BIDS</ion-label>
                     </ion-segment-button>
                     <ion-row style="width: 50%;">
@@ -72,40 +72,56 @@
         <ion-card *ngSwitchCase="'newsp'">
         </ion-card>
         <ion-card *ngSwitchCase="'accountp'">
-            <ion-item>
-                <ion-label position="floating" class="inner">Name</ion-label>
-                <ion-input type="text" class="inner" [(ngModel)]="account.name" value={{account.name}}></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating" class="inner">Phone Number</ion-label>
-                <ion-input type="text" class="inner" [(ngModel)]="account.mobile" value={{account.mobile}}></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating" class="inner">Email</ion-label>
-                <ion-input type="text" class="inner" [(ngModel)]="account.email" value={{account.email}}></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating" class="inner">New Password</ion-label>
-                <ion-input type="password" required class="inner" [(ngModel)]="account.newpass"
-                    value={{account.newpass}}></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating" class="inner">Confirm</ion-label>
-                <ion-input type="password" required class="inner" [(ngModel)]="account.confirm"
-                    value={{account.confirm}}></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating" class="inner">Password</ion-label>
-                <ion-input type="password" placeholder="Input your password to update." required class="inner"
-                    [(ngModel)]="account.oldpass" value={{account.oldpass}}></ion-input>
-            </ion-item>
-            <ion-row style="--border-color:black;margin-top:4%;">
-                <ion-button style="font-size: 12px;width:48%;" type="submit" color="dark" (click)="update('update')">
-                    Update Account</ion-button>
-                <ion-button style="font-size: 12px;width:48%;color: red;" type="submit" color="danger"
+            <ion-segment [(ngModel)]="change_account" color="light" class="landTabs">
+                <ion-segment-button value="update_account">
+                    <ion-label>Update Account</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="delete_account">
+                    <ion-label>Delete Account</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+            <div [ngSwitch]="change_account">
+                <ion-card *ngSwitchCase="'update_account'">
+                    <br>
+                    <ion-item>
+                        <ion-label position="floating" class="inner">Name</ion-label>
+                        <ion-input type="text" class="inner" [(ngModel)]="account.name" value={{account.name}}></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating" class="inner">Current Password</ion-label>
+                        <ion-input type="password" placeholder="Input your password to update." required class="inner"
+                            [(ngModel)]="account.oldpass" value={{account.oldpass}}></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating" class="inner">New Password</ion-label>
+                        <ion-input type="password" required class="inner" [(ngModel)]="account.newpass"
+                            value={{account.newpass}}></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating" class="inner">Confirm</ion-label>
+                        <ion-input type="password" required class="inner" [(ngModel)]="account.confirm"
+                            value={{account.confirm}}></ion-input>
+                    </ion-item>
+                    <br>
+                    <ion-button style="font-size: 12px;width:100%;" type="submit" color="dark" (click)="update('update')">Update Account</ion-button>
+                </ion-card>
+                <ion-card *ngSwitchCase="'delete_account'">
+                    <br>
+                    <ion-item>
+                        <ion-label position="floating" class="inner">Current Password</ion-label>
+                        <ion-input type="password" placeholder="Input your password to update." required class="inner"
+                            [(ngModel)]="delete_account.oldpass" value={{delete_account.oldpass}}></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating" class="inner">Confirm</ion-label>
+                        <ion-input type="password" required class="inner" [(ngModel)]="delete_account.confirm"
+                            value={{delete_account.confirm}}></ion-input>
+                    </ion-item>
+                    <br>
+                    <ion-button style="font-size: 12px;width:100%;color: red;" type="submit" color="danger"
                     (click)="delete()">Delete Account</ion-button>
-            </ion-row>
-            <br>
+                </ion-card>
+            </div>
         </ion-card>
     </div>
 </ion-content>

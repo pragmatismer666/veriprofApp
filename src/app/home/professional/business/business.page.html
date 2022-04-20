@@ -13,7 +13,7 @@
             <ion-icon name="add-circle" color="dark"></ion-icon>
             <ion-label color="dark">Add New</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="paper">
+        <ion-segment-button value="paper" (click)="initial()">
             <ion-icon name="paper" color="dark"></ion-icon>
             <ion-label color="dark">Bids</ion-label>
         </ion-segment-button>
@@ -35,10 +35,10 @@
                         <th>Bid Partcipation</th>
                         <th></th>
                     </tr>
-                    <ng-container *ngIf="bids.length == 0">
+                    <!-- <ng-container *ngIf="bids.length == 0">
                         <div class="text-center" style="font-size: 1.25em;">There is no bids.</div>
-                    </ng-container>
-                    <ng-container *ngIf="bids.length > 0">
+                    </ng-container> -->
+                    <ng-container *ngIf="true">
                         <tr *ngFor="let x of bids">
                             <td data-th="Name">{{x.name}}</td>
                             <td data-th="Surname">{{x.surname}}</td>

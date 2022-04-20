@@ -158,16 +158,8 @@
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Project Cost</ion-label>
-                    <ion-select multiple="false" name="project_cost" [(ngModel)]="plan.project_cost">
-                        <ion-select-option value="0-50,000">R0-R50,000</ion-select-option>
-                        <ion-select-option value="50-100,000">R50-R100,000</ion-select-option>
-                        <ion-select-option value="100,000-500,000">R100,000-R500,000</ion-select-option>
-                        <ion-select-option value="500,000-1m">R500,000-R1m</ion-select-option>
-                        <ion-select-option value="1m-3m">R1m-R3m</ion-select-option>
-                        <ion-select-option value="3m-5m">R3m-R5m</ion-select-option>
-                        <ion-select-option value="5m-10m">R5m-R10m</ion-select-option>
-                        <ion-select-option value="above 10m">above R10m</ion-select-option>
-                    </ion-select>
+                    <ion-input name="project_cost" [(ngModel)]="plan.project_cost"
+                        value="{{plan.project_cost}}"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Generated Plan No.</ion-label>
@@ -186,44 +178,11 @@
                         [(ngModel)]="plan.contact_address_line_2" value="{{plan.contact_address_line_2}}"></ion-input>
                     <ion-input placeholder="City" name="contact_city" [(ngModel)]="plan.contact_city"
                         value="{{plan.contact_city}}"></ion-input>
-                    <ion-select multiple="false" name="contact_province" placeholder="Select Province"
-                        [(ngModel)]="plan.contact_province" value="{{plan.contact_province}}">
-                        <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
-                        <ion-select-option value="Free State">Free State</ion-select-option>
-                        <ion-select-option value="Gauteng">Gauteng</ion-select-option>
-                        <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
-                        <ion-select-option value="Limpopo">Limpopo</ion-select-option>
-                        <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
-                        <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
-                        <ion-select-option value="North West">North West</ion-select-option>
-                        <ion-select-option value="Western Cape">Western Cape</ion-select-option>
-                    </ion-select>
+                    <ion-input placeholder="Cost" name="contact_province" [(ngModel)]="plan.contact_province"
+                        value="{{plan.contact_province}}"></ion-input>
                     <ion-input placeholder="Zip Code" name="contact_zipcode" [(ngModel)]="plan.contact_zipcode"
                         value="{{plan.contact_zipcode}}"></ion-input>
                 </ion-item>
-                <!-- <ion-item>
-          <ion-label position="stacked">Project Type</ion-label>
-          <ion-select multiple="false" name="project_type" placeholder="Project Type" [(ngModel)]="plan.project_type">
-            <ion-select-option value="Architectural">Architectural</ion-select-option>
-            <ion-select-option value="Civil Engineering">Civil Engineering</ion-select-option>
-            <ion-select-option value="Electrical Engineering">Electrical Engineering</ion-select-option>
-            <ion-select-option value="Mechanical Engineering">Mechanical Engineering</ion-select-option>
-            <ion-select-option value="Schools">Schools</ion-select-option>
-            <ion-select-option value="Library">Library</ion-select-option>
-            <ion-select-option value="Offices">Offices</ion-select-option>
-            <ion-select-option value="Hotel">Hotel</ion-select-option>
-            <ion-select-option value="Casino">Casino</ion-select-option>
-            <ion-select-option value="Sanitation">Sanitation</ion-select-option>
-            <ion-select-option value="Residential">Residential</ion-select-option>
-            <ion-select-option value="Factory">Factory</ion-select-option>
-            <ion-select-option value="Social Housing">Social Housing</ion-select-option>
-            <ion-select-option value="Complex">Complex</ion-select-option>
-            <ion-select-option value="Service Station">Service Station</ion-select-option>
-            <ion-select-option value="Garage">Garage</ion-select-option>
-            <ion-select-option value="Warehouse">Warehouse</ion-select-option>
-            <ion-select-option value="Shopping Centre">Shopping Centre</ion-select-option>
-          </ion-select>
-        </ion-item> -->
                 <ion-item>
                     <ion-label position="stacked" style="margin-bottom: 10px;">Upload PDF Copy of plan - FILE PLAN
                     </ion-label>

@@ -1,0 +1,177 @@
+<ion-header>
+    <ion-toolbar color="dark">
+        <ion-back-button slot="start"></ion-back-button>
+        <ion-title>Assessors Report</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<!-- <ion-content>
+    <form class="schedule_line" [formGroup]="report_form" (ngSubmit)="report_confirm(report_form.value)">
+        <ion-item color="" class="report_line">
+            <ion-label position="floating" color="" class="inner"></ion-label>
+            <ion-input type="text" formControlName="accessor" color="" class="inner" [readonly]="true"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item>
+            <ion-label position="floating" color="" class="inner" style="margin-bottom:5px ;">Report Type</ion-label>
+            <ion-select multiple="false" formControlName="report_type" Placeholder="Select Report Type"
+                (ngModelChange)="getType($event)">
+                <ion-select-option value="Project submission"> Project submission Report</ion-select-option>
+                <ion-select-option value="Business Registration">Business Registration Report</ion-select-option>
+                <ion-select-option value="ePlan submission Report">ePlan submission Report</ion-select-option>
+                <ion-select-option value="Quick Verify Request Report">Quick Verify Request Report</ion-select-option>
+                <ion-select-option value="Profile Report">Profile Report</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <br>
+        <ion-item>
+            <ion-label position="floating" color="" class="inner" style="margin-bottom:5px ;">Professional Name
+            </ion-label>
+            <ion-select placeholder="Select Professional Name" formControlName="profess_name" multiple='false'>
+                <ng-container *ngFor="let x of profess">
+                    <ion-select-option *ngIf="x.reg_number != ''">{{x.name}}</ion-select-option>
+                </ng-container>
+            </ion-select>
+        </ion-item>
+        <br>
+        <ion-item>
+            <ion-label position="floating" class="inner">Report Title</ion-label>
+            <ion-input type="text" formControlName="report_title" color="" class="inner"></ion-input>
+        </ion-item>
+        <div class="validation-errors schedule_line">
+            <ng-container *ngFor="let validation of validation_messages.report_title">
+                <div class="error-message"
+                    *ngIf="report_form.get('report_title').hasError(validation.type) && (report_form.get('report_title').dirty)">
+                    {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+        <ion-item>
+            <ion-label position="floating" class="inner">Report Content</ion-label>
+            <ion-textarea rows="3" position="floating" class="inner" formControlName="report_content"
+                placeholder="Please write report about the Project.">
+            </ion-textarea>
+        </ion-item>
+        <br>
+        <ion-row>
+            <ion-button style="width: 100%;" type="submit" [disabled]="!report_form.valid" color="success">Confirm to
+                build report</ion-button>
+        </ion-row>
+    </form>
+</ion-content> -->
+
+<super-tabs activeTabIndex="0"
+    [config]="{ debug: true, sideMenu: 'left', allowElementScroll: true, nativeSmoothScroll: true }">
+    <super-tabs-toolbar slot="bottom">
+        <super-tab-button>
+            <ion-label>Project</ion-label>
+        </super-tab-button>
+        <!-- <super-tab-button>
+            <ion-label>Eplan</ion-label>
+        </super-tab-button> -->
+        <!-- <super-tab-button>
+            <ion-label>News</ion-label>
+        </super-tab-button> -->
+        <super-tab-button>
+            <ion-label>Profile</ion-label>
+        </super-tab-button>
+        <super-tab-button>
+            <ion-label>Business</ion-label>
+        </super-tab-button>
+    </super-tabs-toolbar>
+    <super-tabs-container autoScrollTop>
+        <super-tab >
+            <h4 class="title-center">Project Submission</h4>
+            <div class="scrollH">
+                <table class="table">
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>client Name</th>
+                        <th>Leader Name</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let project of projects">
+                        <td>{{project.title}}</td>
+                        <td>{{project.type}}</td>
+                        <td>{{project.client_name}}</td>
+                        <td>{{project.pl_name}}</td>
+                        <td>{{project.status}}</td>
+                        <td class="d-flex" (click)="action(project, 'project')">Verify</td>
+                    </tr>
+                </table>
+            </div>
+        </super-tab>
+        <!-- <super-tab>
+            <h4 class="title-center">Eplan Submission</h4>
+            <div class="scrollH">
+                <table class="table">
+                    <tr>
+                        <th>Code</th>
+                        <th>Project Title</th>
+                        <th>Prof Name</th>
+                        <th>Client Name</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let eplan of eplans">
+                        <td>{{eplan.verify_code}}</td>
+                        <td>{{eplan.project_title}}</td>
+                        <td>{{eplan.professional_name}}</td>
+                        <td>{{eplan.client_name}}</td>
+                        <td class="d-flex" (click)="action(eplan, 'eplan')">Verify</td>
+                    </tr>
+                </table>
+            </div>
+        </super-tab> -->
+        <!-- <super-tab>
+        </super-tab> -->
+        <super-tab>
+            <h4 class="title-center">Profile Submission</h4>
+            <div class="scrollH">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Council</th>
+                        <th>Experience</th>
+                        <th>Job</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let profile of unverified_profiles">
+                        <td>{{profile.name}}</td>
+                        <td>{{profile.council}}</td>
+                        <td>{{profile.exp_year}}</td>
+                        <td>{{profile.jtitle}}</td>
+                        <td class="d-flex" (click)="action(profile, 'profile')">Verify</td>
+                    </tr>
+                </table>
+            </div>
+        </super-tab>
+        <super-tab>
+            <h4 class="title-center">Business Submission</h4>
+            <div class="scrollH">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Council reg No</th>
+                        <th>Type of Organization</th>
+                        <th>Directors</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let business of unverified_business">
+                        <td>{{business.pname}}</td>
+                        <td>{{business.pcouncil}}</td>
+                        <td>{{business.ptype}}</td>
+                        <td>{{business.director}}</td>
+                        <td class="d-flex" (click)="action(business, 'business')">Verify</td>
+                    </tr>
+                </table>
+            </div>
+        </super-tab>
+    </super-tabs-container>
+</super-tabs>
+<!-- <ion-footer color="dark" class="footer">
+  <ion-toolbar color="">
+    <ion-title class="footer">Copyright SIVAGO </ion-title>
+  </ion-toolbar>
+</ion-footer> -->

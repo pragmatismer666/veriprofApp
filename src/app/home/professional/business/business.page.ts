@@ -65,8 +65,25 @@ export class BusinessPage implements OnInit {
         });
     }
 
+    initial(){
+        this.form = {
+            name: '',
+            surname: '',
+            professional_reg_no: '',
+            email_add: '',
+            cell: '',
+            bidder: '',
+            client_department: '',
+            bid_no: '',
+            short_description: '',
+            file: ''
+        };
+        this.getProfile();
+    }
+
     submit() {
         for (let x in this.form) {
+            console.log(x);
             if (this.form[x].length == 0 && x != "file") {
                 let name = x.replace('_', ' ');
                 return this.restApi.toast("Please fill " + name,1200);
@@ -74,6 +91,7 @@ export class BusinessPage implements OnInit {
         }
 
         this.restApi.post('professional/add-bid', { user_id: this.authService.user.userId, data: this.form }).subscribe((res: any) => {
+            console.log(res);
             if (res && res.status) {
                 this.restApi.toast(res.message, 1200);
                 this.bids = res.data;

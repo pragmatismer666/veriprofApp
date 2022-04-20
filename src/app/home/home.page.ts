@@ -20,16 +20,16 @@ export class HomePage implements OnInit {
     getSlug() {
         if (this.authService.user.role == 'Professional') {
             return 'professional';
-        } else if (this.authService.user.role == "Accessor") {
-            return 'accessor';
+        } else if (this.authService.user.role == "Assessor") {
+            return 'assessor';
         }
     }
 
     checkRoleAndNavigate() {
         if (this.authService.user.role == 'Professional') {
             this.navCtrl.navigateForward('home/professional');
-        } else if (this.authService.user.role == "Accessor") {
-            this.navCtrl.navigateForward('home/accessor');
+        } else if (this.authService.user.role == "Assessor") {
+            this.navCtrl.navigateForward('home/assessor');
         }
     }
 

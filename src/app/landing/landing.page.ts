@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { RestApiService } from 'src/app/services/rest-api.service';
 import { AuthenticateService } from '../services/authentication.service';
 
+import { SuperTabs } from '@ionic-super-tabs/angular';
+import { SuperTabsConfig } from '@ionic-super-tabs/core';
 
 @Component({
     selector: 'app-landing',
@@ -11,8 +13,23 @@ import { AuthenticateService } from '../services/authentication.service';
     styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
-    // home part
-    land_seg: string = "homep";
+    
+    @ViewChild(SuperTabs) superTabs: SuperTabs;
+
+    opts = {
+        icon: false,
+        label: true,
+        toolbarPos: 'top',
+        scrollable: true,
+    };
+
+    config: SuperTabsConfig = {
+        debug: true,
+        allowElementScroll: false,
+    }; 
+
+    tabs: any[] = [];
+
     title: string;
     email: string;
     phone: string;
@@ -34,15 +51,15 @@ export class LandingPage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.getDetails();
+        // this.getDetails();
     }
 
     professional() {
         this.router.navigateByUrl('auth/login/professional');
     }
 
-    accessor() {
-        this.router.navigateByUrl('auth/login/accessor');
+    assessor() {
+        this.router.navigateByUrl('auth/login/assessor');
     }
 
     logout() {
@@ -51,7 +68,7 @@ export class LandingPage implements OnInit {
     }
 
     getDetails() {
-        this.restApi.post('/get-details', {}).subscribe((res: any) => {
+        this.restApi.post('get-details', {}).subscribe((res: any) => {
             if (res && res.status) {
                 try {
                     console.log(res.data);
@@ -71,20 +88,20 @@ export class LandingPage implements OnInit {
         });
     }
 
-    manageData(data : any) {
+    manageData(data: any) {
         try {
             this.keyArray = Object.keys(data);
             for (let index = 0; index < this.keyArray.length; index++) {
-                if ( this.exceptStrs.includes(this.keyArray[index]) ) {
+                if (this.exceptStrs.includes(this.keyArray[index])) {
                     continue;
                 }
                 let updateKey = "";
-                if ( this.keyArray[index].includes("_") ) {
+                if (this.keyArray[index].includes("_")) {
                     updateKey = this.keyArray[index].split("_")[0].toUpperCase() + " " + this.keyArray[index].split("_")[1].toUpperCase()
                 } else {
                     updateKey = this.keyArray[index].toUpperCase();
                 }
-                let eachVal = {key:updateKey, val:data[this.keyArray[index].toString()]}
+                let eachVal = { key: updateKey, val: data[this.keyArray[index].toString()] }
                 this.valArray.push(eachVal);
             }
         } catch (error) {
@@ -94,13 +111,13 @@ export class LandingPage implements OnInit {
     }
 
     searchContent() {
-        if ( this.keyword == null ) {
+        if (this.keyword == null) {
             this.restApi.toast('Please put keyword.', 1200);
-        } else if (this.keyword.trim() == "" ) {
+        } else if (this.keyword.trim() == "") {
             this.restApi.toast('Please put keyword.', 1200);
         } else {
             this.valArray = [];
-            this.restApi.post('/search', { key: this.keyword.trim() })
+            this.restApi.post('search', { key: this.keyword.trim() })
                 .subscribe((res: any) => {
                     console.log(res);
                     if (res && res.status) {

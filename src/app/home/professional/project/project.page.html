@@ -23,30 +23,6 @@
             <ion-card-content>
                 <h1>My Projects</h1>
                 <table class="rwd-table">
-                    <tr>
-                        <th>Project Title</th>
-                        <th>Project Type</th>
-                        <th>ERF / Lot No</th>
-                        <th>GPS Coordinates</th>
-                        <th>Street Address</th>
-                        <th>Project Location</th>
-                        <th>Project Province</th>
-                        <th>Portal Code</th>
-                        <th>Description</th>
-                        <th>Service Rendered</th>
-                        <th>Construction Cost</th>
-                        <th>Final Cost</th>
-                        <th>Cost Variance</th>
-                        <th>Professional Fees</th>
-                        <th>Client Name</th>
-                        <th>Project Leader</th>
-                        <th>Leader Email</th>
-                        <th>Leader Phone</th>
-                        <th>Project Status</th>
-                        <th>Start Year</th>
-                        <th>Date Completed</th>
-                        <th></th>
-                    </tr>
                     <ng-container *ngIf="loadData.length > 0">
                         <tr *ngFor="let x of loadData">
                             <td data-th="Project Title">{{x.title}}</td>
@@ -60,7 +36,6 @@
                             <td data-th="Description">{{x.description}}</td>
                             <td data-th="Service Rendered">{{x.prof_type}}</td>
                             <td data-th="Construction Cost">R{{x.const_cost}}</td>
-                            <td data-th="Final Cost">R{{x.final_cost}}</td>
                             <td data-th="Cost Variance">{{x.variable}}% over budget</td>
                             <td data-th="Professional Fees">R{{x.prof_cost}}</td>
                             <td data-th="Client Name">{{x.client_name}}</td>
@@ -68,7 +43,14 @@
                             <td data-th="Leader Email">{{x.pl_email}}</td>
                             <td data-th="Leader Phone">{{x.pl_phone}}</td>
                             <td data-th="Start Year">{{x.year}}</td>
+                            <td data-th="Document">
+                                <ng-container *ngIf="x.file != ''">
+                                    <ion-button size="small" color="success" style="height: 1.2rem;margin-top: -10px;" (click)="download(x.file)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.file == ''">There is no document.</ng-container>                      
+                            </td>
                             <ng-container *ngIf="x.status == 'Completed'">
+                                <td data-th="Final Cost">R{{x.final_cost}}</td>
                                 <td data-th="Completed Date" style="color: blue;">{{x.completed_at}}</td>
                             </ng-container>
                             <ng-container *ngIf="x.status == 'Ongoing'">
@@ -151,26 +133,26 @@
                     <ion-input type="text" [(ngModel)]="form.const_cost" min="0"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Final Cost(R, Input Only Number) : </ion-label>
-                    <ion-input type="text" [(ngModel)]="form.final_cost" min="0"></ion-input>
-                </ion-item>
-                <ion-item>
                     <ion-label position="stacked">Professional Fees(R, Input Only Number) : </ion-label>
                     <ion-input type="text" [(ngModel)]="form.prof_cost" min="0"></ion-input>
                 </ion-item>
                 <ion-item>
+                    <ion-label>Select Project Status</ion-label>
+                    <ion-select multiple="false" [(ngModel)]="form.status" (ionChange)="change_status($event)">
+                        <ion-select-option value="Ongoing">Ongoing</ion-select-option>
+                        <ion-select-option value="Completed">Completed</ion-select-option>
+                        <ion-select-option value="Cancelled">Cancelled</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngIf="complete_flag">
+                    <ion-item>
+                        <ion-label position="stacked">Final Cost(R, Input Only Number) : </ion-label>
+                        <ion-input type="text" [(ngModel)]="form.final_cost" min="0"></ion-input>
+                    </ion-item>
+                </ng-container>
+                <ion-item>
                     <ion-label position="stacked">Start Date</ion-label>
                     <ion-input type="date" placeholder="Mon/Day/Year" [(ngModel)]="form.year"></ion-input>
-                    <!-- <ion-label>Select Year Of Project</ion-label>
-          <ion-select multiple="false" [(ngModel)]="form.year">
-            <ion-select-option value="2023">2023</ion-select-option>
-            <ion-select-option value="2022">2022</ion-select-option>
-            <ion-select-option value="2021">2021</ion-select-option>
-            <ion-select-option value="2020">2020</ion-select-option>
-            <ion-select-option value="2019">2019</ion-select-option>
-            <ion-select-option value="2018">2018</ion-select-option>
-            <ion-select-option value="2017">2017</ion-select-option>
-          </ion-select> -->
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Construction Complete Date</ion-label>
@@ -205,6 +187,14 @@
                         <ion-input placeholder="City" name="proj_city" [(ngModel)]="form.proj_city"></ion-input>
                         <ion-input placeholder="State" name="proj_state" [(ngModel)]="form.proj_state"></ion-input>
                         <ion-input placeholder="Postal Code" name="proj_zip" [(ngModel)]="form.proj_zip"></ion-input>
+                    </ion-item>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload PDF Copy of plan - FILE PLAN
+                    </ion-label>
+                    <ion-item>
+                        <ion-input name="file" id="myFileInput" type="file" accept="application/pdf"
+                            (change)="changeListener($event)"></ion-input>
                     </ion-item>
                 </ion-item>
                 <ion-button (click)="addProjects()" style="width: 90%;margin: 10px;">Save Project</ion-button>

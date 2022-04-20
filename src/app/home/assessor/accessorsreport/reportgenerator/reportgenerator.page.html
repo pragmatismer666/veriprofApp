@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="dark">
+      <ion-back-button slot="start"></ion-back-button>
+      <ion-title>Assessors Report Generator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="report-padding">
+    <h4 class="report-padding">{{type}} Submission
+        <ion-button (click)="generate_report()" style="margin-top: -2%;padding: 5px;float: right;">Generate</ion-button>
+    </h4>
+    <div class="scrollH report-padding">
+        <table class="table">
+            <tr>
+                <th>Verify</th>
+                <th>Content</th>
+                <th>Value</th>
+            </tr>
+            <tr *ngFor="let each_row of report_data">
+                <td>
+                    <ion-checkbox class="title-center" color="primary" (ionChange)="change_status(each_row, $event)"></ion-checkbox>
+                </td>
+                <td>{{each_row.key}}</td>
+                <td>{{each_row.val}}</td>
+            </tr>
+        </table>
+    </div>
+</ion-content>

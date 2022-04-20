@@ -19,11 +19,11 @@ export class ForgetPage implements OnInit {
         'public_user': {
             title: 'Member Area'
         },
-        'accessor': {
-            title: 'Accessor'
+        'assessor': {
+            title: 'Assessor Area'
         },
         'professional': {
-            title: 'Professional'
+            title: 'Professional Area'
         }
     };
 

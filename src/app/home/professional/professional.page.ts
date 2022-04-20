@@ -13,6 +13,7 @@ export class ProfessionalPage implements OnInit {
 
     land_seg: string = "dashboardp";
     // land_seg: string = "accountp";
+    change_account: string = "update_account";
     userName: string;
     objs: any;
     errorMessage: string = '';
@@ -26,11 +27,13 @@ export class ProfessionalPage implements OnInit {
     // Accounts -------------------------
     account: any = {
         name: this.authService.userDetails().name,
-        email: this.authService.userDetails().email,
-        mobile: '',
         newpass: '',
         confirm: '',
         oldpass: ''
+    };
+    delete_account: any = {
+        oldpass:'',
+        confirm:''
     }
     // check Staff 
     moffice: string = '';
@@ -144,21 +147,16 @@ export class ProfessionalPage implements OnInit {
     // user Account - update and delete -----------------------
     update(key: any) {
         let checkFlag = true;
-        if (this.account.oldpass.length < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
         if (key == "update") {
-            if (this.account.newpass != this.account.confirm) { this.restApi.toast("Please same password in confirm.", 1200); checkFlag = false; return; }
-            else if (this.account.newpass < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
-            else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.account.email) != true) { this.restApi.toast("Please input validated email.", 1200); checkFlag = false; return; }
-            else if (this.account.name < 5) { this.restApi.toast("Name must be longer than 5 letters.", 1200); checkFlag = false; return; }
-            else if (this.account.mobile <= 10) { this.restApi.toast("Phone Number must be longer than 10 numbers.", 1200); checkFlag = false; return; }
-        }
-        if (checkFlag) {
+            if (this.account.oldpass.length < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
+            if (this.account.newpass != this.account.confirm) { this.restApi.toast("Please input same password in confirm.", 1200); checkFlag = false; return; }
+            if (this.account.newpass < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
+            if (this.account.name < 5) { this.restApi.toast("Name must be longer than 5 letters.", 1200); checkFlag = false; return; }
             this.restApi.post('accessor/up-user', { user_id: this.authService.user.userId, data: this.account, pass: this.account.oldpass, key: key }).subscribe((res: any) => {
                 if (res && res.status) {
-                    if (res.status = 'success') {
+                    console.log(res.status);
+                    if (res.status == 'success') {
                         this.account.name = res.data.name;
-                        this.account.email = res.data.email;
-                        this.account.mobile = res.data.mobile;
                         this.restApi.toast("Updated as successfully. Please login again.", 1200);
                         this.logout();
                     }
@@ -167,8 +165,28 @@ export class ProfessionalPage implements OnInit {
                     }
                 }
             }, error => {
-                this.restApi.toast("Something went wrong.", 1200);
+                this.restApi.toast("Please input correct current password.", 1200);
             });
+        } else if ( key == "delete") {
+            if (this.delete_account.oldpass.length < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
+            if (this.delete_account.oldpass != this.delete_account.confirm) { this.restApi.toast("Please same password in confirm.", 1200); checkFlag = false; return; }
+            this.restApi.post('accessor/up-user', { user_id: this.authService.user.userId, data: {}, pass: this.delete_account.oldpass, key: key }).subscribe((res: any) => {
+                if (res && res.status) {
+                    if (res.status == 'success') {
+                        this.restApi.toast("Updated as successfully. Please login again.", 1200);
+                        this.logout();
+                    }
+                    else {
+                        this.restApi.toast(res.data, 1200);
+                    }
+                }
+            }, error => {
+                this.restApi.toast("Please input correct current password.", 1200);
+            });
+        }
+
+        if (checkFlag) {
+            
         }
     }
 
@@ -212,7 +230,7 @@ export class ProfessionalPage implements OnInit {
     checkStaff() {
         this.restApi.post('professional/check-staff', { email: this.account.email }).subscribe((res: any) => {
             if (res && res.status == "success") {
-                if (res.data == 'no') { this.restApi.toast("There is no staff confirm request.", 1200); }
+                if (res.data == 'no') { this.restApi.toast("There is no staff confirm request.", 800); }
                 this.moffice = res.data;
             }
         }, error => {

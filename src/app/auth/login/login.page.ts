@@ -13,14 +13,11 @@ export class LoginPage implements OnInit {
 
     validations_form: FormGroup;
     errorMessage: string = '';
-    currentUserType = 'public_user';
+    currentUserType = 'assessor';
 
     UserTypes = {
-        'public_user': {
-            title: 'Member Area'
-        },
-        'accessor': {
-            title: 'Accessor Area'
+        'assessor': {
+            title: 'Assessor Area'
         },
         'professional': {
             title: 'Professional Area'

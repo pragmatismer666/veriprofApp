@@ -19,6 +19,8 @@ import { RestApiService } from './services/rest-api.service';
 import { LoadingService } from './services/loading.service';
 
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { SuperTabsModule } from '@ionic-super-tabs/angular';
+
 
 firebase.initializeApp(environment.firebase);
 
@@ -31,6 +33,7 @@ firebase.initializeApp(environment.firebase);
         AppRoutingModule,
         AngularFireAuthModule,
         HttpClientModule,
+        SuperTabsModule.forRoot(),
     ],
     providers: [
         StatusBar,

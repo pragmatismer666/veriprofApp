@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-back-button slot="start"></ion-back-button>
+      <ion-title>Unverified Business Offices</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <div class="scrollH">
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>CIPC Reg</th>
+          <th>Office Email</th>
+          <th>Status</th>
+        </tr>
+        <tr *ngFor="let x of objs">
+          <td>{{x.pname}}</td>
+          <td>{{x.ptype}}</td>
+          <td>{{x.pcipc_reg_no}}</td>
+          <td>{{x.email}}</td>
+          <td class="d-flex">
+            <ng-container *ngIf="x.status == 'Pending'">
+              <ion-button size="small" color="success" class='verifybtn' (click)="verify(x)">Begin Verification</ion-button>
+            </ng-container>
+            <ng-container *ngIf="x.status == 'Unverified'">
+              <ion-button size="small" color="danger" class='verifybtn' (click)="schedule()">Verify</ion-button>
+            </ng-container>
+            <ng-container *ngIf="x.status == 'Verified'">Verified</ng-container>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </ion-content>
+  

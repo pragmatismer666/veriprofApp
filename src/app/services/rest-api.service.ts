@@ -19,6 +19,7 @@ export class RestApiService {
     url(endpoint : string) {
         return "https://back.veriprof.co.za/api/" + endpoint;
         // return "http://localhost/veriprof_back/api/" + endpoint;
+        // return "http://192.168.5.61/veriprof_back/api/" + endpoint;
     }
 
     getHeader() {
@@ -78,6 +79,7 @@ export class RestApiService {
     downfile(type : string, filename : string) {
         let url = "https://back.veriprof.co.za/assets/" + type + filename ;
         // let url = "http://localhost/veriprof_back/assets/" + type + filename;
+        // let url = "http://192.168.5.61/veriprof_back/assets/" + type + filename;
         window.open(url);
     }
 

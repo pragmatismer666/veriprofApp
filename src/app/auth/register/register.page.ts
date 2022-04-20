@@ -17,14 +17,11 @@ export class RegisterPage implements OnInit {
     successMessage: string = '';
 
     prof: boolean = false;
-    currentUserType = 'public_user';
+    currentUserType = 'professional';
 
     UserTypes = {
-        'public_user': {
-            title: 'Member Area'
-        },
-        'accessor': {
-            title: 'Accessor Area'
+        'assessor': {
+            title: 'Assessor Area'
         },
         'professional': {
             title: 'Professional Area'
@@ -92,6 +89,7 @@ export class RegisterPage implements OnInit {
                             this.restApi.toast(res.message, 1200);
                             this.router.navigateByUrl('auth/login/' + this.currentUserType);
                         } else {
+                            this.restApi.toast(res.message, 1200);
                             this.errorMessage = res.message;
                             this.successMessage = "";
                         }

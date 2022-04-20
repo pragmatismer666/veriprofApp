@@ -1,0 +1,48 @@
+.table{
+    font-size: 11px;
+    min-width: 96%;
+    margin: 2%;
+    th{
+        background: #8a8a8a;
+        padding: 5px;
+        color: #fff;
+        border: 1px solid #fff;
+    }
+
+    td{
+        background: #ccc;
+        padding: 5px;
+        color: #000;
+        border: 1px solid #fff;
+    }
+}
+
+.scrollH {
+    overflow-x: auto;
+}
+
+/* DOES NOT WORK - not specific enough */
+.alert-wrapper {
+    background: #e5e5e5;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.my-custom-class .alert-wrapper {
+    background: #e5e5e5;
+}
+
+.my-custom-class {
+    width: 94%;
+    --background: #e5e5e5;
+    white-space: normal;
+}
+
+.secondary{
+    margin: auto;
+    white-space: normal;
+}
+
+.verifybtn{
+    font-size: 10px;
+    margin-top: 0px;
+}

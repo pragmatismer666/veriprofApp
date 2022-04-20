@@ -72,7 +72,7 @@ export class ProfilePage implements OnInit {
 
     mybusiness: string;
     myoffice: string;
-    pdfs: Array<{ name: string, filename: string }>;
+    pdfs: Array<{ name: string, filename: string }> = [];
 
     constructor(public http: HttpClient, private httpNative: HTTP, public toastController: ToastController, public authService: AuthenticateService, public restApi: RestApiService) { }
 
@@ -122,16 +122,10 @@ export class ProfilePage implements OnInit {
         this.restApi.post('professional/add-profile', { user_id: this.authService.user.userId, data: this.form }).subscribe((res: any) => {
             if (res && res.status) {
                 console.log(res.result);
-                this.toastController.create({
-                    message: res.message,
-                    duration: 2000
-                }).then(toast => toast.present());
+                this.restApi.toast(" Successfully Updated.", 1200);
             }
         }, error => {
-            this.toastController.create({
-                message: 'Something went wrong.',
-                duration: 2000
-            }).then(toast => toast.present());
+            this.restApi.toast("Please fill as correctly.", 1200);
         });
     }
 
@@ -144,10 +138,7 @@ export class ProfilePage implements OnInit {
             }
         }, error => {
             console.log(error);
-            this.toastController.create({
-                message: 'Something went wrong.',
-                duration: 2000
-            }).then(toast => toast.present());
+            this.restApi.toast("Something went wrong.", 1200);
         });
     }
 
@@ -155,7 +146,8 @@ export class ProfilePage implements OnInit {
     addbranch() {
         let new_branch = "<ion-item><ion-label position='stacked' color='success'>Branch Office No : " + (this.bo_id + 1).toString() + "</ion-label></ion-item><ion-item><ion-label position='stacked'>Contact Number</ion-label><ion-input id='phone" + this.bo_id.toString() + "' >+</ion-input></ion-item><ion-item><ion-label position='stacked'>Contact Email</ion-label><ion-input id='email" + this.bo_id.toString() + "'></ion-input></ion-item><ion-item><ion-label position='stacked'>Responsible Professional Name</ion-label><ion-input id='res_prof_name" + this.bo_id.toString() + "' ></ion-input></ion-item><ion-item><ion-label position='stacked'>Responsible Professional PR registration</ion-label><ion-input id='res_prof_reg" + this.bo_id.toString() + "'></ion-input></ion-item><ion-item><ion-label position='stacked'>Upload Pdf to proof the address</ion-label><ion-input name='file' type='file' accept='application/pdf' id='bfile" + this.bo_id.toString() + "'></ion-input></ion-item><br>";
         document.getElementById('branch_area').insertAdjacentHTML("beforeend", new_branch);
-        document.getElementById('bfile' + this.bo_id.toString()).addEventListener("change", this.bchange);
+        let target_element = document.getElementById('bfile' + this.bo_id.toString());
+        target_element.addEventListener("change", (e: Event) => { this.bchange(e) });
         this.bo_id++;
     }
 
@@ -174,16 +166,18 @@ export class ProfilePage implements OnInit {
     }
 
     addsoft() {
-        let new_soft = "<ion-item><ion-label position='stacked' color='success'>Software No : " + (this.soft_id + 1).toString() + "</ion-label><ion-input id='soft" + this.soft_id.toString() + "' [(ngModel)]='softs[" + this.soft_id + "]'></ion-input></ion-item><ion-item><ion-label position='stacked'>Upload Pdf to proof the address</ion-label><ion-input name='file' type='file' accept='application/pdf' id='soft" + this.soft_id.toString() + "'></ion-input></ion-item><br>";
+        let new_soft = "<ion-item><ion-label position='stacked' color='success'>Software No : " + (this.soft_id + 1).toString() + "</ion-label><ion-input id='softname" + this.soft_id.toString() + "' [(ngModel)]='softs[" + this.soft_id + "]'></ion-input></ion-item><ion-item><ion-label position='stacked'>Upload Pdf to proof the address</ion-label><ion-input name='file' type='file' accept='application/pdf' id='soft" + this.soft_id.toString() + "'></ion-input></ion-item><br>";
         document.getElementById('soft_area').insertAdjacentHTML("beforeend", new_soft);
-        document.getElementById('soft' + this.soft_id.toString()).addEventListener("change", this.bchange);
+        let target_elem = document.getElementById('soft' + this.soft_id.toString());
+        target_elem.addEventListener("change", (e: Event) => { this.bchange(e) });
         this.soft_id++;
     }
 
     addhard() {
-        let new_hard = "<ion-item><ion-label position='stacked' color='success'>Hardware No : " + (this.hard_id + 1).toString() + "</ion-label><ion-input id='hard" + this.hard_id.toString() + "'  [(ngModel)]='hards[" + this.hard_id + "]'></ion-input></ion-item><ion-item><ion-label position='stacked'>Upload Pdf to proof the address</ion-label><ion-input name='file' type='file' accept='application/pdf' id='hard" + this.hard_id.toString() + "'></ion-input></ion-item><br>";
+        let new_hard = "<ion-item><ion-label position='stacked' color='success'>Hardware No : " + (this.hard_id + 1).toString() + "</ion-label><ion-input id='hardname" + this.hard_id.toString() + "'  [(ngModel)]='hards[" + this.hard_id + "]'></ion-input></ion-item><ion-item><ion-label position='stacked'>Upload Pdf to proof the address</ion-label><ion-input name='file' type='file' accept='application/pdf' id='hard" + this.hard_id.toString() + "'></ion-input></ion-item><br>";
         document.getElementById('hard_area').insertAdjacentHTML("beforeend", new_hard);
-        document.getElementById('hard' + this.hard_id.toString()).addEventListener("change", this.bchange);
+        let target_elem = document.getElementById('hard' + this.hard_id.toString())
+        target_elem.addEventListener("change", (e: Event) => { this.bchange(e) });
         this.hard_id++;
     }
 
@@ -199,7 +193,7 @@ export class ProfilePage implements OnInit {
                 if ('soft' + i.toString() == this.pdfs[j].name) { filename = this.pdfs[j].filename; }
             }
             if (filename == '') { this.toast("Please upload " + i.toString() + ' Software licence pdf.'); }
-            var name = (document.getElementById("soft" + i.toString()) as HTMLInputElement).value.toString()
+            var name = (document.getElementById("softname" + i.toString()) as HTMLInputElement).value.toString()
             if (name == null || name == '') { "Please input " + i.toString() + ' Software name.'; }
             this.softs.push({ name: name, filename: filename });
         }
@@ -209,7 +203,7 @@ export class ProfilePage implements OnInit {
                 if ('hard' + i.toString() == this.pdfs[j].name) { filename = this.pdfs[j].filename; }
             }
             if (filename == '') { this.toast("Please upload " + i.toString() + ' Hardware licence pdf.'); }
-            var name = (document.getElementById("hard" + i.toString()) as HTMLInputElement).value.toString()
+            var name = (document.getElementById("hardname" + i.toString()) as HTMLInputElement).value.toString()
             if (name == null || name == '') { "Please input " + i.toString() + ' Hardware name.'; }
             this.hards.push({ name: name, filename: filename });
         }
@@ -250,38 +244,60 @@ export class ProfilePage implements OnInit {
 
     addBusiness() {
         for (let x in this.pform) {
-            if (x == 'verified_at' || x == 'verified_by') continue;
+            if (x == 'verified_at' || x == 'verified_by' || x == 'id' || x == 'created_by' || x == 'updated_at') {
+                continue
+            };
             if (this.pform[x].length == 0) {
                 let name = x.replace('_', ' ');
                 return this.toast("Please fill " + name + " of the Business");
             }
         }
         for (let x in this.hform) {
-            console.log(x, this.hform[x], this.hform[x].length);
             if (this.hform[x].length == 0) {
                 let name = x.replace('_', ' ');
                 return this.toast("Please fill " + name + " of the Head Office.");
             }
         }
         this.manage();
+        for ( let i = 0; i < this.bo_offices.length; i++ ) {
+            for (let x in this.bo_offices[i]) {
+                if (this.bo_offices[i][x].length == 0) {
+                    let name = x.replace('_', ' ');
+                    return this.toast("Please fill " + name + " of the Branch Office.");
+                }
+            }    
+        }
+        for ( let i = 0; i < this.hards.length; i++ ) {
+            for (let x in this.hards[i]) {
+                if (this.hards[i][x].length == 0) {
+                    let name = x.replace('_', ' ');
+                    return this.toast("Please fill " + name + " of the Hardware.");
+                }
+            }    
+        }
+        for ( let i = 0; i < this.softs.length; i++ ) {
+            for (let x in this.softs[i]) {
+                if (this.softs[i][x].length == 0) {
+                    let name = x.replace('_', ' ');
+                    return this.toast("Please fill " + name + " of the Software.");
+                }
+            }    
+        }
+        // console.log( { user_id: this.authService.user.userId, data: this.pform, hoffice: this.hform, softs: this.softs, hards: this.hards, staffs: this.staffs, branchs: this.bo_offices })
         this.restApi.post('professional/add-business', { user_id: this.authService.user.userId, data: this.pform, hoffice: this.hform, softs: this.softs, hards: this.hards, staffs: this.staffs, branchs: this.bo_offices }).subscribe((res: any) => {
-            console.log(res);
-            // if (res && res.status) {
-            //   this.toastController.create({
-            //     message: res.message,
-            //     duration: 2000
-            //   }).then(toast => toast.present());
-            //   this.getBusiness();
-            //   this.getBranchs();
-            //   this.segment = 'business';
-            //   this.business_seg = 'branch';
-            // }
+            // console.log(res);
+            if (res && res.status) {
+                this.restApi.toast(res.message, 1200);
+                this.getBusiness();
+                this.getBranchs();
+                this.segment = 'business';
+                this.business_seg = 'branch';
+            } else {
+                this.restApi.toast(res.message, 1200);
+            }
         }, error => {
             console.log(error);
-            this.toastController.create({
-                message: 'Something went wrong.',
-                duration: 2000
-            }).then(toast => toast.present());
+            this.restApi.toast('Please fill as correctly.', 1000);
         });
     }
 
@@ -292,10 +308,18 @@ export class ProfilePage implements OnInit {
     getBusiness() {
         this.restApi.post('professional/get-business', { user_id: this.authService.user.userId }).subscribe((res: any) => {
             if (res && res.status) {
-                console.log(res);
                 if (res.status == 'success') {
                     if (res.data[0].length > 0) this.pform = res.data[0][0];
-                    if (res.data[1].length > 0) this.hform = res.data[1][0];
+                    if (res.data[1].length > 0) {
+                        this.hform = [];
+                        let head_office = res.data[1][0];
+                        this.hform['phone'] = head_office['phone'];
+                        this.hform['email'] = head_office['email'];
+                        this.hform['res_prof_name'] = head_office['res_prof_name'];
+                        this.hform['res_prof_reg'] = head_office['res_prof_reg'];
+                        this.hform['filename'] = head_office['filename'];
+                        this.hform['status'] = head_office['status'];
+                    }
                     // if ( parseInt(res.data[0]) < 50 ){ this.pform.owned = 'Non professional owner'; } 
                 } else {
                     this.toastController.create({
@@ -316,21 +340,17 @@ export class ProfilePage implements OnInit {
         this.restApi.post('professional/get-branchs', { user_id: this.authService.user.userId }).subscribe((res: any) => {
             if (res && res.status) {
                 if (res.status == 'success') {
-                    this.bo_offices = res.data;
-                    // console.log(this.bo_offices);
+                    for ( let i = 0; i < res.data.length; i++ ) {
+                        let each_office = {phone: res.data[i]['phone'], email: res.data[i]['email'], res_prof_name: res.data[i]['res_prof_name'], res_prof_reg: res.data[i]['res_prof_reg'], filename: res.data[i]['filename'], status: res.data[i]['status']}
+                        this.bo_offices.push(each_office);
+                    }
                 } else {
-                    this.toastController.create({
-                        message: res.message,
-                        duration: 2000
-                    }).then(toast => toast.present());
+                    this.restApi.toast(res.message, 1000);
                 }
             }
         }, error => {
             console.log(error);
-            // this.toastController.create({
-            //   message: 'Something went wrong.',
-            //   duration: 2000
-            // }).then(toast => toast.present());
+            this.restApi.toast("Data connection problem", 1000);
         });
     }
 
@@ -394,27 +414,28 @@ export class ProfilePage implements OnInit {
     getlist(event: any) {
         this.is_profileEdit = false;
         this.is_businessEdit = false;
-        console.log(event.detail.value, this.is_director);
         if (this.is_director == true && event.detail.value == "business") {
             this.restApi.post('professional/get-list', { user_id: this.authService.user.userId }).subscribe((res: any) => {
                 if (res && res.status) {
-                    console.log(res.data);
-                    for (let i = 0; i < res.data[0].length; i++) {
-                        let new_buzi = '<ion-select-option value="' + (i + 1).toString() + '">' + (res.data[0])[i].pname + "(" + (res.data[0])[i].status + ")" + '</ion-select-option>'
-                        document.getElementById("business_list").insertAdjacentHTML("beforeend", new_buzi);
+                    if ( !this.is_director ) {
+                        for (let i = 0; i < res.data[0].length; i++) {
+                            let new_buzi = '<ion-select-option value="' + (i + 1).toString() + '">' + (res.data[0])[i].pname + "(" + (res.data[0])[i].status + ")" + '</ion-select-option>'
+                            document.getElementById("business_list").insertAdjacentHTML("beforeend", new_buzi);
+                        }
+                        for (let j = 0; j < res.data[1].length; j++) {
+                            let new_office = '<ion-select-option value="' + (j + 1).toString() + '">' + (res.data[1])[j].email + "(" + (res.data[1])[j].status + ")" + '</ion-select-option>'
+                            document.getElementById("office_list").insertAdjacentHTML("beforeend", new_office);
+                        }
                     }
-                    for (let j = 0; j < res.data[1].length; j++) {
-                        let new_office = '<ion-select-option value="' + (j + 1).toString() + '">' + (res.data[1])[j].email + "(" + (res.data[1])[j].status + ")" + '</ion-select-option>'
-                        document.getElementById("office_list").insertAdjacentHTML("beforeend", new_office);
+                    if (res.data[2].length > 0) {
+                        let ids = res.data[2][0];
+                        this.mybusiness = ids.buzi_id;
+                        this.myoffice = ids.office_id;
                     }
-                    this.mybusiness = res.data[2].buzi_id;
-                    this.myoffice = res.data[2].office_id;
                 }
             }, error => {
-                this.toastController.create({
-                    message: 'Something went wrong.',
-                    duration: 2000
-                }).then(toast => toast.present());
+                console.log(error, "here");
+                this.restApi.toast('Something went wrong.', 1200);
             });
         }
     }

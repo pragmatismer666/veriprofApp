@@ -49,8 +49,9 @@ export class ReportPage implements OnInit {
     }
 
     getReport() {
-        this.restApi.post('professional/get-report', { user_name: this.authService.user.name }).subscribe((res: any) => {
+        this.restApi.post('professional/get-report', { user_id:this.authService.user.userId}).subscribe((res: any) => {
             if (res && res.status) {
+                console.log(res.data);
                 if (res.status == 'success') {
                     this.objs = res.data;
                 } else {

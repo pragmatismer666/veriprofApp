@@ -1,42 +1,36 @@
 .headerImage {
-    height       : 55%;
-    width        : 55%;
+    height       : 75%;
     margin       : auto;
-    margin-top   : 4%;
+    margin-top   : 6%;
     margin-bottom: 0%;
 }
 
-
-.segPart {
-    margin-left : 5%;
-    margin-right: 5%;
+super-tabs-container super-tab {
+    background-color: black;
+    color: blanchedalmond;
 }
 
-.landTabs {
-    height          : 100%;
-    background-color: #000;
-    --ion-color-base: #9b9595 !important;
+super-tabs-container super-tab ion-input {
+    color: blanchedalmond;
 }
 
-.landTabs ion-label {
-    font-size: 12px;
-    color    : wheat;
+super-tabs-container super-tab ion-card {
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
-.landTabs ion-segment-button {
-    width: 25%;
+super-tabs super-tabs-toolbar {
+    background-color: black;
+    color: blanchedalmond;
 }
 
-// ---------------------------------------------------
-#item100 {
-    width: 100%;
-    color: #000;
-}
-
-#item100 ion-label {
-    font-size  : 14px;
-    white-space: normal;
-    color      : rgb(255, 100, 100);
+// // ---------------------------------------------------
+.quick_verify_content{
+    margin-top: 4%;
+    height: 70%;
+    position: fixed;
+    overflow: scroll;
+    font-size: 0.8rem;
 }
 
 th {
@@ -55,30 +49,28 @@ td {
     width     : 50%;
 }
 
-.validation-errors {
-    color: #000;
-}
+// .validation-errors {
+//     color: #000;
+// }
 
-//  quick inner
-.inner {
-    font-size: 13px;
-    color    : rgb(168, 167, 167);
-}
+// //  quick inner
+// .inner {
+//     font-size: 13px;
+//     color    : rgb(168, 167, 167);
+// }
 
-a {
-    color: rgb(129, 9, 9);
-}
+// a {
+//     color: rgb(129, 9, 9);
+// }
 
-h2 {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color      : rgb(168, 167, 167);
-    text-align : center;
-}
+// h2 {
+//     font-family: Verdana, Geneva, Tahoma, sans-serif;
+//     color      : rgb(168, 167, 167);
+//     text-align : center;
+// }
 
-link {
-    font-size : 13px;
-    color     : rgb(168, 167, 167);
-    text-align: center;
-}
-
-
+// link {
+//     font-size : 13px;
+//     color     : rgb(168, 167, 167);
+//     text-align: center;
+// }
