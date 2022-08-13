@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
+
 import { RestApiService } from './rest-api.service';
 
 describe('RestApiService', () => {
+    let service: RestApiService;
 
-    beforeEach(() => TestBed.configureTestingModule({}));
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(RestApiService);
+    });
 
     it('should be created', () => {
-        const service: RestApiService = TestBed.get(RestApiService);
         expect(service).toBeTruthy();
     });
 });

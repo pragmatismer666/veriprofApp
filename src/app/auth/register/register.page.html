@@ -1,13 +1,13 @@
-<ion-header color="dark">
+<ion-header color="dark" style="height: 35%;">
+    <ion-content color="dark">
+        <ion-img src="../../../assets/veriprof-logo.png" style="margin-top: 10%;"></ion-img>
+        <h2>New {{UserTypes[currentUserType].title}}</h2>
+    </ion-content>
 </ion-header>
 
-<ion-content padding color="dark">
-    <ion-img src="../../../assets/veriprof-logo.png"></ion-img>
-    <br>
-    <h2 style="margin-top: 10px;">New {{UserTypes[currentUserType].title}}</h2>
-    <br>
-    <form class="form" [formGroup]="validations_form" (ngSubmit)="tryRegister(validations_form.value)">
-        <ion-item color="medium">
+<ion-content padding color="dark" class="centerMargin">
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="tryRegister(validations_form.value)" style="margin-left: 5%; margin-right: 5%;">
+        <ion-item color="dark">
             <ion-label position="floating" color="medium" class="inner">Name</ion-label>
             <ion-input type="text" formControlName="full_name" color="medium" class="inner"></ion-input>
         </ion-item>
@@ -20,7 +20,7 @@
                 </div>
             </ng-container>
         </div>
-        <ion-item color="medium">
+        <ion-item color="dark">
             <ion-label position="floating" color="medium" class="inner">Phone Number</ion-label>
             <ion-input type="text" formControlName="mobile" color="medium" class="inner"></ion-input>
         </ion-item>
@@ -33,7 +33,7 @@
                 </div>
             </ng-container>
         </div>
-        <ion-item color="medium">
+        <ion-item color="dark">
             <ion-label position="floating" color="medium" class="inner">Email</ion-label>
             <ion-input type="text" formControlName="email" color="medium" class="inner"></ion-input>
         </ion-item>
@@ -46,7 +46,7 @@
                 </div>
             </ng-container>
         </div>
-        <ion-item color="medium">
+        <ion-item color="dark">
             <ion-label position="floating" color="medium" class="inner">Password</ion-label>
             <ion-input type="password" formControlName="password" class="form-controll" required color="medium"
                 class="inner"></ion-input>
@@ -62,14 +62,14 @@
         </div>
         <ion-button class="submit-btn" type="submit" [disabled]="!validations_form.valid" color="dark">Create Account
         </ion-button>
-        <br>
-        <p></p>
         <label class="error-message" color="danger">{{errorMessage}}</label>
         <label class="success-message" color="danger">{{successMessage}}</label>
     </form>
-    <p class="go-to-login" style="margin-top:5px;">Already have an account? <a (click)="goLoginPage()"
-            style="color:#DC143C;">Try to Log In.</a></p>
+    <ion-row class="centerMargin" style="margin:5%">
+        <p>Already have an account?<a (click)="goLoginPage()" style="color:#DC143C;">Try to Log In.</a></p>
+    </ion-row>
 </ion-content>
+
 <ion-footer color="dark" class="footer">
     <ion-toolbar color="dark">
         <ion-title class="footer">Copyright SIVAGO </ion-title>

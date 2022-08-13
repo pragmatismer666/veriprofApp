@@ -12,8 +12,8 @@ import { AuthenticateService } from 'src/app/services/authentication.service';
 export class ProfessionalPage implements OnInit {
 
     land_seg: string = "dashboardp";
-    // land_seg: string = "accountp";
     change_account: string = "update_account";
+
     userName: string;
     objs: any;
     errorMessage: string = '';
@@ -23,7 +23,7 @@ export class ProfessionalPage implements OnInit {
     keyArray: Array<string> = [];
     valArray: Array<any> = [];
     keyword: string;
-    
+
     // Accounts -------------------------
     account: any = {
         name: this.authService.userDetails().name,
@@ -32,8 +32,8 @@ export class ProfessionalPage implements OnInit {
         oldpass: ''
     };
     delete_account: any = {
-        oldpass:'',
-        confirm:''
+        oldpass: '',
+        confirm: ''
     }
     // check Staff 
     moffice: string = '';
@@ -65,7 +65,11 @@ export class ProfessionalPage implements OnInit {
     }
 
     report() {
-        this.router.navigateByUrl('home/professional/report');
+        if (this.authService.userDetails().account_type == "pro") {
+            this.router.navigateByUrl('home/professional/report');
+        } else {
+            this.restApi.toast("Only pro account can see reports!", 1000);
+        }
     }
 
     plans() {
@@ -74,6 +78,10 @@ export class ProfessionalPage implements OnInit {
 
     bids() {
         this.router.navigateByUrl('home/professional/business');
+    }
+
+    payments() {
+        this.router.navigateByUrl('home/professional/payments');
     }
 
     logout() {
@@ -97,20 +105,20 @@ export class ProfessionalPage implements OnInit {
     }
 
     // Quick verify search function ------------------
-    manageData(data : any) {
+    manageData(data: any) {
         try {
             this.keyArray = Object.keys(data);
             for (let index = 0; index < this.keyArray.length; index++) {
-                if ( this.exceptStrs.includes(this.keyArray[index]) ) {
+                if (this.exceptStrs.includes(this.keyArray[index])) {
                     continue;
                 }
                 let updateKey = "";
-                if ( this.keyArray[index].includes("_") ) {
+                if (this.keyArray[index].includes("_")) {
                     updateKey = this.keyArray[index].split("_")[0].toUpperCase() + " " + this.keyArray[index].split("_")[1].toUpperCase()
                 } else {
                     updateKey = this.keyArray[index].toUpperCase();
                 }
-                let eachVal = {key:updateKey, val:data[this.keyArray[index].toString()]}
+                let eachVal = { key: updateKey, val: data[this.keyArray[index].toString()] }
                 this.valArray.push(eachVal);
             }
         } catch (error) {
@@ -120,9 +128,9 @@ export class ProfessionalPage implements OnInit {
     }
 
     searchContent() {
-        if ( this.keyword == null ) {
+        if (this.keyword == null) {
             this.restApi.toast('Please put keyword.', 1200);
-        } else if (this.keyword.trim() == "" ) {
+        } else if (this.keyword.trim() == "") {
             this.restApi.toast('Please put keyword.', 1200);
         } else {
             this.valArray = [];
@@ -167,7 +175,7 @@ export class ProfessionalPage implements OnInit {
             }, error => {
                 this.restApi.toast("Please input correct current password.", 1200);
             });
-        } else if ( key == "delete") {
+        } else if (key == "delete") {
             if (this.delete_account.oldpass.length < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
             if (this.delete_account.oldpass != this.delete_account.confirm) { this.restApi.toast("Please same password in confirm.", 1200); checkFlag = false; return; }
             this.restApi.post('accessor/up-user', { user_id: this.authService.user.userId, data: {}, pass: this.delete_account.oldpass, key: key }).subscribe((res: any) => {
@@ -186,7 +194,7 @@ export class ProfessionalPage implements OnInit {
         }
 
         if (checkFlag) {
-            
+
         }
     }
 
@@ -215,7 +223,7 @@ export class ProfessionalPage implements OnInit {
     // Dashboard page functions
     getAccount() {
         this.restApi.post('/get-users', { user_id: this.authService.user.userId }).subscribe((res: any) => {
-            if (res && res.status == "success" ) {
+            if (res && res.status == "success") {
                 this.account.name = res.data.name;
                 this.account.email = res.data.email;
                 this.account.mobile = res.data.mobile;
@@ -239,7 +247,7 @@ export class ProfessionalPage implements OnInit {
         });
     }
 
-    saction(key : any ) {
+    saction(key: any) {
         this.restApi.post('professional/verify-staff', { email: this.account.email, key: key }).subscribe((res: any) => {
             if (res && res.status == 'success') {
                 this.restApi.toast(" Updated as successfully.", 1200);

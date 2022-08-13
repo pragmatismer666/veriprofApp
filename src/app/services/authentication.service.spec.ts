@@ -1,44 +1,15 @@
-import { Injectable } from "@angular/core";
-import * as firebase from 'firebase/app';
-@Injectable()
+import { TestBed } from '@angular/core/testing';
+import { AuthenticateService } from './authentication.service';
 
-export class AuthenticateService {
+describe('AuthenticationService', () => {
+    let service: AuthenticateService;
 
-    constructor() { }
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(AuthenticateService);
+    });
 
-    registerUser(value) {
-        return new Promise<any>((resolve, reject) => {
-            firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-                .then(
-                    res => resolve(res),
-                    err => reject(err))
-        })
-    }
-
-    loginUser(value) {
-        return new Promise<any>((resolve, reject) => {
-            firebase.auth().signInWithEmailAndPassword(value.email, value.password)
-                .then(
-                    res => resolve(res),
-                    err => reject(err))
-        })
-    }
-
-    logoutUser() {
-        return new Promise<void>((resolve, reject) => {
-            if (firebase.auth().currentUser) {
-                firebase.auth().signOut()
-                    .then(() => {
-                        console.log("LOG Out");
-                        resolve();
-                    }).catch((error) => {
-                        reject();
-                    });
-            }
-        })
-    }
-
-    userDetails() {
-        return firebase.auth().currentUser;
-    }
-}
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+});

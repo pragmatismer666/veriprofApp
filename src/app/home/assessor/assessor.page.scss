@@ -1,103 +1,101 @@
-.headerImage{
-    height:50%;
-    width:50%;
-    margin:auto;
-    margin-top: 4%;
+.headerImage {
+    height       : 50%;
+    width        : 50%;
+    margin       : auto;
+    margin-top   : 4%;
     margin-bottom: 0%;
 }
 
-.footer {
-    font-size: 11px;
-    color: rgb(168, 167, 167);
-    }
-    
-    .inner {
-        font-size: 13px;
-        color: rgb(168, 167, 167);
-        }
-    
-        a {
-            color: rgb(129, 9, 9);
-        }
-    
-        h2 {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            color: rgb(168, 167, 167);
-            text-align: center;
-        }
+ion-content ion-segment ion-label {
+    text-align: bottom;
+}
 
-        h4 {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            color: rgb(168, 167, 167);
-            text-align: center;
-        }
-    
+ion-content ion-card {
+    background-color: #000;
+    margin          : 5% 10% 18% 10%;
+}
 
-        h5 {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            color: rgb(168, 167, 167);
-            text-align: center;
-        }
-    
+ion-footer {
+    background-color: #000;
+    position: fixed !important;
+    bottom: 0px !important;
+}
 
-        link {
-            font-size: 13px;
-            color: rgb(168, 167, 167);
-            text-align: center;
-        }
+ion-footer ion-card {
+    background-color: #000;
+    margin          : 5% 10% 5% 10%;
+}
+
+h5 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color      : rgb(168, 167, 167);
+    text-align : center;
+}
+
+.inner {
+    font-size: 13px;
+    color    : rgb(168, 167, 167);
+}
 
 // --------------------------------------------------------------------- avatur picture --------------
 .profile-pic {
-    max-width: 200px;
+    max-width : 200px;
     max-height: 200px;
-    display: block;
+    display   : block;
 }
 
 .file-upload {
     display: none;
 }
+
 .circle {
     border-radius: 1000px !important;
-    overflow: hidden;
-    width: 128px;
-    height: 128px;
-    border: 8px solid rgba(255, 255, 255, 0.7);
-    position: absolute;
-    top: 72px;
+    overflow     : hidden;
+    width        : 128px;
+    height       : 128px;
+    border       : 8px solid rgba(255, 255, 255, 0.7);
+    position     : absolute;
+    top          : 72px;
 }
+
 img {
     max-width: 100%;
-    height: auto;
+    height   : auto;
 }
+
 .p-image {
-    position: absolute;
-    top: 167px;
-    right: 30px;
-    color: #666666;
+    position  : absolute;
+    top       : 167px;
+    right     : 30px;
+    color     : #666666;
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
 }
+
 .p-image:hover {
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
 }
+
 .upload-button {
     font-size: 1.2em;
 }
 
 .upload-button:hover {
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-    color: #999;
+    color     : #999;
 }
 
 .profileimage {
-    display: flex;
-    flex-flow: row nowrap;
+    display        : flex;
+    flex-flow      : row nowrap;
     justify-content: center;
-    align-items: center;
-    border-radius: 100%;
+    align-items    : center;
+    border-radius  : 100%;
+
     img {
-        height: 150%;
-        width: 150%;
+        height       : 150%;
+        width        : 150%;
         border-radius: 100%;
     }
+
     margin-top: 10%;
 }

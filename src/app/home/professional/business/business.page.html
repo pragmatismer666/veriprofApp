@@ -1,110 +1,105 @@
 <ion-header>
     <ion-toolbar color="dark">
+        <ion-back-button slot="start"></ion-back-button>
         <ion-title>My Bids</ion-title>
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <br>
     <ion-segment [(ngModel)]="segment" color="light">
         <ion-segment-button value="addBid">
             <ion-icon name="add-circle" color="dark"></ion-icon>
             <ion-label color="dark">Add New</ion-label>
         </ion-segment-button>
         <ion-segment-button value="paper" (click)="initial()">
-            <ion-icon name="paper" color="dark"></ion-icon>
+            <ion-icon name="layers-outline" color="dark"></ion-icon>
             <ion-label color="dark">Bids</ion-label>
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="segment">
-        <ion-card *ngSwitchCase="'paper'">
-            <ion-card-content>
-                <table class="rwd-table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Profess Reg No</th>
-                        <th>Email Add</th>
-                        <th>Cell</th>
-                        <th>Bidder</th>
-                        <th>Client / Department</th>
-                        <th>Bid No</th>
-                        <th>Short Description</th>
-                        <th>Bid Partcipation</th>
-                        <th></th>
-                    </tr>
-                    <!-- <ng-container *ngIf="bids.length == 0">
+        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'paper'">
+            <table class="rwd-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Profess Reg No</th>
+                    <th>Email Add</th>
+                    <th>Cell</th>
+                    <th>Bidder</th>
+                    <th>Client / Department</th>
+                    <th>Bid No</th>
+                    <th>Short Description</th>
+                    <th>Bid Partcipation</th>
+                    <th></th>
+                </tr>
+                <!-- <ng-container *ngIf="bids.length == 0">
                         <div class="text-center" style="font-size: 1.25em;">There is no bids.</div>
                     </ng-container> -->
-                    <ng-container *ngIf="true">
-                        <tr *ngFor="let x of bids">
-                            <td data-th="Name">{{x.name}}</td>
-                            <td data-th="Surname">{{x.surname}}</td>
-                            <td data-th="Profess Reg No">{{x.professional_reg_no}}</td>
-                            <td data-th="Email Add">{{x.email_add}}</td>
-                            <td data-th="Cell">{{x.cell}}</td>
-                            <td data-th="Bidder">{{x.bidder}}</td>
-                            <td data-th="Client / Department">{{x.client_department}}</td>
-                            <td data-th="Bid No">{{x.bid_no}}</td>
-                            <td data-th="Short Description">{{x.short_description}}</td>
-                            <td data-th="Bid Partcipation">
-                                <ion-button size="small" color="success" class="project_verify"
-                                    (click)="download(x.file)">Print / Download</ion-button>
-                            </td>
-                        </tr>
-                    </ng-container>
-                </table>
-            </ion-card-content>
+                <ng-container *ngIf="true">
+                    <tr *ngFor="let x of bids">
+                        <td data-th="Name">{{x.name}}</td>
+                        <td data-th="Surname">{{x.surname}}</td>
+                        <td data-th="Profess Reg No">{{x.professional_reg_no}}</td>
+                        <td data-th="Email Add">{{x.email_add}}</td>
+                        <td data-th="Cell">{{x.cell}}</td>
+                        <td data-th="Bidder">{{x.bidder}}</td>
+                        <td data-th="Client / Department">{{x.client_department}}</td>
+                        <td data-th="Bid No">{{x.bid_no}}</td>
+                        <td data-th="Short Description">{{x.short_description}}</td>
+                        <td data-th="Bid Partcipation">
+                            <ion-button size="small" color="success" class="project_verify" (click)="download(x.file)">
+                                Print / Download</ion-button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </table>
         </ion-card>
-        <ion-card *ngSwitchCase="'addBid'">
-            <!-- <form [formGroup]="loginForm" (submit)="onSubmit()"> -->
-            <ion-item>
-                <ion-label position="stacked">Name </ion-label>
-                <ion-input type="text" name="name" [(ngModel)]="form.name"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Surname</ion-label>
-                <ion-input type="text" [(ngModel)]="form.surname"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Professional Reg No</ion-label>
-                <ion-input type="text" [(ngModel)]="form.professional_reg_no"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Email Add</ion-label>
-                <ion-input type="text" [(ngModel)]="form.email_add"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Cell</ion-label>
-                <ion-input type="text" [(ngModel)]="form.cell"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Bidder</ion-label>
-                <ion-input type="text" [(ngModel)]="form.bidder"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Client / Department</ion-label>
-                <ion-input type="text" [(ngModel)]="form.client_department"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Bid No</ion-label>
-                <ion-input type="text" [(ngModel)]="form.bid_no"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Short Description</ion-label>
-                <ion-textarea type="text" rows="3" name="short_description" [(ngModel)]="form.short_description">
-                </ion-textarea>
-            </ion-item>
-            <ion-button style="width: 90%;margin: 10px;" (click)="submit()">Add New Bid</ion-button>
-            <!-- </form> -->
+        <ion-card class="p-fixed fixed-ion-card-area m-1" *ngSwitchCase="'addBid'">
+            <ion-card-content>
+                <ion-item>
+                    <ion-label position="stacked">Name </ion-label>
+                    <ion-input type="text" name="name" [(ngModel)]="form.name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Surname</ion-label>
+                    <ion-input type="text" [(ngModel)]="form.surname"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Professional Reg No</ion-label>
+                    <ion-input type="text" [(ngModel)]="form.professional_reg_no"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Email Add</ion-label>
+                    <ion-input type="text" [(ngModel)]="form.email_add"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Cell</ion-label>
+                    <ion-input type="text" [(ngModel)]="form.cell"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Bidder</ion-label>
+                    <ion-input type="text" [(ngModel)]="form.bidder"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Client / Department</ion-label>
+                    <ion-input type="text" [(ngModel)]="form.client_department"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Bid No</ion-label>
+                    <ion-input type="text" [(ngModel)]="form.bid_no"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Short Description</ion-label>
+                    <ion-textarea type="text" rows="3" name="short_description" [(ngModel)]="form.short_description">
+                    </ion-textarea>
+                </ion-item>
+                <ion-button style="width: 90%;margin: 10px;" (click)="submit()">Add New Bid</ion-button>
+            </ion-card-content>
         </ion-card>
     </div>
     <br />
 </ion-content>
-<ion-footer color="dark" class="footer">
+<!-- <ion-footer color="dark" class="footer">
     <ion-toolbar color="">
         <ion-title class="footer">Copyright SIVAGO </ion-title>
     </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

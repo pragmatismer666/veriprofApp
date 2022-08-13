@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
     validation_messages = {
         'email': [
             { type: 'required', message: 'Email is required.' },
-            { type: 'pattern', message: 'Please enter a valid email.' }
+            { type: 'pattern', message: 'Please enter a valid email - remove last space.' }
         ],
         'password': [
             { type: 'required', message: 'Password is required.' },
@@ -64,7 +64,6 @@ export class LoginPage implements OnInit {
             .then(res => {
                 if (res && res.status) {
                     if (res.status == 'success') {
-                        res.data['email'] = value.email;
                         this.authService.setUser(res.data);
                         this.errorMessage = "";
                         this.navCtrl.navigateForward('/home');
@@ -74,7 +73,8 @@ export class LoginPage implements OnInit {
                 }
             }, err => {
                 console.log(err);
-                this.errorMessage = "Something went wrong";
+                this.errorMessage = JSON.stringify(err);
+                // this.errorMessage = "Something went wrong";
             })
     }
 

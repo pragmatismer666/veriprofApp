@@ -1,25 +1,23 @@
 <ion-header>
     <ion-toolbar color="dark">
+        <ion-back-button slot="start"></ion-back-button>
         <ion-title>My Projects</ion-title>
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-buttons>
     </ion-toolbar>
 </ion-header>
+
 <ion-content>
-    <br>
     <ion-segment [(ngModel)]="segment" color="light">
-        <ion-segment-button value="add-circle">
+        <ion-segment-button class="border-none" value="add-circle">
             <ion-icon name="add-circle" color="dark"></ion-icon>
             <ion-label color="dark">Add New</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="paper">
-            <ion-icon name="paper" color="dark"></ion-icon>
+        <ion-segment-button class="border-none" value="paper">
+            <ion-icon name="list-circle-outline" color="dark"></ion-icon>
             <ion-label color="dark">Projects</ion-label>
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="segment">
-        <ion-card *ngSwitchCase="'paper'">
+        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'paper'">
             <ion-card-content>
                 <h1>My Projects</h1>
                 <table class="rwd-table">
@@ -35,7 +33,7 @@
                             <td data-th="Portal Code">{{x.proj_zip}}</td>
                             <td data-th="Description">{{x.description}}</td>
                             <td data-th="Service Rendered">{{x.prof_type}}</td>
-                            <td data-th="Construction Cost">R{{x.const_cost}}</td>
+                            <td data-th="Construction Cost">R{{(x.const_cost)}}</td>
                             <td data-th="Cost Variance">{{x.variable}}% over budget</td>
                             <td data-th="Professional Fees">R{{x.prof_cost}}</td>
                             <td data-th="Client Name">{{x.client_name}}</td>
@@ -45,9 +43,10 @@
                             <td data-th="Start Year">{{x.year}}</td>
                             <td data-th="Document">
                                 <ng-container *ngIf="x.file != ''">
-                                    <ion-button size="small" color="success" style="height: 1.2rem;margin-top: -10px;" (click)="download(x.file)">Download</ion-button>
+                                    <ion-button size="small" color="success" style="height: 1.2rem;margin-top: -10px;"
+                                        (click)="download(x.file)">Download</ion-button>
                                 </ng-container>
-                                <ng-container *ngIf="x.file == ''">There is no document.</ng-container>                      
+                                <ng-container *ngIf="x.file == ''">There is no document.</ng-container>
                             </td>
                             <ng-container *ngIf="x.status == 'Completed'">
                                 <td data-th="Final Cost">R{{x.final_cost}}</td>
@@ -73,7 +72,8 @@
                             <ion-button size="small" style="color: blue;" class="project_verify"
                                 (click)="action(x, 'Ongoing')">Ongoing</ion-button>
                             <ion-button size="small" color="danger" class="project_verify"
-                                (click)="action(x, 'Cancelled')">Cancelled</ion-button>
+                                (click)="action(x, 'Cancelled')">
+                                Cancelled</ion-button>
                         </tr>
                     </ng-container>
                     <ng-container *ngIf="loadData.length == 0">
@@ -82,8 +82,9 @@
                 </table>
             </ion-card-content>
         </ion-card>
-        <ion-card *ngSwitchCase="'add-circle'">
+        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'add-circle'">
             <ion-card-content>
+                <h1>Add New Project</h1>
                 <ion-item>
                     <ion-label position="stacked">New Project Title </ion-label>
                     <ion-input type="text" name="title" [(ngModel)]="form.title"></ion-input>
@@ -203,8 +204,8 @@
     </div>
     <br />
 </ion-content>
-<ion-footer color="dark" class="footer">
+<!-- <ion-footer color="dark" class="footer">
     <ion-toolbar color="">
         <ion-title class="footer">Copyright SIVAGO </ion-title>
     </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

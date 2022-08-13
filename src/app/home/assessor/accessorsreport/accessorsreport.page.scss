@@ -1,26 +1,31 @@
-.schedule_line{
-    margin-top: 25px !important; 
-    margin-left:30px !important;
-    margin-right:30px !important;
+.schedule_line {
+    margin-top  : 25px !important;
+    margin-left : 30px !important;
+    margin-right: 30px !important;
 }
 
-.table{
-    margin: auto;
-    font-size: 10px;
-    min-width: 88%;
-    max-width: 90%;
-    th{
+.table {
+    margin   : 2%;
+    width    : 96%;
+    font-size: 14px;
+
+    th {
         background: #8a8a8a;
-        padding: 5px;
-        color: #fff;
-        border: 1px solid #fff;
+        padding   : 3px;
+        color     : #fff;
+        border    : 1px solid #fff;
     }
 
-    td{
+    tr {
         background: #ccc;
-        padding: 5px;
-        color: #000;
-        border: 1px solid #fff;
+    }
+
+    td {
+        background: #ccc;
+        padding   : 3px;
+        color     : #000;
+        border    : 1px solid #fff;
+        height    : 100%;
     }
 }
 
@@ -28,35 +33,46 @@
     overflow-x: auto;
 }
 
-.validation-errors{
+.validation-errors {
     color: #000;
 }
 
-.footer {
-    font-size: 12px;
-    color: rgb(109, 109, 109);
+// tab - segmenet
+.landTabs {
+    position: fixed;
+    bottom  : 0;
+    color   : wheat !important;
 }
 
-// text center align
-.title-center{
+.landTabs ion-segment-button {
+    --indicator-color: var(--ion-color-dark);
+    color            : wheat !important;
+    border-radius    : 0px !important;
+    border           : 0.05px solid rgb(29, 29, 29);
+    font-size        : 14px;
+    height           : 35px;
+}
+
+.segment-button-checked ::ng-deep {
+    border-top: 3px solid #fff !important;
+}
+
+// segpart
+.segPart ion-item {
+    background-color: #000;
+}
+
+.segPart ion-card {
+    background-color: #000;
+}
+
+.segPart ion-card h6 {
     text-align: center;
-}
-// super tab style
-super-tabs-container super-tab {
-    background-color: #363636;
-    color: blanchedalmond;
+    color     : wheat;
 }
 
-super-tabs-container super-tab ion-input {
-    color: blanchedalmond;
-}
-
-super-tabs-container super-tab ion-card {
-    margin-left: 10%;
+.segPart ion-card ion-button {
+    margin-left : 10%;
     margin-right: 10%;
-}
-
-super-tabs super-tabs-toolbar {
-    background-color: black;
-    color: blanchedalmond;
+    margin-top  : 10%;
 }

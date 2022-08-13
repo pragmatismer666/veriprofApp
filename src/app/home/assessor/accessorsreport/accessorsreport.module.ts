@@ -4,10 +4,8 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AccessorsreportPage } from './accessorsreport.page';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 
 const routes: Routes = [
@@ -15,7 +13,8 @@ const routes: Routes = [
     path: '',
     component: AccessorsreportPage,
   },
-  { path: 'reportgenerator', loadChildren: './reportgenerator/reportgenerator.module#ReportgeneratorPageModule' },
+  { path: 'reportgenerator', loadChildren: () => import('./reportgenerator/reportgenerator.module').then(m => m.ReportgeneratorPageModule) },
+  // './reportgenerator/reportgenerator.module#ReportgeneratorPageModule'
 ];
 
 @NgModule({
@@ -24,7 +23,6 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    SuperTabsModule,
     RouterModule.forChild(routes),
   ],
   // providers:[

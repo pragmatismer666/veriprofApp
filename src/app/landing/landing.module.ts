@@ -2,11 +2,10 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
-
+import { HttpClientModule } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http';
 import { LandingPage } from './landing.page';
-import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 const routes: Routes = [
     {
@@ -17,14 +16,16 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
+        HttpClientModule,
         CommonModule,
         FormsModule,
-        SuperTabsModule,
         IonicModule,
         RouterModule.forChild(routes),
     ],
     schemas : [
         CUSTOM_ELEMENTS_SCHEMA
+    ],
+    providers:[
     ],
     declarations: [LandingPage]
 })

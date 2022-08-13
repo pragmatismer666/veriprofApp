@@ -1,14 +1,18 @@
-import { Injectable } from "@angular/core";
-// import * as firebase from 'firebase/app';
+import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { RestApiService } from './rest-api.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthenticateService {
 
     user: any;
 
-    constructor(public restApi: RestApiService, public navCtrl: NavController) { }
+    constructor(
+        public restApi: RestApiService, 
+        public navCtrl: NavController
+    ) { }
 
     registerUser(value: any) {
         return new Promise<any>((resolve, reject) => {
@@ -48,7 +52,7 @@ export class AuthenticateService {
         }
     }
 
-    setUser(data) {
+    setUser(data : any) {
         this.user = data;
         localStorage.setItem('user', JSON.stringify(data));
     }

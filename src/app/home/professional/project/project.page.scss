@@ -1,15 +1,5 @@
-.footer {
-    font-size: 11px;
-    color    : rgb(109, 109, 109);
-}
-
-.list {
-    font-size: 11px;
-
-}
-
 body {
-    padding               : 0 2em;
+    padding               : 0 1em;
     font-family           : Montserrat, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering        : optimizeLegibility;
@@ -21,8 +11,8 @@ body {
 $breakpoint-alpha: 800px; // adjust to your needs
 
 .project_verify {
-    padding: 2px;
-    height : 1.9rem;
+    padding: 3px;
+    height : 2rem;
     margin : 0rem;
 }
 

@@ -1,0 +1,81 @@
+<ion-header>
+    <ion-toolbar color="dark">
+        <ion-back-button slot="start"></ion-back-button>
+        <ion-title>Payment Center</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class="p-fixed" style="overflow-y: scroll; margin-top: 10px !important; height: 90%;">
+        <h4 class="text-center mt-4">Payment Rule</h4>
+        <ng-container *ngIf="paylist.length > 0">
+            <table class="table m-3 mb-0" style="width: 90%">
+                <tr>
+                    <th>ID</th>
+                    <th>Account Type</th>
+                    <th>Amount</th>
+                </tr>
+                <tr *ngFor="let x of paylist">
+                    <td>{{x.id}}</td>
+                    <td>{{x.account}} Account</td>
+                    <ng-container *ngIf="x.amount=='0'">
+                        <td>Free</td>
+                    </ng-container>
+                    <ng-container *ngIf="x.amount!='0'">
+                        <td>R{{x.amount}}</td>
+                    </ng-container>
+                </tr>
+            </table>
+        </ng-container>
+        <ng-container *ngIf="account == 'Free Account'">
+            <ion-card-content class="m-2 mb-0">
+                <ion-label>
+                    Hi {{username}}, you are currently subscribed to VeriProf Freemium account.
+                    To get more from VeriProf Upgrade your account to Pro Account for a monthly subscription of R89.99
+                    <br>
+                    <br>
+                    Benefits of Pro Account<br>
+                    1. Generate unlimited comprehensive reports of professional and businesses anytime requested.<br>
+                    2. Get notified when any of your data or business data are used on Verify by another person.<br>
+                </ion-label>
+            </ion-card-content>
+        </ng-container>
+        <ng-container *ngIf="account == 'Pro Account'">
+            <ion-card-content class="m-2 mb-0">
+                <ion-label>
+                    <br>
+                    Hi {{username}}, you are on Pro account enjoy every benefit of VeriProf with 24/7 support.
+                    <br>
+                </ion-label>
+            </ion-card-content>
+        </ng-container>
+
+        <h4 class="mt-4 text-center">Update Account Payment Stats</h4>
+        <table class="table m-3 mb-1 font-16" style="width: 90%;">
+            <tr class="text-center">
+                <th>Account Status</th>
+                <th>Updated Date</th>
+            </tr>
+            <tr class="text-center">
+                <td>{{account}}</td>
+                <td>{{updated}}</td>
+            </tr>
+        </table>
+        <!-- <ion-card>
+            <ion-button size="small" color="success" class="project_verify pl-3" (click)="action('pro')"
+                style="width: 48%;">
+                Pro Account</ion-button>
+            <ion-button size="small" color="danger" class="project_verify pr-3" (click)="action('free')"
+                style="width: 48%;">
+                Free Account</ion-button>
+        </ion-card> -->
+        <br>
+        <ion-card-content>
+            <a
+                href="https://www.payfast.co.za/eng/process?cmd=_paynow&amp;receiver=11522879&amp;item_name=VeriProf+Pro&amp;amount=89.00&amp;cycles=0&amp;frequency=3&amp;m_payment_id=pay_now_11522879&amp;subscription_type=1">
+                <img src="https://www.payfast.co.za/images/buttons/light-small-subscribe.png" width="210" height="36"
+                    alt="Subscribe" title="Subscribe Now with PayFast" style="width:70%;margin:15%;margin-top:6%;" />
+            </a>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

@@ -3,12 +3,12 @@ import { ToastController } from '@ionic/angular';
 import { RestApiService } from 'src/app/services/rest-api.service';
 import { AuthenticateService } from 'src/app/services/authentication.service';
 
-
 @Component({
     selector: 'app-plans',
     templateUrl: './plans.page.html',
     styleUrls: ['./plans.page.scss'],
 })
+
 export class PlansPage implements OnInit {
 
     segment: string = "added";

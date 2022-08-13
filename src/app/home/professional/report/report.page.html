@@ -1,31 +1,29 @@
 <ion-header>
     <ion-toolbar color="dark">
+        <ion-back-button slot="start"></ion-back-button>
         <ion-title>Report</ion-title>
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <div class="scrollH">
-        <table class="table">
-            <tr>
-                <th>ID</th>
-                <th>Assessor</th>
-                <th>Type</th>
-                <th>Download</th>
-            </tr>
-            <tr *ngFor="let x of objs">
-                <td>{{x.id}}</td>
-                <td>{{x.accessor}}</td>
-                <td>{{x.report_type}} Submission</td>
-                <td class="d-flex">
-                    <ion-button size="small" color="success" (click)="download(x.filename)" style="font-size: 10px;">
-                        Download</ion-button>
-                </td>
-            </tr>
-        </table>
-    </div>
-
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Assessor</th>
+            <th>Type</th>
+            <th>Document</th>
+        </tr>
+        <tr *ngFor="let x of objs">
+            <td>{{x.id}}</td>
+            <td>{{x.accessor}}</td>
+            <td>{{x.report_type}} Submission</td>
+            <td class="d-flex" (click)="download(x.filename)" style="background-color: lightgreen;">Download</td>
+        </tr>
+    </table>
 </ion-content>
+
+<ion-footer color="dark" class="footer">
+    <ion-toolbar color="">
+        <ion-title class="footer">Copyright SIVAGO </ion-title>
+    </ion-toolbar>
+</ion-footer>

@@ -8,11 +8,12 @@ import { IonicModule } from '@ionic/angular';
 import { ProfessionalPage } from './professional.page';
 const routes: Routes = [
     { path: '', component: ProfessionalPage },
-    { path: 'project', loadChildren: './project/project.module#ProjectPageModule' },
-    { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-    { path: 'report', loadChildren: './report/report.module#ReportPageModule' },
-    { path: 'plans', loadChildren: './plans/plans.module#PlansPageModule' },
-    { path: 'business', loadChildren: './business/business.module#BusinessPageModule' }
+    { path: 'project', loadChildren: () => import("./project/project.module").then(m => m.ProjectPageModule) },
+    { path: 'profile', loadChildren: () => import("./profile/profile.module").then(m => m.ProfilePageModule) },
+    { path: 'report', loadChildren: () => import("./report/report.module").then(m => m.ReportPageModule) },
+    { path: 'plans', loadChildren: () => import("./plans/plans.module").then(m => m.PlansPageModule) },
+    { path: 'business', loadChildren: () => import("./business/business.module").then(m => m.BusinessPageModule) },
+    { path: 'payments', loadChildren: () => import("./payments/payments.module").then(m => m.PaymentsPageModule) },
 ];
 
 @NgModule({

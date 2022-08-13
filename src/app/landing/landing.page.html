@@ -1,90 +1,51 @@
-<ion-header color="dark" style="height: 22%;border: none;">
+<ion-header style="height: 140px; border: none;">
     <ion-content color="dark">
         <ion-img src="../../assets/veriprof-logo2.png" class="headerImage"></ion-img>
     </ion-content>
 </ion-header>
 
-<super-tabs activeTabIndex="3" [config]="{ debug: true, sideMenu: 'left', allowElementScroll: true, nativeSmoothScroll: true }">
-    <super-tabs-toolbar slot="bottom">
-        <!-- <super-tab-button>
-            <ion-label>Contact</ion-label>
-        </super-tab-button> -->
-        <super-tab-button>
-            <ion-label>Search</ion-label>
-        </super-tab-button>
-        <super-tab-button>
-            <ion-label>News</ion-label>
-        </super-tab-button>
-        <super-tab-button>
-            <ion-label>Login</ion-label>
-        </super-tab-button>
-    </super-tabs-toolbar>
-    <super-tabs-container autoScrollTop>
-        <!-- <super-tab class="ion-padding">
-            <h1 text-center color="light">About</h1>
-            <ion-item lines="none" color="dark">
-                <ion-note slot="end" style="color: rgb(255, 0, 0);">24/7 available</ion-note>
+<ion-content class="ion-content-overflow-hidden" padding color="dark">
+    <div [ngSwitch]="land_seg" class="segPart">
+        <ion-card class="p-fixed quick_verify_card" *ngSwitchCase="'quickp'">
+            <h1>Quick Verify</h1>
+            <ion-item class="m-4 mb-1" color="dark">
+                <ion-label color="success" position="floating" class="inner">Key Word</ion-label>
+                <ion-input class="inner " type="text" [(ngModel)]="keyword" color="light"></ion-input>
+                <ion-button class="inner m-0 mt-3" color="success" slot="end" (click)="searchContent()">Search</ion-button>
             </ion-item>
-            <ion-item lines="none" color="dark">
-            <ion-label><h1 text-center>Service Contact</h1></ion-label>
-            </ion-item>
-            <ion-item color="dark">
-            <ion-label>Company Title:</ion-label>
-            <ion-label>{{title}}</ion-label>
-            </ion-item>
-            <ion-item color="dark">
-            <ion-label>Contact Email:</ion-label>
-            <ion-label>{{email}}</ion-label>
-            </ion-item>
-            <ion-item color="dark">
-            <ion-label>Phone Number:</ion-label>
-            <ion-label>{{phone}}</ion-label>
-            </ion-item>
-            <ion-item color="dark">
-            <ion-label>Address:</ion-label>
-            <ion-label>{{address}}</ion-label>
-            </ion-item>
-            <ion-item color="dark">
-            <ion-label>Latest News:</ion-label>
-            <ion-label>{{Alarm}}</ion-label>
-            </ion-item>
-        </super-tab> -->
-        <super-tab>
-            <h1 text-center color="light">Quick Verify</h1>
-            <ion-card>
-                <ion-item color="dark" style="margin-top: 4%;">
-                    <ion-label  position="floating" color="dark" class="inner">Key Word</ion-label>
-                    <ion-input type="text" [(ngModel)]="keyword" color="dark" class="inner"></ion-input>
-                    <ion-button class="inner" color="success" slot="end" style="margin:0px; margin-top: 16px;" (click)="searchContent()">Search</ion-button>
-                </ion-item>
-                <ion-item color="dark" lines="none" class="quick_verify_content">
+            <ion-item class="m-4 mt-0 mb-1" color="dark" lines="none" style="height: 68%; overflow-y: scroll;">
+                <tbody>
                     <ng-container *ngIf="valArray != null">
-                        <tr *ngFor="let eachVal of valArray">
+                        <tr class="w-100 m-auto" *ngFor="let eachVal of valArray">
                             <td data-th="">{{eachVal.key}}</td>
                             <td data-th="">{{eachVal.val}}</td>
                         </tr>
                     </ng-container>
-                </ion-item>
-            </ion-card>
-        </super-tab>
-        <super-tab>
+                </tbody>
+            </ion-item>
+        </ion-card>
+        <ion-card *ngSwitchCase="'newsp'">
             <h1 text-center color="light">News</h1>
-            <ion-card>
-            </ion-card>
-        </super-tab>
-        <super-tab>
+        </ion-card>
+        <ion-card *ngSwitchCase="'loginp'">
             <h1 text-center color="light">Login - Account</h1>
-            <ion-card>
-                <ion-button color="danger" expand="block" (click)="assessor()" style="margin-top: 25%;">
-                    <ion-icon slot="start" name="Construct"></ion-icon>
-                    As An Assessors
-                </ion-button>
-                <br>
-                <ion-button color="danger" expand="block" (click)="professional()" style="margin-top: 25%;">
-                    <ion-icon slot="start" name="switch"></ion-icon>
-                    As A Professional
-                </ion-button>
-            </ion-card>
-        </super-tab>
-    </super-tabs-container>
-</super-tabs>
+            <ion-button color="danger" expand="block" (click)="assessor()" style="margin-top: 30%;">
+                <ion-icon slot="start" name="Construct"></ion-icon>As An Assessors
+            </ion-button>
+            <ion-button color="danger" expand="block" (click)="professional()" style="margin-top: 25%;">
+                <ion-icon slot="start" name="cog"></ion-icon>As A Professional
+            </ion-button>
+        </ion-card>
+    </div>
+    <ion-segment [(ngModel)]="land_seg" class="landTabs">
+        <ion-segment-button value="quickp">
+            <ion-label>Search</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="newsp">
+            <ion-label>News</ion-label>
+        </ion-segment-button>
+        <ion-segment-button color="dark" value="loginp">
+            <ion-label>Login</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-content>

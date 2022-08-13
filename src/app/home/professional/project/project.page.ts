@@ -82,7 +82,7 @@ export class ProjectPage implements OnInit {
         if ( file.length == 0 ) { this.restApi.toast("Please input project document.",1200); return; } 
         // if (!this.form.const_cost.includes('R')) { this.form.const_cost = this.form.const_cost.concat("R");}
         // if (!this.form.prof_cost.includes('R')) {this.form.prof_cost = this.form.prof_cost.concat("R");}
-        this.form.variable = ((parseInt(const_cost)) / (parseInt(const_cost) + parseInt(prof_cost)) * 100).toString();
+        this.form.variable = (((parseInt(const_cost) / (parseInt(const_cost) + parseInt(prof_cost)) * 100)).toFixed(2)).toString();
         this.restApi.post('professional/add-project', { user_id: this.authService.user.userId, data: this.form }).subscribe((res: any) => {
             if (res && res.status) {
                 this.restApi.toast(res.message,1200);

@@ -1,24 +1,19 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-title></ion-title>
-    </ion-toolbar>
+<ion-header color="dark" style="height: 40%;">
+    <ion-content color="dark">
+        <ion-img src="../../../assets/veriprof-logo.png" class="mt-4"></ion-img>
+        <h2>Forgot Password</h2>
+    </ion-content>
 </ion-header>
 
-<ion-content padding color="dark">
-    <ion-img src="../../../assets/veriprof-logo.png"></ion-img>
-    <br>
-    <h2 style="margin:0px;">Forgot Password</h2>
-    <br>
-    <br>
-    <br>
-    <ion-item color="medium">
-        <ion-label position="floating" color="medium" class="inner">Email</ion-label>
-        <ion-input name="email" class="inner" [(ngModel)]="user_email"></ion-input>
-    </ion-item>
-    <ion-button class="submit-btn" color="dark" (click)='sendPass()'>Verify by Eamil </ion-button>
-    <br>
-    <p class="go-to-login" style="margin-top:5px;">Remember password?<a (click)="goLoginPage()"
-            style="color:#DC143C;">Try to Log In.</a></p>
+<ion-content class="centerMargin" color="dark" style="margin:5%">
+    <ion-card color="dark">
+        <ion-item color="medium">
+            <ion-label position="floating" color="medium" class="inner">Email</ion-label>
+            <ion-input name="email" class="inner" [(ngModel)]="user_email"></ion-input>
+        </ion-item>
+        <ion-button class="submit-btn" color="dark" (click)='sendPass()'>Verify by Eamil </ion-button>
+        <p class="go-to-login" class="mt-3">Remember password?<a (click)="goLoginPage()" style="color:#DC143C;">Try to Log In.</a></p>
+    </ion-card>
 </ion-content>
 <ion-footer color="dark" class="footer">
     <ion-toolbar color="dark">

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { AuthenticateService } from 'src/app/services/authentication.service';
 import { RestApiService } from 'src/app/services/rest-api.service';

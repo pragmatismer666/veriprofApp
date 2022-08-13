@@ -6,10 +6,10 @@ import { AuthenticateService } from '../../services/authentication.service';
 import { ActionSheetController, ToastController, AlertController } from '@ionic/angular';
 
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { LoadingService } from 'src/app/services/loading.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Base64 } from '@ionic-native/base64/ngx';
+// import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { Base64 } from '@ionic-native/base64/ngx';
 @Component({
     selector: 'app-assessor',
     templateUrl: './assessor.page.html',
@@ -19,17 +19,16 @@ export class AssessorPage implements OnInit {
     // avatur ----------------------------------
 
     constructor(
-        public http: HttpClient,
-        private base64: Base64,
+        // public http: HttpClient,
         public toastController: ToastController,
         private navCtrl: NavController,
         private router: Router,
         public restApi: RestApiService,
         private authService: AuthenticateService,
-        private loading: LoadingService,
         public formBuilder: FormBuilder,
         public actionSheetController: ActionSheetController,
-        private camera: Camera,
+        // private camera: Camera,
+        private loading: LoadingService,
         private alertCtrl: AlertController,
     ) {
         this.name = this.formBuilder.group({
@@ -119,7 +118,7 @@ export class AssessorPage implements OnInit {
                     text: 'Camera',
                     role: 'camera',
                     handler: () => {
-                        this.profilePictureCamera()
+                        // this.profilePictureCamera();
                     }
                 },
                 {
@@ -127,7 +126,7 @@ export class AssessorPage implements OnInit {
                     cssClass: 'secondary',
                     role: 'gallery',
                     handler: () => {
-                        this.profilePictureGallery()
+                        // this.profilePictureGallery();
                     }
                 }
             ]
@@ -135,62 +134,60 @@ export class AssessorPage implements OnInit {
         await alert.present();
     }
 
-    //for update the profile picture 
-    async profilePictureCamera() {
-        const option: CameraOptions = {
-            quality: 100,
-            targetHeight: 530,
-            targetWidth: 530,
-            sourceType: this.camera.PictureSourceType.CAMERA,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE,
-            correctOrientation: true,
-            allowEdit: true
-        }
-        this.updateImage(option);
-    }
+    // //for update the profile picture 
+    // async profilePictureCamera() {
+    //     const option: CameraOptions = {
+    //         quality: 100,
+    //         targetHeight: 530,
+    //         targetWidth: 530,
+    //         sourceType: this.camera.PictureSourceType.CAMERA,
+    //         destinationType: this.camera.DestinationType.DATA_URL,
+    //         encodingType: this.camera.EncodingType.JPEG,
+    //         mediaType: this.camera.MediaType.PICTURE,
+    //         correctOrientation: true,
+    //         allowEdit: true
+    //     }
+    //     this.updateImage(option);
+    // }
 
-    async profilePictureGallery() {
-        const option: CameraOptions = {
-            quality: 100,
-            targetHeight: 530,
-            targetWidth: 530,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE,
-            correctOrientation: true,
-            allowEdit: true
-        }
-        this.updateImage(option);
-    }
+    // async profilePictureGallery() {
+    //     const option: CameraOptions = {
+    //         quality: 100,
+    //         targetHeight: 530,
+    //         targetWidth: 530,
+    //         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+    //         destinationType: this.camera.DestinationType.DATA_URL,
+    //         encodingType: this.camera.EncodingType.JPEG,
+    //         mediaType: this.camera.MediaType.PICTURE,
+    //         correctOrientation: true,
+    //         allowEdit: true
+    //     }
+    //     this.updateImage(option);
+    // }
 
     updateImage(option) {
         try {
-            // this handle the upload to the firebase 
-            // it handle the selection from the image after will be upload to firebase storage 
-            this.camera.getPicture(option).then((imageData) => {
-                this.loading.showPro()
-                let url = "data:image/jpeg;base64," + imageData;
-                // let imgBlob = this.imgURItoBlob(imageData);
-                // let metadata = { 'contentType': imgBlob.type };
-                this.restApi.post('accessor/up-user', { user_id: this.authService.user.userId, data: url, type: "image/jpeg" }).subscribe((res: any) => {
-                    if (res && res.status) {
-                        if (res.data != this.image) {
-                            this.authService.user.picpath = res.data;
-                            this.image = this.commonUrl + res.data;
-                            this.loading.hide();
-                        }
-                    }
-                }, error => {
-                    console.log(error);
-                    this.toastController.create({
-                        message: 'Something went wrong.',
-                        duration: 2000
-                    }).then(toast => toast.present());
-                });
-            })
+            // this.camera.getPicture(option).then((imageData) => {
+            //     this.loading.showPro()
+            //     let url = "data:image/jpeg;base64," + imageData;
+            //     // let imgBlob = this.imgURItoBlob(imageData);
+            //     // let metadata = { 'contentType': imgBlob.type };
+            //     this.restApi.post('accessor/up-user', { user_id: this.authService.user.userId, data: url, type: "image/jpeg" }).subscribe((res: any) => {
+            //         if (res && res.status) {
+            //             if (res.data != this.image) {
+            //                 this.authService.user.picpath = res.data;
+            //                 this.image = this.commonUrl + res.data;
+            //                 this.loading.hide();
+            //             }
+            //         }
+            //     }, error => {
+            //         console.log(error);
+            //         this.toastController.create({
+            //             message: 'Something went wrong.',
+            //             duration: 2000
+            //         }).then(toast => toast.present());
+            //     });
+            // })
         } catch (error) {
             console.log(error, option.sourceType);
         }

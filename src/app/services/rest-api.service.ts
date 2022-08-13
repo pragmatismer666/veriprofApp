@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
 import { Platform, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 
@@ -9,17 +8,18 @@ import { Observable } from 'rxjs';
 })
 export class RestApiService {
 
+    // base_url = "http://back.veriprof.co.za/";
+    base_url = "https://back.veriprof.co.za/";
+    // base_url = "http://192.168.5.61/www.veriprof_back/";
+
     constructor(
         public toastController: ToastController,
         public http: HttpClient,
-        private httpNative: HTTP,
         private platform: Platform
     ) { }
 
-    url(endpoint : string) {
-        return "https://back.veriprof.co.za/api/" + endpoint;
-        // return "http://localhost/veriprof_back/api/" + endpoint;
-        // return "http://192.168.5.61/veriprof_back/api/" + endpoint;
+    url(endpoint: string) {
+        return this.base_url + "api/" + endpoint;
     }
 
     getHeader() {
@@ -32,41 +32,15 @@ export class RestApiService {
         };
     }
 
-    post(endpoint : string, data : any) {
+    post(endpoint: string, data: any) {
         let url = this.url(endpoint);
         this.getHeader();
         return this.http.post(url, data);
-        // if(this.platform.is('desktop')) {
-        //     return this.http.post(url,data);
-        // } else {
-        //   return new Observable((observer) => {
-        //     this.httpNative.post(url,data, {}).then(res => {
-        //         observer.next(res.data);
-        //         observer.complete();
-        //       }).catch(error => {
-        //         observer.next(error);
-        //         observer.complete();
-        //       });
-        //   });
-        // }
     }
 
-    get(endpoint : string) {
+    get(endpoint: string) {
         let url = this.url(endpoint);
         return this.http.get(url);
-        // if(this.platform.is('desktop'))  {
-        //   return this.http.get(url, this.getHeader());
-        // } else {
-        //   return new Observable((observer) => {
-        //     this.httpNative.get(url, {}, {}).then(res => {
-        //         observer.next(res.data);
-        //         observer.complete();
-        //       }).catch(error => {
-        //         observer.next(error);
-        //         observer.complete();
-        //       });
-        //   });
-        // }
     }
 
     postFile(fileToUpload: File, endpoint: string): Observable<any> {
@@ -76,10 +50,8 @@ export class RestApiService {
         return this.http.post(url, formData);
     }
 
-    downfile(type : string, filename : string) {
-        let url = "https://back.veriprof.co.za/assets/" + type + filename ;
-        // let url = "http://localhost/veriprof_back/assets/" + type + filename;
-        // let url = "http://192.168.5.61/veriprof_back/assets/" + type + filename;
+    downfile(type: string, filename: string) {
+        let url = this.base_url + "assets/" + type + filename;
         window.open(url);
     }
 
@@ -89,4 +61,7 @@ export class RestApiService {
             duration: duration
         }).then(toast => toast.present());
     }
+
+
+
 }

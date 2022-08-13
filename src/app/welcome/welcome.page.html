@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-content-overflow-hidden">
     <ion-slides pager="true" [options]="slideOptsOne">
         <ion-slide>
             <div class="slide">
@@ -15,40 +15,48 @@
                 <h2>Welcome</h2>
                 <p>
                     VeriProf is a platform designed to protect
-                    the interests of the public and Professionals 
+                    the interests of the public and Professionals
                     within the built environment sector.
                 </p>
             </div>
         </ion-slide>
 
         <ion-slide>
-            <img src="../../assets/veriprof-logo.png" />
-            <h2>Redefining transparency</h2>
-            <p>
-                As a professional in the built environment
-                VeriProf will provide an independently managed 
-                electronic platform available at the tip of 
-                your figure tips.
-            </p>
+            <div class="slide">
+                <img src="../../assets/veriprof-logo.png" />
+                <h2>Redefining transparency</h2>
+                <p>
+                    As a professional in the built environment
+                    VeriProf will provide an independently managed
+                    electronic platform available at the tip of
+                    your figure tips.
+                </p>
+            </div>
         </ion-slide>
 
         <ion-slide>
-            <img src="../../assets/veriprof-logo.png" />
-            <h2>A new way of protecting your Interest</h2>
-            <p> As the client, knowing with whom you are engaged 
-                in business with has never been more important. 
-                VeriProf will give you, the client, confirmation
-                as to whom you deal with.</p>
+            <div class="slide">
+                <img src="../../assets/veriprof-logo.png" />
+                <h2>A new way of protecting your Interest</h2>
+                <p> 
+                    As the client, knowing with whom you are engaged
+                    in business with has never been more important.
+                    VeriProf will give you, the client, confirmation
+                    as to whom you deal with.
+                </p>
+            </div>
         </ion-slide>
 
         <ion-slide>
-            <img src="../../assets/veriprof-logo.png" />
-            <h2>Ready?</h2>
-            <p>want to find out how VeriProf can serve you better?</p>
-            <ion-button color="danger" expand="block" routerLink="/landing" style="margin-left: 15%;margin-right: 15%;">
-                Let's go <ion-icon slot="end" name="arrow-forward">
-                </ion-icon>
-            </ion-button>
+            <div class="slide">
+                <img src="../../assets/veriprof-logo.png" />
+                <h2>Ready?</h2>
+                <p>want to find out how VeriProf can serve you better?</p>
+                <ion-button color="danger" expand="block" routerLink="/landing" class="ml-5 mr-5">
+                    Let's go <ion-icon slot="end" name="arrow-forward">
+                    </ion-icon>
+                </ion-button>
+            </div>
         </ion-slide>
     </ion-slides>
 </ion-content>

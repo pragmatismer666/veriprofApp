@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-    { path: 'landing', loadChildren: './landing/landing.module#LandingPageModule' },
-    { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule' },
-    { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-    { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
-  { path: 'reportsubmission', loadChildren: './home/assessor/reportsubmission/reportsubmission.module#ReportsubmissionPageModule' },
-  { path: 'reportgenerator', loadChildren: './home/assessor/accessorsreport/reportgenerator/reportgenerator.module#ReportgeneratorPageModule' },
-  { path: 'welcome', loadChildren: './welcome/welcome.module#WelcomePageModule' },
-
+    { path: 'welcome', loadChildren: () => import('./welcome/welcome.module').then(m => m.WelcomePageModule) },
+    { path: 'landing', loadChildren: () => import('./landing/landing.module').then(m => m.LandingPageModule) },
+    { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthPageModule) },
+    { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutPageModule) },
+    { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [
+        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

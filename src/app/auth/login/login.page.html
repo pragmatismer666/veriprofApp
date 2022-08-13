@@ -1,12 +1,12 @@
-<ion-header color="dark" style="background: black;height: 40%;">
+<ion-header color="dark" style="height: 40%;">
     <ion-content color="dark">
-        <ion-img src="../../../assets/veriprof-logo.png" style="margin-top: 10%;"></ion-img>
+        <ion-img src="../../../assets/veriprof-logo.png" class="mt-4"></ion-img>
         <h2>{{UserTypes[currentUserType].title}}</h2>
     </ion-content>
 </ion-header>
 
 <ion-content color="dark" class="centerMargin">
-    <form class="form" [formGroup]="validations_form" (ngSubmit)="loginUser(validations_form.value)" color="dark">
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="loginUser(validations_form.value)" color="dark" style="margin:5%">
         <ion-item color="dark">
             <ion-label position="floating" color="dark" class="inner">Email</ion-label>
             <ion-input type="text" formControlName="email" color="dark" class="inner"></ion-input>

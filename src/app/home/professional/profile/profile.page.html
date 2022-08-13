@@ -1,15 +1,12 @@
 <ion-header>
     <ion-toolbar color="dark">
+        <ion-back-button slot="start"></ion-back-button>
         <ion-title>My Profile</ion-title>
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <br>
-    <ion-segment [(ngModel)]="segment" color="light" (ionChange)="getlist($event)">
+    <ion-segment class="mt-1" [(ngModel)]="segment" color="light" (ionChange)="getlist($event)">
         <ion-segment-button value="profess" class="dark" enabled>
             <ion-icon name="business" class="dark" color="dark"></ion-icon>
             <ion-label class="dark" color="dark">Individual</ion-label>
@@ -20,24 +17,22 @@
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="segment">
-        <ion-card *ngSwitchCase="'profess'">
-            <ion-card-content>
-                <strong>Individual Profile
-                    <ion-button size="small" id="personal_edit" class="profile_edit" (click)="editPerson()">
-                        <ng-container *ngIf="is_profileEdit">Cancel Edit</ng-container>
-                        <ng-container *ngIf="!is_profileEdit">Edit Profile</ng-container>
-                    </ion-button>
-                </strong>
-                <ion-row>
-                    <ion-label>Status : </ion-label>
-                    <ng-container *ngIf="form.status =='Unverified'">
-                        <ion-label color="danger">Unverified</ion-label>
-                    </ng-container>
-                    <ng-container *ngIf="form.status == 'Verified'">
-                        <ion-label color="success">Verified</ion-label>
-                    </ng-container>
-                </ion-row>
-            </ion-card-content>
+        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'profess'">
+            <strong>Individual Profile
+                <ion-button size="small" id="personal_edit" class="profile_edit" (click)="editPerson()">
+                    <ng-container *ngIf="is_profileEdit">Cancel Edit</ng-container>
+                    <ng-container *ngIf="!is_profileEdit">Edit Profile</ng-container>
+                </ion-button>
+            </strong>
+            <ion-row>
+                <ion-label>Status : </ion-label>
+                <ng-container *ngIf="form.status =='Unverified'">
+                    <ion-label color="danger">Unverified</ion-label>
+                </ng-container>
+                <ng-container *ngIf="form.status == 'Verified'">
+                    <ion-label color="success">Verified</ion-label>
+                </ng-container>
+            </ion-row>
             <ion-card id="profess_profile" disabled="true" style="opacity: 0.55;">
                 <ion-item>
                     <ion-label>Are you director in Business?</ion-label>
@@ -104,7 +99,7 @@
                 </ion-button>
             </ion-card>
         </ion-card>
-        <ion-card *ngSwitchCase="'business'">
+        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'business'">
             <ng-container *ngIf="is_director==true">
                 <ion-segment [(ngModel)]="business_seg" color="light" (ionChange)="changeOffice($event)">
                     <ion-segment-button value="head" class="dark" enabled>
@@ -133,54 +128,52 @@
                                 </ng-container>
                             </ion-row>
                         </ion-card-content>
-                        <ion-card id="business_profile" disabled="true" style="opacity: 0.55;">
-                            <ion-card-content style="padding: 0px;">
-                                <ion-item>
-                                    <ion-label position="stacked">Practice Name</ion-label>
-                                    <ion-input name="pname" [(ngModel)]="pform.pname" value="{{pform.pname}}">
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked">Practice Council reg. No</ion-label>
-                                    <ion-input name="pcouncil" [(ngModel)]="pform.pcouncil" value="{{pform.pcouncil}}">
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked">CIPC registration</ion-label>
-                                    <ion-input name="pcipc_reg_no" [(ngModel)]="pform.pcipc_reg_no"
-                                        value="{{pform.pcipc_reg_no}}"></ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked">Type of Organization</ion-label>
-                                    <ion-select multiple="false" name="ptype" [(ngModel)]="pform.ptype"
-                                        value="{{pform.ptype}}">
-                                        <ion-select-option value="CC">CC</ion-select-option>
-                                        <ion-select-option value="Sole Proprietor">Sole Proprietor</ion-select-option>
-                                        <ion-select-option value="Private">Private</ion-select-option>
-                                        <ion-select-option value="Public">Public</ion-select-option>
-                                        <ion-select-option value="Inc">Inc</ion-select-option>
-                                        <ion-select-option value="Partnership">Partnership</ion-select-option>
-                                        <ion-select-option value="External company">External Company</ion-select-option>
-                                        <ion-select-option value="Business trust">Business trust</ion-select-option>
-                                    </ion-select>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked">Directors</ion-label>
-                                    <ion-input name="directors" [(ngModel)]="pform.director" value="{{pform.director}}">
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked">Director Prof registration No</ion-label>
-                                    <ion-input name="directors_prof_regno" [(ngModel)]="pform.dir_prof_regno"
-                                        value="{{pform.dir_prof_regno}}"></ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked">Percentage Owned</ion-label>
-                                    <ion-input name="owned" class="full_part" [(ngModel)]="pform.owned" style="border-bottom: solid 1px;" value="{{pform.owned}}"></ion-input>
-                                    <!-- <ion-input name="owned" class="full_part" [(ngModel)]="pform.owned" value="{{pform.owned}}" (change)="checkOwned()"></ion-input> -->
-                                </ion-item>
-                                <br>
-                            </ion-card-content>
+                        <ion-card-content class="p-1" id="business_profile" disabled="true" style="opacity: 0.55;">
+                            <ion-item>
+                                <ion-label position="stacked">Practice Name</ion-label>
+                                <ion-input name="pname" [(ngModel)]="pform.pname" value="{{pform.pname}}">
+                                </ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Practice Council reg. No</ion-label>
+                                <ion-input name="pcouncil" [(ngModel)]="pform.pcouncil" value="{{pform.pcouncil}}">
+                                </ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">CIPC registration</ion-label>
+                                <ion-input name="pcipc_reg_no" [(ngModel)]="pform.pcipc_reg_no"
+                                    value="{{pform.pcipc_reg_no}}"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Type of Organization</ion-label>
+                                <ion-select multiple="false" name="ptype" [(ngModel)]="pform.ptype"
+                                    value="{{pform.ptype}}">
+                                    <ion-select-option value="CC">CC</ion-select-option>
+                                    <ion-select-option value="Sole Proprietor">Sole Proprietor</ion-select-option>
+                                    <ion-select-option value="Private">Private</ion-select-option>
+                                    <ion-select-option value="Public">Public</ion-select-option>
+                                    <ion-select-option value="Inc">Inc</ion-select-option>
+                                    <ion-select-option value="Partnership">Partnership</ion-select-option>
+                                    <ion-select-option value="External company">External Company</ion-select-option>
+                                    <ion-select-option value="Business trust">Business trust</ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Directors</ion-label>
+                                <ion-input name="directors" [(ngModel)]="pform.director" value="{{pform.director}}">
+                                </ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Director Prof registration No</ion-label>
+                                <ion-input name="directors_prof_regno" [(ngModel)]="pform.dir_prof_regno"
+                                    value="{{pform.dir_prof_regno}}"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Percentage Owned</ion-label>
+                                <ion-input name="owned" class="full_part" [(ngModel)]="pform.owned"
+                                    style="border-bottom: solid 1px;" value="{{pform.owned}}"></ion-input>
+                                <!-- <ion-input name="owned" class="full_part" [(ngModel)]="pform.owned" value="{{pform.owned}}" (change)="checkOwned()"></ion-input> -->
+                            </ion-item>
                             <ion-card-content>
                                 <strong style="color:blue">Head Office Address</strong>
                                 <ion-item>
@@ -252,15 +245,14 @@
                 <ng-container *ngIf="pform.status == 'Verified'">Update Profile</ng-container> -->
                                 </ion-button>
                             </div>
-                        </ion-card>
+                        </ion-card-content>
                     </ion-card-content>
                     <ion-card *ngSwitchCase="'branch'">
                         <ng-container *ngIf="bo_offices.length == 0">
                             <h3>There is no Branch Office.</h3>
                         </ng-container>
                         <ng-container *ngIf="bo_offices.length > 0">
-                            <ion-card-content id="branch_areas" *ngFor="let obj of bo_offices; let i=index;"
-                                style="padding: 0px;">
+                            <div id="branch_areas" *ngFor="let obj of bo_offices; let i=index;" style="padding: 0px;">
                                 <ion-input placeholder="Contact Number" id="phone" name="pform_number"
                                     [(ngModel)]="obj.phone" value="{{obj.phone}}"></ion-input>
                                 <ion-input placeholder="Contact Email" id="email" name="pform_email"
@@ -281,7 +273,7 @@
                                         (click)="addbstaff('bstaffs' + i, obj.phone)">Add Branch Office Staff
                                     </ion-button>
                                 </ion-card-content>
-                            </ion-card-content>
+                            </div>
                             <div class="ion-padding">
                                 <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
                                     (click)="bstaffs()">Save Branch Staffs</ion-button>
@@ -291,30 +283,28 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="is_director==false">
-                <ion-card-content style="padding: 5px;">
-                    <strong>Business Office
-                        <ion-button size="small" id="Buzi_edit" class="editbtn" (click)="editBuzi()">
-                            <ng-container *ngIf="is_nonDirectorEdit">Cancel Edit</ng-container>
-                            <ng-container *ngIf="!is_nonDirectorEdit">Edit Information</ng-container>
-                        </ion-button>
-                    </strong>
-                    <ion-card id="Buzi_info" disabled="true" style="opacity: 0.55;">
-                        <ion-card-content>
-                            <strong>Select Business Name</strong>
-                            <ion-select multiple="false" id="business_list" [(ngModel)]="mybusiness"
-                                value="{{mybusiness}}"></ion-select>
-                        </ion-card-content>
-                        <ion-card-content>
-                            <strong>Select Office Email</strong>
-                            <ion-select multiple="false" id="office_list" [(ngModel)]="myoffice" value="{{myoffice}}">
-                            </ion-select>
-                        </ion-card-content>
-                    </ion-card>
-                    <div class="ion-padding">
-                        <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
-                            (click)="updateBuzi()">Save Information</ion-button>
-                    </div>
-                </ion-card-content>
+                <strong>Business Office
+                    <ion-button size="small" id="Buzi_edit" class="editbtn" (click)="editBuzi()">
+                        <ng-container *ngIf="is_nonDirectorEdit">Cancel Edit</ng-container>
+                        <ng-container *ngIf="!is_nonDirectorEdit">Edit Information</ng-container>
+                    </ion-button>
+                </strong>
+                <ion-card id="Buzi_info" disabled="true" style="opacity: 0.55;">
+                    <ion-card-content>
+                        <strong>Select Business Name</strong>
+                        <ion-select multiple="false" id="business_list" [(ngModel)]="mybusiness" value="{{mybusiness}}">
+                        </ion-select>
+                    </ion-card-content>
+                    <ion-card-content>
+                        <strong>Select Office Email</strong>
+                        <ion-select multiple="false" id="office_list" [(ngModel)]="myoffice" value="{{myoffice}}">
+                        </ion-select>
+                    </ion-card-content>
+                </ion-card>
+                <div class="ion-padding">
+                    <ion-button expand="block" type="submit" class="ion-no-margin" color="dark" (click)="updateBuzi()">
+                        Save Information</ion-button>
+                </div>
             </ng-container>
         </ion-card>
     </div>

@@ -14,8 +14,10 @@
 }
 
 .rwd-table {
-    margin   : 1em 0;
-    min-width: 100%; // adjust to your needs
+    margin-top   : 1em;
+    margin-left: 2%;
+    margin-right: 2%;
+    min-width: 96%; // adjust to your needs
 
     tr {
         border-top   : 1px solid #ddd;

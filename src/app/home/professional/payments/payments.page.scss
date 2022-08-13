@@ -1,0 +1,21 @@
+.table {
+    font-size: 12px;
+
+    th {
+        background: #8a8a8a;
+        padding   : 5px;
+        color     : #fff;
+        border    : 1px solid #fff;
+    }
+
+    td {
+        background: #ccc;
+        padding   : 5px;
+        color     : #000;
+        border    : 1px solid #fff;
+    }
+}
+
+.scrollH {
+    overflow-x: auto;
+}

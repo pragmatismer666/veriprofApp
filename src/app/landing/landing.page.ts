@@ -1,11 +1,8 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { RestApiService } from 'src/app/services/rest-api.service';
+import { RestApiService } from '../services/rest-api.service';
 import { AuthenticateService } from '../services/authentication.service';
-
-import { SuperTabs } from '@ionic-super-tabs/angular';
-import { SuperTabsConfig } from '@ionic-super-tabs/core';
 
 @Component({
     selector: 'app-landing',
@@ -14,21 +11,7 @@ import { SuperTabsConfig } from '@ionic-super-tabs/core';
 })
 export class LandingPage implements OnInit {
     
-    @ViewChild(SuperTabs) superTabs: SuperTabs;
-
-    opts = {
-        icon: false,
-        label: true,
-        toolbarPos: 'top',
-        scrollable: true,
-    };
-
-    config: SuperTabsConfig = {
-        debug: true,
-        allowElementScroll: false,
-    }; 
-
-    tabs: any[] = [];
+    land_seg: string = "loginp";
 
     title: string;
     email: string;
@@ -51,7 +34,6 @@ export class LandingPage implements OnInit {
     ) { }
 
     ngOnInit() {
-        // this.getDetails();
     }
 
     professional() {

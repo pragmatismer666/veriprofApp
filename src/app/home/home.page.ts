@@ -14,7 +14,6 @@ export class HomePage implements OnInit {
 
     ngOnInit() {
         this.checkRoleAndNavigate();
-        console.log(this.authService.user.role, "this.authService.user");
     }
 
     getSlug() {
@@ -26,9 +25,9 @@ export class HomePage implements OnInit {
     }
 
     checkRoleAndNavigate() {
-        if (this.authService.user.role == 'Professional') {
+        if (this.authService.userDetails().role == 'Professional') {
             this.navCtrl.navigateForward('home/professional');
-        } else if (this.authService.user.role == "Assessor") {
+        } else if (this.authService.userDetails().role == "Assessor") {
             this.navCtrl.navigateForward('home/assessor');
         }
     }
@@ -36,14 +35,6 @@ export class HomePage implements OnInit {
     goHome() {
         this.navCtrl.navigateRoot('home/' + this.getSlug());
     }
-
-    goMyProject() {
-        this.navCtrl.navigateRoot('home/' + this.getSlug() + '/project');
-    }
-
-    // goContact() {
-    //     this.navCtrl.navigateRoot('/posts');
-    // }
 
     logout() {
         localStorage.clear();

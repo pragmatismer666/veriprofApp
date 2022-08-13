@@ -4,7 +4,6 @@ import { AuthenticateService } from 'src/app/services/authentication.service';
 import { RestApiService } from 'src/app/services/rest-api.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
 
 @Component({
     selector: 'app-profile',
@@ -74,7 +73,7 @@ export class ProfilePage implements OnInit {
     myoffice: string;
     pdfs: Array<{ name: string, filename: string }> = [];
 
-    constructor(public http: HttpClient, private httpNative: HTTP, public toastController: ToastController, public authService: AuthenticateService, public restApi: RestApiService) { }
+    constructor(public http: HttpClient, public toastController: ToastController, public authService: AuthenticateService, public restApi: RestApiService) { }
 
     ngOnInit() {
         this.getProfile();

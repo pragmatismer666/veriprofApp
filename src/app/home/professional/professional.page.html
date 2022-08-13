@@ -1,132 +1,144 @@
-<ion-header color="dark" style="background: black;height: 25%;">
-    <ion-content color="dark">
+<ion-header color="dark" style="height: 25%;">
+    <ion-content color="dark" class="ion-content-overflow-hidden">
         <ion-img src="../../../assets/veriprof-logo2.png" class="headerImage"></ion-img>
-        <h3 text-center color="light">Welcome : {{userName}}</h3>
+        <h5 class="text-center" color="light">Welcome : {{userName}}</h5>
     </ion-content>
 </ion-header>
 
-<ion-content color="dark">
-    <div [ngSwitch]="land_seg" class="segPart">
+<ion-content color="dark" class="ion-content-overflow-hidden">
+    <div [ngSwitch]="land_seg">
         <ion-card *ngSwitchCase="'dashboardp'">
-            <ion-card>
-                <ion-segment scrollable>
-                    <ion-segment-button (click)="project()">
+            <ion-segment>
+                <ion-segment>
+                    <ion-card (click)="project()">
                         <ion-img src="../../../assets/myproj.png"></ion-img>
                         <ion-label class="inner">My Projects</ion-label>
-                    </ion-segment-button>
-                    <ion-segment-button (click)="profile()">
+                    </ion-card>
+                </ion-segment>
+                <ion-segment>
+                    <ion-card (click)="profile()">
                         <ion-img src="../../../assets/prof.png"></ion-img>
                         <ion-label class="inner">My Profile</ion-label>
-                    </ion-segment-button>
+                    </ion-card>
                 </ion-segment>
-                <br>
-                <ion-segment scrollable>
-                    <ion-segment-button (click)="plans()">
+            </ion-segment>
+            <ion-segment>
+                <ion-segment>
+                    <ion-card (click)="plans()">
                         <ion-img src="../../../assets/plans.png"></ion-img>
                         <ion-label class="inner">ePlan Filling</ion-label>
-                    </ion-segment-button>
-                    <ion-segment-button (click)="report()">
+                    </ion-card>
+                </ion-segment>
+                <ion-segment>
+                    <ion-card (click)="report()">
                         <ion-img src="../../../assets/reports.png"></ion-img>
                         <ion-label class="inner">Reporting</ion-label>
-                    </ion-segment-button>
+                    </ion-card>
                 </ion-segment>
-                <br>
-                <ion-segment scrollable>
-                    <ion-segment-button (click)="bids()" style="width: 50%;">
+            </ion-segment>
+            <ion-segment>
+                <ion-segment>
+                    <ion-card (click)="bids()">
                         <ion-img src="../../../assets/accreport.png"></ion-img>
                         <ion-label class="inner">Tender BIDS</ion-label>
-                    </ion-segment-button>
-                    <ion-row style="width: 50%;">
-                        <ng-container *ngIf="moffice != 'no'">
-                            <ion-row style="width: 100%;">
-                                <ion-label style="font-size: 15px;">{{moffice}} is your office email? </ion-label>
-                            </ion-row>
-                            <ion-row style="margin: auto;">
-                                <ion-button style="width: 50%;" size="small" color="success" class="project_verify"
-                                    (click)="saction('Verified')">Yes</ion-button>
-                                <ion-button style="width: 50%;" size="small" color="success" class="project_verify"
-                                    (click)="saction('Unerified')">No</ion-button>
-                            </ion-row>
-                        </ng-container>
-                    </ion-row>
+                    </ion-card>
                 </ion-segment>
-            </ion-card>
+                <ion-segment>
+                    <ion-card (click)="payments()">
+                        <ion-img src="../../../assets/paydue.png"></ion-img>
+                        <ion-label class="inner">Payment</ion-label>
+                    </ion-card>
+                </ion-segment>
+            </ion-segment>
+            <ion-segment>
+                <ng-container *ngIf="moffice != 'no'">
+                    <ion-row style="width: 100%;">
+                        <ion-label style="font-size: 18px;">{{moffice}} is your office email? </ion-label>
+                    </ion-row>
+                    <ion-row style="margin: auto;">
+                        <ion-button style="width: 50%;" size="small" color="success" class="project_verify"
+                            (click)="saction('Verified')">Yes</ion-button>
+                        <ion-button style="width: 50%;" size="small" color="success" class="project_verify"
+                            (click)="saction('Unerified')">No</ion-button>
+                    </ion-row>
+                </ng-container>
+            </ion-segment>
         </ion-card>
-        <ion-card *ngSwitchCase="'quickp'">
-            <ion-card>
-                <ion-item color="dark" style="margin-bottom: 10px;">
-                    <ion-label  position="floating" color="dark" class="inner">Key Word</ion-label>
-                    <ion-input type="text" [(ngModel)]="keyword" color="dark" class="inner"></ion-input>
-                    <ion-button class="inner" color="success" slot="end" style="margin:0px; margin-top: 16px;" (click)="searchContent()">Search</ion-button>
-                </ion-item>   
-                <ion-item color="dark" lines="none" style="font-size: 13px;">
+        <ion-card class="p-fixed rounded-0 quick_verify_card_profess" *ngSwitchCase="'quickp'">
+            <ion-item color="dark" class="mb-2">
+                <ion-label position="floating" color="dark" class="inner">Key Word</ion-label>
+                <ion-input type="text" [(ngModel)]="keyword" color="dark" class="inner"></ion-input>
+                <ion-button class="inner" color="success" slot="end" style="margin:0px; margin-top: 20px;"
+                    (click)="searchContent()">Search</ion-button>
+            </ion-item>
+            <ion-item class="h-100 overflow-scroll" color="dark" lines="none">
+                <tbody>
                     <ng-container *ngIf="valArray != null">
                         <tr *ngFor="let eachVal of valArray">
                             <td data-th="">{{eachVal.key}}</td>
                             <td data-th="">{{eachVal.val}}</td>
                         </tr>
                     </ng-container>
-                </ion-item>
-            </ion-card>
+                </tbody>
+            </ion-item>
         </ion-card>
         <ion-card *ngSwitchCase="'newsp'">
         </ion-card>
-        <ion-card *ngSwitchCase="'accountp'">
-            <ion-segment [(ngModel)]="change_account" color="light" class="landTabs">
+        <ion-card *ngSwitchCase="'accountp'" style="padding: 0px !important;">
+            <ion-segment class="account_setting" [(ngModel)]="change_account">
                 <ion-segment-button value="update_account">
-                    <ion-label>Update Account</ion-label>
+                    <ion-label color="light">Update Account</ion-label>
                 </ion-segment-button>
                 <ion-segment-button value="delete_account">
-                    <ion-label>Delete Account</ion-label>
+                    <ion-label color="light">Delete Account</ion-label>
                 </ion-segment-button>
             </ion-segment>
             <div [ngSwitch]="change_account">
-                <ion-card *ngSwitchCase="'update_account'">
-                    <br>
-                    <ion-item>
+                <ion-card *ngSwitchCase="'update_account'" color="dark">
+                    <ion-item color="dark">
                         <ion-label position="floating" class="inner">Name</ion-label>
-                        <ion-input type="text" class="inner" [(ngModel)]="account.name" value={{account.name}}></ion-input>
+                        <ion-input type="text" class="inner" [(ngModel)]="account.name" value={{account.name}}>
+                        </ion-input>
                     </ion-item>
-                    <ion-item>
+                    <ion-item color="dark">
                         <ion-label position="floating" class="inner">Current Password</ion-label>
                         <ion-input type="password" placeholder="Input your password to update." required class="inner"
                             [(ngModel)]="account.oldpass" value={{account.oldpass}}></ion-input>
                     </ion-item>
-                    <ion-item>
+                    <ion-item color="dark">
                         <ion-label position="floating" class="inner">New Password</ion-label>
                         <ion-input type="password" required class="inner" [(ngModel)]="account.newpass"
                             value={{account.newpass}}></ion-input>
                     </ion-item>
-                    <ion-item>
+                    <ion-item color="dark">
                         <ion-label position="floating" class="inner">Confirm</ion-label>
                         <ion-input type="password" required class="inner" [(ngModel)]="account.confirm"
                             value={{account.confirm}}></ion-input>
                     </ion-item>
                     <br>
-                    <ion-button style="font-size: 12px;width:100%;" type="submit" color="dark" (click)="update('update')">Update Account</ion-button>
+                    <ion-button class="font-16 w-100" type="submit" color="success" (click)="update('update')">Update
+                        Account</ion-button>
                 </ion-card>
                 <ion-card *ngSwitchCase="'delete_account'">
-                    <br>
-                    <ion-item>
+                    <ion-item color="dark">
                         <ion-label position="floating" class="inner">Current Password</ion-label>
                         <ion-input type="password" placeholder="Input your password to update." required class="inner"
                             [(ngModel)]="delete_account.oldpass" value={{delete_account.oldpass}}></ion-input>
                     </ion-item>
-                    <ion-item>
+                    <ion-item color="dark">
                         <ion-label position="floating" class="inner">Confirm</ion-label>
                         <ion-input type="password" required class="inner" [(ngModel)]="delete_account.confirm"
                             value={{delete_account.confirm}}></ion-input>
                     </ion-item>
-                    <br>
-                    <ion-button style="font-size: 12px;width:100%;color: red;" type="submit" color="danger"
-                    (click)="delete()">Delete Account</ion-button>
+                    <ion-button class="font-16 w-100" type="submit" color="danger" (click)="delete()">Delete Account
+                    </ion-button>
                 </ion-card>
             </div>
         </ion-card>
     </div>
 </ion-content>
 <ion-footer>
-    <ion-segment [(ngModel)]="land_seg" color="light" class="landTabs">
+    <ion-segment [(ngModel)]="land_seg" class="landTabs">
         <ion-segment-button value="dashboardp">
             <ion-label>Dashboard</ion-label>
         </ion-segment-button>

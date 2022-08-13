@@ -6,8 +6,6 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { ToastController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
-import { SuperTabs } from '@ionic-super-tabs/angular';
-import { SuperTabsConfig } from '@ionic-super-tabs/core';
 
 @Component({
     selector: 'app-accessorsreport',
@@ -16,12 +14,7 @@ import { SuperTabsConfig } from '@ionic-super-tabs/core';
 })
 export class AccessorsreportPage implements OnInit {
 
-    @ViewChild(SuperTabs) superTabs: SuperTabs;
-    
-    config: SuperTabsConfig = {
-        debug: true,
-        allowElementScroll: false,
-    }; 
+    assessor_report: string = "projectp";
 
     projects: Array<any>;
     unverified_business:Array<any>;
@@ -98,6 +91,7 @@ export class AccessorsreportPage implements OnInit {
             this.restApi.toast('Something went wrong.', 1200);
         });
     }
+
     // Business Submission
     get_unverified_business(){
         this.restApi.get('accessor/get-unverifyBusiness').subscribe((res: any) => {
@@ -114,9 +108,11 @@ export class AccessorsreportPage implements OnInit {
             this.restApi.toast('Something went wrong.', 1200);
         });
     }
+
     // Profile Submission
     get_unverified_profile(){
         this.restApi.get('accessor/get-unverifyProfiles').subscribe((res: any) => {
+            console.log( res.data );
             if (res && res.status) {
                 if (res.status == 'success') {
                     this.unverified_profiles = res.data;
@@ -129,6 +125,7 @@ export class AccessorsreportPage implements OnInit {
             this.restApi.toast('Something went wrong.', 1200);
         });
     }
+
     // Eplan Submission
     get_eplan(){
         this.restApi.get('accessor/get-eplans').subscribe((res: any) => {
@@ -144,6 +141,7 @@ export class AccessorsreportPage implements OnInit {
             this.restApi.toast('Something went wrong.', 1200);
         });
     }
+
     // action 
     action(data:any, type: string){
         let navigationExtras: NavigationExtras = {
@@ -153,6 +151,10 @@ export class AccessorsreportPage implements OnInit {
             }
         };
         this.router.navigate(['home/assessor/accessorsreport/reportgenerator'], navigationExtras);
+    }
+
+    download(type:string ,filename : string ) {
+        this.restApi.downfile(type + '/', filename);
     }
 
     report_confirm(value: any) {
@@ -189,8 +191,4 @@ export class AccessorsreportPage implements OnInit {
         });
     }
 
-    // getType(event: any) {
-    //     console.log(this.report_form);
-    //     console.log(event);
-    // }
 }

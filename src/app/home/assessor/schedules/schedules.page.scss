@@ -1,34 +1,26 @@
-.schedule_line{
-    margin: 15px;
-    margin-left:30px;
-    margin-right:30px;
-}
-.schedule_btn{
-    margin: auto;
-}
-.table{
-    margin: auto;
-    margin-top: 25px;
-    font-size: 10px;
-    min-width: 90%;
-    th{
+.table {
+    margin    : auto;
+    font-size : 11px;
+
+    th {
         background: #8a8a8a;
-        padding: 5px;
-        color: #fff;
-        border: 1px solid #fff;
+        padding   : 3px;
+        color     : #fff;
+        border    : 1px solid #fff;
     }
 
-    td{
+    td {
         background: #ccc;
-        padding: 5px;
-        color: #000;
-        border: 1px solid #fff;
+        padding   : 3px;
+        color     : #000;
+        border    : 1px solid #fff;
     }
 }
 
 .scrollH {
     overflow-x: auto;
 }
-.validation-errors{
+
+.validation-errors {
     color: #000;
 }
