@@ -16,14 +16,15 @@ export class ReportPage implements OnInit {
     constructor(public toastController: ToastController, public restApi: RestApiService, public navCtrl: NavController, public authService: AuthenticateService) { }
 
     ngOnInit() {
-        this.getReport();
+        // this.getReport();
+        this.getMyReport();
     }
 
     getMyStatus() {
         this.restApi.post('professional/get-profile', { user_id: this.authService.user.userId }).subscribe((res: any) => {
             if (res && res.status) {
                 try {
-                    this.account = res.personal['0'].account.concat(' Account');
+                    this.account = res.data['0'].account.concat(' Account');
                 }
                 catch (Error) {
                     this.toastController.create({
@@ -69,8 +70,32 @@ export class ReportPage implements OnInit {
             });
     }
 
+    // Get my Bid and Plan Documents
+    getMyReport() {
+        this.restApi.post('professional/get-myReport', { user_id: this.authService.user.userId }).subscribe((res: any) => {
+            if (res && res.status) {
+                console.log(res.data);
+                if (res.status == 'success') {
+                    this.objs = res.data;
+                } else {
+                    this.toastController.create({
+                        message: res.message,
+                        duration: 2000
+                    }).then(toast => toast.present());
+                }
+            }
+        },
+            error => {
+                this.toastController.create({
+                    message: 'Something went wrong.',
+                    duration: 2000
+                }).then(toast => toast.present());
+            });
+    }
+
     download(filename) {
         console.log(filename);
-        this.restApi.downfile('reports/', filename);
+        // this.restApi.downfile('reports/', filename);
+        this.restApi.downfile("", filename);
     }
 }

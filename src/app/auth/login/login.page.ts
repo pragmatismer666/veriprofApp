@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavController } from '@ionic/angular';
-import { AuthenticateService } from '../../services/authentication.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { NavController } from "@ionic/angular";
+import { AuthenticateService } from "../../services/authentication.service";
+import { Router } from "@angular/router";
+
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
+    selector: "app-login",
+    templateUrl: "./login.page.html",
+    styleUrls: ["./login.page.scss"],
 })
 export class LoginPage implements OnInit {
 
     validations_form: FormGroup;
-    errorMessage: string = '';
-    currentUserType = 'assessor';
+    errorMessage: string = "";
+    currentUserType = "assessor";
 
     UserTypes = {
-        'assessor': {
-            title: 'Assessor Area'
+        "assessor": {
+            title: "Assessor Area"
         },
-        'professional': {
-            title: 'Professional Area'
+        "professional": {
+            title: "Professional Area"
         }
     };
 
@@ -28,18 +29,18 @@ export class LoginPage implements OnInit {
         private navCtrl: NavController,
         private authService: AuthenticateService,
         private formBuilder: FormBuilder,
-        private router: Router
+        private router: Router,
     ) {
-        this.currentUserType = this.router.url.split('/').pop();
+        this.currentUserType = this.router.url.split("/").pop();
     }
 
     ngOnInit() {
         this.validations_form = this.formBuilder.group({
-            email: new FormControl('', Validators.compose([
+            email: new FormControl("", Validators.compose([
                 Validators.required,
-                Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+                Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
             ])),
-            password: new FormControl('', Validators.compose([
+            password: new FormControl("", Validators.compose([
                 Validators.minLength(5),
                 Validators.required
             ])),
@@ -48,41 +49,43 @@ export class LoginPage implements OnInit {
     }
 
     validation_messages = {
-        'email': [
-            { type: 'required', message: 'Email is required.' },
-            { type: 'pattern', message: 'Please enter a valid email - remove last space.' }
+        "email": [
+            { type: "required", message: "Email is required." },
+            { type: "pattern", message: "Please enter a valid email - remove last space." }
         ],
-        'password': [
-            { type: 'required', message: 'Password is required.' },
-            { type: 'minlength', message: 'Password must be at least 5 characters long.' }
+        "password": [
+            { type: "required", message: "Password is required." },
+            { type: "minlength", message: "Password must be at least 5 characters long." }
         ]
     };
 
 
     loginUser(value: any) {
+        // console.log("login page loginUser value : ", value);
         this.authService.loginUser(value)
             .then(res => {
+                // console.log("login page loginUser res : ", JSON.stringify(res));
                 if (res && res.status) {
-                    if (res.status == 'success') {
+                    if (res.status == "success") {
                         this.authService.setUser(res.data);
+                        this.authService.setToken(res.token);
                         this.errorMessage = "";
-                        this.navCtrl.navigateForward('/home');
+                        this.navCtrl.navigateForward("/home");
                     } else {
                         this.errorMessage = res.message;
                     }
                 }
             }, err => {
-                console.log(err);
+                console.log("login page loginUser err : ", err);
                 this.errorMessage = JSON.stringify(err);
-                // this.errorMessage = "Something went wrong";
             })
     }
 
     goToRegisterPage() {
-        this.navCtrl.navigateForward('auth/register/' + this.currentUserType);
+        this.navCtrl.navigateForward("auth/register/" + this.currentUserType);
     }
     goToForgetPage() {
-        this.navCtrl.navigateForward('auth/forget/' + this.currentUserType);
+        this.navCtrl.navigateForward("auth/forget/" + this.currentUserType);
     }
 
 }

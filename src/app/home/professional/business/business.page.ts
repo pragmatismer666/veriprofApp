@@ -51,7 +51,7 @@ export class BusinessPage implements OnInit {
 
         this.restApi.post('professional/get-profile', { user_id: this.authService.user.userId }).subscribe((res: any) => {
             if (res.status != "noexist") {
-                this.form.professional_reg_no = res.personal.reg_no;
+                this.form.professional_reg_no = res.data.reg_no;
                 this.form.email_add = this.authService.user.email;
                 this.form.cell = this.authService.user.mobile;
             }
@@ -82,7 +82,6 @@ export class BusinessPage implements OnInit {
 
     submit() {
         for (let x in this.form) {
-            console.log(x);
             if (this.form[x].length == 0 && x != "file") {
                 let name = x.replace('_', ' ');
                 return this.restApi.toast("Please fill " + name,1200);
@@ -95,6 +94,9 @@ export class BusinessPage implements OnInit {
                 this.restApi.toast(res.message, 1200);
                 this.bids = res.data;
                 this.segment = "paper";
+                for (let x in this.form) {
+                    this.form[x] = "";
+                }
             }
         }, error => {
             this.restApi.toast('Something went wrong.', 1200);

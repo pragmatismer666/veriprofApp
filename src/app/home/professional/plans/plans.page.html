@@ -20,7 +20,7 @@
         <ion-card *ngSwitchCase="'paper'" class="p-fixed fixed-ion-card-area p-3">
             <strong>Project Info</strong>
             <ion-item>
-                <ion-label position="stacked">Clients Name</ion-label>
+                <ion-label position="stacked">Client Name</ion-label>
                 <ion-input name="client_name" [(ngModel)]="plan.client_name" value=""></ion-input>
             </ion-item>
             <ion-item>
@@ -43,7 +43,7 @@
                     <ion-select-option value="North West">North West</ion-select-option>
                     <ion-select-option value="Western Cape">Western Cape</ion-select-option>
                 </ion-select>
-                <ion-input placeholder="Zip Code" name="client_zipcode" [(ngModel)]="plan.client_zipcode">
+                <ion-input placeholder="POSTAL Code" name="client_zipcode" [(ngModel)]="plan.client_zipcode">
                 </ion-input>
             </ion-item>
             <ion-item>
@@ -132,6 +132,11 @@
                 <ion-input name="project_area" [(ngModel)]="plan.project_area"></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label position="stacked">Responsible QS</ion-label>
+                <ion-input name="responsible_qs" [(ngModel)]="plan.responsible_qs" value="{{plan.responsible_qs}}">
+                </ion-input>
+            </ion-item>
+            <ion-item>
                 <ion-label position="stacked">Responsible Professional</ion-label>
                 <ion-input name="professional" [(ngModel)]="plan.professional"></ion-input>
             </ion-item>
@@ -139,16 +144,6 @@
                 <ion-label position="stacked">Prof. Registration Number</ion-label>
                 <ion-input name="professional_reg_number" [(ngModel)]="plan.professional_reg_number"
                     value="{{plan.professional_reg_number}}"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Responsible QS</ion-label>
-                <ion-input name="responsible_qs" [(ngModel)]="plan.responsible_qs" value="{{plan.responsible_qs}}">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Full Name</ion-label>
-                <ion-input name="professional_name" [(ngModel)]="plan.professional_name"
-                    value="{{plan.professional_name}}"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">Project Cost</ion-label>
@@ -161,11 +156,7 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked" style="margin-bottom:12px;">Contact Details</ion-label>
-                <ion-input placeholder="Contact Eamil" name="contact_email" [(ngModel)]="plan.contact_email"
-                    value="{{plan.contact_email}}"></ion-input>
-                <ion-input placeholder="Contact Phone" name="contact_phone" [(ngModel)]="plan.contact_phone"
-                    value="{{plan.phone}}"></ion-input>
+                <ion-label position="stacked" style="margin-bottom:12px;">Responsible Prof Contact Details</ion-label>
                 <ion-input placeholder="Address Line 1" name="contact_address_line_1"
                     [(ngModel)]="plan.contact_address_line_1" value="{{plan.contact_address_line_1}}"></ion-input>
                 <ion-input placeholder="Address Line 2" name="contact_address_line_2"
@@ -176,9 +167,13 @@
                     value="{{plan.contact_province}}"></ion-input>
                 <ion-input placeholder="Zip Code" name="contact_zipcode" [(ngModel)]="plan.contact_zipcode"
                     value="{{plan.contact_zipcode}}"></ion-input>
+                <ion-input placeholder="Contact Eamil" name="contact_email" [(ngModel)]="plan.contact_email"
+                    value="{{plan.contact_email}}"></ion-input>
+                <ion-input placeholder="Contact Phone" name="contact_phone" [(ngModel)]="plan.contact_phone"
+                    value="{{plan.phone}}"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked" style="margin-bottom: 10px;">Upload PDF Copy of plan - FILE PLAN
+                <ion-label position="stacked" style="margin-bottom: 10px;">Upload PDF Copy of plan
                 </ion-label>
                 <ion-item>
                     <ion-input name="file" id="myFileInput" type="file" accept="application/pdf"
@@ -187,11 +182,11 @@
             </ion-item>
             <div class="ion-padding">
                 <ion-button expand="block" type="submit" class="ion-no-margin" color="dark" (click)="submit()">
-                    Request Verification</ion-button>
+                    FILE PLAN</ion-button>
             </div>
         </ion-card>
         <ion-card *ngSwitchCase="'added'">
-            <table class="table" style="width: 100%;">
+            <table class="table-common" style="width: 100%;">
                 <tr>
                     <th>Title</th>
                     <th>Profess Email</th>
@@ -202,10 +197,7 @@
                     <td>{{x.project_title}}</td>
                     <td>{{x.contact_email}}</td>
                     <td>{{x.created_at}}</td>
-                    <td class="d-flex">
-                        <ion-button size="small" color="success" (click)="download(x.certificate)"
-                            style="font-size: 10px;">Download</ion-button>
-                    </td>
+                    <td class="d-flex" class="td-download-bg" (click)="download(x.certificate)">Download</td>
                 </tr>
             </table>
         </ion-card>
@@ -213,7 +205,7 @@
     <br>
 </ion-content>
 
-<script>
+<!-- <script>
     const controller = document.querySelector('ion-alert-controller');
     let firstName, lastName;
     function processForm(event) {
@@ -234,4 +226,4 @@
     function handleLastNameValue(event) {
         lastName = event.target.value;
     }
-</script>
+</script> -->

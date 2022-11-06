@@ -46,10 +46,11 @@
 // Edit button 
 .profile_edit {
     float: right;
+    color: white;
 }
 
-.business_edit {
-    float: right;
+.opacity-disable {
+    opacity: 0.6;
 }
 
 .editbtn {
@@ -76,4 +77,10 @@
 
 .business_btn {
     font-size: 8px;
+}
+
+#profess_profile,
+#business_profile,
+#Buzi_info {
+    opacity: 0.6;
 }

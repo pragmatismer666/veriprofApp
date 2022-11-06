@@ -37,7 +37,7 @@ export class HomePage implements OnInit {
     }
 
     logout() {
-        localStorage.clear();
+        this.authService.logoutUser();
         this.navCtrl.navigateRoot('/landing');
     }
 }

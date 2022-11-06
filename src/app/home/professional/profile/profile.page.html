@@ -19,7 +19,7 @@
     <div [ngSwitch]="segment">
         <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'profess'">
             <strong>Individual Profile
-                <ion-button size="small" id="personal_edit" class="profile_edit" (click)="editPerson()">
+                <ion-button size="small" class="profile_edit" (click)="editPerson()">
                     <ng-container *ngIf="is_profileEdit">Cancel Edit</ng-container>
                     <ng-container *ngIf="!is_profileEdit">Edit Profile</ng-container>
                 </ion-button>
@@ -33,14 +33,22 @@
                     <ion-label color="success">Verified</ion-label>
                 </ng-container>
             </ion-row>
-            <ion-card id="profess_profile" disabled="true" style="opacity: 0.55;">
+            <ion-card-content id="profess_profile" disabled="true">
                 <ion-item>
-                    <ion-label>Are you director in Business?</ion-label>
+                    <ion-label>Are you a director in the Business?</ion-label>
                     <ng-container *ngIf="is_director">
-                        <ion-checkbox [(ngModel)]="is_director" checked="true"></ion-checkbox>
+                        <ion-button size="small" class="profile_edit">Yes
+                        </ion-button>
+                        <ion-button size="small" class="profile_edit opacity-disable"
+                            (click)="editDirector(is_director)">No
+                        </ion-button>
                     </ng-container>
                     <ng-container *ngIf="!is_director">
-                        <ion-checkbox [(ngModel)]="is_director"></ion-checkbox>
+                        <ion-button size="small" class="profile_edit opacity-disable"
+                            (click)="editDirector(is_director)">Yes
+                        </ion-button>
+                        <ion-button size="small" class="profile_edit">No
+                        </ion-button>
                     </ng-container>
                 </ion-item>
                 <ion-item>
@@ -48,7 +56,7 @@
                     <ion-input name="name" [(ngModel)]="form.name" value="{{form.name}}"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">SurName</ion-label>
+                    <ion-label position="stacked">Surname</ion-label>
                     <ion-input name="surname" [(ngModel)]="form.surname" value="{{form.surname}}"></ion-input>
                 </ion-item>
                 <ion-item>
@@ -74,10 +82,23 @@
                     </ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Employer Requirement PDF
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Supporting Documents
                     </ion-label>
-                    <ion-input name="file" id="hfileInput" type="file" accept="application/pdf"
-                        (change)="changeListener($event,'employer')" required></ion-input>
+                    <ion-item>
+                        <ion-label position="stacked">Letter of appointment</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'appointment')"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Practical completion</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'pratical_certification')"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">C V</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'cv')"></ion-input>
+                    </ion-item>
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Exp In years</ion-label>
@@ -92,12 +113,20 @@
                     <ion-label position="stacked">Job Title</ion-label>
                     <ion-input name="jtitle" [(ngModel)]="form.jtitle" value="{{form.jtitle}}"></ion-input>
                 </ion-item>
-                <ion-button expand="block" type="submit" class="ion-no-margin" color="dark" (click)="addProfile()"
-                    style="width: 90%;margin: 5%;">Request Verification
-                    <!-- <ng-container *ngIf="form.status =='Unverified'">Request Verification</ng-container>
-          <ng-container *ngIf="form.status == 'Verified'">Update Profile</ng-container> -->
-                </ion-button>
-            </ion-card>
+                <br>
+                <ng-container *ngIf="saveButtonFlag">
+                    <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
+                        disabled={{saveButtonFlag}}>Uploading
+                        File
+                    </ion-button>
+                </ng-container>
+                <ng-container *ngIf="!saveButtonFlag">
+                    <ion-button (click)="addProfile()" expand="block" type="submit" class="ion-no-margin" color="dark"
+                        disabled={{saveButtonFlag}}>Request Verification
+                    </ion-button>
+                </ng-container>
+
+            </ion-card-content>
         </ion-card>
         <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'business'">
             <ng-container *ngIf="is_director==true">
@@ -110,10 +139,10 @@
                     </ion-segment-button>
                 </ion-segment>
                 <div [ngSwitch]="business_seg">
-                    <ion-card-content *ngSwitchCase="'head'">
+                    <div *ngSwitchCase="'head'">
                         <ion-card-content style="padding: 0px;">
                             <strong>Practice Profile
-                                <ion-button size="small" class="business_edit" (click)="editBusiness()">
+                                <ion-button size="small" class="profile_edit" (click)="editBusiness()">
                                     <ng-container *ngIf="is_businessEdit">Cancel Edit</ng-container>
                                     <ng-container *ngIf="!is_businessEdit">Edit Business</ng-container>
                                 </ion-button>
@@ -128,7 +157,7 @@
                                 </ng-container>
                             </ion-row>
                         </ion-card-content>
-                        <ion-card-content class="p-1" id="business_profile" disabled="true" style="opacity: 0.55;">
+                        <ion-card-content class="p-1" id="business_profile" disabled="true">
                             <ion-item>
                                 <ion-label position="stacked">Practice Name</ion-label>
                                 <ion-input name="pname" [(ngModel)]="pform.pname" value="{{pform.pname}}">
@@ -174,8 +203,13 @@
                                     style="border-bottom: solid 1px;" value="{{pform.owned}}"></ion-input>
                                 <!-- <ion-input name="owned" class="full_part" [(ngModel)]="pform.owned" value="{{pform.owned}}" (change)="checkOwned()"></ion-input> -->
                             </ion-item>
-                            <ion-card-content>
+                            <div>
                                 <strong style="color:blue">Head Office Address</strong>
+                                <ion-item>
+                                    <ion-label position="stacked">Address</ion-label>
+                                    <ion-input placeholder="" name="hform_number" [(ngModel)]="hform.address"
+                                        value="{{hform.address}}"></ion-input>
+                                </ion-item>
                                 <ion-item>
                                     <ion-label position="stacked">Contact Number</ion-label>
                                     <ion-input placeholder="" name="hform_number" [(ngModel)]="hform.phone"
@@ -197,62 +231,82 @@
                                         [(ngModel)]="hform.res_prof_reg" value="{{hform.res_prof_reg}}"></ion-input>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Pdf to proof the
-                                        address</ion-label>
-                                    <ion-input name="file" id="hfileInput" type="file" accept="application/pdf"
-                                        (change)="changeListener($event,'hoffice')"></ion-input>
+                                    <ion-label position="stacked" style="margin-bottom: 10px;">SUPPORTING DOCUMENTS
+                                    </ion-label>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label position="stacked" style="margin-bottom: 5px;">PROOF OF ADDRESS
+                                    </ion-label>
+                                    <ion-input name="file" type="file" accept="application/pdf"
+                                        (change)="changeListener_dynamic($event,'hoffice_file_address')"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label position="stacked" style="margin-bottom: 5px;">RESPONSIBLE PROF PR
+                                        CERTIFICATE</ion-label>
+                                    <ion-input name="file" type="file" accept="application/pdf"
+                                        (change)="changeListener_dynamic($event,'hoffice_file_certificate')">
+                                    </ion-input>
                                 </ion-item>
                                 <br>
-                                <ion-card-content style="padding: 0px;">
-                                    <strong style="color:blue">Head Office Staff Info</strong>
-                                    <ion-card-content id="ho_staff_area" style="padding: 0px;">
-                                    </ion-card-content>
+                                <div style="padding: 0px;">
+                                    <!-- <strong style="color:blue">Head Office Staff Info</strong> -->
+                                    <ion-row id="ho_staff_area" style="padding: 0px;">
+                                    </ion-row>
                                     <ion-row>
                                         <ion-button type="button" color="dark" (click)="addStaff()">Add Head Office
                                             Staff</ion-button>
                                         <!-- <ion-button type="button" class="business_btn" color="dark" (click)="cancelStaff()">Cancel last Staff</ion-button> -->
                                     </ion-row>
-                                </ion-card-content>
-                            </ion-card-content>
+                                </div>
+                            </div>
                             <br>
-                            <strong style="color:blue">Branch Office Details</strong>
+                            <!-- <strong style="color:blue">Branch Office Details</strong> -->
                             <ion-card-content id="branch_area" style="padding: 0px;"></ion-card-content>
                             <ion-row>
                                 <ion-button color="dark" (click)="addbranch()">Add Branch Office</ion-button>
                                 <!-- <ion-button class="business_btn" color="dark" (click)="cancelbranch()">Cancel Last Office</ion-button> -->
                             </ion-row>
-                            <ion-card-content>
-                                <strong style="color:blue"> Type of Licensed Equipment</strong>
+                            <ion-card>
+                                <!-- <strong style="color:blue"> Type of Licensed Equipment</strong> -->
                                 <ion-card-content>
-                                    <strong>Software</strong>
+                                    <!-- <strong>Software</strong> -->
                                     <ion-card-content id="soft_area">
                                     </ion-card-content>
                                     <ion-button id="addsoft" expand="block" type="button" color="dark"
                                         (click)="addsoft()" style="font-size: 12px;">Add Software</ion-button>
                                 </ion-card-content>
                                 <ion-card-content>
-                                    <strong>Hardware</strong>
+                                    <!-- <strong>Hardware</strong> -->
                                     <ion-card-content id="hard_area">
                                     </ion-card-content>
                                     <ion-button id="addhard" expand="block" type="button" color="dark"
                                         (click)="addhard()" style="font-size: 12px;">Add Hardware</ion-button>
                                 </ion-card-content>
-                            </ion-card-content>
+                            </ion-card>
                             <div class="ion-padding">
-                                <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
-                                    (click)="addBusiness()">Request Verification
-                                    <!-- <ng-container *ngIf="pform.status =='Unverified'">Request Verification</ng-container>
-                <ng-container *ngIf="pform.status == 'Verified'">Update Profile</ng-container> -->
-                                </ion-button>
+                                <ng-container *ngIf="saveButtonFlag">
+                                    <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
+                                        disabled={{saveButtonFlag}}>Uploading
+                                        File
+                                    </ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="!saveButtonFlag">
+                                    <ion-button (click)="addBusiness()" expand="block" type="submit"
+                                        class="ion-no-margin" color="dark" disabled={{saveButtonFlag}}>Request
+                                        Verification
+                                    </ion-button>
+                                </ng-container>
                             </div>
                         </ion-card-content>
-                    </ion-card-content>
-                    <ion-card *ngSwitchCase="'branch'">
+                    </div>
+                    <ion-card-content *ngSwitchCase="'branch'">
                         <ng-container *ngIf="bo_offices.length == 0">
                             <h3>There is no Branch Office.</h3>
                         </ng-container>
                         <ng-container *ngIf="bo_offices.length > 0">
                             <div id="branch_areas" *ngFor="let obj of bo_offices; let i=index;" style="padding: 0px;">
+                                <ion-input placeholder="Address" id="address" name="pform_address"
+                                    [(ngModel)]="obj.address" value="{{obj.address}}"></ion-input>
                                 <ion-input placeholder="Contact Number" id="phone" name="pform_number"
                                     [(ngModel)]="obj.phone" value="{{obj.phone}}"></ion-input>
                                 <ion-input placeholder="Contact Email" id="email" name="pform_email"
@@ -269,17 +323,23 @@
                                     <strong style="color:blue">Branchs Staff Info</strong>
                                     <ion-card-content id="{{'bstaffs' + i}}">
                                     </ion-card-content>
-                                    <ion-button id="{{'bstaffbtn' + i}}" expand="block" type="button" color="dark"
+                                    <ion-button id="{{'bstaffbtn' + i}}" color="dark" style="margin-left: 20px;"
                                         (click)="addbstaff('bstaffs' + i, obj.phone)">Add Branch Office Staff
                                     </ion-button>
                                 </ion-card-content>
                             </div>
-                            <div class="ion-padding">
+                            <ng-container *ngIf="saveButtonFlag">
                                 <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
-                                    (click)="bstaffs()">Save Branch Staffs</ion-button>
-                            </div>
+                                    disabled={{saveButtonFlag}}>Uploading File
+                                </ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="!saveButtonFlag">
+                                <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
+                                    (click)="bstaffs()" disabled={{saveButtonFlag}}>Save Branch Staffs
+                                </ion-button>
+                            </ng-container>
                         </ng-container>
-                    </ion-card>
+                    </ion-card-content>
                 </div>
             </ng-container>
             <ng-container *ngIf="is_director==false">
@@ -289,7 +349,7 @@
                         <ng-container *ngIf="!is_nonDirectorEdit">Edit Information</ng-container>
                     </ion-button>
                 </strong>
-                <ion-card id="Buzi_info" disabled="true" style="opacity: 0.55;">
+                <ion-card id="Buzi_info" disabled="true">
                     <ion-card-content>
                         <strong>Select Business Name</strong>
                         <ion-select multiple="false" id="business_list" [(ngModel)]="mybusiness" value="{{mybusiness}}">

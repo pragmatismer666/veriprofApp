@@ -18,23 +18,20 @@
     <div [ngSwitch]="segment">
         <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'paper'">
             <table class="rwd-table">
-                <tr>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Profess Reg No</th>
-                    <th>Email Add</th>
-                    <th>Cell</th>
-                    <th>Bidder</th>
-                    <th>Client / Department</th>
-                    <th>Bid No</th>
-                    <th>Short Description</th>
-                    <th>Bid Partcipation</th>
-                    <th></th>
-                </tr>
-                <!-- <ng-container *ngIf="bids.length == 0">
-                        <div class="text-center" style="font-size: 1.25em;">There is no bids.</div>
-                    </ng-container> -->
-                <ng-container *ngIf="true">
+                <ng-container *ngIf="bids.length > 0">
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Profess Reg No</th>
+                        <th>Email Add</th>
+                        <th>Cell</th>
+                        <th>Bidder</th>
+                        <th>Client / Department</th>
+                        <th>Bid No</th>
+                        <th>Short Description</th>
+                        <th>Bid Partcipation</th>
+                        <th></th>
+                    </tr>
                     <tr *ngFor="let x of bids">
                         <td data-th="Name">{{x.name}}</td>
                         <td data-th="Surname">{{x.surname}}</td>
@@ -50,6 +47,9 @@
                                 Print / Download</ion-button>
                         </td>
                     </tr>
+                </ng-container>
+                <ng-container *ngIf="bids.length == 0">
+                    <div class="text-center">No Bids.</div>
                 </ng-container>
             </table>
         </ion-card>

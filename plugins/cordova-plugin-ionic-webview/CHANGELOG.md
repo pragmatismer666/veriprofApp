@@ -1,3 +1,61 @@
+# [5.0.0](https://github.com/ionic-team/cordova-plugin-ionic-webview/compare/v4.2.1...v5.0.0) (2020-05-27)
+
+
+### Features
+
+* **android:** remove RequiresApi annotation and drop support for API 19 ([#540](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/540)) ([17d2ada](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/17d2ada038cbd6548ed14887b1b7a0cbc98f1d83))
+* **ios:** remove normalizeURL function ([#576](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/576)) ([d5bdbaa](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/d5bdbaaf128bdd49cebe50fff52fbcf226998e7d))
+* **ios:** remove wkRewriteURL function ([#577](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/577)) ([02c18ea](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/02c18ea359e344ab904733b8dc582ceb4e25d581))
+
+
+### BREAKING CHANGES
+
+* **ios:** wkRewriteURL was deprecated and has been removed, use
+window.Ionic.WebView.convertFileSrc instead
+* **ios:** normalizeURL was deprecated and has been removed, use
+window.Ionic.WebView.convertFileSrc instead
+* **android:** Drop Android 4.4 support (SDK API level 19). Min required is 21.
+
+## [4.2.1](https://github.com/ionic-team/cordova-plugin-ionic-webview/compare/v4.2.0...v4.2.1) (2020-04-28)
+
+
+### Bug Fixes
+
+* **ios:** release userAgentLock for IAB compat ([#558](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/558)) ([4c027f3](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/4c027f3e1dadf790b1d699936b90b670b401db9e)), closes [#551](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/551)
+
+# [4.2.0](https://github.com/ionic-team/cordova-plugin-ionic-webview/compare/v4.1.3...v4.2.0) (2020-04-14)
+
+
+### Bug Fixes
+
+* **ionassethandler.m:** fix startPath is getting null ([#463](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/463)) ([0bf16f1](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/0bf16f1b73b853f40781c5de83964457cc4493d5))
+* **ios:** avoid app scrolling to top on keyboard hide ([#533](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/533)) ([7974eb4](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/7974eb4160f5e83cf4b3e98905beba1f874464a6))
+* **ios:** Replace deprecated APIs ([#539](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/539)) ([27b9021](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/27b9021d5d76b3e6dc6bfc83ab46b98cd301e694))
+
+
+### Features
+
+* **android:** proxy service worker requests through local server ([#452](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/452)) ([c672175](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/c672175b7527d64b077f7715b2ff145325524add))
+* **ios:** implement custom userAgent handling ([#537](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/537)) ([8587114](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/85871147ba8e5b23b693e518bf5ea800cccce8cc))
+
+## [4.1.3](https://github.com/ionic-team/cordova-plugin-ionic-webview/compare/v4.1.2...v4.1.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* **android:** return proper mimeType for .mjs files ([#455](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/455)) ([173a313](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/173a313))
+* **ios:** mitigate media memory usage ([#459](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/459)) ([cbd526d](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/cbd526d))
+* **ios:** remove itms-services private scheme ([#464](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/464)) ([d7d2600](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/d7d2600))
+
+## [4.1.2](https://github.com/ionic-team/cordova-plugin-ionic-webview/compare/v4.1.1...v4.1.2) (2019-09-25)
+
+
+### Bug Fixes
+
+* **android:** allow schemes that start by https ([#437](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/437)) ([fab9d1f](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/fab9d1f))
+* **Android:** return proper mimeType for wasm files ([0eb8a37](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/0eb8a37))
+* **ios:** make programmatically focus work on iOS 13 ([#438](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/438)) ([7a514b0](https://github.com/ionic-team/cordova-plugin-ionic-webview/commit/7a514b0)), closes [#435](https://github.com/ionic-team/cordova-plugin-ionic-webview/issues/435)
+
 ## [4.1.1](https://github.com/ionic-team/cordova-plugin-ionic-webview/compare/v4.1.0...v4.1.1) (2019-06-26)
 
 

@@ -52,10 +52,10 @@ export class RegisterPage implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router) {
         this.currentUserType = this.router.url.split('/').pop();
-        console.log(this.currentUserType);
     }
 
     ngOnInit() {
+        console.log(this.currentUserType, "+++++");
         this.validations_form = this.formBuilder.group({
             full_name: new FormControl('', Validators.compose([
                 Validators.required

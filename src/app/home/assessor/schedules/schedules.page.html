@@ -6,8 +6,8 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class="p-fixed p-3 m-1 scroll-y">
-        <form [formGroup]="schedule_form" (ngSubmit)="schedule_confirm(schedule_form.value)">
+    <ion-card class="p-2 m-2 scroll-y h-100">
+        <form class="p-2" [formGroup]="schedule_form" (ngSubmit)="schedule_confirm(schedule_form.value)">
             <ion-item color="" class="mt-4">
                 <ion-label position="floating" color="grey" class="inner">UserName</ion-label>
                 <ion-input type="text" formControlName="name" color="" class="inner" [readonly]="true"
@@ -41,19 +41,23 @@
                     Confirm</ion-button>
             </ion-segment>
         </form>
-        <table class="table mt-4">
-            <tr>
-                <th>Name</th>
-                <th>Verify Target</th>
-                <th>DateTime</th>
-                <th>Location</th>
-            </tr>
-            <tr *ngFor="let x of objs">
-                <td>{{x.name}}</td>
-                <td>{{x.verify_target}}</td>
-                <td>{{x.date.split('.')[0]}}</td>
-                <td>{{x.location}}</td>
-            </tr>
-        </table>
+        <div class="scrollH">
+            <table class="table mt-4 mb-2">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Verify Target</th>
+                        <th>DateTime</th>
+                        <th>Location</th>
+                    </tr>
+                    <tr *ngFor="let x of objs">
+                        <td>{{x.name}}</td>
+                        <td>{{x.verify_target}}</td>
+                        <td>{{x.date.split('.')[0]}}</td>
+                        <td>{{x.location}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </ion-card>
 </ion-content>

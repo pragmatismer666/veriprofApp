@@ -25,59 +25,108 @@
                         <tr *ngFor="let x of loadData">
                             <td data-th="Project Title">{{x.title}}</td>
                             <td data-th="Project Type">{{x.type}}</td>
-                            <td data-th="ERF / Lot No">{{x.proj_street1}}</td>
-                            <td data-th="GPS Coordinates">{{x.proj_street2}}</td>
-                            <td data-th="Street Address">{{x.proj_street3}}</td>
+                            <td data-th="ERF / Lot No">{{x.proj_address}}</td>
+                            <td data-th="GPS Coordinates">{{x.proj_gps}}</td>
+                            <td data-th="Street Address">{{x.proj_city}}</td>
                             <td data-th="Project Location">R {{x.proj_city}}</td>
-                            <td data-th="Project State">{{x.proj_state}}</td>
+                            <td data-th="Province">{{x.proj_state}}</td>
                             <td data-th="Portal Code">{{x.proj_zip}}</td>
                             <td data-th="Description">{{x.description}}</td>
                             <td data-th="Service Rendered">{{x.prof_type}}</td>
                             <td data-th="Construction Cost">R{{(x.const_cost)}}</td>
-                            <td data-th="Cost Variance">{{x.variable}}% over budget</td>
                             <td data-th="Professional Fees">R{{x.prof_cost}}</td>
                             <td data-th="Client Name">{{x.client_name}}</td>
                             <td data-th="Project Leader">{{x.pl_name}}</td>
-                            <td data-th="Leader Email">{{x.pl_email}}</td>
-                            <td data-th="Leader Phone">{{x.pl_phone}}</td>
-                            <td data-th="Start Year">{{x.year}}</td>
-                            <td data-th="Document">
-                                <ng-container *ngIf="x.file != ''">
-                                    <ion-button size="small" color="success" style="height: 1.2rem;margin-top: -10px;"
-                                        (click)="download(x.file)">Download</ion-button>
-                                </ng-container>
-                                <ng-container *ngIf="x.file == ''">There is no document.</ng-container>
-                            </td>
+                            <td data-th="Email">{{x.pl_email}}</td>
+                            <td data-th="Phone">{{x.pl_phone}}</td>
+                            <td data-th="Start Date">{{x.started_at}}</td>
+                            <ion-label class="textBold">Supporting Documents</ion-label><br>
+                            <ion-label>Letter of appointment</ion-label><br>
+                            <ng-container *ngIf="x.appointment != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.appointment)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.appointment == ''">
+                                <ion-label>There is no Letter of appointment.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Practical completion certificate</ion-label><br>
+                            <ng-container *ngIf="x.pratical_certification != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.pratical_certification)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.pratical_certification == ''">
+                                <ion-label>There is no Practical completion
+                                    certificate.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Final completion certificate</ion-label><br>
+                            <ng-container *ngIf="x.final_certification != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.final_certification)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.final_certification == ''">
+                                <ion-label>There is no Final completion
+                                    certificate.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Final account</ion-label><br>
+                            <ng-container *ngIf="x.final_account != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.final_account)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.final_account == ''">
+                                <ion-label>There is no Final account.</ion-label>
+                            </ng-container><br>
                             <ng-container *ngIf="x.status == 'Completed'">
                                 <td data-th="Final Cost">R{{x.final_cost}}</td>
+                                <td data-th="Cost Variance">{{x.variable}}% over budget</td>
                                 <td data-th="Completed Date" style="color: blue;">{{x.completed_at}}</td>
-                            </ng-container>
-                            <ng-container *ngIf="x.status == 'Ongoing'">
-                                <td data-th="Completed Date" style="color: rgb(0, 0, 0);">{{x.status}}</td>
-                            </ng-container>
-                            <ng-container *ngIf="x.status == 'Cancelled'">
-                                <td data-th="Cancelled Date" style="color: rgb(255, 0, 0);">{{x.completed_at}}</td>
-                            </ng-container>
-                            <ng-container *ngIf="x.status == 'Completed'">
                                 <td data-th="Project Status" style="color: blue;">{{x.status}}</td>
                             </ng-container>
                             <ng-container *ngIf="x.status == 'Ongoing'">
                                 <td data-th="Project Status" style="color: rgb(0, 0, 0);">{{x.status}}</td>
                             </ng-container>
                             <ng-container *ngIf="x.status == 'Cancelled'">
+                                <td data-th="Cancelled Date" style="color: rgb(255, 0, 0);">{{x.completed_at}}</td>
                                 <td data-th="Project Status" style="color: rgb(255, 0, 0);">{{x.status}}</td>
                             </ng-container>
-                            <ion-button size="small" color="success" class="project_verify"
-                                (click)="action(x, 'Completed')">Complete</ion-button>
-                            <ion-button size="small" style="color: blue;" class="project_verify"
-                                (click)="action(x, 'Ongoing')">Ongoing</ion-button>
-                            <ion-button size="small" color="danger" class="project_verify"
-                                (click)="action(x, 'Cancelled')">
-                                Cancelled</ion-button>
+                            <br>
+                            <ng-container *ngIf="x.status_verify == '1'">
+                                <ion-button size="small" color="success" class="project_verify"
+                                    (click)="action(x, 'Completed')" disabled="true">Complete</ion-button>
+                                <ion-button size="small" style="color: blue;" class="project_verify"
+                                    (click)="action(x, 'Ongoing')" disabled="true">Ongoing</ion-button>
+                                <ion-button size="small" color="danger" class="project_verify"
+                                    (click)="action(x, 'Cancelled')" disabled="true">
+                                    Cancelled</ion-button>
+                                <ion-item>
+                                    <ion-button size="small" color="success" class="project_update"
+                                        (click)="action(x, 'Update')" disabled="true">
+                                        Update</ion-button>
+                                    <ion-button size="small" color="dark" class="project_update"
+                                        (click)="action(x, 'Verify')" disabled="true">
+                                        Verification</ion-button>
+                                </ion-item>
+                            </ng-container>
+                            <ng-container *ngIf="x.status_verify == '0'">
+                                <ion-button size="small" color="success" class="project_verify"
+                                    (click)="action(x, 'Completed')">Complete</ion-button>
+                                <ion-button size="small" style="color: blue;" class="project_verify"
+                                    (click)="action(x, 'Ongoing')">Ongoing</ion-button>
+                                <ion-button size="small" color="danger" class="project_verify"
+                                    (click)="action(x, 'Cancelled')">
+                                    Cancelled</ion-button>
+                                <ion-item>
+                                    <ion-button size="small" color="success" class="project_update"
+                                        (click)="action(x, 'Update')">
+                                        Update</ion-button>
+                                    <ion-button size="small" color="dark" class="project_update"
+                                        (click)="action(x, 'Verify')">
+                                        Verification</ion-button>
+                                </ion-item>
+                            </ng-container>
                         </tr>
                     </ng-container>
                     <ng-container *ngIf="loadData.length == 0">
-                        <div class="text-center">No Project</div>
+                        <div class="text-center">No project or No connection.</div>
                     </ng-container>
                 </table>
             </ion-card-content>
@@ -138,6 +187,10 @@
                     <ion-input type="text" [(ngModel)]="form.prof_cost" min="0"></ion-input>
                 </ion-item>
                 <ion-item>
+                    <ion-label position="stacked">Start Date</ion-label>
+                    <ion-input type="date" placeholder="Mon/Day/Year" [(ngModel)]="form.started_at"></ion-input>
+                </ion-item>
+                <ion-item>
                     <ion-label>Select Project Status</ion-label>
                     <ion-select multiple="false" [(ngModel)]="form.status" (ionChange)="change_status($event)">
                         <ion-select-option value="Ongoing">Ongoing</ion-select-option>
@@ -145,20 +198,16 @@
                         <ion-select-option value="Cancelled">Cancelled</ion-select-option>
                     </ion-select>
                 </ion-item>
-                <ng-container *ngIf="complete_flag">
+                <ng-container *ngIf="completeFlag">
                     <ion-item>
                         <ion-label position="stacked">Final Cost(R, Input Only Number) : </ion-label>
                         <ion-input type="text" [(ngModel)]="form.final_cost" min="0"></ion-input>
                     </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Construction Completed Date</ion-label>
+                        <ion-input type="date" placeholder="Mon/Day/Year" [(ngModel)]="form.completed_at"></ion-input>
+                    </ion-item>
                 </ng-container>
-                <ion-item>
-                    <ion-label position="stacked">Start Date</ion-label>
-                    <ion-input type="date" placeholder="Mon/Day/Year" [(ngModel)]="form.year"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">Construction Complete Date</ion-label>
-                    <ion-input type="date" placeholder="Mon/Day/Year" [(ngModel)]="form.completed_at"></ion-input>
-                </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Client Name</ion-label>
                     <ion-input name="client_name" [(ngModel)]="form.client_name"></ion-input>
@@ -179,26 +228,53 @@
                     <ion-label position="stacked" style="margin-bottom: 10px;">Project Location</ion-label>
                     <ion-item>
                         <ion-label position="stacked"></ion-label>
-                        <ion-input placeholder="ERF /Lot No" name="proj_street1" [(ngModel)]="form.proj_street1">
+                        <ion-input placeholder="ERF /Lot No" name="proj_address" [(ngModel)]="form.proj_address">
                         </ion-input>
-                        <ion-input placeholder="GPS Coordinates" name="proj_street2" [(ngModel)]="form.proj_street2">
+                        <ion-input placeholder="GPS Coordinates" name="proj_gps" [(ngModel)]="form.proj_gps">
                         </ion-input>
-                        <ion-input placeholder="Street Address" name="proj_street3" [(ngModel)]="form.proj_street3">
+                        <ion-input placeholder="Street Address" name="proj_street" [(ngModel)]="form.proj_street">
                         </ion-input>
                         <ion-input placeholder="City" name="proj_city" [(ngModel)]="form.proj_city"></ion-input>
-                        <ion-input placeholder="State" name="proj_state" [(ngModel)]="form.proj_state"></ion-input>
+                        <ion-input placeholder="Province" name="proj_state" [(ngModel)]="form.proj_state"></ion-input>
                         <ion-input placeholder="Postal Code" name="proj_zip" [(ngModel)]="form.proj_zip"></ion-input>
                     </ion-item>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload PDF Copy of plan - FILE PLAN
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Supporting Documents
                     </ion-label>
                     <ion-item>
-                        <ion-input name="file" id="myFileInput" type="file" accept="application/pdf"
-                            (change)="changeListener($event)"></ion-input>
+                        <ion-label position="stacked">Letter of appointment</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'appointment')"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Practical completion</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'pratical_certification')"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Final completion certificate</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'final_certification')"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Final account</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'final_account')"></ion-input>
                     </ion-item>
                 </ion-item>
-                <ion-button (click)="addProjects()" style="width: 90%;margin: 10px;">Save Project</ion-button>
+                <ion-item style="margin-top: 20px;">
+                    <ng-container *ngIf="saveButtonFlag">
+                        <ion-button (click)="addProjects()" class="button-common" disabled={{saveButtonFlag}}>Uploading
+                            File
+                        </ion-button>
+                    </ng-container>
+                    <ng-container *ngIf="!saveButtonFlag">
+                        <ion-button (click)="addProjects()" class="button-common" disabled={{saveButtonFlag}}>Save
+                            Project
+                        </ion-button>
+                    </ng-container>
+                </ion-item>
             </ion-card-content>
         </ion-card>
     </div>

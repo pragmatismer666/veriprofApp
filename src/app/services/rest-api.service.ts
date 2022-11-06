@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Platform, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +16,7 @@ export class RestApiService {
     constructor(
         public toastController: ToastController,
         public http: HttpClient,
-        private platform: Platform
+        private iab: InAppBrowser,
     ) { }
 
     url(endpoint: string) {
@@ -25,16 +26,15 @@ export class RestApiService {
     getHeader() {
         return {
             headers: new HttpHeaders({
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 "Accept": 'application/json',
-                "Access-Control-Allow-Origin": '*'
+                "Access-Control-Allow-Origin": '*',
             })
         };
     }
 
     post(endpoint: string, data: any) {
         let url = this.url(endpoint);
-        this.getHeader();
         return this.http.post(url, data);
     }
 
@@ -43,16 +43,21 @@ export class RestApiService {
         return this.http.get(url);
     }
 
-    postFile(fileToUpload: File, endpoint: string): Observable<any> {
+    postFile(fileToUpload: File, endpoint: string, folderName: string): Observable<any> {
         let url = this.url(endpoint);
         const formData: FormData = new FormData();
-        formData.append('file-to-upload', fileToUpload, fileToUpload.name);
+        formData.append("file-to-upload", fileToUpload);
+        formData.append("folder", folderName);
         return this.http.post(url, formData);
     }
 
     downfile(type: string, filename: string) {
-        let url = this.base_url + "assets/" + type + filename;
-        window.open(url);
+        try {
+            let url = this.base_url + "assets/" + type + filename;
+            let browser = this.iab.create(url, "_system", {});
+        } catch (error) {
+            console.log(error, "+++++");
+        }
     }
 
     toast(message: string, duration: any) {
@@ -61,7 +66,6 @@ export class RestApiService {
             duration: duration
         }).then(toast => toast.present());
     }
-
 
 
 }

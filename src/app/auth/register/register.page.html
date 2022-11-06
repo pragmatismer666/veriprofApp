@@ -6,7 +6,8 @@
 </ion-header>
 
 <ion-content padding color="dark" class="centerMargin">
-    <form class="form" [formGroup]="validations_form" (ngSubmit)="tryRegister(validations_form.value)" style="margin-left: 5%; margin-right: 5%;">
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="tryRegister(validations_form.value)"
+        style="margin-left: 5%; margin-right: 5%;">
         <ion-item color="dark">
             <ion-label position="floating" color="medium" class="inner">Name</ion-label>
             <ion-input type="text" formControlName="full_name" color="medium" class="inner"></ion-input>
@@ -60,8 +61,11 @@
                 </div>
             </ng-container>
         </div>
-        <ion-button class="submit-btn" type="submit" [disabled]="!validations_form.valid" color="dark">Create Account
-        </ion-button>
+        <ng-container *ngIf="currentUserType == 'professional'">
+            <ion-button class="submit-btn" type="submit" [disabled]="!validations_form.valid" color="dark">Create
+                Account
+            </ion-button>
+        </ng-container>
         <label class="error-message" color="danger">{{errorMessage}}</label>
         <label class="success-message" color="danger">{{successMessage}}</label>
     </form>

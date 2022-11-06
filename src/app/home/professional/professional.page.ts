@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController, AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { RestApiService } from 'src/app/services/rest-api.service';
-import { AuthenticateService } from 'src/app/services/authentication.service';
+import { Component, OnInit } from "@angular/core";
+import { NavController, ToastController, AlertController } from "@ionic/angular";
+import { Router } from "@angular/router";
+import { RestApiService } from "src/app/services/rest-api.service";
+import { AuthenticateService } from "src/app/services/authentication.service";
 
 @Component({
-    selector: 'app-professional',
-    templateUrl: './professional.page.html',
-    styleUrls: ['./professional.page.scss'],
+    selector: "app-professional",
+    templateUrl: "./professional.page.html",
+    styleUrls: ["./professional.page.scss"],
 })
 export class ProfessionalPage implements OnInit {
 
@@ -16,8 +16,8 @@ export class ProfessionalPage implements OnInit {
 
     userName: string;
     objs: any;
-    errorMessage: string = '';
-    successMessage: string = '';
+    errorMessage: string = "";
+    successMessage: string = "";
     // Quick Verify
     exceptStrs: Array<string> = ["id", "created_by", "verified_by", "user_id", "is_director", "file", "certificate", "verify_code"];
     keyArray: Array<string> = [];
@@ -26,17 +26,18 @@ export class ProfessionalPage implements OnInit {
 
     // Accounts -------------------------
     account: any = {
-        name: this.authService.userDetails().name,
-        newpass: '',
-        confirm: '',
-        oldpass: ''
+        name: "",
+        email: "",
+        newpass: "",
+        confirm: "",
+        oldpass: ""
     };
     delete_account: any = {
-        oldpass: '',
-        confirm: ''
+        oldpass: "",
+        confirm: ""
     }
     // check Staff 
-    moffice: string = '';
+    moffice: string = "";
 
     constructor(
         public toastController: ToastController,
@@ -47,52 +48,58 @@ export class ProfessionalPage implements OnInit {
         public alertController: AlertController
     ) { }
 
-    ngOnInit() {
-        this.getAccount();
-        if (this.authService.userDetails()) {
-            this.userName = this.authService.userDetails().name;
+    async ngOnInit() {
+        // let token = await this.authService.getToken();
+        // console.log("Professional ngOnInit token : ", token);
+        let userData = this.authService.userDetails();
+        if (userData != null && userData != undefined) {
+            this.account.name = userData.name;
+            this.account.email = userData.email;
+            // this.account.mobile = userData.mobile;
+            this.userName = userData.name;
+            this.checkStaff();
         } else {
-            this.navCtrl.navigateBack('');
+            this.navCtrl.navigateBack("");
         }
     }
 
     project() {
-        this.router.navigateByUrl('home/professional/project');
+        this.router.navigateByUrl("home/professional/project");
     }
 
     profile() {
-        this.router.navigateByUrl('home/professional/profile');
+        this.router.navigateByUrl("home/professional/profile");
     }
 
     report() {
         if (this.authService.userDetails().account_type == "pro") {
-            this.router.navigateByUrl('home/professional/report');
+            this.router.navigateByUrl("home/professional/report");
         } else {
             this.restApi.toast("Only pro account can see reports!", 1000);
         }
     }
 
     plans() {
-        this.router.navigateByUrl('home/professional/plans');
+        this.router.navigateByUrl("home/professional/plans");
     }
 
     bids() {
-        this.router.navigateByUrl('home/professional/business');
+        this.router.navigateByUrl("home/professional/business");
     }
 
     payments() {
-        this.router.navigateByUrl('home/professional/payments');
+        this.router.navigateByUrl("home/professional/payments");
     }
 
     logout() {
         this.authService.logoutUser();
-        this.navCtrl.navigateBack('');
+        this.navCtrl.navigateBack("");
     }
 
     getProfess() {
-        this.restApi.get('professional/get-profess').subscribe((res: any) => {
+        this.restApi.get("professional/get-profess").subscribe((res: any) => {
             if (res && res.status) {
-                if (res.status == 'success') {
+                if (res.status == "success") {
                     this.objs = res.data;
                     console.log(this.objs);
                 } else {
@@ -123,31 +130,31 @@ export class ProfessionalPage implements OnInit {
             }
         } catch (error) {
             console.log(error);
-            this.restApi.toast('Response data type is wrong.', 1200);
+            this.restApi.toast("Response data type is wrong.", 1200);
         }
     }
 
     searchContent() {
         if (this.keyword == null) {
-            this.restApi.toast('Please put keyword.', 1200);
+            this.restApi.toast("Please put keyword.", 1200);
         } else if (this.keyword.trim() == "") {
-            this.restApi.toast('Please put keyword.', 1200);
+            this.restApi.toast("Please put keyword.", 1200);
         } else {
             this.valArray = [];
-            this.restApi.post('/search', { key: this.keyword.trim() })
+            this.restApi.post("/search", { key: this.keyword.trim() })
                 .subscribe((res: any) => {
                     console.log(res);
                     if (res && res.status) {
-                        if (res.status == 'success') {
-                            this.restApi.toast('Successfully.', 1200);
+                        if (res.status == "success") {
+                            this.restApi.toast("Successfully.", 1200);
                             this.manageData(res.data);
                         } else {
-                            this.restApi.toast('There is no result.', 1200);
+                            this.restApi.toast("There is no result.", 1200);
                         }
                     }
                 }, error => {
                     console.log(error);
-                    this.restApi.toast('Please Check search bar.', 1200);
+                    this.restApi.toast("Please Check search bar.", 1200);
                 });
         }
     }
@@ -160,10 +167,10 @@ export class ProfessionalPage implements OnInit {
             if (this.account.newpass != this.account.confirm) { this.restApi.toast("Please input same password in confirm.", 1200); checkFlag = false; return; }
             if (this.account.newpass < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
             if (this.account.name < 5) { this.restApi.toast("Name must be longer than 5 letters.", 1200); checkFlag = false; return; }
-            this.restApi.post('accessor/up-user', { user_id: this.authService.user.userId, data: this.account, pass: this.account.oldpass, key: key }).subscribe((res: any) => {
+            this.restApi.post("accessor/up-user", { user_id: this.authService.user.userId, data: this.account, pass: this.account.oldpass, key: key }).subscribe((res: any) => {
                 if (res && res.status) {
                     console.log(res.status);
-                    if (res.status == 'success') {
+                    if (res.status == "success") {
                         this.account.name = res.data.name;
                         this.restApi.toast("Updated as successfully. Please login again.", 1200);
                         this.logout();
@@ -178,9 +185,9 @@ export class ProfessionalPage implements OnInit {
         } else if (key == "delete") {
             if (this.delete_account.oldpass.length < 5) { this.restApi.toast("Password must be longer than 5 letters.", 1200); checkFlag = false; return; }
             if (this.delete_account.oldpass != this.delete_account.confirm) { this.restApi.toast("Please same password in confirm.", 1200); checkFlag = false; return; }
-            this.restApi.post('accessor/up-user', { user_id: this.authService.user.userId, data: {}, pass: this.delete_account.oldpass, key: key }).subscribe((res: any) => {
+            this.restApi.post("accessor/up-user", { user_id: this.authService.user.userId, data: {}, pass: this.delete_account.oldpass, key: key }).subscribe((res: any) => {
                 if (res && res.status) {
-                    if (res.status == 'success') {
+                    if (res.status == "success") {
                         this.restApi.toast("Updated as successfully. Please login again.", 1200);
                         this.logout();
                     }
@@ -201,18 +208,18 @@ export class ProfessionalPage implements OnInit {
     async delete() {
         let val = 0;
         const alert = await this.alertController.create({
-            cssClass: 'my-custom-class',
-            header: 'Your account and all information will be removed.',
+            cssClass: "my-custom-class",
+            header: "Your account and all information will be removed.",
             buttons: [
                 {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary'
+                    text: "Cancel",
+                    role: "cancel",
+                    cssClass: "secondary"
                 }, {
-                    text: 'Okay',
-                    cssClass: 'secondary',
+                    text: "Okay",
+                    cssClass: "secondary",
                     handler: () => {
-                        { this.update('delete'); }
+                        { this.update("delete"); }
                     }
                 }
             ]
@@ -222,7 +229,7 @@ export class ProfessionalPage implements OnInit {
 
     // Dashboard page functions
     getAccount() {
-        this.restApi.post('/get-users', { user_id: this.authService.user.userId }).subscribe((res: any) => {
+        this.restApi.post("get-users", { user_id: this.authService.user.userId }).subscribe((res: any) => {
             if (res && res.status == "success") {
                 this.account.name = res.data.name;
                 this.account.email = res.data.email;
@@ -236,27 +243,29 @@ export class ProfessionalPage implements OnInit {
     }
 
     checkStaff() {
-        this.restApi.post('professional/check-staff', { email: this.account.email }).subscribe((res: any) => {
+        // console.log("Professional Page, checkStaff, this.account.email : ", this.account.email);
+        this.restApi.post("professional/check-staff", { email: this.account.email }).subscribe((res: any) => {
             if (res && res.status == "success") {
-                if (res.data == 'no') { this.restApi.toast("There is no staff confirm request.", 800); }
+                if (res.data == "no") { this.restApi.toast("There is no staff confirm request.", 800); }
                 this.moffice = res.data;
             }
         }, error => {
-            console.log(error);
-            this.restApi.toast("Something went wrong.", 1200);
+            console.log("Professional Page, checkStaff, error : ", error);
+            this.moffice = "no";
+            // this.restApi.toast("Something went wrong.", 1200);
         });
     }
 
     saction(key: any) {
-        this.restApi.post('professional/verify-staff', { email: this.account.email, key: key }).subscribe((res: any) => {
-            if (res && res.status == 'success') {
+        this.restApi.post("professional/verify-staff", { email: this.account.email, key: key }).subscribe((res: any) => {
+            if (res && res.status == "success") {
                 this.restApi.toast(" Updated as successfully.", 1200);
             }
         }, error => {
             console.log(error);
             this.restApi.toast("Something went wrong.", 1200);
             this.restApi.toastController.create({
-                message: 'Something went wrong.',
+                message: "Something went wrong.",
                 duration: 2000
             }).then(toast => toast.present());
         });

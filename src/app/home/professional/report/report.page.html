@@ -6,20 +6,27 @@
 </ion-header>
 
 <ion-content>
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Assessor</th>
-            <th>Type</th>
-            <th>Document</th>
-        </tr>
-        <tr *ngFor="let x of objs">
-            <td>{{x.id}}</td>
-            <td>{{x.accessor}}</td>
-            <td>{{x.report_type}} Submission</td>
-            <td class="d-flex" (click)="download(x.filename)" style="background-color: lightgreen;">Download</td>
-        </tr>
-    </table>
+    <ion-card>
+        <table class="table">
+            <tr>
+                <!-- <th>ID</th>
+                <th>Assessor</th> -->
+                <th>Type</th>
+                <th>Client Name</th>
+                <th>Created at</th>
+                <th>Document</th>
+            </tr>
+            <tr *ngFor="let x of objs">
+                <!-- <td>{{x.id}}</td>
+                <td>{{x.accessor}}</td>
+                <td>{{x.report_type}} Submission</td> -->
+                <td>{{x.type}}</td>
+                <td>{{x.client_name}}</td>
+                <td>{{x.created_at}}</td>
+                <td (click)="download(x.file)" style="background-color: lightgreen;">Download</td>
+            </tr>
+        </table>
+    </ion-card>
 </ion-content>
 
 <ion-footer color="dark" class="footer">

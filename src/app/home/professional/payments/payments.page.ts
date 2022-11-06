@@ -46,9 +46,9 @@ export class PaymentsPage implements OnInit {
             if (res && res.status) {
                 // console.log(res.personal);
                 try {
-                    this.account = res.personal['0'].account.concat(' Account');
+                    this.account = res.data['0'].account.concat(' Account');
                     console.log(this.account);
-                    this.updated = res.personal['0'].account_updated;
+                    this.updated = res.data['0'].account_updated;
                 }
                 catch (Error) {
                     this.toastController.create({

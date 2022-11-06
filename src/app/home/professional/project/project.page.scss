@@ -14,11 +14,18 @@ $breakpoint-alpha: 800px; // adjust to your needs
     padding: 3px;
     height : 2rem;
     margin : 0rem;
+    width: 33%;
+}
+
+.project_update {
+    padding: 3px;
+    height : 2rem;
+    margin : 5%;
+    width: 40%;
 }
 
 .rwd-table {
     margin   : 1em 0;
-    min-width: 600px; // adjust to your needs
 
     tr {
         border-top   : 1px solid #ddd;
