@@ -90,12 +90,17 @@
                             (change)="changeListener($event, 'appointment')"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="stacked">Practical completion</ion-label>
+                        <ion-label position="stacked">Professional reqestration certificate</ion-label>
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'pratical_certification')"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="stacked">C V</ion-label>
+                        <ion-label position="stacked">Qualification</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'qualification')"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">CV</ion-label>
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'cv')"></ion-input>
                     </ion-item>
@@ -187,12 +192,13 @@
                                     <ion-select-option value="Business trust">Business trust</ion-select-option>
                                 </ion-select>
                             </ion-item>
-                            <ion-item>
+                            <div style="padding: 0px;">
                                 <ion-label position="stacked">Directors</ion-label>
-                                <ion-input name="directors" [(ngModel)]="pform.director" value="{{pform.director}}">
-                                </ion-input>
-                            </ion-item>
-                            <ion-item>
+                                <ion-card-content id="directors_area" style="padding: 0px;"></ion-card-content>
+                                <ion-button color="dark" (click)="adddirector()">Add director</ion-button>
+                            </div>
+                            <br>
+                            <!-- <ion-item>
                                 <ion-label position="stacked">Director Prof registration No</ion-label>
                                 <ion-input name="directors_prof_regno" [(ngModel)]="pform.dir_prof_regno"
                                     value="{{pform.dir_prof_regno}}"></ion-input>
@@ -201,8 +207,7 @@
                                 <ion-label position="stacked">Percentage Owned</ion-label>
                                 <ion-input name="owned" class="full_part" [(ngModel)]="pform.owned"
                                     style="border-bottom: solid 1px;" value="{{pform.owned}}"></ion-input>
-                                <!-- <ion-input name="owned" class="full_part" [(ngModel)]="pform.owned" value="{{pform.owned}}" (change)="checkOwned()"></ion-input> -->
-                            </ion-item>
+                            </ion-item> -->
                             <div>
                                 <strong style="color:blue">Head Office Address</strong>
                                 <ion-item>
@@ -261,11 +266,13 @@
                             </div>
                             <br>
                             <!-- <strong style="color:blue">Branch Office Details</strong> -->
-                            <ion-card-content id="branch_area" style="padding: 0px;"></ion-card-content>
-                            <ion-row>
-                                <ion-button color="dark" (click)="addbranch()">Add Branch Office</ion-button>
-                                <!-- <ion-button class="business_btn" color="dark" (click)="cancelbranch()">Cancel Last Office</ion-button> -->
-                            </ion-row>
+                            <div style="padding: 0px;">
+                                <ion-card-content id="branch_area" style="padding: 0px;"></ion-card-content>
+                                <ion-row>
+                                    <ion-button color="dark" (click)="addbranch()">Add Branch Office</ion-button>
+                                    <!-- <ion-button class="business_btn" color="dark" (click)="cancelbranch()">Cancel Last Office</ion-button> -->
+                                </ion-row>
+                            </div>
                             <ion-card>
                                 <!-- <strong style="color:blue"> Type of Licensed Equipment</strong> -->
                                 <ion-card-content>

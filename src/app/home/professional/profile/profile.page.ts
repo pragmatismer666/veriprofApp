@@ -34,6 +34,7 @@ export class ProfilePage implements OnInit {
         jtitle: "",
         appointment: "",
         pratical_certification: "",
+        qualification: "",
         cv: "",
         status: "Unverified",
         is_director: "false"
@@ -44,9 +45,6 @@ export class ProfilePage implements OnInit {
         pcouncil: "",
         pcipc_reg_no: "",
         ptype: "CC",
-        director: "",
-        dir_prof_regno: "",
-        owned: "",
         status: "Unverified"
     };
 
@@ -62,11 +60,14 @@ export class ProfilePage implements OnInit {
     }
 
     ho_staff_id: any = 0;
-    staffs: Array<{ name: string, surname: string, jtitle: string, exp_year: string, prof_reg_no: string, email: string, phone: string, file_appointment: string, file_cv: string }> = [];
+    staffs: Array<{ name: string, surname: string, jtitle: string, exp_year: string, prof_reg_no: string, email: string, phone: string, file_appointment: string, file_prof_registration: string, file_qualification: string, file_cv: string }> = [];
     soft_id: any = 0;
     softs: Array<{ name: string, filename: string }> = [];
     hard_id: any = 0;
     hards: Array<{ name: string, filename: string }> = [];
+
+    director_id: any = 0;
+    directors: Array<{ name: string, prof_reg_no: string, owned: string }>;
 
     bo_id: any = 0;
     bo_offices: Array<{ address: string, phone: string, email: string, res_prof_name: string, res_prof_reg: string, file_certificate: string, file_address: string, status: "Unverified" }> = [];
@@ -152,7 +153,7 @@ export class ProfilePage implements OnInit {
                 if (this.form.is_director == "0") { this.is_director = false; }
                 else { this.is_director = true; }
             } else {
-                let data = this.authService.getProfileData("personal");
+                let data = this.authService.getData("personal");
                 if (data != null && data != undefined) {
                     this.form = data;
                 }
@@ -163,7 +164,22 @@ export class ProfilePage implements OnInit {
         });
     }
 
-    //  Business - branch, staff, soft, hardware
+    //  Business - directors branch, staff, soft, hardware
+    adddirector() {
+        let new_branch = `<ion-item id="director${(this.director_id).toString()}" class="w-100"><ion-row class="w-100"><ion-label position="stacked" color="success">Director No : ${(this.director_id + 1).toString()}</ion-label><ion-button id="director_closebtn${(this.director_id).toString()}" class="closebtn_business">&#x2715</ion-button></ion-row><ion-item><ion-label position="stacked">Name</ion-label><ion-input id="dir_name${(this.director_id).toString()}" ></ion-input></ion-item><ion-item><ion-label position="stacked">Prof Reg No</ion-label><ion-input id="dir_prof_reg_no${(this.director_id).toString()}" ></ion-input></ion-item><ion-item><ion-label position="stacked">Owned (%)</ion-label><ion-input id="dir_owned${(this.director_id).toString()}"></ion-input></ion-item><br></ion-item>`;
+        document.getElementById("directors_area").insertAdjacentHTML("beforeend", new_branch);
+        // document.getElementById(`bo_file_address${this.director_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `bo_file_address${this.director_id.toString()}`) });
+        // document.getElementById(`bo_file_certificate${this.director_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `bo_file_certificate${this.director_id.toString()}`) });
+        document.getElementById(`director_closebtn${(this.director_id).toString()}`).addEventListener("click", this.closedirector);
+        this.director_id++;
+    }
+
+    closedirector(event: any) {
+        let element_id = event.srcElement.id;
+        let director_id = element_id.replace("director_closebtn", "");
+        document.getElementById(`director${director_id}`).remove();
+    }
+
     addbranch() {
         let new_branch = `<ion-item id="bo${(this.bo_id).toString()}" class="w-100"><ion-row class="w-100"><ion-label position="stacked" color="success">Branch Office No : ${(this.bo_id + 1).toString()}</ion-label><ion-button id="bo_closebtn${(this.bo_id).toString()}" class="closebtn_business">&#x2715</ion-button></ion-row><ion-item><ion-label position="stacked">Address</ion-label><ion-input id="bo_address${(this.bo_id).toString()}" ></ion-input></ion-item><ion-item><ion-label position="stacked">Contact Number</ion-label><ion-input id="phone${(this.bo_id).toString()}" >+</ion-input></ion-item><ion-item><ion-label position="stacked">Contact Email</ion-label><ion-input id="email${(this.bo_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">Responsible Professional Name</ion-label><ion-input id="res_prof_name${(this.bo_id).toString()}" ></ion-input></ion-item><ion-item><ion-label position="stacked">Responsible Professional PR CERTIFICATE</ion-label><ion-input id="res_prof_reg${(this.bo_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">SUPPORTING DOCUMENT</ion-label><ion-item><ion-label position="stacked">PROOF OF ADDRESS</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_file_address${(this.bo_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">RESPONSIBLE PROF PR CERTIFICATE</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_file_certificate${(this.bo_id).toString()}"></ion-input></ion-item><br></ion-item>`;
         document.getElementById("branch_area").insertAdjacentHTML("beforeend", new_branch);
@@ -180,9 +196,11 @@ export class ProfilePage implements OnInit {
     }
 
     addStaff() {
-        let new_staff = `<ion-item id="hstaff${(this.ho_staff_id).toString()}" class="w-100"><ion-row class="w-100"><ion-label position="stacked" color="success">Staff Member No : ${(this.ho_staff_id + 1).toString()}</ion-label><ion-button id="ho_staff_closebtn${(this.ho_staff_id).toString()}" class="closebtn_business">&#x2715</ion-button></ion-row><ion-input placeholder="Name" id="staffname${(this.ho_staff_id).toString()}" ></ion-input><ion-input placeholder="Surname" id="staffsurname${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Job Title" id="staffjtitle${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Exp in Years" class="exp_year" id="staffexp_year${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Professional registration No" id="staffprof_reg_no${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Contact Phone Number" id="staffphone${(this.ho_staff_id).toString()}" >+</ion-input><ion-input placeholder="Contact Email" id="staffemail${(this.ho_staff_id).toString()}"></ion-input><ion-item><ion-label position="stacked">LETTER OF APPOINTMENT</ion-label><ion-input name="file" type="file" accept="application/pdf" id="ho_staff_appointment${(this.ho_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">CV</ion-label><ion-input name="file" type="file" accept="application/pdf" id="ho_staff_cv${(this.ho_staff_id).toString()}"></ion-input></ion-item><br></ion-item>`;
+        let new_staff = `<ion-item id="hstaff${(this.ho_staff_id).toString()}" class="w-100"><ion-row class="w-100"><ion-label position="stacked" color="success">Staff Member No : ${(this.ho_staff_id + 1).toString()}</ion-label><ion-button id="ho_staff_closebtn${(this.ho_staff_id).toString()}" class="closebtn_business">&#x2715</ion-button></ion-row><ion-input placeholder="Name" id="staffname${(this.ho_staff_id).toString()}" ></ion-input><ion-input placeholder="Surname" id="staffsurname${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Job Title" id="staffjtitle${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Exp in Years" class="exp_year" id="staffexp_year${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Professional registration No" id="staffprof_reg_no${(this.ho_staff_id).toString()}"></ion-input><ion-input placeholder="Contact Phone Number" id="staffphone${(this.ho_staff_id).toString()}" >+</ion-input><ion-input placeholder="Contact Email" id="staffemail${(this.ho_staff_id).toString()}"></ion-input><ion-item><ion-label position="stacked">LETTER OF APPOINTMENT</ion-label><ion-input name="file" type="file" accept="application/pdf" id="ho_staff_appointment${(this.ho_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">Prof Registration</ion-label><ion-input name="file" type="file" accept="application/pdf" id="ho_staff_prof_registration${(this.ho_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">Qualification</ion-label><ion-input name="file" type="file" accept="application/pdf" id="ho_staff_qualification${(this.ho_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">CV</ion-label><ion-input name="file" type="file" accept="application/pdf" id="ho_staff_cv${(this.ho_staff_id).toString()}"></ion-input></ion-item><br></ion-item>`;
         document.getElementById("ho_staff_area").insertAdjacentHTML("beforeend", new_staff);
         document.getElementById(`ho_staff_appointment${this.ho_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `ho_staff_appointment${this.ho_staff_id.toString()}`) });
+        document.getElementById(`ho_staff_prof_registration${this.ho_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `ho_staff_prof_registration${this.ho_staff_id.toString()}`) });
+        document.getElementById(`ho_staff_qualification${this.ho_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `ho_staff_qualification${this.ho_staff_id.toString()}`) });
         document.getElementById(`ho_staff_cv${this.ho_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `ho_staff_cv${this.ho_staff_id.toString()}`) });
         document.getElementById(`ho_staff_closebtn${(this.ho_staff_id).toString()}`).addEventListener("click", this.closeStaff);
         this.ho_staff_id++;
@@ -224,10 +242,17 @@ export class ProfilePage implements OnInit {
 
     // manage datas in office
     manage() {
+        this.directors = [];
         this.softs = [];
         this.hards = [];
         this.staffs = [];
         this.bo_offices = [];
+        for (let i = 0; i < this.director_id; i++) {
+            let name = (document.getElementById("dir_name" + i.toString()) as HTMLInputElement).value.toString();
+            var prof_reg_no = (document.getElementById("dir_prof_reg_no" + i.toString()) as HTMLInputElement).value.toString();
+            var owned = (document.getElementById("dir_owned" + i.toString()) as HTMLInputElement).value.toString();
+            this.directors.push({ name: name, prof_reg_no: prof_reg_no, owned: owned });
+        }
         for (let i = 0; i < this.soft_id; i++) {
             if (document.getElementById(`soft${i}`) == null) {
                 continue;
@@ -261,10 +286,12 @@ export class ProfilePage implements OnInit {
                 if (document.getElementById(`hstaff${i}`) == null) {
                     continue;
                 } else {
-                    let file_appointment = ""; let file_cv = "";
+                    let file_appointment = ""; let file_cv = ""; let file_prof_registration = ""; let file_qualification = "";
                     for (let j = 0; j < this.pdfs.length; j++) {
                         if ("file_appointment" == this.pdfs[j].name && (i + 1).toString() == this.pdfs[j].id.toString()) { file_appointment = this.pdfs[j].filename; }
                         if ("file_cv" == this.pdfs[j].name && (i + 1).toString() == this.pdfs[j].id.toString()) { file_cv = this.pdfs[j].filename; }
+                        if ("file_prof_registration" == this.pdfs[j].name && (i + 1).toString() == this.pdfs[j].id.toString()) { file_prof_registration = this.pdfs[j].filename; }
+                        if ("file_qualification" == this.pdfs[j].name && (i + 1).toString() == this.pdfs[j].id.toString()) { file_qualification = this.pdfs[j].filename; }
                     }
                     var name = (document.getElementById("staffname" + i.toString()) as HTMLInputElement).value.toString();
                     var surname = (document.getElementById("staffsurname" + i.toString()) as HTMLInputElement).value.toString();
@@ -277,7 +304,7 @@ export class ProfilePage implements OnInit {
                     if (name == "" && surname == "" && jtitle == "" && exp_year == "" && prof_reg_no == "" && phone == "" && email == "") { continue; }
                     else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) != true) { this.toast("Please input validated email."); }
                     else if (name == "" || surname == "" || jtitle == "" || exp_year == "" || prof_reg_no == "" || phone == "" || email == "") { this.toast("Please Fill Gaps"); }
-                    this.staffs.push({ name: name, surname: surname, jtitle: jtitle, exp_year: exp_year, prof_reg_no: prof_reg_no, phone: phone, email: email, file_appointment: file_appointment, file_cv: file_cv });
+                    this.staffs.push({ name: name, surname: surname, jtitle: jtitle, exp_year: exp_year, prof_reg_no: prof_reg_no, phone: phone, email: email, file_appointment: file_appointment, file_prof_registration: file_prof_registration, file_qualification: file_qualification, file_cv: file_cv });
                 }
             } catch (error) {
                 continue;
@@ -324,6 +351,14 @@ export class ProfilePage implements OnInit {
         }
         let result_manage = this.manage();
         if (result_manage.status) {
+            for (let i = 0; i < this.directors.length; i++) {
+                for (let x in this.directors[i]) {
+                    if (this.directors[i][x].length == 0) {
+                        let name = x.replace("_", " ");
+                        return this.toast("Please fill " + name + " of the Director.");
+                    }
+                }
+            }
             for (let i = 0; i < this.bo_offices.length; i++) {
                 for (let x in this.bo_offices[i]) {
                     if (this.bo_offices[i][x].length == 0) {
@@ -356,15 +391,15 @@ export class ProfilePage implements OnInit {
                     }
                 }
             }
-            console.log({ user_id: this.authService.user.userId, data: this.pform, hoffice: this.hform, softs: this.softs, hards: this.hards, staffs: this.staffs, branchs: this.bo_offices })
-            this.restApi.post("professional/add-business", { user_id: this.authService.user.userId, data: this.pform, hoffice: this.hform, softs: this.softs, hards: this.hards, staffs: this.staffs, branchs: this.bo_offices }).subscribe((res: any) => {
+            console.log({ user_id: this.authService.user.userId, data: this.pform, hoffice: this.hform, softs: this.softs, hards: this.hards, staffs: this.staffs, branchs: this.bo_offices, directors: this.directors })
+            this.restApi.post("professional/add-business", { user_id: this.authService.user.userId, data: this.pform, hoffice: this.hform, softs: this.softs, hards: this.hards, staffs: this.staffs, branchs: this.bo_offices, directors: this.directors }).subscribe((res: any) => {
                 console.log(res);
                 if (res && res.status) {
                     this.restApi.toast(res.message, 1200);
-                    this.getBusiness();
-                    this.getBranchs();
-                    this.segment = "business";
-                    this.business_seg = "branch";
+                    // this.getBusiness();
+                    // this.getBranchs();
+                    // this.segment = "business";
+                    // this.business_seg = "branch";
                 } else {
                     this.restApi.toast(res.message, 1200);
                 }
@@ -406,11 +441,11 @@ export class ProfilePage implements OnInit {
                         message: res.message,
                         duration: 2000
                     }).then(toast => toast.present());
-                    let pformData = this.authService.getProfileData("business");
+                    let pformData = this.authService.getData("business");
                     if (pformData != null && pformData != undefined) {
                         this.pform = pformData;
                     }
-                    let hformData = this.authService.getProfileData("hoffice");
+                    let hformData = this.authService.getData("hoffice");
                     if (hformData != null && hformData != undefined) {
                         this.hform = hformData;
                     }
@@ -453,12 +488,14 @@ export class ProfilePage implements OnInit {
 
     //  b - branch office
     addbstaff(id: string, office_id: string) {
-        let new_staff = `<ion-item id="bo_staff${(this.bo_staff_id).toString()}" class="w-100"><ion-row class="w-100"><ion-label position="stacked" color="success" class="${office_id}">Staff No : ${(this.bo_staff_id + 1).toString()}</ion-label><ion-button id="bo_staff_closebtn${(this.bo_staff_id).toString()}" class="closebtn_business">&#x2715</ion-button></ion-row><ion-input placeholder="Name" id="bstaffname${(this.bo_staff_id).toString()}" ></ion-input><ion-input placeholder="Surname" id="bstaffsurname${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Job Title" id="bstaffjtitle${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Exp in Years" id="bstaffexp_year${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Professional registration No" id="bstaffprof_reg_no${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Contect Phone Number" id="bstaffphone${(this.bo_staff_id).toString()}" >+</ion-input><ion-input placeholder="Contact Email" id="bstaffemail${(this.bo_staff_id).toString()}"></ion-input><ion-item><ion-label position="stacked">LETTER OF APPOINTMENT</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_staff_appointment${(this.bo_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">CV</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_staff_cv${(this.bo_staff_id).toString()}"></ion-input></ion-item><br></ion-item>`;
+        let new_staff = `<ion-item id="bo_staff${(this.bo_staff_id).toString()}" class="w-100"><ion-row class="w-100"><ion-label position="stacked" color="success" class="${office_id}">Staff No : ${(this.bo_staff_id + 1).toString()}</ion-label><ion-button id="bo_staff_closebtn${(this.bo_staff_id).toString()}" class="closebtn_business">&#x2715</ion-button></ion-row><ion-input placeholder="Name" id="bstaffname${(this.bo_staff_id).toString()}" ></ion-input><ion-input placeholder="Surname" id="bstaffsurname${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Job Title" id="bstaffjtitle${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Exp in Years" id="bstaffexp_year${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Professional registration No" id="bstaffprof_reg_no${(this.bo_staff_id).toString()}"></ion-input><ion-input placeholder="Contect Phone Number" id="bstaffphone${(this.bo_staff_id).toString()}" >+</ion-input><ion-input placeholder="Contact Email" id="bstaffemail${(this.bo_staff_id).toString()}"></ion-input><ion-item><ion-label position="stacked">LETTER OF APPOINTMENT</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_staff_appointment${(this.bo_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">Prof Registration</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_staff_prof_registration${(this.bo_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">Qualification</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_staff_qualification${(this.bo_staff_id).toString()}"></ion-input></ion-item><ion-item><ion-label position="stacked">CV</ion-label><ion-input name="file" type="file" accept="application/pdf" id="bo_staff_cv${(this.bo_staff_id).toString()}"></ion-input></ion-item><br></ion-item>`;
         document.getElementById(id).insertAdjacentHTML("beforeend", new_staff);
         document.getElementById(`bo_staff_closebtn${(this.bo_staff_id).toString()}`).addEventListener("click", (e: Event) => { this.closeBranchStaff(e); });
         try {
             document.getElementById(`bo_staff_appointment${this.bo_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `bo_staff_appointment${this.bo_staff_id.toString()}`) });
             document.getElementById(`bo_staff_cv${this.bo_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `bo_staff_cv${this.bo_staff_id.toString()}`) });
+            document.getElementById(`bo_staff_prof_registration${this.bo_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `bo_staff_prof_registration${this.bo_staff_id.toString()}`) });
+            document.getElementById(`bo_staff_qualification${this.bo_staff_id.toString()}`).addEventListener("change", (e: Event) => { this.changeListener_dynamic(e, `bo_staff_qualification${this.bo_staff_id.toString()}`) });
         } catch (error) {
             console.log(" profile addbstaff error : ", error);
         }
@@ -480,10 +517,12 @@ export class ProfilePage implements OnInit {
             console.log(this.bo_offices[i], this.bo_offices[i].phone, eachOffice.length, this.pdfs);
             for (let j = 0; j < eachOffice.length; j++) {
                 try {
-                    let file_appointment = ""; let file_cv = "";
+                    let file_appointment = ""; let file_cv = ""; let file_qualification = ""; let file_prof_registration = "";
                     for (let k = 0; k < this.pdfs.length; k++) {
                         if ("bo_file_appointment" == this.pdfs[k].name && (bo_staff_id + 1).toString() == this.pdfs[k].id.toString()) { file_appointment = this.pdfs[k].filename; }
                         if ("bo_file_cv" == this.pdfs[k].name && (bo_staff_id + 1).toString() == this.pdfs[k].id.toString()) { file_cv = this.pdfs[k].filename; }
+                        if ("bo_file_prof_registration" == this.pdfs[k].name && (bo_staff_id + 1).toString() == this.pdfs[k].id.toString()) { file_prof_registration = this.pdfs[k].filename; }
+                        if ("bo_file_qualification" == this.pdfs[k].name && (bo_staff_id + 1).toString() == this.pdfs[k].id.toString()) { file_qualification = this.pdfs[k].filename; }
                     }
                     if (file_appointment == "") {
                         this.toast("Please upload Letter of appointment of the Branch Staff");
@@ -502,7 +541,7 @@ export class ProfilePage implements OnInit {
                     // if ( name == "" && surname == "" && jtitle == "" && exp_year == "" && prof_reg_no == "" && phone == "" && email == "" ){ continue; }
                     // else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) != true){ this.toast("Please input validated email."); }
                     // else if ( name == "" || surname == "" || jtitle == "" || exp_year == "" || prof_reg_no == "" || phone == "" || email == ""){ this.toast("Please Fill Gaps"); }
-                    this.staffs.push({ name: name, surname: surname, jtitle: jtitle, exp_year: exp_year, prof_reg_no: prof_reg_no, phone: phone, email: email, file_appointment: file_appointment, file_cv: file_cv });
+                    this.staffs.push({ name: name, surname: surname, jtitle: jtitle, exp_year: exp_year, prof_reg_no: prof_reg_no, phone: phone, email: email, file_appointment: file_appointment, file_prof_registration: file_prof_registration, file_qualification: file_qualification, file_cv: file_cv });
                     bo_staff_id++;
                 } catch (error) {
                     bo_staff_id++;
@@ -607,12 +646,24 @@ export class ProfilePage implements OnInit {
                         } else if (keyword.includes("ho_staff_appointment")) {
                             current_index = parseInt(keyword.replace("ho_staff_appointment", ""));
                             this.pdfs.push({ id: current_index, name: "file_appointment", filename: res.filename });
+                        } else if (keyword.includes("ho_staff_prof_registration")) {
+                            current_index = parseInt(keyword.replace("ho_staff_prof_registration", ""));
+                            this.pdfs.push({ id: current_index, name: "file_prof_registration", filename: res.filename });
+                        } else if (keyword.includes("ho_staff_qualification")) {
+                            current_index = parseInt(keyword.replace("ho_staff_qualification", ""));
+                            this.pdfs.push({ id: current_index, name: "file_qualification", filename: res.filename });
                         } else if (keyword.includes("ho_staff_cv")) {
                             current_index = parseInt(keyword.replace("ho_staff_cv", ""));
                             this.pdfs.push({ id: current_index, name: "file_cv", filename: res.filename });
                         } else if (keyword.includes("bo_staff_appointment")) {
                             current_index = parseInt(keyword.replace("bo_staff_appointment", ""));
                             this.pdfs.push({ id: current_index, name: "bo_file_appointment", filename: res.filename });
+                        } else if (keyword.includes("bo_staff_qualification")) {
+                            current_index = parseInt(keyword.replace("bo_staff_qualification", ""));
+                            this.pdfs.push({ id: current_index, name: "bo_file_qualification", filename: res.filename });
+                        } else if (keyword.includes("bo_staff_prof_registration")) {
+                            current_index = parseInt(keyword.replace("bo_staff_prof_registration", ""));
+                            this.pdfs.push({ id: current_index, name: "bo_file_prof_registration", filename: res.filename });
                         } else if (keyword.includes("bo_staff_cv")) {
                             current_index = parseInt(keyword.replace("bo_staff_cv", ""));
                             this.pdfs.push({ id: current_index, name: "bo_file_cv", filename: res.filename });

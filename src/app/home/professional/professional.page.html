@@ -11,13 +11,17 @@
             <ion-segment>
                 <ion-segment>
                     <ion-card (click)="project()">
-                        <ion-img src="../../../assets/myproj.png"></ion-img>
+                        <ion-card-content>
+                            <ion-img src="../../../assets/myproj.png"></ion-img>
+                        </ion-card-content>
                         <ion-label class="inner">My Projects</ion-label>
                     </ion-card>
                 </ion-segment>
                 <ion-segment>
                     <ion-card (click)="profile()">
-                        <ion-img src="../../../assets/prof.png"></ion-img>
+                        <ion-card-content>
+                            <ion-img src="../../../assets/prof.png"></ion-img>
+                        </ion-card-content>
                         <ion-label class="inner">My Profile</ion-label>
                     </ion-card>
                 </ion-segment>
@@ -25,27 +29,35 @@
             <ion-segment>
                 <ion-segment>
                     <ion-card (click)="plans()">
-                        <ion-img src="../../../assets/plans.png"></ion-img>
+                        <ion-card-content>
+                            <ion-img src="../../../assets/plans.png" class="prof_img_icon"></ion-img>
+                        </ion-card-content>
                         <ion-label class="inner">ePlan Filling</ion-label>
                     </ion-card>
                 </ion-segment>
                 <ion-segment>
                     <ion-card (click)="report()">
-                        <ion-img src="../../../assets/reports.png"></ion-img>
-                        <ion-label class="inner">Reporting</ion-label>
+                        <ion-card-content>
+                            <ion-img src="../../../assets/reports.png"></ion-img>
+                        </ion-card-content>
+                        <ion-label class="inner">Verified Report</ion-label>
                     </ion-card>
                 </ion-segment>
             </ion-segment>
             <ion-segment>
                 <ion-segment>
                     <ion-card (click)="bids()">
-                        <ion-img src="../../../assets/accreport.png"></ion-img>
+                        <ion-card-content>
+                            <ion-img src="../../../assets/accreport.png"></ion-img>
+                        </ion-card-content>
                         <ion-label class="inner">Tender BIDS</ion-label>
                     </ion-card>
                 </ion-segment>
                 <ion-segment>
                     <ion-card (click)="payments()">
-                        <ion-img src="../../../assets/paydue.png"></ion-img>
+                        <ion-card-content>
+                            <ion-img src="../../../assets/paydue.png"></ion-img>
+                        </ion-card-content>
                         <ion-label class="inner">Payment</ion-label>
                     </ion-card>
                 </ion-segment>

@@ -44,6 +44,7 @@ ion-item {
     font-size: 11px;
     color    : rgb(109, 109, 109);
 }
+
 // Scroll
 .scroll-x {
     overflow-x: scroll !important;
@@ -52,6 +53,7 @@ ion-item {
 .scroll-y {
     overflow-y: scroll !important;
 }
+
 // position
 .p-fixed {
     position: fixed !important;
@@ -80,9 +82,13 @@ ion-item {
     --padding-end  : 5% !important;
 }
 
-// 
+// background
 .transparent-modal .modal-wrapper {
     --background: rgba(44, 39, 45, 0.7);
+}
+
+.background-black {
+    --background: rgb(0, 0, 0) !important;
 }
 
 // Test global css
@@ -97,30 +103,32 @@ h3 h5 {
 .textBold {
     font-weight: 800;
 }
+
 // common-button
 .button-common {
-    width: 90%; 
+    width : 90%;
     height: 30px;
 }
-.down-btn-profe{
-    height: 1.2rem;
+
+.down-btn-profe {
+    height    : 1.2rem;
     margin-top: -12px;
-    float: right;
+    float     : right;
 }
 
-.closebtn_business{
+.closebtn_business {
     --border-radius: 50%;
-    margin-left: auto;
-    margin-right: 5px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-weight: bolder;
-    height: 25px;
-    width: 25px;
+    margin-left    : auto;
+    margin-right   : 5px;
+    margin-top     : 0px;
+    margin-bottom  : 0px;
+    font-weight    : bolder;
+    height         : 25px;
+    width          : 25px;
 }
 
 // Common Table CSS
-.td-download-bg{
+.td-download-bg {
     background-color: #2dd36f !important;
 }
 
@@ -145,3 +153,17 @@ h3 h5 {
 .scrollH-common {
     overflow-x: auto;
 }
+
+// opacity
+.opacity-6 {
+    opacity: 0.6 !important;
+}
+
+// Margin
+.marginTop-20px {
+    margin-top: 20px !important;
+}
+
+// .margin-5% {
+//     margin-top: 20px !important;
+// }

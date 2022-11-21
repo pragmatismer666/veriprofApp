@@ -74,8 +74,18 @@ export class AuthenticateService {
         localStorage.setItem("business", JSON.stringify(businessProfile));
         localStorage.setItem("hoffice", JSON.stringify(hofficeProfile));
     }
-
-    getProfileData(type: string) {
+    
+    getData(type: string) {
         return JSON.parse(localStorage.getItem(type));
     }
+
+    saveData(data: any, type: string) {
+        this.storage.set(type, JSON.stringify(data));
+    }
+
+    async getSavedData(type: string) {
+        let data = await this.storage.get(type);
+        return JSON.parse(data);
+    }
+    
 }

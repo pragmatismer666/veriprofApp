@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { RestApiService } from "src/app/services/rest-api.service";
 import { AuthenticateService } from "src/app/services/authentication.service";
-import { ToastController, AlertController } from "@ionic/angular";
+import { ToastController, AlertController, IonModal } from "@ionic/angular";
 
 @Component({
     selector: "app-project",
@@ -10,9 +10,12 @@ import { ToastController, AlertController } from "@ionic/angular";
 })
 export class ProjectPage implements OnInit {
 
+    @ViewChild(IonModal) modal: IonModal;
+    isUpdateModal: Boolean = false;
+    current_status: string = "Ongoing";
     segment: string = "paper";
     name: string = "any";
-    completeFlag: Boolean = false;
+    completeFlag: number = 0;
     loadData: Array<any> = [];
     updateData: any
     form: any = {
@@ -43,12 +46,19 @@ export class ProjectPage implements OnInit {
         final_account: "",
         status_verify: "0",
     }
-    saveButtonFlag: Boolean = false;
 
+    updateProjectData: any = {
+        title: "",
+        user_id: this.authService.user.userId,
+        verified: "",
+        completed_at: "",
+        final_cost: "0"
+    };
+
+    saveButtonFlag: Boolean = false;
     constructor(public restApi: RestApiService, public authService: AuthenticateService, public toastController: ToastController, private alertController: AlertController) { }
 
     ngOnInit() {
-
         this.getProjects();
     }
 
@@ -84,9 +94,9 @@ export class ProjectPage implements OnInit {
         if (proj_state.length == 0) { this.restApi.toast("Please fill Project Location Province", 1200); return; }
         if (proj_zip.length == 0) { this.restApi.toast("Please fill Project Location Zipcode", 1200); return; }
         if (appointment.length == 0) { this.restApi.toast("Please input letter of appointment and wait for seconds.", 1200); return; }
-        if (pratical_certification.length == 0) { this.restApi.toast("Please input pratical completion certificate and wait for seconds.", 1200); return; }
-        if (final_certification.length == 0) { this.restApi.toast("Please input final completion certificate and wait for seconds.", 1200); return; }
-        if (final_account.length == 0) { this.restApi.toast("Please input final account and wait for seconds.", 1200); return; }
+        if (pratical_certification.length == 0 && this.completeFlag == 1) { this.restApi.toast("Please input pratical completion certificate and wait for seconds.", 1200); return; }
+        if (final_certification.length == 0 && this.completeFlag == 1) { this.restApi.toast("Please input final completion certificate and wait for seconds.", 1200); return; }
+        if (final_account.length == 0 && (this.completeFlag == 1 || this.completeFlag == -1)) { this.restApi.toast("Please input final account and wait for seconds.", 1200); return; }
         // if (!this.form.const_cost.includes("R")) { this.form.const_cost = this.form.const_cost.concat("R");}
         // if (!this.form.prof_cost.includes("R")) {this.form.prof_cost = this.form.prof_cost.concat("R");}
         if (status != "Ongoing" && final_cost != "0" && final_cost != "") {
@@ -109,43 +119,29 @@ export class ProjectPage implements OnInit {
         });
     }
 
+    closeUpdateModal() {
+        this.isUpdateModal = false;
+    }
+
     async action(x: any, act: any) {
-        let updateProjectData = { title: x.title, user_id: x.created_by, verified: act, completed_at: "", final_cost: "0" };
-        if (act == "Completed" || act == "Cancelled") {
-            const alert = await this.alertController.create({
-                header: 'Please enter your info',
-                buttons: [{
-                    text: 'OK',
-                    handler: (data) => {
-                        if (data["0"] == "" || data["1"] == "") {
-                            return false;
-                        } else if (parseFloat(data["0"]) > parseFloat(x.const_cost)) {
-                            return false;
-                        }
-                        else {
-                            updateProjectData.completed_at = data["1"];
-                            updateProjectData.final_cost = data["0"];
-                            console.log(updateProjectData, x, data);
-                            this.updateStatus(updateProjectData);
-                        }
-                    }
-                }],
-                inputs: [
-                    {
-                        type: 'number',
-                        placeholder: 'Final Cost',
-                        min: 1
-                    },
-                    {
-                        type: 'date',
-                        placeholder: 'Mon/Day/Year',
-                        min: x.started_at
-                    },
-                ],
-            });
-            await alert.present();
-        } else if (act == "Ongoing") {
-            this.updateStatus(updateProjectData);
+        // let updateProjectData = { title: x.title, user_id: x.created_by, verified: act, completed_at: "", final_cost: "0" };
+        // console.log(x, updateProjectData);
+        this.updateProjectData.title = x.title;
+        this.updateProjectData.verified = act;
+        this.current_status = act;
+        if (act == "Completed") {
+            this.updateProjectData["pratical_certification"] = "";
+            this.updateProjectData["final_certification"] = "";
+            this.updateProjectData["final_account"] = "";
+            this.isUpdateModal = true;
+        } else if (act == "Cancelled") {
+            this.updateProjectData["pratical_certification"] = "";
+            this.updateProjectData["final_certification"] = "";
+            this.updateProjectData["final_account"] = "";
+            this.isUpdateModal = true;
+        }
+        else if (act == "Ongoing") {
+            this.updateStatus();
         } else if (act == "Update") {
             this.form = x;
             this.segment = "add-circle";
@@ -154,7 +150,7 @@ export class ProjectPage implements OnInit {
         }
     }
 
-    request_verification(project_id: string){
+    request_verification(project_id: string) {
         this.restApi.post("professional/request-verificationProject", { user_id: this.authService.user.userId, project_id: project_id }).subscribe((res: any) => {
             if (res && res.status) {
                 this.restApi.toast(res.message, 1200);
@@ -165,10 +161,21 @@ export class ProjectPage implements OnInit {
         });
     }
 
-    updateStatus(data: any) {
-        this.restApi.post("professional/action-project", data).subscribe((res: any) => {
+    updateStatus() {
+        if (this.updateProjectData.verified != "Ongoing") {
+            if (this.updateProjectData.final_cost == "0") {
+                this.restApi.toast("Please Input Final Cost", 1200); return;
+            }
+            if (this.updateProjectData.completed_at == "") {
+                this.restApi.toast("Please Input Correct Date", 1200); return;
+            }
+        }
+        // console.log(this.updateProjectData);
+        this.restApi.post("professional/action-project", this.updateProjectData).subscribe((res: any) => {
             if (res && res.status) {
+                // console.log(res);
                 if (res.status == "success") {
+                    this.isUpdateModal = false;
                     this.getProjects();
                 } else {
                     this.restApi.toast(res.message, 1200);
@@ -180,10 +187,12 @@ export class ProjectPage implements OnInit {
     }
 
     change_status(event: any) {
-        if (event.detail.value == "Completed" || event.detail.value == "Cancelled") {
-            this.completeFlag = true;
+        if (event.detail.value == "Completed") {
+            this.completeFlag = 1;
+        } else if (event.detail.value == "Cancelled") {
+            this.completeFlag = -1;
         } else if (event.detail.value == "Ongoing") {
-            this.completeFlag = false;
+            this.completeFlag = 0;
         }
     }
 
@@ -193,8 +202,12 @@ export class ProjectPage implements OnInit {
         if (file && file.type == "application/pdf") {
             this.restApi.postFile(file, "upload-file", "project").subscribe(res => {
                 if (res && res.status && res.status == "success") {
-                    this.form[`${type}`] = res.filename;
-                    console.log(" Project page - after upload file : ", this.form);
+                    if (type.includes("isUpdateModal_")) {
+                        let keyword = type.replace("isUpdateModal_", "");
+                        this.updateProjectData[`${keyword}`] = res.filename;
+                    } else {
+                        this.form[`${type}`] = res.filename;
+                    }
                     this.saveButtonFlag = false;
                 }
             }, error => {

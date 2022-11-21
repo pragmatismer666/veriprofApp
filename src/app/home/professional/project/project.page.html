@@ -34,6 +34,10 @@
                             <td data-th="Description">{{x.description}}</td>
                             <td data-th="Service Rendered">{{x.prof_type}}</td>
                             <td data-th="Construction Cost">R{{(x.const_cost)}}</td>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <td data-th="Final Cost">R{{x.final_cost}}</td>
+                                <td data-th="Cost Variance">{{x.variable}}% over budget</td>
+                            </ng-container>
                             <td data-th="Professional Fees">R{{x.prof_cost}}</td>
                             <td data-th="Client Name">{{x.client_name}}</td>
                             <td data-th="Project Leader">{{x.pl_name}}</td>
@@ -47,37 +51,41 @@
                                     (click)="download(x.appointment)">Download</ion-button>
                             </ng-container>
                             <ng-container *ngIf="x.appointment == ''">
-                                <ion-label>There is no Letter of appointment.</ion-label>
-                            </ng-container><br>
-                            <ion-label>Practical completion certificate</ion-label><br>
-                            <ng-container *ngIf="x.pratical_certification != ''">
-                                <ion-button size="small" color="success" class="down-btn-profe"
-                                    (click)="download(x.pratical_certification)">Download</ion-button>
-                            </ng-container>
-                            <ng-container *ngIf="x.pratical_certification == ''">
-                                <ion-label>There is no Practical completion
-                                    certificate.</ion-label>
-                            </ng-container><br>
-                            <ion-label>Final completion certificate</ion-label><br>
-                            <ng-container *ngIf="x.final_certification != ''">
-                                <ion-button size="small" color="success" class="down-btn-profe"
-                                    (click)="download(x.final_certification)">Download</ion-button>
-                            </ng-container>
-                            <ng-container *ngIf="x.final_certification == ''">
-                                <ion-label>There is no Final completion
-                                    certificate.</ion-label>
-                            </ng-container><br>
-                            <ion-label>Final account</ion-label><br>
-                            <ng-container *ngIf="x.final_account != ''">
-                                <ion-button size="small" color="success" class="down-btn-profe"
-                                    (click)="download(x.final_account)">Download</ion-button>
-                            </ng-container>
-                            <ng-container *ngIf="x.final_account == ''">
-                                <ion-label>There is no Final account.</ion-label>
+                                <ion-label>&nbsp;&nbsp;There is no Letter of appointment.</ion-label>
                             </ng-container><br>
                             <ng-container *ngIf="x.status == 'Completed'">
-                                <td data-th="Final Cost">R{{x.final_cost}}</td>
-                                <td data-th="Cost Variance">{{x.variable}}% over budget</td>
+                                <ion-label>Practical completion certificate</ion-label><br>
+                                <ng-container *ngIf="x.pratical_certification != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.pratical_certification)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.pratical_certification == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Practical completion
+                                        certificate.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <ion-label>Final completion certificate</ion-label><br>
+                                <ng-container *ngIf="x.final_certification != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.final_certification)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.final_certification == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Final completion
+                                        certificate.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed' || x.status == 'Cancelled'">
+                                <ion-label>Final account</ion-label><br>
+                                <ng-container *ngIf="x.final_account != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.final_account)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.final_account == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Final account.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed'">
                                 <td data-th="Completed Date" style="color: blue;">{{x.completed_at}}</td>
                                 <td data-th="Project Status" style="color: blue;">{{x.status}}</td>
                             </ng-container>
@@ -198,7 +206,7 @@
                         <ion-select-option value="Cancelled">Cancelled</ion-select-option>
                     </ion-select>
                 </ion-item>
-                <ng-container *ngIf="completeFlag">
+                <ng-container *ngIf="completeFlag==1">
                     <ion-item>
                         <ion-label position="stacked">Final Cost(R, Input Only Number) : </ion-label>
                         <ion-input type="text" [(ngModel)]="form.final_cost" min="0"></ion-input>
@@ -247,25 +255,34 @@
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'appointment')"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked">Practical completion</ion-label>
-                        <ion-input name="file" type="file" accept="application/pdf"
-                            (change)="changeListener($event, 'pratical_certification')"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked">Final completion certificate</ion-label>
-                        <ion-input name="file" type="file" accept="application/pdf"
-                            (change)="changeListener($event, 'final_certification')"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked">Final account</ion-label>
-                        <ion-input name="file" type="file" accept="application/pdf"
-                            (change)="changeListener($event, 'final_account')"></ion-input>
-                    </ion-item>
+                    <ng-container *ngIf="completeFlag==1">
+                        <ion-item>
+                            <ion-label position="stacked">Practical completion</ion-label>
+                            <ion-input name="file" type="file" accept="application/pdf"
+                                (change)="changeListener($event, 'pratical_certification')"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">Final completion certificate</ion-label>
+                            <ion-input name="file" type="file" accept="application/pdf"
+                                (change)="changeListener($event, 'final_certification')"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">Final account</ion-label>
+                            <ion-input name="file" type="file" accept="application/pdf"
+                                (change)="changeListener($event, 'final_account')"></ion-input>
+                        </ion-item>
+                    </ng-container>
+                    <ng-container *ngIf="completeFlag==-1">
+                        <ion-item>
+                            <ion-label position="stacked">Final account</ion-label>
+                            <ion-input name="file" type="file" accept="application/pdf"
+                                (change)="changeListener($event, 'final_account')"></ion-input>
+                        </ion-item>
+                    </ng-container>
                 </ion-item>
                 <ion-item style="margin-top: 20px;">
                     <ng-container *ngIf="saveButtonFlag">
-                        <ion-button (click)="addProjects()" class="button-common" disabled={{saveButtonFlag}}>Uploading
+                        <ion-button class="button-common" disabled={{saveButtonFlag}}>Uploading
                             File
                         </ion-button>
                     </ng-container>
@@ -278,7 +295,58 @@
             </ion-card-content>
         </ion-card>
     </div>
-    <br />
+    <br>
+    <ion-modal [isOpen]="isUpdateModal">
+        <ng-template>
+            <ion-toolbar color="dark">
+                <ion-title>Complete Information</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button (click)="closeUpdateModal()">Close</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+            <ion-content class="ion-padding">
+                <ion-item>
+                    <ion-label position="stacked">Final Cost</ion-label>
+                    <ion-input type="number" min="1" [(ngModel)]="updateProjectData.final_cost"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">DateTime</ion-label>
+                    <ion-input type="date" [(ngModel)]="updateProjectData.completed_at"></ion-input>
+                </ion-item>
+                <ng-container *ngIf="current_status == 'Completed'">
+                    <ion-item>
+                        <ion-label position="stacked">Practical completion</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'isUpdateModal_pratical_certification')"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Final completion certificate</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'isUpdateModal_final_certification')"></ion-input>
+                    </ion-item>
+                </ng-container>
+                <ng-container *ngIf="current_status == 'Completed' || current_status == 'Cancelled'">
+                    <ion-item>
+                        <ion-label position="stacked">Final account</ion-label>
+                        <ion-input name="file" type="file" accept="application/pdf"
+                            (change)="changeListener($event, 'isUpdateModal_final_account')"></ion-input>
+                    </ion-item>
+                </ng-container>
+                <ion-item class="m-2">
+                    <ng-container *ngIf="saveButtonFlag">
+                        <ion-button class="button-common w-100" disabled={{saveButtonFlag}}>Uploading
+                            File
+                        </ion-button>
+                    </ng-container>
+                    <ng-container *ngIf="!saveButtonFlag">
+                        <ion-button (click)="updateStatus()" class="button-common w-100">Update
+                            Information
+                        </ion-button>
+                    </ng-container>
+                </ion-item>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
 </ion-content>
 <!-- <ion-footer color="dark" class="footer">
     <ion-toolbar color="">

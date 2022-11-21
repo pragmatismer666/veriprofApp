@@ -58,9 +58,22 @@ export class PlansPage implements OnInit {
 
     constructor(public toastController: ToastController, public authService: AuthenticateService, public restApi: RestApiService) { }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.getplanNo();
         this.getPlans();
+        await this.loadSavedPlans();
+    }
+
+    ngOnDestroy() {
+        this.authService.saveData(this.plan, "plan");
+    }
+
+    async loadSavedPlans(){
+        let saved_plan = await this.authService.getSavedData("plan");
+        // console.log( saved_plan);
+        if ( saved_plan != null ){
+            this.plan = saved_plan;
+        }
     }
 
     submit() {
