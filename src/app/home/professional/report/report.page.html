@@ -1,36 +1,72 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
-        <ion-title>Report</ion-title>
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">Report</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-card>
-        <table class="table">
-            <tr>
-                <!-- <th>ID</th>
-                <th>Assessor</th> -->
-                <th>Type</th>
-                <th>Client Name</th>
-                <th>Created at</th>
-                <th>Document</th>
-            </tr>
-            <tr *ngFor="let x of objs">
-                <!-- <td>{{x.id}}</td>
-                <td>{{x.accessor}}</td>
-                <td>{{x.report_type}} Submission</td> -->
-                <td>{{x.type}}</td>
-                <td>{{x.client_name}}</td>
-                <td>{{x.created_at}}</td>
-                <td (click)="download(x.file)" style="background-color: lightgreen;">Download</td>
-            </tr>
-        </table>
-    </ion-card>
+    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
+        <ion-segment-button value="reports" class="dark" enabled>
+            <ion-icon name="star" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">Reports</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="myDocs">
+            <ion-icon name="star" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">My PDFs</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="segment">
+        <ion-card *ngSwitchCase="'reports'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>Reports</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="reports.length > 0">
+                        <tr *ngFor="let x of reports">
+                            <td data-th="Type">{{x.report_type}}</td>
+                            <td data-th="Assesser Name">{{x.accessor}}</td>
+                            <td data-th="Score">{{x.score}}</td>
+                            <td data-th="Created at">{{x.created_at}}</td>
+                            <td data-th="Document">
+                                <ion-button size="small" color="success" class="down-btn-profe mt-2"
+                                    (click)="download('create/report/'+ x.filename)">
+                                    Download</ion-button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="reports.length == 0">
+                        <div class="text-center">No reports, yet.</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+        <ion-card *ngSwitchCase="'myDocs'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>My PDFs</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="objs.length > 0">
+                        <tr *ngFor="let x of objs">
+                            <td data-th="Type">{{x.type}}</td>
+                            <td data-th="Client Name">{{x.client_name}}</td>
+                            <td data-th="Created at">{{x.created_at}}</td>
+                            <td data-th="Document">
+                                <ion-button size="small" color="success" class="down-btn-profe mt-2"
+                                    (click)="download(x.file)">
+                                    Download</ion-button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="objs.length == 0">
+                        <div class="text-center">No DPDFs in eplan and bid.</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+    </div>
 </ion-content>
 
-<ion-footer color="dark" class="footer">
+<!-- <ion-footer color="dark" class="footer">
     <ion-toolbar color="">
         <ion-title class="footer">Copyright SIVAGO </ion-title>
     </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

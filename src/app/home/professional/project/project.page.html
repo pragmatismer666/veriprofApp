@@ -1,12 +1,12 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
-        <ion-title>My Projects</ion-title>
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">My Projects</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-segment [(ngModel)]="segment" color="light">
+    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
         <ion-segment-button class="border-none" value="add-circle">
             <ion-icon name="add-circle" color="dark"></ion-icon>
             <ion-label color="dark">Add New</ion-label>
@@ -17,7 +17,7 @@
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="segment">
-        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'paper'">
+        <ion-card *ngSwitchCase="'paper'" class="fixed-ion-card-area">
             <ion-card-content>
                 <h1>My Projects</h1>
                 <table class="rwd-table">
@@ -36,7 +36,10 @@
                             <td data-th="Construction Cost">R{{(x.const_cost)}}</td>
                             <ng-container *ngIf="x.status == 'Completed'">
                                 <td data-th="Final Cost">R{{x.final_cost}}</td>
-                                <td data-th="Cost Variance">{{x.variable}}% over budget</td>
+                                <td data-th="Cost Variance">{{x.variable}}%
+                                    <ng-container *ngIf="x.variable.includes('-')">Over</ng-container>
+                                    <ng-container *ngIf="!x.variable.includes('-')">Within</ng-container>
+                                </td>
                             </ng-container>
                             <td data-th="Professional Fees">R{{x.prof_cost}}</td>
                             <td data-th="Client Name">{{x.client_name}}</td>
@@ -139,7 +142,7 @@
                 </table>
             </ion-card-content>
         </ion-card>
-        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'add-circle'">
+        <ion-card *ngSwitchCase="'add-circle'" class="fixed-ion-card-area">
             <ion-card-content>
                 <h1>Add New Project</h1>
                 <ion-item>
@@ -206,7 +209,7 @@
                         <ion-select-option value="Cancelled">Cancelled</ion-select-option>
                     </ion-select>
                 </ion-item>
-                <ng-container *ngIf="completeFlag==1">
+                <ng-container *ngIf="form.status=='Completed'">
                     <ion-item>
                         <ion-label position="stacked">Final Cost(R, Input Only Number) : </ion-label>
                         <ion-input type="text" [(ngModel)]="form.final_cost" min="0"></ion-input>
@@ -248,31 +251,39 @@
                     </ion-item>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Supporting Documents
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Supporting Documents (PDF)
                     </ion-label>
                     <ion-item>
-                        <ion-label position="stacked">Letter of appointment</ion-label>
+                        <ion-label position="stacked">Letter of appointment
+                            <ng-container *ngIf="form.appointment!=''"><span class="text-danger">(Added - {{this.appointment}})</span></ng-container>
+                        </ion-label>
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'appointment')"></ion-input>
                     </ion-item>
-                    <ng-container *ngIf="completeFlag==1">
+                    <ng-container *ngIf="form.status=='Completed'">
                         <ion-item>
-                            <ion-label position="stacked">Practical completion</ion-label>
+                            <ion-label position="stacked">Practical completion
+                                <ng-container *ngIf="form.pratical_certification!=''"><span class="text-danger">(Added - {{this.pratical_certification}})</span></ng-container>
+                            </ion-label>
                             <ion-input name="file" type="file" accept="application/pdf"
                                 (change)="changeListener($event, 'pratical_certification')"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label position="stacked">Final completion certificate</ion-label>
+                            <ion-label position="stacked">Final completion certificate
+                                <ng-container *ngIf="form.final_certification!=''"><span class="text-danger">(Added - {{this.final_certification}})</span></ng-container>
+                            </ion-label>
                             <ion-input name="file" type="file" accept="application/pdf"
                                 (change)="changeListener($event, 'final_certification')"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label position="stacked">Final account</ion-label>
+                            <ion-label position="stacked">Final account
+                                <ng-container *ngIf="form.final_account!=''"><span class="text-danger">(Added - {{this.final_account}})</span></ng-container>
+                            </ion-label>
                             <ion-input name="file" type="file" accept="application/pdf"
                                 (change)="changeListener($event, 'final_account')"></ion-input>
                         </ion-item>
                     </ng-container>
-                    <ng-container *ngIf="completeFlag==-1">
+                    <ng-container *ngIf="form.status=='Cancelled'">
                         <ion-item>
                             <ion-label position="stacked">Final account</ion-label>
                             <ion-input name="file" type="file" accept="application/pdf"
@@ -282,13 +293,25 @@
                 </ion-item>
                 <ion-item style="margin-top: 20px;">
                     <ng-container *ngIf="saveButtonFlag">
-                        <ion-button class="button-common" disabled={{saveButtonFlag}}>Uploading
+                        <ion-button class="button-common w-50" color="medium" disabled={{saveButtonFlag}}>Uploading
                             File
                         </ion-button>
                     </ng-container>
                     <ng-container *ngIf="!saveButtonFlag">
-                        <ion-button (click)="addProjects()" class="button-common" disabled={{saveButtonFlag}}>Save
+                        <ion-button (click)="addProjects(false)" class="button-common w-50" color="primary"
+                            disabled={{saveButtonFlag}}>Save
                             Project
+                        </ion-button>
+                    </ng-container>
+                    <br>
+                    <ng-container *ngIf="saveButtonFlag">
+                        <ion-button class="button-common w-50" color="medium" disabled={{saveButtonFlag}}>Uploading
+                            File
+                        </ion-button>
+                    </ng-container>
+                    <ng-container *ngIf="!saveButtonFlag">
+                        <ion-button (click)="addProjects(true)" class="button-common w-50" color="success"
+                            disabled={{saveButtonFlag}}>Verification
                         </ion-button>
                     </ng-container>
                 </ion-item>

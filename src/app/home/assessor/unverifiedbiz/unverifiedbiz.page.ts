@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { RestApiService } from 'src/app/services/rest-api.service';
-import { AuthenticateService } from 'src/app/services/authentication.service';
-import { ToastController, AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
-// import { AlertController } from 'ionic-angular';
+import { Component, OnInit } from "@angular/core";
+import { RestApiService } from "src/app/services/rest-api.service";
+import { AuthenticateService } from "src/app/services/authentication.service";
+import { ToastController, AlertController } from "@ionic/angular";
+import { Router } from "@angular/router";
+// import { AlertController } from "ionic-angular";
 
 
 @Component({
-    selector: 'app-unverifiedbiz',
-    templateUrl: './unverifiedbiz.page.html',
-    styleUrls: ['./unverifiedbiz.page.scss'],
+    selector: "app-unverifiedbiz",
+    templateUrl: "./unverifiedbiz.page.html",
+    styleUrls: ["./unverifiedbiz.page.scss"],
 })
 export class UnverifiedbizPage implements OnInit {
 
-    objs: Array<any>;
+    objs: Array<any> = [];
+    verifieds: Array<any> = [];
     schedules: Array<any>;
     x: any;
     action: any;
@@ -27,100 +28,22 @@ export class UnverifiedbizPage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.getPending();
+        this.getBusiness();
     }
 
-    getPending() {
-        this.restApi.get('accessor/get-unverifyBusiness').subscribe((res: any) => {
+    getBusiness() {
+        this.restApi.post("accessor/get-business", {}).subscribe((res: any) => {
             if (res && res.status) {
                 console.log(res.data);
-                if (res.status == 'success') {
+                if (res.status == "success") {
                     this.objs = res.data;
-                    this.get_schedule();
                 } else {
                     this.restApi.toast(res.message, 1200);
                 }
             }
         }, error => {
             console.log(error);
-            this.restApi.toast('Something went wrong.', 1200);
+            this.restApi.toast("Something went wrong.", 1200);
         });
-    }
-
-    updatebusiness(x:any) {
-        this.restApi.post('accessor/verify-business', { user_id: this.authService.user.userId, business_id: x.buzi_id, office_id: x.id, email: x.email }).subscribe((res: any) => {
-            if (res && res.status) {
-                if (res.status == 'success') {
-                    this.getPending();
-                }
-                this.restApi.toast(res.data, 1200);
-            }
-        }, error => {
-            this.restApi.toast('Something went wrong.', 1200);
-        });
-    }
-
-    async verify(x:any) {
-        // console.log(x);
-        let val = 0;
-        const alert = await this.alertController.create({
-            cssClass: 'my-custom-class',
-            header: 'Unverified Business Detail',
-            // message: 'Business Title : '+x.org_name+'<br>Project Type : '+x.project_type+'<br>CPD Level : '+x.cdp_level+'<br>CIPC Reg Number : '+x.cipc_reg_number+'<br>Professional : '+x.profess+'<br>Business Address1 : '+x.business_address_line_1+'<br>Business Address2 : '+x.business_address_line2+'<br>City : '+x.city+'<br>Code : '+x.code+'<br>States : '+x.province+'',
-            inputs: [{ id: 'pname', name: 'pname', type: 'checkbox', label: 'Name is ' + x.pname + '?', handler: () => { val++; }, },
-            { id: 'pcouncil', name: 'pcouncil', type: 'checkbox', label: 'Practice Council reg. No is ' + x.pcouncil + '?', handler: () => { val++; }, },
-            { name: 'pcipc_reg_no', type: 'checkbox', label: 'CIPC registration is ' + x.pcipc_reg_no + '?', handler: () => { val++; }, },
-            { name: 'ptype', type: 'checkbox', label: 'Business Type is ' + x.ptype + '?', handler: () => { val++; }, },
-            { name: 'director', type: 'checkbox', label: 'Director is ' + x.director + '?', handler: () => { val++; }, },
-            { name: 'dir_prof_regno', type: 'checkbox', label: 'Director Prof registration No is ' + x.dir_prof_regno + '?', handler: () => { val++; }, },
-            { name: 'owned', type: 'checkbox', label: '%Owned is ' + x.owned + '?', handler: () => { val++; }, },
-            { name: 'phone', type: 'checkbox', label: 'Office Phone Number is ' + x.phone + '?', handler: () => { val++; }, },
-            { name: 'email', type: 'checkbox', label: 'Office Email is ' + x.email + '?', handler: () => { val++; }, },
-            { name: 'res_prof_name', type: 'checkbox', label: 'Responsible Professional Name is ' + x.res_prof_name + '?', handler: () => { val++; }, },
-            { name: 'res_prof_reg', type: 'checkbox', label: 'Responsible Professional Reg No is ' + x.res_prof_reg + '?', handler: () => { val++; }, }
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary'
-                }, {
-                    text: 'Okay',
-                    cssClass: 'secondary',
-                    handler: () => {
-                        if (val >= 11) { this.updatebusiness(x); }
-                        else { 
-                            this.restApi.toast("It is not enough to verify.", 1200);
-                        }
-                    }
-                }
-            ]
-        });
-        await alert.present();
-    }
-
-    get_schedule() {
-        console.log(this.authService.userDetails().name, this.authService.user.userId);
-        this.restApi.get('accessor/get-schedule').subscribe((res: any) => {
-            if (res) {
-                if (res.status == 'success') {
-                    this.schedules = res.data;
-                    console.log(this.schedules, this.objs);
-                    for (var j = 0; j < this.objs.length; j++) {
-                        for (var i = 0; i < this.schedules.length; i++) {
-                            if (this.schedules[i].verify_target == this.objs[j].email && new Date(this.schedules[i].date).getTime() < new Date().getTime()) {
-                                this.objs[j].status = 'Pending';
-                            }
-                        }
-                    }
-                }
-            }
-        }, error => {
-            this.restApi.toast('Something went wrong.', 1200);
-        });
-    }
-
-    schedule() {
-        this.router.navigateByUrl('home/assessor/schedules');
     }
 }

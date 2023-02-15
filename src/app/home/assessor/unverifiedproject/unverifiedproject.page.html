@@ -1,0 +1,168 @@
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">Projects</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
+        <ion-segment-button value="unverified" class="dark" enabled>
+            <ion-icon name="briefcase" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">Unverified</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="verified">
+            <ion-icon name="layers-outline" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">Verified</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="segment">
+        <ion-card *ngSwitchCase="'unverified'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>Unverified Project</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="projects.length > 0">
+                        <tr *ngFor="let x of projects">
+                            <td data-th="Project Name">{{x.title}}</td>
+                            <td data-th="Project Type">{{x.type}}</td>
+                            <td data-th="Leader Name">{{x.pl_name}}</td>
+                            <td data-th="Leader Contact Email">{{x.pl_email}}</td>
+                            <td data-th="Leader Contact Phone">{{x.pl_phone}}</td>
+                            <td data-th="Professional Type">{{x.prof_type}}</td>
+                            <td data-th="Project Address">{{x.proj_address}}</td>
+                            <td data-th="Project Status">{{x.status}}</td>
+                            <ion-label class="textBold">Supporting Documents</ion-label><br>
+                            <ion-label>Letter of appointment</ion-label><br>
+                            <ng-container *ngIf="x.appointment != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.appointment)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.appointment == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Letter of appointment.</ion-label>
+                            </ng-container><br>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <ion-label>Practical completion certificate</ion-label><br>
+                                <ng-container *ngIf="x.pratical_certification != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.pratical_certification)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.pratical_certification == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Practical completion
+                                        certificate.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <ion-label>Final completion certificate</ion-label><br>
+                                <ng-container *ngIf="x.final_certification != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.final_certification)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.final_certification == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Final completion
+                                        certificate.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed' || x.status == 'Cancelled'">
+                                <ion-label>Final account</ion-label><br>
+                                <ng-container *ngIf="x.final_account != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.final_account)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.final_account == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Final account.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.schedule_data == '' || !checkDate(x.schedule_data)">
+                                <td data-th="Schedule">None</td>
+                                <ion-row>
+                                    <ion-button size="small" color="primary" class="button-common-assessor w-40"
+                                        (click)="selectDate(x)">Schedule</ion-button>
+                                    <ion-button size="small" color="success" class="button-common-assessor w-40"
+                                        disabled="true">
+                                        Verify</ion-button>
+                                </ion-row>
+                            </ng-container>
+                            <ng-container *ngIf="x.schedule_data != ''  && checkDate(x.schedule_data)">
+                                <td data-th="Schedule">Appointment</td>
+                                <ion-row>
+                                    <ion-label color="success"
+                                        class="button-common-assessor w-40">{{x.schedule_data}}</ion-label>
+                                    <ion-button size="small" color="success" class="button-common-assessor w-40"
+                                        (click)="verifyProject(x)">
+                                        Verify</ion-button>
+                                </ion-row>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="projects.length == 0">
+                        <div class="text-center">No Unverified Projects</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+        <ion-card *ngSwitchCase="'verified'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>Verified Projects</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="verified.length > 0">
+                        <tr *ngFor="let x of verified">
+                            <td data-th="Project Name">{{x.title}}</td>
+                            <td data-th="Project Type">{{x.type}}</td>
+                            <td data-th="Leader Name">{{x.pl_name}}</td>
+                            <td data-th="Leader Contact Email">{{x.pl_email}}</td>
+                            <td data-th="Leader Contact Phone">{{x.pl_phone}}</td>
+                            <td data-th="Professional Type">{{x.prof_type}}</td>
+                            <td data-th="Project Address">{{x.proj_address}}</td>
+                            <td data-th="Project Status">{{x.status}}</td>
+                            <td data-th="Verified Status">{{x.status_verified}}</td>
+                            <ion-label class="textBold">Supporting Documents</ion-label><br>
+                            <ion-label>Letter of appointment</ion-label><br>
+                            <ng-container *ngIf="x.appointment != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.appointment)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.appointment == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Letter of appointment.</ion-label>
+                            </ng-container><br>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <ion-label>Practical completion certificate</ion-label><br>
+                                <ng-container *ngIf="x.pratical_certification != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.pratical_certification)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.pratical_certification == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Practical completion
+                                        certificate.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed'">
+                                <ion-label>Final completion certificate</ion-label><br>
+                                <ng-container *ngIf="x.final_certification != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.final_certification)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.final_certification == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Final completion
+                                        certificate.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                            <ng-container *ngIf="x.status == 'Completed' || x.status == 'Cancelled'">
+                                <ion-label>Final account</ion-label><br>
+                                <ng-container *ngIf="x.final_account != ''">
+                                    <ion-button size="small" color="success" class="down-btn-profe"
+                                        (click)="download(x.final_account)">Download</ion-button>
+                                </ng-container>
+                                <ng-container *ngIf="x.final_account == ''">
+                                    <ion-label>&nbsp;&nbsp;There is no Final account.</ion-label>
+                                </ng-container><br>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="verified.length == 0">
+                        <div class="text-center">No Verified Projects</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>

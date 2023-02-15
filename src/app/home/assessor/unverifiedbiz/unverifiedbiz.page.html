@@ -1,35 +1,33 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
-        <ion-title>Unverified Business Offices</ion-title>
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">Business</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <div class="scroll-x">
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>CIPC Reg</th>
-                <th>Office Email</th>
-                <th>Status</th>
-            </tr>
-            <tr *ngFor="let x of objs">
-                <td>{{x.pname}}</td>
-                <td>{{x.ptype}}</td>
-                <td>{{x.pcipc_reg_no}}</td>
-                <td>{{x.email}}</td>
-                <ng-container *ngIf="x.status == 'Pending'">
-                    <td (click)="verify(x)" style="background-color: lightgreen;">Begin Schedule</td>
+    <ion-card class="fixed-ion-card-area top-55px">
+        <ion-card-content>
+            <table class="rwd-table">
+                <ng-container *ngIf="objs.length > 0">
+                    <tr *ngFor="let x of objs">
+                        <td data-th="Project Name">{{x.pname}}</td>
+                        <td data-th="Project Type">{{x.ptype}}</td>
+                        <td data-th="Project Council">{{x.pcouncil}}</td>
+                        <td data-th="CIPC Reg No">{{x.pcipc_reg_no}}</td>
+                        <td data-th="Updated">{{x.updated_at}}</td>
+                        <td data-th="Status">{{x.status}}</td>
+                    </tr>
                 </ng-container>
-                <ng-container *ngIf="x.status == 'Unverified'">
-                    <td (click)="schedule()" style="background-color: rgb(180, 0, 0);">Begin Schedule</td>
+                <ng-container *ngIf="objs.length == 0">
+                    <div class="text-center">No business</div>
                 </ng-container>
-                <ng-container *ngIf="x.status == 'Verified'">
-                    <td>Verified</td>
-                </ng-container>
-            </tr>
-        </table>
-    </div>
+            </table>
+        </ion-card-content>
+    </ion-card>
 </ion-content>
+<!-- <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+        <ion-datetime id="datetime"></ion-datetime>
+    </ng-template>
+</ion-modal> -->

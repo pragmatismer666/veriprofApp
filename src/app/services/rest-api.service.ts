@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
-import { Observable } from 'rxjs';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { ToastController } from "@ionic/angular";
+import { Observable } from "rxjs";
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root"
 })
 export class RestApiService {
 
@@ -25,17 +25,17 @@ export class RestApiService {
 
     getHeader() {
         return {
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": 'application/json',
-                "Access-Control-Allow-Origin": '*',
-            })
+            headers: new HttpHeaders()
+                .set("Content-Type", "application/json")
+                // .set("Accept", "application/json")
+                // .set("Access-Control-Allow-Origin", "*")
+                // .set("Access-Control-Allow-Methods", "POST, GET, OPTIPN")
         };
     }
 
     post(endpoint: string, data: any) {
         let url = this.url(endpoint);
-        return this.http.post(url, data);
+        return this.http.post(url, data, this.getHeader());
     }
 
     get(endpoint: string) {
@@ -66,6 +66,4 @@ export class RestApiService {
             duration: duration
         }).then(toast => toast.present());
     }
-
-
 }

@@ -1,0 +1,121 @@
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">Offices</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
+        <ion-segment-button value="unverified" class="dark" enabled>
+            <ion-icon name="business" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">Unverified Offices</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="verified">
+            <ion-icon name="layers-outline" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">Verified Offices</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="segment">
+        <ion-card *ngSwitchCase="'unverified'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>Unverified Office</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="offices.length > 0">
+                        <tr *ngFor="let x of offices">
+                            <td data-th="Business Name">{{x.pname}}</td>
+                            <td data-th="Business Type">{{x.ptype}}</td>
+                            <td data-th="CIPC Reg No">{{x.pcipc_reg_no}}</td>
+                            <td data-th="Address">{{x.address}}</td>
+                            <td data-th="Contact Person">{{x.res_prof_name}}</td>
+                            <td data-th="Contact Number">{{x.phone}}</td>
+                            <td data-th="Contact Email">{{x.email}}</td>
+                            <ng-container *ngIf="x.is_head == '1'">
+                                <td data-th="Office Type">Head Office</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.is_head != '1'">
+                                <td data-th="Office Type">Branch Office</td>
+                            </ng-container>
+                            <ion-label class="textBold">Documents</ion-label><br>
+                            <ion-label>Proof of Address</ion-label><br>
+                            <ng-container *ngIf="x.file_address != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.file_address)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.file_address == ''">
+                                <ion-label>&nbsp;&nbsp;There is no a proof of Address.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Responsible Prof Certificate</ion-label><br>
+                            <ng-container *ngIf="x.file_certificate != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.file_certificate)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.file_certificate == ''">
+                                <ion-label>&nbsp;&nbsp;There is no a Responsible Prof Certificate.</ion-label>
+                            </ng-container><br>
+                            <br>
+                            <ng-container *ngIf="x.schedule_data == '' || !checkDate(x.schedule_data)">
+                                <td data-th="Schedule">None</td>
+                                <ion-row>
+                                    <ion-button size="small" color="primary" class="button-common-assessor w-40"
+                                        (click)="selectDate(x)">Schedule</ion-button>
+                                    <ion-button size="small" color="success" class="button-common-assessor w-40"
+                                        disabled="true">
+                                        Verify</ion-button>
+                                </ion-row>
+                            </ng-container>
+                            <ng-container *ngIf="x.schedule_data != ''  && checkDate(x.schedule_data)">
+                                <td data-th="Schedule">Appointment</td>
+                                <ion-row>
+                                    <ion-label color="success"
+                                        class="button-common-assessor w-40">{{x.schedule_data}}</ion-label>
+                                    <ion-button size="small" color="success" class="button-common-assessor w-40"
+                                        (click)="verifyOffice(x)">
+                                        Verify</ion-button>
+                                </ion-row>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="offices.length == 0">
+                        <div class="text-center">No Unverified Offices</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+        <ion-card *ngSwitchCase="'verified'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>Verified Offices</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="verified.length > 0">
+                        <tr *ngFor="let x of verified">
+                            <td data-th="Business Name">{{x.pname}}</td>
+                            <td data-th="Business Type">{{x.ptype}}</td>
+                            <td data-th="CIPC Reg No">{{x.pcipc_reg_no}}</td>
+                            <td data-th="Address">{{x.address}}</td>
+                            <td data-th="Contact Person">{{x.res_prof_name}}</td>
+                            <td data-th="Contact Number">{{x.phone}}</td>
+                            <td data-th="Contact Email">{{x.email}}</td>
+                            <ng-container *ngIf="x.is_head == '1'">
+                                <td data-th="Office Type">Head Office</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.is_head != '1'">
+                                <td data-th="Office Type">Branch Office</td>
+                            </ng-container>
+                            <td data-th="Status">{{x.status}}</td>
+                            <ion-label class="textBold">Documents</ion-label><br>
+                            <ion-label>PROOF OF ADDRESS</ion-label>
+                            <ion-button size="small" color="success" class="down-btn-profe"
+                                (click)="download(x.file_address)">Download</ion-button>
+                            <ion-label>RESPONSIBLE PROF PR CERTIFICATE</ion-label>
+                            <ion-button size="small" color="success" class="down-btn-profe"
+                                (click)="download(x.file_certificate)">Download</ion-button>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="verified.length == 0">
+                        <div class="text-center">No Verified Offices</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>

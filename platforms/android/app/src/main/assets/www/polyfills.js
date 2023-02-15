@@ -107,7 +107,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 /**
- * @license Angular v14.0.0-next.5
+ * @license Angular v14.2.0-next.0
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -903,7 +903,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
         var listener = target[eventNameSymbol];
         var result;
         if (isBrowser && target === internalWindow && event.type === 'error') {
-            // window.onerror have different signiture
+            // window.onerror have different signature
             // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror#window.onerror
             // and onerror callback will prevent default when callback return true
             var errorEvent = event;
@@ -948,8 +948,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
         delete desc.value;
         var originalDescGet = desc.get;
         var originalDescSet = desc.set;
-        // substr(2) cuz 'onclick' -> 'click', etc
-        var eventName = prop.substr(2);
+        // slice(2) cuz 'onclick' -> 'click', etc
+        var eventName = prop.slice(2);
         var eventNameSymbol = zoneSymbolEventNames$1[eventName];
         if (!eventNameSymbol) {
             eventNameSymbol = zoneSymbolEventNames$1[eventName] = zoneSymbol$1('ON_PROPERTY' + eventName);
@@ -1022,7 +1022,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
         else {
             var onProperties = [];
             for (var prop in obj) {
-                if (prop.substr(0, 2) == 'on') {
+                if (prop.slice(0, 2) == 'on') {
                     onProperties.push(prop);
                 }
             }
@@ -1448,7 +1448,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
                 promise[symbolState] = UNRESOLVED;
                 promise[symbolValue] = []; // queue;
                 try {
-                    executor && executor(makeResolver(promise, RESOLVED), makeResolver(promise, REJECTED));
+                    var onceWrapper = once();
+                    executor &&
+                        executor(onceWrapper(makeResolver(promise, RESOLVED)), onceWrapper(makeResolver(promise, REJECTED)));
                 }
                 catch (error) {
                     resolvePromise(promise, false, error);
@@ -1605,7 +1607,16 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
                 configurable: true
             });
             ZoneAwarePromise.prototype.then = function (onFulfilled, onRejected) {
-                var C = this.constructor[Symbol.species];
+                var _a;
+                // We must read `Symbol.species` safely because `this` may be anything. For instance, `this`
+                // may be an object without a prototype (created through `Object.create(null)`); thus
+                // `this.constructor` will be undefined. One of the use cases is SystemJS creating
+                // prototype-less objects (modules) via `Object.create(null)`. The SystemJS creates an empty
+                // object and copies promise properties into that object (within the `getOrCreateLoad`
+                // function). The zone.js then checks if the resolved value has the `then` method and invokes
+                // it with the `value` context. Otherwise, this will throw an error: `TypeError: Cannot read
+                // properties of undefined (reading 'Symbol(Symbol.species)')`.
+                var C = (_a = this.constructor) === null || _a === void 0 ? void 0 : _a[Symbol.species];
                 if (!C || typeof C !== 'function') {
                     C = this.constructor || ZoneAwarePromise;
                 }
@@ -1623,7 +1634,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
                 return this.then(null, onRejected);
             };
             ZoneAwarePromise.prototype.finally = function (onFinally) {
-                var C = this.constructor[Symbol.species];
+                var _a;
+                // See comment on the call to `then` about why thee `Symbol.species` is safely accessed.
+                var C = (_a = this.constructor) === null || _a === void 0 ? void 0 : _a[Symbol.species];
                 if (!C || typeof C !== 'function') {
                     C = ZoneAwarePromise;
                 }
@@ -2055,7 +2068,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
                     var passive = passiveSupported && !!passiveEvents && passiveEvents.indexOf(eventName) !== -1;
                     var options = buildEventListenerOptions(arguments[2], passive);
                     if (unpatchedEvents) {
-                        // check upatched list
+                        // check unpatched list
                         for (var i = 0; i < unpatchedEvents.length; i++) {
                             if (eventName === unpatchedEvents[i]) {
                                 if (passive) {
@@ -2363,18 +2376,32 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
                 callbacks.forEach(function (callback) {
                     var source = "".concat(targetName, ".").concat(method, "::") + callback;
                     var prototype = opts.prototype;
-                    if (prototype.hasOwnProperty(callback)) {
-                        var descriptor = api.ObjectGetOwnPropertyDescriptor(prototype, callback);
-                        if (descriptor && descriptor.value) {
-                            descriptor.value = api.wrapWithCurrentZone(descriptor.value, source);
-                            api._redefineProperty(opts.prototype, callback, descriptor);
+                    // Note: the `patchCallbacks` is used for patching the `document.registerElement` and
+                    // `customElements.define`. We explicitly wrap the patching code into try-catch since
+                    // callbacks may be already patched by other web components frameworks (e.g. LWC), and they
+                    // make those properties non-writable. This means that patching callback will throw an error
+                    // `cannot assign to read-only property`. See this code as an example:
+                    // https://github.com/salesforce/lwc/blob/master/packages/@lwc/engine-core/src/framework/base-bridge-element.ts#L180-L186
+                    // We don't want to stop the application rendering if we couldn't patch some
+                    // callback, e.g. `attributeChangedCallback`.
+                    try {
+                        if (prototype.hasOwnProperty(callback)) {
+                            var descriptor = api.ObjectGetOwnPropertyDescriptor(prototype, callback);
+                            if (descriptor && descriptor.value) {
+                                descriptor.value = api.wrapWithCurrentZone(descriptor.value, source);
+                                api._redefineProperty(opts.prototype, callback, descriptor);
+                            }
+                            else if (prototype[callback]) {
+                                prototype[callback] = api.wrapWithCurrentZone(prototype[callback], source);
+                            }
                         }
                         else if (prototype[callback]) {
                             prototype[callback] = api.wrapWithCurrentZone(prototype[callback], source);
                         }
                     }
-                    else if (prototype[callback]) {
-                        prototype[callback] = api.wrapWithCurrentZone(prototype[callback], source);
+                    catch (_a) {
+                        // Note: we leave the catch block empty since there's no way to handle the error related
+                        // to non-writable property.
                     }
                 });
             }
@@ -2544,13 +2571,13 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
             Object.keys(props).forEach(function (prop) {
                 Object.defineProperty(obj, prop, props[prop]);
             });
-            for (var _i = 0, _a = Object.getOwnPropertySymbols(props); _i < _a.length; _i++) {
-                var sym = _a[_i];
+            for (var _i = 0, _b = Object.getOwnPropertySymbols(props); _i < _b.length; _i++) {
+                var sym = _b[_i];
                 var desc = Object.getOwnPropertyDescriptor(props, sym);
                 // Since `Object.getOwnPropertySymbols` returns *all* symbols,
-                // including non-enumberable ones, retrieve property descriptor and check
+                // including non-enumerable ones, retrieve property descriptor and check
                 // enumerability there. Proceed with the rewrite only when a property is
-                // enumberable to make the logic consistent with the way regular
+                // enumerable to make the logic consistent with the way regular
                 // properties are retrieved (via `Object.keys`, which respects
                 // `enumerable: false` flag). More information:
                 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties#retrieval
@@ -2655,7 +2682,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
      * found in the LICENSE file at https://angular.io/license
      */
     function eventTargetLegacyPatch(_global, api) {
-        var _a = api.getGlobalObjects(), eventNames = _a.eventNames, globalSources = _a.globalSources, zoneSymbolEventNames = _a.zoneSymbolEventNames, TRUE_STR = _a.TRUE_STR, FALSE_STR = _a.FALSE_STR, ZONE_SYMBOL_PREFIX = _a.ZONE_SYMBOL_PREFIX;
+        var _b = api.getGlobalObjects(), eventNames = _b.eventNames, globalSources = _b.globalSources, zoneSymbolEventNames = _b.zoneSymbolEventNames, TRUE_STR = _b.TRUE_STR, FALSE_STR = _b.FALSE_STR, ZONE_SYMBOL_PREFIX = _b.ZONE_SYMBOL_PREFIX;
         var WTF_ISSUE_555 = 'Anchor,Area,Audio,BR,Base,BaseFont,Body,Button,Canvas,Content,DList,Directory,Div,Embed,FieldSet,Font,Form,Frame,FrameSet,HR,Head,Heading,Html,IFrame,Image,Input,Keygen,LI,Label,Legend,Link,Map,Marquee,Media,Menu,Meta,Meter,Mod,OList,Object,OptGroup,Option,Output,Paragraph,Pre,Progress,Quote,Script,Select,Source,Span,Style,TableCaption,TableCell,TableCol,Table,TableRow,TableSection,TextArea,Title,Track,UList,Unknown,Video';
         var NO_EVENT_TARGET = 'ApplicationCache,EventSource,FileReader,InputMethodContext,MediaController,MessagePort,Node,Performance,SVGElementInstance,SharedWorker,TextTrack,TextTrackCue,TextTrackList,WebKitNamedFlow,Window,Worker,WorkerGlobalScope,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload,IDBRequest,IDBOpenDBRequest,IDBDatabase,IDBTransaction,IDBCursor,DBIndex,WebSocket'
             .split(',');
@@ -2772,7 +2799,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
      */
     // we have to patch the instance since the proto is non-configurable
     function apply(api, _global) {
-        var _a = api.getGlobalObjects(), ADD_EVENT_LISTENER_STR = _a.ADD_EVENT_LISTENER_STR, REMOVE_EVENT_LISTENER_STR = _a.REMOVE_EVENT_LISTENER_STR;
+        var _b = api.getGlobalObjects(), ADD_EVENT_LISTENER_STR = _b.ADD_EVENT_LISTENER_STR, REMOVE_EVENT_LISTENER_STR = _b.REMOVE_EVENT_LISTENER_STR;
         var WS = _global.WebSocket;
         // On Safari window.EventTarget doesn't exist so need to patch WS add/removeEventListener
         // On older Chrome, no need since EventTarget was already patched
@@ -2825,7 +2852,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
      * found in the LICENSE file at https://angular.io/license
      */
     function propertyDescriptorLegacyPatch(api, _global) {
-        var _a = api.getGlobalObjects(), isNode = _a.isNode, isMix = _a.isMix;
+        var _b = api.getGlobalObjects(), isNode = _b.isNode, isMix = _b.isMix;
         if (isNode && !isMix) {
             return;
         }
@@ -2841,7 +2868,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
         }
     }
     function canPatchViaPropertyDescriptor(api, _global) {
-        var _a = api.getGlobalObjects(), isBrowser = _a.isBrowser, isMix = _a.isMix;
+        var _b = api.getGlobalObjects(), isBrowser = _b.isBrowser, isMix = _b.isMix;
         if ((isBrowser || isMix) &&
             !api.ObjectGetOwnPropertyDescriptor(HTMLElement.prototype, 'onclick') &&
             typeof Element !== 'undefined') {
@@ -3154,7 +3181,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
      * found in the LICENSE file at https://angular.io/license
      */
     function registerElementPatch(_global, api) {
-        var _a = api.getGlobalObjects(), isBrowser = _a.isBrowser, isMix = _a.isMix;
+        var _b = api.getGlobalObjects(), isBrowser = _b.isBrowser, isMix = _b.isMix;
         if ((!isBrowser && !isMix) || !('registerElement' in _global.document)) {
             return;
         }
@@ -3327,7 +3354,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
      * found in the LICENSE file at https://angular.io/license
      */
     function patchCustomElements(_global, api) {
-        var _a = api.getGlobalObjects(), isBrowser = _a.isBrowser, isMix = _a.isMix;
+        var _b = api.getGlobalObjects(), isBrowser = _b.isBrowser, isMix = _b.isMix;
         if ((!isBrowser && !isMix) || !_global['customElements'] || !('customElements' in _global)) {
             return;
         }
@@ -3346,7 +3373,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
             // EventTarget is already patched.
             return;
         }
-        var _a = api.getGlobalObjects(), eventNames = _a.eventNames, zoneSymbolEventNames = _a.zoneSymbolEventNames, TRUE_STR = _a.TRUE_STR, FALSE_STR = _a.FALSE_STR, ZONE_SYMBOL_PREFIX = _a.ZONE_SYMBOL_PREFIX;
+        var _b = api.getGlobalObjects(), eventNames = _b.eventNames, zoneSymbolEventNames = _b.zoneSymbolEventNames, TRUE_STR = _b.TRUE_STR, FALSE_STR = _b.FALSE_STR, ZONE_SYMBOL_PREFIX = _b.ZONE_SYMBOL_PREFIX;
         //  predefine all __zone_symbol__ + eventName + true/false string
         for (var i = 0; i < eventNames.length; i++) {
             var eventName = eventNames[i];

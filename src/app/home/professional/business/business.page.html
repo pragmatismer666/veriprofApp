@@ -1,11 +1,12 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
-        <ion-title>My Bids</ion-title>
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">My Bids</ion-title>
     </ion-toolbar>
 </ion-header>
+
 <ion-content>
-    <ion-segment [(ngModel)]="segment" color="light">
+    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
         <ion-segment-button value="addBid">
             <ion-icon name="add-circle" color="dark"></ion-icon>
             <ion-label color="dark">Add New</ion-label>
@@ -16,44 +17,47 @@
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="segment">
-        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'paper'">
-            <table class="rwd-table">
-                <ng-container *ngIf="bids.length > 0">
-                    <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Profess Reg No</th>
-                        <th>Email Add</th>
-                        <th>Cell</th>
-                        <th>Bidder</th>
-                        <th>Client / Department</th>
-                        <th>Bid No</th>
-                        <th>Short Description</th>
-                        <th>Bid Partcipation</th>
-                        <th></th>
-                    </tr>
-                    <tr *ngFor="let x of bids">
-                        <td data-th="Name">{{x.name}}</td>
-                        <td data-th="Surname">{{x.surname}}</td>
-                        <td data-th="Profess Reg No">{{x.professional_reg_no}}</td>
-                        <td data-th="Email Add">{{x.email_add}}</td>
-                        <td data-th="Cell">{{x.cell}}</td>
-                        <td data-th="Bidder">{{x.bidder}}</td>
-                        <td data-th="Client / Department">{{x.client_department}}</td>
-                        <td data-th="Bid No">{{x.bid_no}}</td>
-                        <td data-th="Short Description">{{x.short_description}}</td>
-                        <td data-th="Bid Partcipation">
-                            <ion-button size="small" color="success" class="project_verify" (click)="download(x.file)">
-                                Print / Download</ion-button>
-                        </td>
-                    </tr>
-                </ng-container>
-                <ng-container *ngIf="bids.length == 0">
-                    <div class="text-center">No Bids.</div>
-                </ng-container>
-            </table>
+        <ion-card class="fixed-ion-card-area" *ngSwitchCase="'paper'">
+            <ion-card-content>
+                <table class="rwd-table">
+                    <ng-container *ngIf="bids.length > 0">
+                        <tr>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Profess Reg No</th>
+                            <th>Email Add</th>
+                            <th>Cell</th>
+                            <th>Bidder</th>
+                            <th>Client / Department</th>
+                            <th>Bid No</th>
+                            <th>Short Description</th>
+                            <th>Bid Partcipation</th>
+                            <th></th>
+                        </tr>
+                        <tr *ngFor="let x of bids">
+                            <td data-th="Name">{{x.name}}</td>
+                            <td data-th="Surname">{{x.surname}}</td>
+                            <td data-th="Profess Reg No">{{x.professional_reg_no}}</td>
+                            <td data-th="Email Add">{{x.email_add}}</td>
+                            <td data-th="Cell">{{x.cell}}</td>
+                            <td data-th="Bidder">{{x.bidder}}</td>
+                            <td data-th="Client / Department">{{x.client_department}}</td>
+                            <td data-th="Bid No">{{x.bid_no}}</td>
+                            <td data-th="Short Description">{{x.short_description}}</td>
+                            <td data-th="Bid Partcipation">
+                                <ion-button size="small" color="success" class="down-btn-profe mt-0"
+                                    (click)="download(x.file)">
+                                    Print / Download</ion-button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="bids.length == 0">
+                        <div class="text-center">No Bids.</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
         </ion-card>
-        <ion-card class="p-fixed fixed-ion-card-area m-1" *ngSwitchCase="'addBid'">
+        <ion-card class="fixed-ion-card-area" *ngSwitchCase="'addBid'">
             <ion-card-content>
                 <ion-item>
                     <ion-label position="stacked">Name </ion-label>
@@ -98,8 +102,3 @@
     </div>
     <br />
 </ion-content>
-<!-- <ion-footer color="dark" class="footer">
-    <ion-toolbar color="">
-        <ion-title class="footer">Copyright SIVAGO </ion-title>
-    </ion-toolbar>
-</ion-footer> -->

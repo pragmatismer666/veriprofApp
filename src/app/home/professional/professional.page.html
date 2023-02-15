@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content color="dark" class="ion-content-overflow-hidden">
-    <div [ngSwitch]="land_seg">
+    <div [ngSwitch]="land_seg" class="scroll-y mb-0 p-fixed w-100 h-68">
         <ion-card *ngSwitchCase="'dashboardp'">
             <ion-segment>
                 <ion-segment>
@@ -149,6 +149,7 @@
         </ion-card>
     </div>
 </ion-content>
+
 <ion-footer>
     <ion-segment [(ngModel)]="land_seg" class="landTabs">
         <ion-segment-button value="dashboardp">

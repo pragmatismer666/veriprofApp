@@ -37,8 +37,14 @@ export class ProfilePage implements OnInit {
         qualification: "",
         cv: "",
         status: "Unverified",
-        is_director: "false"
+        is_director: "false",
+        status_request: "No",
     };
+
+    appointment: string = "";
+    pratical_certification: string = "";
+    qualification: string = "";
+    cv: string = "";
 
     pform: any = {
         pname: "",
@@ -88,8 +94,8 @@ export class ProfilePage implements OnInit {
     }
 
     ngOnDestroy() {
-        this.authService.saveProfileData(this.form, this.pform, this.hform);
     }
+    
     // Edit Content Button Setting
     editPerson() {
         this.is_profileEdit = !this.is_profileEdit;
@@ -120,7 +126,7 @@ export class ProfilePage implements OnInit {
     }
 
     //  Add and get Profile
-    addProfile() {
+    addProfile(status_request: Boolean) {
         if (this.is_director) { this.form.is_director = "1"; }
         else { this.form.is_director = "0"; }
         let { name, surname, council, reg_no, employer, exp_year, full_part, jtitle, appointment } = this.form;
@@ -134,6 +140,11 @@ export class ProfilePage implements OnInit {
         if (jtitle.length == 0) { this.toast("Please fill Job Title"); return; }
         if (appointment.length == 0) { this.toast("Please upload letter of appointment document"); return; }
         if (!this.form.exp_year.includes("year")) { this.form.exp_year = this.form.exp_year.concat(" year"); }
+        if (status_request) {
+            this.form.status_request = "Yes";
+        } else {
+            this.form.status_request = "No";
+        }
         this.restApi.post("professional/add-profile", { user_id: this.authService.user.userId, data: this.form }).subscribe((res: any) => {
             if (res && res.status) {
                 // console.log(res.result);
@@ -148,10 +159,18 @@ export class ProfilePage implements OnInit {
         // console.log("profile page get-profile res : ", this.authService.user.userId);
         this.restApi.post("professional/get-profile", { user_id: this.authService.user.userId }).subscribe((res: any) => {
             if (res.status != "noexist") {
-                // console.log(res.data, "res.data,");
+                // console.log("Profile getProfile res = : ", res);
                 this.form = res.data;
-                if (this.form.is_director == "0") { this.is_director = false; }
-                else { this.is_director = true; }
+                this.appointment = this.getPDFName(res.data.appointment);
+                this.pratical_certification = this.getPDFName(res.data.pratical_certification);
+                this.qualification = this.getPDFName(res.data.qualification);
+                this.cv = this.getPDFName(res.data.cv);
+                if (this.form.is_director == "0") {
+                    this.is_director = false;
+                }
+                else {
+                    this.is_director = true;
+                }
             } else {
                 let data = this.authService.getData("personal");
                 if (data != null && data != undefined) {
@@ -164,6 +183,18 @@ export class ProfilePage implements OnInit {
         });
     }
 
+    getPDFName(fileName: string) {
+        let pdfName = "";
+        try {
+            pdfName = fileName;
+            let timeStamp = pdfName.split("_")[0];
+            pdfName = pdfName.replace(timeStamp, "").toString();
+            pdfName = pdfName.split("_").join(" ");
+        } catch (error) {
+            console.log("Project getPDFName error == : ", error);
+        }
+        return pdfName;
+    }
     //  Business - directors branch, staff, soft, hardware
     adddirector() {
         let new_branch = `<ion-item id="director${(this.director_id).toString()}" class="w-100"><ion-row class="w-100"><ion-label position="stacked" color="success">Director No : ${(this.director_id + 1).toString()}</ion-label><ion-button id="director_closebtn${(this.director_id).toString()}" class="closebtn_business">&#x2715</ion-button></ion-row><ion-item><ion-label position="stacked">Name</ion-label><ion-input id="dir_name${(this.director_id).toString()}" ></ion-input></ion-item><ion-item><ion-label position="stacked">Prof Reg No</ion-label><ion-input id="dir_prof_reg_no${(this.director_id).toString()}" ></ion-input></ion-item><ion-item><ion-label position="stacked">Owned (%)</ion-label><ion-input id="dir_owned${(this.director_id).toString()}"></ion-input></ion-item><br></ion-item>`;
@@ -248,10 +279,14 @@ export class ProfilePage implements OnInit {
         this.staffs = [];
         this.bo_offices = [];
         for (let i = 0; i < this.director_id; i++) {
-            let name = (document.getElementById("dir_name" + i.toString()) as HTMLInputElement).value.toString();
-            var prof_reg_no = (document.getElementById("dir_prof_reg_no" + i.toString()) as HTMLInputElement).value.toString();
-            var owned = (document.getElementById("dir_owned" + i.toString()) as HTMLInputElement).value.toString();
-            this.directors.push({ name: name, prof_reg_no: prof_reg_no, owned: owned });
+            if (document.getElementById(`director${i}`) == null) {
+                continue;
+            } else {
+                let name = (document.getElementById("dir_name" + i.toString()) as HTMLInputElement).value.toString();
+                var prof_reg_no = (document.getElementById("dir_prof_reg_no" + i.toString()) as HTMLInputElement).value.toString();
+                var owned = (document.getElementById("dir_owned" + i.toString()) as HTMLInputElement).value.toString();
+                this.directors.push({ name: name, prof_reg_no: prof_reg_no, owned: owned });
+            }
         }
         for (let i = 0; i < this.soft_id; i++) {
             if (document.getElementById(`soft${i}`) == null) {
@@ -396,9 +431,9 @@ export class ProfilePage implements OnInit {
                 console.log(res);
                 if (res && res.status) {
                     this.restApi.toast(res.message, 1200);
-                    // this.getBusiness();
-                    // this.getBranchs();
-                    // this.segment = "business";
+                    this.getBusiness();
+                    this.getBranchs();
+                    this.segment = "business";
                     // this.business_seg = "branch";
                 } else {
                     this.restApi.toast(res.message, 1200);
@@ -554,10 +589,7 @@ export class ProfilePage implements OnInit {
         this.restApi.post("professional/add-bstaffs", { all: this.bo_staff_id, user_id: this.authService.user.userId, staffs: bstaffs, offices: this.bo_offices }).subscribe((res: any) => {
             if (res && res.status) {
                 console.log(res.data);
-                this.toastController.create({
-                    message: res.data,
-                    duration: 2000
-                }).then(toast => toast.present());
+                this.restApi.toast(res.data, 2000);
                 // this.getBusiness();
                 // this.getBranchs();
                 // this.segment = "business";
@@ -572,7 +604,7 @@ export class ProfilePage implements OnInit {
     getlist(event: any) {
         this.is_profileEdit = false;
         this.is_businessEdit = false;
-        if (this.is_director == true && event.detail.value == "business") {
+        if (this.is_director == false && event.detail.value == "business") {
             this.restApi.post("professional/get-list", { user_id: this.authService.user.userId }).subscribe((res: any) => {
                 if (res && res.status) {
                     if (!this.is_director) {
@@ -719,7 +751,7 @@ export class ProfilePage implements OnInit {
     toast(message: string) {
         this.toastController.create({
             message: message,
-            duration: 1500
+            duration: 3000
         }).then(toast => toast.present());
     }
 }

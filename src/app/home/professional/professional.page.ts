@@ -72,11 +72,12 @@ export class ProfessionalPage implements OnInit {
     }
 
     report() {
-        if (this.authService.userDetails().account_type == "pro") {
-            this.router.navigateByUrl("home/professional/report");
-        } else {
-            this.restApi.toast("Only pro account can see reports!", 1000);
-        }
+        this.router.navigateByUrl("home/professional/report");
+        // if (this.authService.userDetails().account_type == "pro") {
+        //     this.router.navigateByUrl("home/professional/report");
+        // } else {
+        //     this.restApi.toast("Only pro account can see reports!", 1000);
+        // }
     }
 
     plans() {
@@ -96,20 +97,20 @@ export class ProfessionalPage implements OnInit {
         this.navCtrl.navigateBack("");
     }
 
-    getProfess() {
-        this.restApi.get("professional/get-profess").subscribe((res: any) => {
-            if (res && res.status) {
-                if (res.status == "success") {
-                    this.objs = res.data;
-                    console.log(this.objs);
-                } else {
-                    this.restApi.toast(res.message, 1200);
-                }
-            }
-        }, error => {
-            this.restApi.toast("Something went wrong.", 1200);
-        });
-    }
+    // getProfess() {
+    //     this.restApi.get("professional/get-profess").subscribe((res: any) => {
+    //         if (res && res.status) {
+    //             if (res.status == "success") {
+    //                 this.objs = res.data;
+    //                 console.log(this.objs);
+    //             } else {
+    //                 this.restApi.toast(res.message, 1200);
+    //             }
+    //         }
+    //     }, error => {
+    //         this.restApi.toast("Something went wrong.", 1200);
+    //     });
+    // }
 
     // Quick verify search function ------------------
     manageData(data: any) {

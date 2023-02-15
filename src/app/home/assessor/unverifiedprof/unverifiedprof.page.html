@@ -1,0 +1,162 @@
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">Professional</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
+        <ion-segment-button value="unverified" class="dark" enabled>
+            <ion-icon name="briefcase" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">Unverified</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="verified">
+            <ion-icon name="layers-outline" class="dark" color="dark"></ion-icon>
+            <ion-label class="dark" color="dark">Verified</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="segment">
+        <ion-card *ngSwitchCase="'unverified'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>Unverified Professional</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="profs.length > 0">
+                        <tr *ngFor="let x of profs">
+                            <td data-th="Name">{{x.name}}</td>
+                            <td data-th="Surname">{{x.surname}}</td>
+                            <td data-th="Job Title">{{x.jtitle}}</td>
+                            <td data-th="Employer">{{x.employer}}</td>
+                            <td data-th="Council">{{x.council}}</td>
+                            <td data-th="Reg No">{{x.reg_no}}</td>
+                            <td data-th="Exp Years">{{x.exp_year}}</td>
+                            <ng-container *ngIf="x.is_director == '1'">
+                                <td data-th="Director or Not">Director</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.is_director != '1'">
+                                <td data-th="Director or Not">NO</td>
+                            </ng-container>
+                            <ion-label class="textBold">Certification Documents</ion-label><br>
+                            <ion-label>Letter of appointment</ion-label><br>
+                            <ng-container *ngIf="x.appointment != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.appointment)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.appointment == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Letter of appointment.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Professional CV</ion-label><br>
+                            <ng-container *ngIf="x.cv != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.cv)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.cv == ''">
+                                <ion-label>&nbsp;&nbsp;There is no CV.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Pratical Certification</ion-label><br>
+                            <ng-container *ngIf="x.pratical_certification != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.pratical_certification)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.pratical_certification == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Pratical Certification.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Qualification</ion-label><br>
+                            <ng-container *ngIf="x.qualification != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.qualification)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.qualification == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Qualification.</ion-label>
+                            </ng-container><br>
+                            <ng-container *ngIf="x.schedule_data == '' || !checkDate(x.schedule_data)">
+                                <td data-th="Schedule">None</td>
+                                <ion-row>
+                                    <ion-button size="small" color="primary" class="button-common-assessor w-40"
+                                        (click)="selectDate(x)">Schedule</ion-button>
+                                    <ion-button size="small" color="success" class="button-common-assessor w-40"
+                                        disabled="true">
+                                        Verify</ion-button>
+                                </ion-row>
+                            </ng-container>
+                            <ng-container *ngIf="x.schedule_data != ''  && checkDate(x.schedule_data)">
+                                <td data-th="Schedule">Appointment</td>
+                                <ion-row>
+                                    <ion-label color="success"
+                                        class="button-common-assessor w-40">{{x.schedule_data}}</ion-label>
+                                    <ion-button size="small" color="success" class="button-common-assessor w-40"
+                                        (click)="verifyProf(x)">
+                                        Verify</ion-button>
+                                </ion-row>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="profs.length == 0">
+                        <div class="text-center">No Unverified Professional</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+        <ion-card *ngSwitchCase="'verified'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>Verified Professional</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="verified.length > 0">
+                        <tr *ngFor="let x of verified">
+                            <td data-th="Name">{{x.name}}</td>
+                            <td data-th="Surname">{{x.surname}}</td>
+                            <td data-th="Job Title">{{x.jtitle}}</td>
+                            <td data-th="Employer">{{x.employer}}</td>
+                            <td data-th="Council">{{x.council}}</td>
+                            <td data-th="Reg No">{{x.reg_no}}</td>
+                            <td data-th="Exp Years">{{x.exp_year}}</td>
+                            <ng-container *ngIf="x.is_director == '1'">
+                                <td data-th="Director or Not">Director</td>
+                            </ng-container>
+                            <ng-container *ngIf="x.is_director != '1'">
+                                <td data-th="Director or Not">NO</td>
+                            </ng-container>
+                            <td data-th="Status">{{x.status}}</td>
+                            <ion-label class="textBold">Certification Documents</ion-label><br>
+                            <ion-label>Letter of appointment</ion-label><br>
+                            <ng-container *ngIf="x.appointment != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.appointment)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.appointment == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Letter of appointment.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Professional CV</ion-label><br>
+                            <ng-container *ngIf="x.cv != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.cv)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.cv == ''">
+                                <ion-label>&nbsp;&nbsp;There is no CV.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Pratical Certification</ion-label><br>
+                            <ng-container *ngIf="x.pratical_certification != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.pratical_certification)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.pratical_certification == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Pratical Certification.</ion-label>
+                            </ng-container><br>
+                            <ion-label>Qualification</ion-label><br>
+                            <ng-container *ngIf="x.qualification != ''">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.qualification)">Download</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.qualification == ''">
+                                <ion-label>&nbsp;&nbsp;There is no Qualification.</ion-label>
+                            </ng-container><br>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="verified.length == 0">
+                        <div class="text-center">No Verified Professional</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>

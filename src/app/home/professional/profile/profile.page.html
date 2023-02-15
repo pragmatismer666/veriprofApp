@@ -1,12 +1,12 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
-        <ion-title>My Profile</ion-title>
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">My Profile</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-segment class="mt-1" [(ngModel)]="segment" color="light" (ionChange)="getlist($event)">
+    <ion-segment class="content-segment-head-area" [(ngModel)]="segment" color="light" (ionChange)="getlist($event)">
         <ion-segment-button value="profess" class="dark" enabled>
             <ion-icon name="business" class="dark" color="dark"></ion-icon>
             <ion-label class="dark" color="dark">Individual</ion-label>
@@ -17,22 +17,24 @@
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="segment">
-        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'profess'">
-            <strong>Individual Profile
-                <ion-button size="small" class="profile_edit" (click)="editPerson()">
-                    <ng-container *ngIf="is_profileEdit">Cancel Edit</ng-container>
-                    <ng-container *ngIf="!is_profileEdit">Edit Profile</ng-container>
-                </ion-button>
-            </strong>
-            <ion-row>
-                <ion-label>Status : </ion-label>
-                <ng-container *ngIf="form.status =='Unverified'">
-                    <ion-label color="danger">Unverified</ion-label>
-                </ng-container>
-                <ng-container *ngIf="form.status == 'Verified'">
-                    <ion-label color="success">Verified</ion-label>
-                </ng-container>
-            </ion-row>
+        <ion-card class="fixed-ion-card-area" *ngSwitchCase="'profess'">
+            <ion-card-content class="mb-0">
+                <strong>Individual Profile
+                    <ion-button size="small" class="profile_edit" (click)="editPerson()">
+                        <ng-container *ngIf="is_profileEdit">Cancel Edit</ng-container>
+                        <ng-container *ngIf="!is_profileEdit">Edit Profile</ng-container>
+                    </ion-button>
+                </strong>
+                <ion-row>
+                    <ion-label>Status : </ion-label>
+                    <ng-container *ngIf="form.status =='Unverified'">
+                        <ion-label color="danger">Unverified</ion-label>
+                    </ng-container>
+                    <ng-container *ngIf="form.status == 'Verified'">
+                        <ion-label color="success">Verified</ion-label>
+                    </ng-container>
+                </ion-row>
+            </ion-card-content>
             <ion-card-content id="profess_profile" disabled="true">
                 <ion-item>
                     <ion-label>Are you a director in the Business?</ion-label>
@@ -82,25 +84,33 @@
                     </ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Supporting Documents
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload Supporting Documents (PDF)
                     </ion-label>
                     <ion-item>
-                        <ion-label position="stacked">Letter of appointment</ion-label>
+                        <ion-label position="stacked">Letter of appointment
+                            <ng-container *ngIf="form.appointment!=''"><span class="text-danger">(Saved - {{this.appointment}})</span></ng-container>
+                        </ion-label>
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'appointment')"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="stacked">Professional reqestration certificate</ion-label>
+                        <ion-label position="stacked">Professional reqestration certificate
+                            <ng-container *ngIf="form.pratical_certification!=''"><span class="text-danger">(Saved - {{this.appointment}})</span></ng-container>
+                        </ion-label>
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'pratical_certification')"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="stacked">Qualification</ion-label>
+                        <ion-label position="stacked">Qualification
+                            <ng-container *ngIf="form.qualification!=''"><span class="text-danger">(Saved - {{this.appointment}})</span></ng-container>
+                        </ion-label>
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'qualification')"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="stacked">CV</ion-label>
+                        <ion-label position="stacked">CV
+                            <ng-container *ngIf="form.cv!=''"><span class="text-danger">(Saved - {{this.appointment}})</span></ng-container>
+                        </ion-label>
                         <ion-input name="file" type="file" accept="application/pdf"
                             (change)="changeListener($event, 'cv')"></ion-input>
                     </ion-item>
@@ -121,21 +131,28 @@
                 <br>
                 <ng-container *ngIf="saveButtonFlag">
                     <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
-                        disabled={{saveButtonFlag}}>Uploading
-                        File
+                        disabled={{saveButtonFlag}}>Uploading File
+                    </ion-button>
+                    <br>
+                    <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
+                        disabled={{saveButtonFlag}}>Uploading File
                     </ion-button>
                 </ng-container>
                 <ng-container *ngIf="!saveButtonFlag">
-                    <ion-button (click)="addProfile()" expand="block" type="submit" class="ion-no-margin" color="dark"
+                    <ion-button (click)="addProfile(false)" expand="block" type="submit" class="ion-no-margin" color="dark"
+                        disabled={{saveButtonFlag}}>Save Profile
+                    </ion-button>
+                    <br>
+                    <ion-button (click)="addProfile(true)" expand="block" type="submit" class="ion-no-margin" color="dark"
                         disabled={{saveButtonFlag}}>Request Verification
                     </ion-button>
                 </ng-container>
 
             </ion-card-content>
         </ion-card>
-        <ion-card class="p-fixed fixed-ion-card-area" *ngSwitchCase="'business'">
+        <ion-card class="fixed-ion-card-area" *ngSwitchCase="'business'">
             <ng-container *ngIf="is_director==true">
-                <ion-segment [(ngModel)]="business_seg" color="light" (ionChange)="changeOffice($event)">
+                <ion-segment [(ngModel)]="business_seg" color="light" (ionChange)="changeOffice($event)" class="h-45px">
                     <ion-segment-button value="head" class="dark" enabled>
                         <ion-label class="dark" color="dark" style="font-weight: bold;">Head Office</ion-label>
                     </ion-segment-button>
@@ -145,7 +162,7 @@
                 </ion-segment>
                 <div [ngSwitch]="business_seg">
                     <div *ngSwitchCase="'head'">
-                        <ion-card-content style="padding: 0px;">
+                        <ion-card-content class="mb-0">
                             <strong>Practice Profile
                                 <ion-button size="small" class="profile_edit" (click)="editBusiness()">
                                     <ng-container *ngIf="is_businessEdit">Cancel Edit</ng-container>
@@ -162,7 +179,7 @@
                                 </ng-container>
                             </ion-row>
                         </ion-card-content>
-                        <ion-card-content class="p-1" id="business_profile" disabled="true">
+                        <ion-card-content id="business_profile" disabled="true">
                             <ion-item>
                                 <ion-label position="stacked">Practice Name</ion-label>
                                 <ion-input name="pname" [(ngModel)]="pform.pname" value="{{pform.pname}}">
@@ -236,21 +253,21 @@
                                         [(ngModel)]="hform.res_prof_reg" value="{{hform.res_prof_reg}}"></ion-input>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-label position="stacked" style="margin-bottom: 10px;">SUPPORTING DOCUMENTS
-                                    </ion-label>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked" style="margin-bottom: 5px;">PROOF OF ADDRESS
-                                    </ion-label>
-                                    <ion-input name="file" type="file" accept="application/pdf"
-                                        (change)="changeListener_dynamic($event,'hoffice_file_address')"></ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label position="stacked" style="margin-bottom: 5px;">RESPONSIBLE PROF PR
-                                        CERTIFICATE</ion-label>
-                                    <ion-input name="file" type="file" accept="application/pdf"
-                                        (change)="changeListener_dynamic($event,'hoffice_file_certificate')">
-                                    </ion-input>
+                                    <ion-label position="stacked" style="margin-bottom: 10px;">SUPPORTING
+                                        DOCUMENTS</ion-label>
+                                    <ion-item>
+                                        <ion-label position="stacked" style="margin-bottom: 5px;">PROOF OF ADDRESS
+                                        </ion-label>
+                                        <ion-input name="file" type="file" accept="application/pdf"
+                                            (change)="changeListener_dynamic($event,'hoffice_file_address')"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label position="stacked" style="margin-bottom: 5px;">RESPONSIBLE PROF PR
+                                            CERTIFICATE</ion-label>
+                                        <ion-input name="file" type="file" accept="application/pdf"
+                                            (change)="changeListener_dynamic($event,'hoffice_file_certificate')">
+                                        </ion-input>
+                                    </ion-item>
                                 </ion-item>
                                 <br>
                                 <div style="padding: 0px;">
@@ -350,13 +367,13 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="is_director==false">
-                <strong>Business Office
-                    <ion-button size="small" id="Buzi_edit" class="editbtn" (click)="editBuzi()">
-                        <ng-container *ngIf="is_nonDirectorEdit">Cancel Edit</ng-container>
-                        <ng-container *ngIf="!is_nonDirectorEdit">Edit Information</ng-container>
-                    </ion-button>
-                </strong>
                 <ion-card id="Buzi_info" disabled="true">
+                    <strong>Business Office
+                        <ion-button size="small" id="Buzi_edit" class="editbtn" (click)="editBuzi()">
+                            <ng-container *ngIf="is_nonDirectorEdit">Cancel Edit</ng-container>
+                            <ng-container *ngIf="!is_nonDirectorEdit">Edit Information</ng-container>
+                        </ion-button>
+                    </strong>
                     <ion-card-content>
                         <strong>Select Business Name</strong>
                         <ion-select multiple="false" id="business_list" [(ngModel)]="mybusiness" value="{{mybusiness}}">
@@ -367,11 +384,12 @@
                         <ion-select multiple="false" id="office_list" [(ngModel)]="myoffice" value="{{myoffice}}">
                         </ion-select>
                     </ion-card-content>
+                    <div class="ion-padding">
+                        <ion-button expand="block" type="submit" class="ion-no-margin" color="dark"
+                            (click)="updateBuzi()">
+                            Save Information</ion-button>
+                    </div>
                 </ion-card>
-                <div class="ion-padding">
-                    <ion-button expand="block" type="submit" class="ion-no-margin" color="dark" (click)="updateBuzi()">
-                        Save Information</ion-button>
-                </div>
             </ng-container>
         </ion-card>
     </div>

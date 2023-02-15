@@ -986,6 +986,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "IonCol": () => (/* binding */ IonCol),
 /* harmony export */   "IonContent": () => (/* binding */ IonContent),
 /* harmony export */   "IonDatetime": () => (/* binding */ IonDatetime),
+/* harmony export */   "IonDatetimeButton": () => (/* binding */ IonDatetimeButton),
 /* harmony export */   "IonFab": () => (/* binding */ IonFab),
 /* harmony export */   "IonFabButton": () => (/* binding */ IonFabButton),
 /* harmony export */   "IonFabList": () => (/* binding */ IonFabList),
@@ -1135,6 +1136,11 @@ const raf = h => {
   return setTimeout(h);
 };
 
+const isComponentFactoryResolver = item => {
+  return !!item.resolveComponentFactory;
+}; // TODO(FW-2827): types
+
+
 class ValueAccessor {
   constructor(injector, el) {
     this.injector = injector;
@@ -1151,7 +1157,7 @@ class ValueAccessor {
 
   writeValue(value) {
     /**
-     * TODO for Ionic 6:
+     * TODO FW-2646
      * Change `value == null ? '' : value;`
      * to `value`. This was a fix for IE9, but IE9
      * is no longer supported; however, this change
@@ -1215,14 +1221,8 @@ class ValueAccessor {
       this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
     }
     /**
-     * TODO Remove this in favor of https://github.com/angular/angular/issues/10887
-     * whenever it is implemented. Currently, Ionic's form status classes
-     * do not react to changes when developers manually call
-     * Angular form control methods such as markAsTouched.
-     * This results in Ionic's form status classes being out
-     * of sync with the ng form status classes.
-     * This patches the methods to manually sync
-     * the classes until this feature is implemented in Angular.
+     * TODO FW-2787: Remove this in favor of https://github.com/angular/angular/issues/10887
+     * whenever it is implemented.
      */
 
 
@@ -1460,7 +1460,8 @@ NumericValueAccessorDirective.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPO
 class RadioValueAccessorDirective extends ValueAccessor {
   constructor(injector, el) {
     super(injector, el);
-  }
+  } // TODO(FW-2827): type (HTMLIonRadioElement and HTMLElement are both missing `checked`)
+
 
   _handleIonSelect(el) {
     this.handleChangeEvent(el, el.checked);
@@ -2295,6 +2296,7 @@ IonButton.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ�
     download: "download",
     expand: "expand",
     fill: "fill",
+    form: "form",
     href: "href",
     mode: "mode",
     rel: "rel",
@@ -2320,7 +2322,7 @@ IonButton.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ�
 });
 IonButton = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
+  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
 })], IonButton);
 
 (function () {
@@ -2330,7 +2332,7 @@ IonButton = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
       selector: 'ion-button',
       changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
       template: '<ng-content></ng-content>',
-      inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
+      inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
     }]
   }], function () {
     return [{
@@ -3024,7 +3026,9 @@ IonDatetime.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["�
     minuteValues: "minuteValues",
     mode: "mode",
     monthValues: "monthValues",
+    multiple: "multiple",
     name: "name",
+    preferWheel: "preferWheel",
     presentation: "presentation",
     readonly: "readonly",
     showClearButton: "showClearButton",
@@ -3032,6 +3036,7 @@ IonDatetime.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["�
     showDefaultTimeLabel: "showDefaultTimeLabel",
     showDefaultTitle: "showDefaultTitle",
     size: "size",
+    titleSelectedDatesFormatter: "titleSelectedDatesFormatter",
     value: "value",
     yearValues: "yearValues"
   },
@@ -3049,7 +3054,7 @@ IonDatetime.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["�
 });
 IonDatetime = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'name', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   methods: ['confirm', 'reset', 'cancel']
 })], IonDatetime);
 
@@ -3060,7 +3065,69 @@ IonDatetime = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
       selector: 'ion-datetime',
       changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
       template: '<ng-content></ng-content>',
-      inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'name', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'value', 'yearValues']
+      inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues']
+    }]
+  }], function () {
+    return [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.NgZone
+    }];
+  }, null);
+})();
+
+let IonDatetimeButton = class IonDatetimeButton {
+  constructor(c, r, z) {
+    this.z = z;
+    c.detach();
+    this.el = r.nativeElement;
+  }
+
+};
+/** @nocollapse */
+
+IonDatetimeButton.ɵfac = function IonDatetimeButton_Factory(t) {
+  return new (t || IonDatetimeButton)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgZone));
+};
+/** @nocollapse */
+
+
+IonDatetimeButton.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({
+  type: IonDatetimeButton,
+  selectors: [["ion-datetime-button"]],
+  inputs: {
+    color: "color",
+    datetime: "datetime",
+    disabled: "disabled",
+    mode: "mode"
+  },
+  ngContentSelectors: _c0,
+  decls: 1,
+  vars: 0,
+  template: function IonDatetimeButton_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojectionDef"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojection"](0);
+    }
+  },
+  encapsulation: 2,
+  changeDetection: 0
+});
+IonDatetimeButton = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['color', 'datetime', 'disabled', 'mode']
+})], IonDatetimeButton);
+
+(function () {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵsetClassMetadata"](IonDatetimeButton, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Component,
+    args: [{
+      selector: 'ion-datetime-button',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
+      template: '<ng-content></ng-content>',
+      inputs: ['color', 'datetime', 'disabled', 'mode']
     }]
   }], function () {
     return [{
@@ -4944,6 +5011,7 @@ IonRange.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵ
   type: IonRange,
   selectors: [["ion-range"]],
   inputs: {
+    activeBarStart: "activeBarStart",
     color: "color",
     debounce: "debounce",
     disabled: "disabled",
@@ -4973,7 +5041,7 @@ IonRange.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵ
 });
 IonRange = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })], IonRange);
 
 (function () {
@@ -4983,7 +5051,7 @@ IonRange = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
       selector: 'ion-range',
       changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
       template: '<ng-content></ng-content>',
-      inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+      inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
     }]
   }], function () {
     return [{
@@ -6402,6 +6470,7 @@ IonToggle.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ�
     checked: "checked",
     color: "color",
     disabled: "disabled",
+    enableOnOffLabels: "enableOnOffLabels",
     mode: "mode",
     name: "name",
     value: "value"
@@ -6420,7 +6489,7 @@ IonToggle.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ�
 });
 IonToggle = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
 })], IonToggle);
 
 (function () {
@@ -6430,7 +6499,7 @@ IonToggle = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
       selector: 'ion-toggle',
       changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
       template: '<ng-content></ng-content>',
-      inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+      inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
     }]
   }], function () {
     return [{
@@ -6550,7 +6619,8 @@ class NavParams {
     return this.data[param];
   }
 
-}
+} // TODO(FW-2827): types
+
 
 class AngularDelegate {
   constructor(zone, appRef) {
@@ -6558,8 +6628,8 @@ class AngularDelegate {
     this.appRef = appRef;
   }
 
-  create(resolver, injector, location) {
-    return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
+  create(resolverOrInjector, injector, location, elementReferenceKey) {
+    return new AngularFrameworkDelegate(resolverOrInjector, injector, location, this.appRef, this.zone, elementReferenceKey);
   }
 
 }
@@ -6590,12 +6660,13 @@ AngularDelegate.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2
 })();
 
 class AngularFrameworkDelegate {
-  constructor(resolver, injector, location, appRef, zone) {
-    this.resolver = resolver;
+  constructor(resolverOrInjector, injector, location, appRef, zone, elementReferenceKey) {
+    this.resolverOrInjector = resolverOrInjector;
     this.injector = injector;
     this.location = location;
     this.appRef = appRef;
     this.zone = zone;
+    this.elementReferenceKey = elementReferenceKey;
     this.elRefMap = new WeakMap();
     this.elEventsMap = new WeakMap();
   }
@@ -6603,7 +6674,21 @@ class AngularFrameworkDelegate {
   attachViewToDom(container, component, params, cssClasses) {
     return this.zone.run(() => {
       return new Promise(resolve => {
-        const el = attachView(this.zone, this.resolver, this.injector, this.location, this.appRef, this.elRefMap, this.elEventsMap, container, component, params, cssClasses);
+        const componentProps = Object.assign({}, params);
+        /**
+         * Ionic Angular passes a reference to a modal
+         * or popover that can be accessed using a
+         * variable in the overlay component. If
+         * elementReferenceKey is defined, then we should
+         * pass a reference to the component using
+         * elementReferenceKey as the key.
+         */
+
+        if (this.elementReferenceKey !== undefined) {
+          componentProps[this.elementReferenceKey] = container;
+        }
+
+        const el = attachView(this.zone, this.resolverOrInjector, this.injector, this.location, this.appRef, this.elRefMap, this.elEventsMap, container, component, componentProps, cssClasses);
         resolve(el);
       });
     });
@@ -6632,13 +6717,29 @@ class AngularFrameworkDelegate {
 
 }
 
-const attachView = (zone, resolver, injector, location, appRef, elRefMap, elEventsMap, container, component, params, cssClasses) => {
-  const factory = resolver.resolveComponentFactory(component);
+const attachView = (zone, resolverOrInjector, injector, location, appRef, elRefMap, elEventsMap, container, component, params, cssClasses) => {
+  let componentRef;
   const childInjector = _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector.create({
     providers: getProviders(params),
     parent: injector
   });
-  const componentRef = location ? location.createComponent(factory, location.length, childInjector) : factory.create(childInjector);
+
+  if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
+    // Angular 13 and lower
+    const factory = resolverOrInjector.resolveComponentFactory(component);
+    componentRef = location ? location.createComponent(factory, location.length, childInjector) : factory.create(childInjector);
+  } else if (location) {
+    // Angular 14
+    const environmentInjector = resolverOrInjector;
+    componentRef = location.createComponent(component, {
+      index: location.indexOf,
+      injector: childInjector,
+      environmentInjector
+    });
+  } else {
+    return null;
+  }
+
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
 
@@ -6775,11 +6876,11 @@ const toSegments = path => {
 
 const destroyView = view => {
   if (view) {
-    // TODO lifecycle event
     view.ref.destroy();
     view.unlistenEvents();
   }
-};
+}; // TODO(FW-2827): types
+
 
 class StackController {
   constructor(tabsPrefix, containerEl, router, navCtrl, zone, location) {
@@ -7464,7 +7565,7 @@ Platform.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ�
 })();
 
 const readQueryParam = (url, key) => {
-  key = key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+  key = key.replace(/[[\]\\]/g, '\\$&');
   const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
   const results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
@@ -7747,15 +7848,16 @@ const getAnimation = (direction, animated, animationDirection) => {
 };
 
 const DEFAULT_DIRECTION = 'auto';
-const DEFAULT_ANIMATED = undefined; // eslint-disable-next-line @angular-eslint/directive-class-suffix
+const DEFAULT_ANIMATED = undefined; // TODO(FW-2827): types
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 
 class IonRouterOutlet {
-  constructor(parentContexts, location, resolver, name, tabs, config, navCtrl, commonLocation, elementRef, router, zone, activatedRoute, parentOutlet) {
+  constructor(parentContexts, location, name, tabs, config, navCtrl, componentFactoryResolver, commonLocation, elementRef, router, zone, activatedRoute, parentOutlet) {
     this.parentContexts = parentContexts;
     this.location = location;
-    this.resolver = resolver;
     this.config = config;
     this.navCtrl = navCtrl;
+    this.componentFactoryResolver = componentFactoryResolver;
     this.parentOutlet = parentOutlet;
     this.activated = null;
     this.activatedView = null;
@@ -7907,7 +8009,9 @@ class IonRouterOutlet {
     }
   }
 
-  activateWith(activatedRoute, resolver) {
+  activateWith(activatedRoute, resolverOrInjector) {
+    var _a;
+
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
@@ -7930,18 +8034,64 @@ class IonRouterOutlet {
 
       this.updateActivatedRouteProxy(cmpRef.instance, activatedRoute);
     } else {
-      const snapshot = activatedRoute._futureSnapshot; // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const snapshot = activatedRoute._futureSnapshot;
+      /**
+       * Angular 14 introduces a new `loadComponent` property to the route config.
+       * This function will assign a `component` property to the route snapshot.
+       * We check for the presence of this property to determine if the route is
+       * using standalone components.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 
-      const component = snapshot.routeConfig.component;
-      resolver = resolver || this.resolver;
-      const factory = resolver.resolveComponentFactory(component);
+      if (snapshot.routeConfig.component == null && this.environmentInjector == null) {
+        console.warn('[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n\n' + 'In your component class, add:\n\n' + `   import { EnvironmentInjector } from '@angular/core';\n` + '   constructor(public environmentInjector: EnvironmentInjector) {}\n' + '\n' + 'In your router outlet template, add:\n\n' + '   <ion-router-outlet [environmentInjector]="environmentInjector"></ion-router-outlet>\n\n' + 'Alternatively, if you are routing within ion-tabs:\n\n' + '   <ion-tabs [environmentInjector]="environmentInjector"></ion-tabs>');
+        return;
+      }
+
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children; // We create an activated route proxy object that will maintain future updates for this component
       // over its lifecycle in the stack.
 
       const component$ = new rxjs__WEBPACK_IMPORTED_MODULE_9__.BehaviorSubject(null);
       const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
-      cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector); // Once the component is created we can push it to our local subject supplied to the proxy
+      /**
+       * The resolver is not always provided and is required in Angular 12.
+       * Fallback to the class-level provider when the resolver is not set.
+       */
+
+      resolverOrInjector = resolverOrInjector || this.componentFactoryResolver; // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
+      const component = (_a = snapshot.routeConfig.component) !== null && _a !== void 0 ? _a : snapshot.component;
+
+      if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
+        // Backwards compatibility for Angular 13 and lower
+        const factory = resolverOrInjector.resolveComponentFactory(component);
+        cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
+      } else {
+        /**
+         * Angular 14 and higher.
+         *
+         * TODO: FW-1641: Migrate once Angular 13 support is dropped.
+         *
+         * When we drop < Angular 14, we can replace the following code with:
+         * ```ts
+          const environmentInjector = resolverOrInjector ?? this.environmentInjector;
+            cmpRef = this.activated = location.createComponent(component, {
+              index: location.length,
+              injector,
+              environmentInjector,
+            });
+         * ```
+         * where `this.environmentInjector` is a provider of `EnvironmentInjector` from @angular/core.
+         */
+        const environmentInjector = resolverOrInjector !== null && resolverOrInjector !== void 0 ? resolverOrInjector : this.environmentInjector;
+        cmpRef = this.activated = this.location.createComponent(component, {
+          index: this.location.length,
+          injector,
+          environmentInjector
+        });
+      } // Once the component is created we can push it to our local subject supplied to the proxy
+
 
       component$.next(cmpRef.instance); // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
@@ -7956,8 +8106,18 @@ class IonRouterOutlet {
     }
 
     this.activatedView = enteringView;
+    /**
+     * The top outlet is set prior to the entering view's transition completing,
+     * so that when we have nested outlets (e.g. ion-tabs inside an ion-router-outlet),
+     * the tabs outlet will be assigned as the top outlet when a view inside tabs is
+     * activated.
+     *
+     * In this scenario, activeWith is called for both the tabs and the root router outlet.
+     * To avoid a race condition, we assign the top outlet synchronously.
+     */
+
+    this.navCtrl.setTopOutlet(this);
     this.stackCtrl.setActive(enteringView).then(data => {
-      this.navCtrl.setTopOutlet(this);
       this.activateEvents.emit(cmpRef.instance);
       this.stackEvents.emit(data);
     });
@@ -8073,7 +8233,7 @@ class IonRouterOutlet {
 
 
 IonRouterOutlet.ɵfac = function IonRouterOutlet_Factory(t) {
-  return new (t || IonRouterOutlet)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ChildrenOutletContexts), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewContainerRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('name'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('tabs'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](Config), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](NavController), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_7__.Location), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgZone), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](IonRouterOutlet, 12));
+  return new (t || IonRouterOutlet)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ChildrenOutletContexts), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewContainerRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('name'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('tabs'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](Config), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](NavController), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver, 8), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_7__.Location), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgZone), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](IonRouterOutlet, 12));
 };
 /** @nocollapse */
 
@@ -8084,7 +8244,9 @@ IonRouterOutlet.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2_
   inputs: {
     animated: "animated",
     animation: "animation",
-    swipeGesture: "swipeGesture"
+    mode: "mode",
+    swipeGesture: "swipeGesture",
+    environmentInjector: "environmentInjector"
   },
   outputs: {
     stackEvents: "stackEvents",
@@ -8101,15 +8263,13 @@ IonRouterOutlet.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2_
       selector: 'ion-router-outlet',
       exportAs: 'outlet',
       // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-      inputs: ['animated', 'animation', 'swipeGesture']
+      inputs: ['animated', 'animation', 'mode', 'swipeGesture']
     }]
   }], function () {
     return [{
       type: _angular_router__WEBPACK_IMPORTED_MODULE_8__.ChildrenOutletContexts
     }, {
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewContainerRef
-    }, {
-      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver
     }, {
       type: undefined,
       decorators: [{
@@ -8129,6 +8289,11 @@ IonRouterOutlet.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2_
     }, {
       type: NavController
     }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver,
+      decorators: [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Optional
+      }]
+    }, {
       type: _angular_common__WEBPACK_IMPORTED_MODULE_7__.Location
     }, {
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef
@@ -8147,6 +8312,9 @@ IonRouterOutlet.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2_
       }]
     }];
   }, {
+    environmentInjector: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input
+    }],
     stackEvents: [{
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Output
     }],
@@ -8325,14 +8493,17 @@ IonTabs.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵd
       });
     }
   },
+  inputs: {
+    environmentInjector: "environmentInjector"
+  },
   outputs: {
     ionTabsWillChange: "ionTabsWillChange",
     ionTabsDidChange: "ionTabsDidChange"
   },
   ngContentSelectors: _c3,
   decls: 5,
-  vars: 0,
-  consts: [[1, "tabs-inner"], ["tabs", "true", 3, "stackEvents"], ["outlet", ""]],
+  vars: 1,
+  consts: [[1, "tabs-inner"], ["tabs", "true", 3, "environmentInjector", "stackEvents"], ["outlet", ""]],
   template: function IonTabs_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojectionDef"](_c2);
@@ -8343,6 +8514,11 @@ IonTabs.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵd
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojection"](4, 1);
+    }
+
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("environmentInjector", ctx.environmentInjector);
     }
   },
   directives: [IonRouterOutlet],
@@ -8356,7 +8532,12 @@ IonTabs.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵd
       selector: 'ion-tabs',
       template: ` <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner">
-      <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
+      <ion-router-outlet
+        #outlet
+        tabs="true"
+        [environmentInjector]="environmentInjector"
+        (stackEvents)="onPageSelected($event)"
+      ></ion-router-outlet>
     </div>
     <ng-content></ng-content>`,
       styles: [`
@@ -8402,6 +8583,9 @@ IonTabs.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵd
       args: [IonTabBar, {
         static: false
       }]
+    }],
+    environmentInjector: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input
     }],
     ionTabsWillChange: [{
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Output
@@ -9097,13 +9281,16 @@ IonModal.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵ
   },
   inputs: {
     animated: "animated",
+    keepContentsMounted: "keepContentsMounted",
     backdropBreakpoint: "backdropBreakpoint",
     backdropDismiss: "backdropDismiss",
     breakpoints: "breakpoints",
+    canDismiss: "canDismiss",
     cssClass: "cssClass",
     enterAnimation: "enterAnimation",
     event: "event",
     handle: "handle",
+    handleBehavior: "handleBehavior",
     initialBreakpoint: "initialBreakpoint",
     isOpen: "isOpen",
     keyboardClose: "keyboardClose",
@@ -9124,7 +9311,7 @@ IonModal.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵ
     }
 
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.isCmpOpen);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.isCmpOpen || ctx.keepContentsMounted);
     }
   },
   directives: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_7__.NgTemplateOutlet],
@@ -9132,7 +9319,7 @@ IonModal.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵ
   changeDetection: 0
 });
 IonModal = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
-  inputs: ['animated', 'backdropBreakpoint', 'backdropDismiss', 'breakpoints', 'cssClass', 'enterAnimation', 'event', 'handle', 'initialBreakpoint', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose', 'translucent', 'trigger'],
+  inputs: ['animated', 'keepContentsMounted', 'backdropBreakpoint', 'backdropDismiss', 'breakpoints', 'canDismiss', 'cssClass', 'enterAnimation', 'event', 'handle', 'handleBehavior', 'initialBreakpoint', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose', 'translucent', 'trigger'],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'setCurrentBreakpoint', 'getCurrentBreakpoint']
 })], IonModal);
 
@@ -9142,8 +9329,10 @@ IonModal = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
     args: [{
       selector: 'ion-modal',
       changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
-      template: `<div class="ion-page" *ngIf="isCmpOpen"><ng-container [ngTemplateOutlet]="template"></ng-container></div>`,
-      inputs: ['animated', 'backdropBreakpoint', 'backdropDismiss', 'breakpoints', 'cssClass', 'enterAnimation', 'event', 'handle', 'initialBreakpoint', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose', 'translucent', 'trigger']
+      template: `<div class="ion-page" *ngIf="isCmpOpen || keepContentsMounted">
+    <ng-container [ngTemplateOutlet]="template"></ng-container>
+  </div>`,
+      inputs: ['animated', 'keepContentsMounted', 'backdropBreakpoint', 'backdropDismiss', 'breakpoints', 'canDismiss', 'cssClass', 'enterAnimation', 'event', 'handle', 'handleBehavior', 'initialBreakpoint', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose', 'translucent', 'trigger']
     }]
   }], function () {
     return [{
@@ -9168,7 +9357,7 @@ let IonPopover = class IonPopover {
     this.z = z;
     this.isCmpOpen = false;
     this.el = r.nativeElement;
-    this.el.addEventListener('willPresent', () => {
+    this.el.addEventListener('ionMount', () => {
       this.isCmpOpen = true;
       c.detectChanges();
     });
@@ -9206,6 +9395,7 @@ IonPopover.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ
     alignment: "alignment",
     animated: "animated",
     arrow: "arrow",
+    keepContentsMounted: "keepContentsMounted",
     backdropDismiss: "backdropDismiss",
     cssClass: "cssClass",
     dismissOnSelect: "dismissOnSelect",
@@ -9232,7 +9422,7 @@ IonPopover.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ
     }
 
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.isCmpOpen);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.isCmpOpen || ctx.keepContentsMounted);
     }
   },
   directives: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_7__.NgTemplateOutlet],
@@ -9240,7 +9430,7 @@ IonPopover.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵ
   changeDetection: 0
 });
 IonPopover = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
-  inputs: ['alignment', 'animated', 'arrow', 'backdropDismiss', 'cssClass', 'dismissOnSelect', 'enterAnimation', 'event', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'translucent', 'trigger', 'triggerAction', 'reference', 'size', 'side'],
+  inputs: ['alignment', 'animated', 'arrow', 'keepContentsMounted', 'backdropDismiss', 'cssClass', 'dismissOnSelect', 'enterAnimation', 'event', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'translucent', 'trigger', 'triggerAction', 'reference', 'size', 'side'],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
 })], IonPopover);
 
@@ -9250,8 +9440,8 @@ IonPopover = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
     args: [{
       selector: 'ion-popover',
       changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
-      template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`,
-      inputs: ['alignment', 'animated', 'arrow', 'backdropDismiss', 'cssClass', 'dismissOnSelect', 'enterAnimation', 'event', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'translucent', 'trigger', 'triggerAction', 'reference', 'size', 'side']
+      template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen || keepContentsMounted"></ng-container>`,
+      inputs: ['alignment', 'animated', 'arrow', 'keepContentsMounted', 'backdropDismiss', 'cssClass', 'dismissOnSelect', 'enterAnimation', 'event', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'translucent', 'trigger', 'triggerAction', 'reference', 'size', 'side']
     }]
   }], function () {
     return [{
@@ -9269,7 +9459,8 @@ IonPopover = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([ProxyCmp({
       }]
     }]
   });
-})();
+})(); // TODO(FW-2827): types
+
 
 class OverlayBaseController {
   constructor(ctrl) {
@@ -9281,7 +9472,6 @@ class OverlayBaseController {
 
 
   create(opts) {
-    // TODO: next major release opts is not optional
     return this.ctrl.create(opts || {});
   }
   /**
@@ -9561,18 +9751,31 @@ PickerController.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_
     return [];
   }, null);
 })();
+/**
+ * An `Injector` that's part of the environment injector hierarchy, which exists outside of the
+ * component tree.
+ *
+ * @developerPreview
+ */
+
+
+class EnvironmentInjector {}
 
 class ModalController extends OverlayBaseController {
-  constructor(angularDelegate, resolver, injector) {
+  constructor(angularDelegate, resolver, injector, // TODO: FW-1641: Migrate to Angular's version once Angular 13 is dropped
+  environmentInjector) {
     super(_ionic_core__WEBPACK_IMPORTED_MODULE_0__.modalController);
     this.angularDelegate = angularDelegate;
     this.resolver = resolver;
     this.injector = injector;
+    this.environmentInjector = environmentInjector;
   }
 
   create(opts) {
+    var _a;
+
     return super.create(Object.assign(Object.assign({}, opts), {
-      delegate: this.angularDelegate.create(this.resolver, this.injector)
+      delegate: this.angularDelegate.create((_a = this.resolver) !== null && _a !== void 0 ? _a : this.environmentInjector, this.injector, undefined, 'modal')
     }));
   }
 
@@ -9581,7 +9784,7 @@ class ModalController extends OverlayBaseController {
 
 
 ModalController.ɵfac = function ModalController_Factory(t) {
-  return new (t || ModalController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector));
+  return new (t || ModalController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](EnvironmentInjector, 8));
 };
 /** @nocollapse */
 
@@ -9601,21 +9804,30 @@ ModalController.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver
     }, {
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector
+    }, {
+      type: EnvironmentInjector,
+      decorators: [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Optional
+      }]
     }];
   }, null);
 })();
 
 class PopoverController extends OverlayBaseController {
-  constructor(angularDelegate, resolver, injector) {
+  constructor(angularDelegate, resolver, injector, // TODO: FW-1641: Migrate to Angular's version once Angular 13 is dropped
+  environmentInjector) {
     super(_ionic_core__WEBPACK_IMPORTED_MODULE_0__.popoverController);
     this.angularDelegate = angularDelegate;
     this.resolver = resolver;
     this.injector = injector;
+    this.environmentInjector = environmentInjector;
   }
 
   create(opts) {
+    var _a;
+
     return super.create(Object.assign(Object.assign({}, opts), {
-      delegate: this.angularDelegate.create(this.resolver, this.injector)
+      delegate: this.angularDelegate.create((_a = this.resolver) !== null && _a !== void 0 ? _a : this.environmentInjector, this.injector, undefined, 'popover')
     }));
   }
 
@@ -9624,7 +9836,7 @@ class PopoverController extends OverlayBaseController {
 
 
 PopoverController.ɵfac = function PopoverController_Factory(t) {
-  return new (t || PopoverController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector));
+  return new (t || PopoverController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](EnvironmentInjector, 8));
 };
 /** @nocollapse */
 
@@ -9644,6 +9856,11 @@ PopoverController.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver
     }, {
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector
+    }, {
+      type: EnvironmentInjector,
+      decorators: [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Optional
+      }]
     }];
   }, null);
 })();
@@ -9900,6 +10117,7 @@ class IonicRouteStrategy {
 /**
  *  https://ionicframework.com/docs/api/router-outlet#life-cycle-hooks
  */
+// TODO(FW-2827): types
 
 
 const appInitialize = (config, doc, zone) => {
@@ -9932,10 +10150,12 @@ const appInitialize = (config, doc, zone) => {
   };
 };
 
-const DECLARATIONS = [// proxies
-IonAccordion, IonAccordionGroup, IonApp, IonAvatar, IonBackButton, IonBackdrop, IonBadge, IonBreadcrumb, IonBreadcrumbs, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonDatetime, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonItemGroup, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenu, IonMenuButton, IonMenuToggle, IonModal, IonNav, IonNavLink, IonNote, IonPopover, IonProgressBar, IonRadio, IonRadioGroup, IonRange, IonRefresher, IonRefresherContent, IonReorder, IonReorderGroup, IonRippleEffect, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonSkeletonText, IonSlide, IonSlides, IonSpinner, IonSplitPane, IonTabBar, IonTabButton, IonText, IonTextarea, IonThumbnail, IonToggle, IonToolbar, IonTitle, IonTabs, // ngModel accessors
+const DIRECTIVES = [IonAccordion, IonAccordionGroup, IonApp, IonAvatar, IonBackButton, IonBackdrop, IonBadge, IonBreadcrumb, IonBreadcrumbs, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonDatetime, IonDatetimeButton, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonItemGroup, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenu, IonMenuButton, IonMenuToggle, IonNav, IonNavLink, IonNote, IonProgressBar, IonRadio, IonRadioGroup, IonRange, IonRefresher, IonRefresherContent, IonReorder, IonReorderGroup, IonRippleEffect, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonSkeletonText, IonSlide, IonSlides, IonSpinner, IonSplitPane, IonTabBar, IonTabButton, IonText, IonTextarea, IonThumbnail, IonTitle, IonToggle, IonToolbar];
+const DECLARATIONS = [// generated proxies
+...DIRECTIVES, // manual proxies
+IonModal, IonPopover, // ngModel accessors
 BooleanValueAccessorDirective, NumericValueAccessorDirective, RadioValueAccessorDirective, SelectValueAccessorDirective, TextValueAccessorDirective, // navigation
-IonRouterOutlet, IonBackButtonDelegateDirective, NavDelegate, RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective, // virtual scroll
+IonTabs, IonRouterOutlet, IonBackButtonDelegateDirective, NavDelegate, RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective, // virtual scroll
 VirtualFooter, VirtualHeader, VirtualItem, IonVirtualScroll];
 
 class IonicModule {
@@ -9966,16 +10186,16 @@ IonicModule.ɵfac = function IonicModule_Factory(t) {
 
 IonicModule.ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineNgModule"]({
   type: IonicModule,
-  declarations: [// proxies
-  IonAccordion, IonAccordionGroup, IonApp, IonAvatar, IonBackButton, IonBackdrop, IonBadge, IonBreadcrumb, IonBreadcrumbs, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonDatetime, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonItemGroup, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenu, IonMenuButton, IonMenuToggle, IonModal, IonNav, IonNavLink, IonNote, IonPopover, IonProgressBar, IonRadio, IonRadioGroup, IonRange, IonRefresher, IonRefresherContent, IonReorder, IonReorderGroup, IonRippleEffect, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonSkeletonText, IonSlide, IonSlides, IonSpinner, IonSplitPane, IonTabBar, IonTabButton, IonText, IonTextarea, IonThumbnail, IonToggle, IonToolbar, IonTitle, IonTabs, // ngModel accessors
+  declarations: [IonAccordion, IonAccordionGroup, IonApp, IonAvatar, IonBackButton, IonBackdrop, IonBadge, IonBreadcrumb, IonBreadcrumbs, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonDatetime, IonDatetimeButton, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonItemGroup, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenu, IonMenuButton, IonMenuToggle, IonNav, IonNavLink, IonNote, IonProgressBar, IonRadio, IonRadioGroup, IonRange, IonRefresher, IonRefresherContent, IonReorder, IonReorderGroup, IonRippleEffect, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonSkeletonText, IonSlide, IonSlides, IonSpinner, IonSplitPane, IonTabBar, IonTabButton, IonText, IonTextarea, IonThumbnail, IonTitle, IonToggle, IonToolbar, // manual proxies
+  IonModal, IonPopover, // ngModel accessors
   BooleanValueAccessorDirective, NumericValueAccessorDirective, RadioValueAccessorDirective, SelectValueAccessorDirective, TextValueAccessorDirective, // navigation
-  IonRouterOutlet, IonBackButtonDelegateDirective, NavDelegate, RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective, // virtual scroll
+  IonTabs, IonRouterOutlet, IonBackButtonDelegateDirective, NavDelegate, RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective, // virtual scroll
   VirtualFooter, VirtualHeader, VirtualItem, IonVirtualScroll],
   imports: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.CommonModule],
-  exports: [// proxies
-  IonAccordion, IonAccordionGroup, IonApp, IonAvatar, IonBackButton, IonBackdrop, IonBadge, IonBreadcrumb, IonBreadcrumbs, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonDatetime, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonItemGroup, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenu, IonMenuButton, IonMenuToggle, IonModal, IonNav, IonNavLink, IonNote, IonPopover, IonProgressBar, IonRadio, IonRadioGroup, IonRange, IonRefresher, IonRefresherContent, IonReorder, IonReorderGroup, IonRippleEffect, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonSkeletonText, IonSlide, IonSlides, IonSpinner, IonSplitPane, IonTabBar, IonTabButton, IonText, IonTextarea, IonThumbnail, IonToggle, IonToolbar, IonTitle, IonTabs, // ngModel accessors
+  exports: [IonAccordion, IonAccordionGroup, IonApp, IonAvatar, IonBackButton, IonBackdrop, IonBadge, IonBreadcrumb, IonBreadcrumbs, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonDatetime, IonDatetimeButton, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonItemGroup, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonMenu, IonMenuButton, IonMenuToggle, IonNav, IonNavLink, IonNote, IonProgressBar, IonRadio, IonRadioGroup, IonRange, IonRefresher, IonRefresherContent, IonReorder, IonReorderGroup, IonRippleEffect, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonSkeletonText, IonSlide, IonSlides, IonSpinner, IonSplitPane, IonTabBar, IonTabButton, IonText, IonTextarea, IonThumbnail, IonTitle, IonToggle, IonToolbar, // manual proxies
+  IonModal, IonPopover, // ngModel accessors
   BooleanValueAccessorDirective, NumericValueAccessorDirective, RadioValueAccessorDirective, SelectValueAccessorDirective, TextValueAccessorDirective, // navigation
-  IonRouterOutlet, IonBackButtonDelegateDirective, NavDelegate, RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective, // virtual scroll
+  IonTabs, IonRouterOutlet, IonBackButtonDelegateDirective, NavDelegate, RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective, // virtual scroll
   VirtualFooter, VirtualHeader, VirtualItem, IonVirtualScroll]
 });
 /** @nocollapse */
@@ -10006,9 +10226,9 @@ IonicModule.ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["�
 
 /***/ }),
 
-/***/ 2597:
+/***/ 5933:
 /*!*****************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/animation-36c1d77d.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/animation-4ff3f603.js ***!
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -10017,10 +10237,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "c": () => (/* binding */ createAnimation)
 /* harmony export */ });
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
+/* harmony import */ var _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-33ffec25.js */ 2286);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
+
 
 
 let animationPrefix;
@@ -10094,6 +10316,7 @@ const animationEnd = (el, callback) => {
   }
   return unregister;
 };
+// TODO(FW-2832): type
 const generateKeyframeRules = (keyframes = []) => {
   return keyframes
     .map((keyframe) => {
@@ -10118,17 +10341,20 @@ const generateKeyframeName = (keyframeRules) => {
   return `ion-animation-${index}`;
 };
 const getStyleContainer = (element) => {
-  const rootNode = element.getRootNode();
+  // getRootNode is not always available in SSR environments.
+  // TODO(FW-2832): types
+  const rootNode = element.getRootNode !== undefined ? element.getRootNode() : element;
   return rootNode.head || rootNode;
 };
 const createKeyframeStylesheet = (keyframeName, keyframeRules, element) => {
+  var _a;
   const styleContainer = getStyleContainer(element);
   const keyframePrefix = getAnimationPrefix(element);
   const existingStylesheet = styleContainer.querySelector('#' + keyframeName);
   if (existingStylesheet) {
     return existingStylesheet;
   }
-  const stylesheet = (element.ownerDocument || document).createElement('style');
+  const stylesheet = ((_a = element.ownerDocument) !== null && _a !== void 0 ? _a : document).createElement('style');
   stylesheet.id = keyframeName;
   stylesheet.textContent = `@${keyframePrefix}keyframes ${keyframeName} { ${keyframeRules} } @${keyframePrefix}keyframes ${keyframeName}-alt { ${keyframeRules} }`;
   styleContainer.appendChild(stylesheet);
@@ -10182,7 +10408,8 @@ const createAnimation = (animationId) => {
   const _afterAddReadFunctions = [];
   const _afterAddWriteFunctions = [];
   const webAnimations = [];
-  const supportsAnimationEffect = typeof AnimationEffect === 'function' || typeof window.AnimationEffect === 'function';
+  const supportsAnimationEffect = typeof AnimationEffect === 'function' ||
+    (_index_33ffec25_js__WEBPACK_IMPORTED_MODULE_1__.w !== undefined && typeof _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_1__.w.AnimationEffect === 'function');
   const supportsWebAnimations = typeof Element === 'function' &&
     typeof Element.prototype.animate === 'function' &&
     supportsAnimationEffect;
@@ -10254,7 +10481,7 @@ const createAnimation = (animationId) => {
     }
     else {
       const elementsArray = elements.slice();
-      (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
+      (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
         elementsArray.forEach((element) => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
@@ -10608,7 +10835,7 @@ const createAnimation = (animationId) => {
         if (toggleAnimationName) {
           setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
         }
-        (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
+        (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
           setStyleProperty(element, 'animation-name', stylesheet.id || null);
         });
       }
@@ -10680,7 +10907,7 @@ const createAnimation = (animationId) => {
     }
   };
   const updateCSSAnimation = (toggleAnimationName = true, step) => {
-    (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
+    (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
       elements.forEach((element) => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', `${getDuration()}ms`);
@@ -10693,7 +10920,7 @@ const createAnimation = (animationId) => {
         if (toggleAnimationName) {
           setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
         }
-        (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
+        (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
           setStyleProperty(element, 'animation-name', keyframeName || null);
         });
       });
@@ -10813,7 +11040,7 @@ const createAnimation = (animationId) => {
   };
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
-    (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
+    (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
       elements.forEach((element) => {
         if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
@@ -10849,12 +11076,10 @@ const createAnimation = (animationId) => {
          * may be flickering if a new
          * animation is started on the same
          * element too quickly
-         *
-         * TODO: Is there a cleaner way to do this?
          */
-        (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
+        (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.r)(() => {
           clearCSSAnimationPlayState();
-          (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.r)(animationFinish);
+          (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.r)(animationFinish);
         });
       });
     }
@@ -11003,9 +11228,9 @@ const createAnimation = (animationId) => {
 
 /***/ }),
 
-/***/ 9350:
+/***/ 2963:
 /*!*******************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/app-globals-7511e593.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/app-globals-a49ec076.js ***!
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -11014,22 +11239,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "g": () => (/* binding */ globalScripts)
 /* harmony export */ });
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ionic-global-c74e4951.js */ 5823);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
 
 
-const globalScripts = _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_0__.i;
+const globalScripts = _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_0__.i;
 
 
 
 
 /***/ }),
 
-/***/ 1077:
+/***/ 1463:
 /*!********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/cubic-bezier-c313947a.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/cubic-bezier-e78d1307.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -11045,7 +11270,6 @@ __webpack_require__.r(__webpack_exports__);
  * Based on:
  * https://stackoverflow.com/questions/7348009/y-coordinate-for-a-given-x-cubic-bezier
  * https://math.stackexchange.com/questions/26846/is-there-an-explicit-form-for-cubic-b%C3%A9zier-curves
- * TODO: Reduce rounding error
  */
 /**
  * EXPERIMENTAL
@@ -11133,9 +11357,9 @@ const solveCubicEquation = (a, b, c, d) => {
 
 /***/ }),
 
-/***/ 607:
+/***/ 6379:
 /*!**************************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/gesture-controller-17e82006.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/gesture-controller-17060b7c.js ***!
   \**************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -11158,7 +11382,8 @@ class GestureController {
    * Creates a gesture delegate based on the GestureConfig passed
    */
   createGesture(config) {
-    return new GestureDelegate(this, this.newID(), config.name, config.priority || 0, !!config.disableScroll);
+    var _a;
+    return new GestureDelegate(this, this.newID(), config.name, (_a = config.priority) !== null && _a !== void 0 ? _a : 0, !!config.disableScroll);
   }
   /**
    * Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
@@ -11451,9 +11676,9 @@ const MENU_BACK_BUTTON_PRIORITY = 99; // 1 less than overlay priority since menu
 
 /***/ }),
 
-/***/ 9158:
+/***/ 9234:
 /*!***************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/helpers-4d272360.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/helpers-3b390e48.js ***!
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -11542,6 +11767,7 @@ const transitionEnd = (el, expectedDuration = 0, callback) => {
  */
 const componentOnReady = (el, callback) => {
   if (el.componentOnReady) {
+    // eslint-disable-next-line custom-rules/no-component-on-ready-method
     el.componentOnReady().then((resolvedEl) => callback(resolvedEl));
   }
   else {
@@ -11633,9 +11859,15 @@ const ariaAttributes = [
  * Returns an array of aria attributes that should be copied from
  * the shadow host element to a target within the light DOM.
  * @param el The element that the attributes should be copied from.
+ * @param ignoreList The list of aria-attributes to ignore reflecting and removing from the host.
+ * Use this in instances where we manually specify aria attributes on the `<Host>` element.
  */
-const inheritAriaAttributes = (el) => {
-  return inheritAttributes(el, ariaAttributes);
+const inheritAriaAttributes = (el, ignoreList) => {
+  let attributesToInherit = ariaAttributes;
+  if (ignoreList && ignoreList.length > 0) {
+    attributesToInherit = attributesToInherit.filter((attr) => !ignoreList.includes(attr));
+  }
+  return inheritAttributes(el, attributesToInherit);
 };
 const addEventListener = (el, eventName, callback, opts) => {
   var _a;
@@ -11889,9 +12121,9 @@ const shallowEqualStringMap = (map1, map2) => {
 
 /***/ }),
 
-/***/ 4243:
+/***/ 919:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-2b53f989.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-27c7e5c4.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -11910,8 +12142,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "t": () => (/* binding */ transition)
 /* harmony export */ });
 /* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
+/* harmony import */ var _index_8e692445_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-8e692445.js */ 1559);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
 
 
 /*!
@@ -11925,13 +12157,14 @@ const LIFECYCLE_WILL_LEAVE = 'ionViewWillLeave';
 const LIFECYCLE_DID_LEAVE = 'ionViewDidLeave';
 const LIFECYCLE_WILL_UNLOAD = 'ionViewWillUnload';
 
-const iosTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./ios.transition-248dea7c.js */ 1339));
+const iosTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./ios.transition-4a0deed6.js */ 9078));
 
-const mdTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./md.transition-d04040a2.js */ 4250));
+const mdTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./md.transition-0d261204.js */ 4199)); // TODO(FW-2832): types
+
 
 const transition = opts => {
   return new Promise((resolve, reject) => {
-    (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_1__.c)(() => {
+    (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_1__.c)(() => {
       beforeTransition(opts);
       runTransition(opts).then(result => {
         if (result.animation) {
@@ -11978,7 +12211,7 @@ const beforeTransition = opts => {
 const runTransition = /*#__PURE__*/function () {
   var _ref = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts) {
     const animationBuilder = yield getAnimationBuilder(opts);
-    const ani = animationBuilder && _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_1__.B.isBrowser ? animation(animationBuilder, opts) : noAnimation(opts); // fast path for no animation
+    const ani = animationBuilder && _index_8e692445_js__WEBPACK_IMPORTED_MODULE_1__.B.isBrowser ? animation(animationBuilder, opts) : noAnimation(opts); // fast path for no animation
 
     return ani;
   });
@@ -12131,7 +12364,7 @@ const lifecycle = (el, eventName) => {
 
 const shallowReady = el => {
   if (el) {
-    return new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__.c)(el, resolve));
+    return new Promise(resolve => (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_2__.c)(el, resolve));
   }
 
   return Promise.resolve();
@@ -12143,6 +12376,7 @@ const deepReady = /*#__PURE__*/function () {
 
     if (element) {
       if (element.componentOnReady != null) {
+        // eslint-disable-next-line custom-rules/no-component-on-ready-method
         const stencilEl = yield element.componentOnReady();
 
         if (stencilEl != null) {
@@ -12157,7 +12391,7 @@ const deepReady = /*#__PURE__*/function () {
          * Non-lazy loaded custom elements need to wait
          * one frame for component to be loaded.
          */
-        const waitForCustomElement = new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__.r)(resolve));
+        const waitForCustomElement = new Promise(resolve => (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_2__.r)(resolve));
         yield waitForCustomElement;
         return;
       }
@@ -12211,2997 +12445,9 @@ const getIonPageElement = element => {
 
 /***/ }),
 
-/***/ 2172:
+/***/ 7351:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-3f1a7d95.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "GESTURE_CONTROLLER": () => (/* reexport safe */ _gesture_controller_17e82006_js__WEBPACK_IMPORTED_MODULE_0__.G),
-/* harmony export */   "createGesture": () => (/* binding */ createGesture)
-/* harmony export */ });
-/* harmony import */ var _gesture_controller_17e82006_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gesture-controller-17e82006.js */ 607);
-/*!
- * (C) Ionic http://ionicframework.com - MIT License
- */
-
-
-
-const addEventListener = (el, eventName, callback, opts) => {
-  // use event listener options when supported
-  // otherwise it's just a boolean for the "capture" arg
-  const listenerOpts = supportsPassive(el)
-    ? {
-      capture: !!opts.capture,
-      passive: !!opts.passive,
-    }
-    : !!opts.capture;
-  let add;
-  let remove;
-  if (el['__zone_symbol__addEventListener']) {
-    add = '__zone_symbol__addEventListener';
-    remove = '__zone_symbol__removeEventListener';
-  }
-  else {
-    add = 'addEventListener';
-    remove = 'removeEventListener';
-  }
-  el[add](eventName, callback, listenerOpts);
-  return () => {
-    el[remove](eventName, callback, listenerOpts);
-  };
-};
-const supportsPassive = (node) => {
-  if (_sPassive === undefined) {
-    try {
-      const opts = Object.defineProperty({}, 'passive', {
-        get: () => {
-          _sPassive = true;
-        },
-      });
-      node.addEventListener('optsTest', () => {
-        return;
-      }, opts);
-    }
-    catch (e) {
-      _sPassive = false;
-    }
-  }
-  return !!_sPassive;
-};
-let _sPassive;
-
-const MOUSE_WAIT = 2000;
-const createPointerEvents = (el, pointerDown, pointerMove, pointerUp, options) => {
-  let rmTouchStart;
-  let rmTouchMove;
-  let rmTouchEnd;
-  let rmTouchCancel;
-  let rmMouseStart;
-  let rmMouseMove;
-  let rmMouseUp;
-  let lastTouchEvent = 0;
-  const handleTouchStart = (ev) => {
-    lastTouchEvent = Date.now() + MOUSE_WAIT;
-    if (!pointerDown(ev)) {
-      return;
-    }
-    if (!rmTouchMove && pointerMove) {
-      rmTouchMove = addEventListener(el, 'touchmove', pointerMove, options);
-    }
-    /**
-     * Events are dispatched on the element that is tapped and bubble up to
-     * the reference element in the gesture. In the event that the element this
-     * event was first dispatched on is removed from the DOM, the event will no
-     * longer bubble up to our reference element. This leaves the gesture in an
-     * unusable state. To account for this, the touchend and touchcancel listeners
-     * should be added to the event target so that they still fire even if the target
-     * is removed from the DOM.
-     */
-    if (!rmTouchEnd) {
-      rmTouchEnd = addEventListener(ev.target, 'touchend', handleTouchEnd, options);
-    }
-    if (!rmTouchCancel) {
-      rmTouchCancel = addEventListener(ev.target, 'touchcancel', handleTouchEnd, options);
-    }
-  };
-  const handleMouseDown = (ev) => {
-    if (lastTouchEvent > Date.now()) {
-      return;
-    }
-    if (!pointerDown(ev)) {
-      return;
-    }
-    if (!rmMouseMove && pointerMove) {
-      rmMouseMove = addEventListener(getDocument(el), 'mousemove', pointerMove, options);
-    }
-    if (!rmMouseUp) {
-      rmMouseUp = addEventListener(getDocument(el), 'mouseup', handleMouseUp, options);
-    }
-  };
-  const handleTouchEnd = (ev) => {
-    stopTouch();
-    if (pointerUp) {
-      pointerUp(ev);
-    }
-  };
-  const handleMouseUp = (ev) => {
-    stopMouse();
-    if (pointerUp) {
-      pointerUp(ev);
-    }
-  };
-  const stopTouch = () => {
-    if (rmTouchMove) {
-      rmTouchMove();
-    }
-    if (rmTouchEnd) {
-      rmTouchEnd();
-    }
-    if (rmTouchCancel) {
-      rmTouchCancel();
-    }
-    rmTouchMove = rmTouchEnd = rmTouchCancel = undefined;
-  };
-  const stopMouse = () => {
-    if (rmMouseMove) {
-      rmMouseMove();
-    }
-    if (rmMouseUp) {
-      rmMouseUp();
-    }
-    rmMouseMove = rmMouseUp = undefined;
-  };
-  const stop = () => {
-    stopTouch();
-    stopMouse();
-  };
-  const enable = (isEnabled = true) => {
-    if (!isEnabled) {
-      if (rmTouchStart) {
-        rmTouchStart();
-      }
-      if (rmMouseStart) {
-        rmMouseStart();
-      }
-      rmTouchStart = rmMouseStart = undefined;
-      stop();
-    }
-    else {
-      if (!rmTouchStart) {
-        rmTouchStart = addEventListener(el, 'touchstart', handleTouchStart, options);
-      }
-      if (!rmMouseStart) {
-        rmMouseStart = addEventListener(el, 'mousedown', handleMouseDown, options);
-      }
-    }
-  };
-  const destroy = () => {
-    enable(false);
-    pointerUp = pointerMove = pointerDown = undefined;
-  };
-  return {
-    enable,
-    stop,
-    destroy,
-  };
-};
-const getDocument = (node) => {
-  return node instanceof Document ? node : node.ownerDocument;
-};
-
-const createPanRecognizer = (direction, thresh, maxAngle) => {
-  const radians = maxAngle * (Math.PI / 180);
-  const isDirX = direction === 'x';
-  const maxCosine = Math.cos(radians);
-  const threshold = thresh * thresh;
-  let startX = 0;
-  let startY = 0;
-  let dirty = false;
-  let isPan = 0;
-  return {
-    start(x, y) {
-      startX = x;
-      startY = y;
-      isPan = 0;
-      dirty = true;
-    },
-    detect(x, y) {
-      if (!dirty) {
-        return false;
-      }
-      const deltaX = x - startX;
-      const deltaY = y - startY;
-      const distance = deltaX * deltaX + deltaY * deltaY;
-      if (distance < threshold) {
-        return false;
-      }
-      const hypotenuse = Math.sqrt(distance);
-      const cosine = (isDirX ? deltaX : deltaY) / hypotenuse;
-      if (cosine > maxCosine) {
-        isPan = 1;
-      }
-      else if (cosine < -maxCosine) {
-        isPan = -1;
-      }
-      else {
-        isPan = 0;
-      }
-      dirty = false;
-      return true;
-    },
-    isGesture() {
-      return isPan !== 0;
-    },
-    getDirection() {
-      return isPan;
-    },
-  };
-};
-
-const createGesture = (config) => {
-  let hasCapturedPan = false;
-  let hasStartedPan = false;
-  let hasFiredStart = true;
-  let isMoveQueued = false;
-  const finalConfig = Object.assign({ disableScroll: false, direction: 'x', gesturePriority: 0, passive: true, maxAngle: 40, threshold: 10 }, config);
-  const canStart = finalConfig.canStart;
-  const onWillStart = finalConfig.onWillStart;
-  const onStart = finalConfig.onStart;
-  const onEnd = finalConfig.onEnd;
-  const notCaptured = finalConfig.notCaptured;
-  const onMove = finalConfig.onMove;
-  const threshold = finalConfig.threshold;
-  const passive = finalConfig.passive;
-  const blurOnStart = finalConfig.blurOnStart;
-  const detail = {
-    type: 'pan',
-    startX: 0,
-    startY: 0,
-    startTime: 0,
-    currentX: 0,
-    currentY: 0,
-    velocityX: 0,
-    velocityY: 0,
-    deltaX: 0,
-    deltaY: 0,
-    currentTime: 0,
-    event: undefined,
-    data: undefined,
-  };
-  const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
-  const gesture = _gesture_controller_17e82006_js__WEBPACK_IMPORTED_MODULE_0__.G.createGesture({
-    name: config.gestureName,
-    priority: config.gesturePriority,
-    disableScroll: config.disableScroll,
-  });
-  const pointerDown = (ev) => {
-    const timeStamp = now(ev);
-    if (hasStartedPan || !hasFiredStart) {
-      return false;
-    }
-    updateDetail(ev, detail);
-    detail.startX = detail.currentX;
-    detail.startY = detail.currentY;
-    detail.startTime = detail.currentTime = timeStamp;
-    detail.velocityX = detail.velocityY = detail.deltaX = detail.deltaY = 0;
-    detail.event = ev;
-    // Check if gesture can start
-    if (canStart && canStart(detail) === false) {
-      return false;
-    }
-    // Release fallback
-    gesture.release();
-    // Start gesture
-    if (!gesture.start()) {
-      return false;
-    }
-    hasStartedPan = true;
-    if (threshold === 0) {
-      return tryToCapturePan();
-    }
-    pan.start(detail.startX, detail.startY);
-    return true;
-  };
-  const pointerMove = (ev) => {
-    // fast path, if gesture is currently captured
-    // do minimum job to get user-land even dispatched
-    if (hasCapturedPan) {
-      if (!isMoveQueued && hasFiredStart) {
-        isMoveQueued = true;
-        calcGestureData(detail, ev);
-        requestAnimationFrame(fireOnMove);
-      }
-      return;
-    }
-    // gesture is currently being detected
-    calcGestureData(detail, ev);
-    if (pan.detect(detail.currentX, detail.currentY)) {
-      if (!pan.isGesture() || !tryToCapturePan()) {
-        abortGesture();
-      }
-    }
-  };
-  const fireOnMove = () => {
-    // Since fireOnMove is called inside a RAF, onEnd() might be called,
-    // we must double check hasCapturedPan
-    if (!hasCapturedPan) {
-      return;
-    }
-    isMoveQueued = false;
-    if (onMove) {
-      onMove(detail);
-    }
-  };
-  const tryToCapturePan = () => {
-    if (gesture && !gesture.capture()) {
-      return false;
-    }
-    hasCapturedPan = true;
-    hasFiredStart = false;
-    // reset start position since the real user-land event starts here
-    // If the pan detector threshold is big, not resetting the start position
-    // will cause a jump in the animation equal to the detector threshold.
-    // the array of positions used to calculate the gesture velocity does not
-    // need to be cleaned, more points in the positions array always results in a
-    // more accurate value of the velocity.
-    detail.startX = detail.currentX;
-    detail.startY = detail.currentY;
-    detail.startTime = detail.currentTime;
-    if (onWillStart) {
-      onWillStart(detail).then(fireOnStart);
-    }
-    else {
-      fireOnStart();
-    }
-    return true;
-  };
-  const blurActiveElement = () => {
-    if (typeof document !== 'undefined') {
-      const activeElement = document.activeElement;
-      if (activeElement === null || activeElement === void 0 ? void 0 : activeElement.blur) {
-        activeElement.blur();
-      }
-    }
-  };
-  const fireOnStart = () => {
-    if (blurOnStart) {
-      blurActiveElement();
-    }
-    if (onStart) {
-      onStart(detail);
-    }
-    hasFiredStart = true;
-  };
-  const reset = () => {
-    hasCapturedPan = false;
-    hasStartedPan = false;
-    isMoveQueued = false;
-    hasFiredStart = true;
-    gesture.release();
-  };
-  // END *************************
-  const pointerUp = (ev) => {
-    const tmpHasCaptured = hasCapturedPan;
-    const tmpHasFiredStart = hasFiredStart;
-    reset();
-    if (!tmpHasFiredStart) {
-      return;
-    }
-    calcGestureData(detail, ev);
-    // Try to capture press
-    if (tmpHasCaptured) {
-      if (onEnd) {
-        onEnd(detail);
-      }
-      return;
-    }
-    // Not captured any event
-    if (notCaptured) {
-      notCaptured(detail);
-    }
-  };
-  const pointerEvents = createPointerEvents(finalConfig.el, pointerDown, pointerMove, pointerUp, {
-    capture: false,
-    passive,
-  });
-  const abortGesture = () => {
-    reset();
-    pointerEvents.stop();
-    if (notCaptured) {
-      notCaptured(detail);
-    }
-  };
-  return {
-    enable(enable = true) {
-      if (!enable) {
-        if (hasCapturedPan) {
-          pointerUp(undefined);
-        }
-        reset();
-      }
-      pointerEvents.enable(enable);
-    },
-    destroy() {
-      gesture.destroy();
-      pointerEvents.destroy();
-    },
-  };
-};
-const calcGestureData = (detail, ev) => {
-  if (!ev) {
-    return;
-  }
-  const prevX = detail.currentX;
-  const prevY = detail.currentY;
-  const prevT = detail.currentTime;
-  updateDetail(ev, detail);
-  const currentX = detail.currentX;
-  const currentY = detail.currentY;
-  const timestamp = (detail.currentTime = now(ev));
-  const timeDelta = timestamp - prevT;
-  if (timeDelta > 0 && timeDelta < 100) {
-    const velocityX = (currentX - prevX) / timeDelta;
-    const velocityY = (currentY - prevY) / timeDelta;
-    detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
-    detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
-  }
-  detail.deltaX = currentX - detail.startX;
-  detail.deltaY = currentY - detail.startY;
-  detail.event = ev;
-};
-const updateDetail = (ev, detail) => {
-  // get X coordinates for either a mouse click
-  // or a touch depending on the given event
-  let x = 0;
-  let y = 0;
-  if (ev) {
-    const changedTouches = ev.changedTouches;
-    if (changedTouches && changedTouches.length > 0) {
-      const touch = changedTouches[0];
-      x = touch.clientX;
-      y = touch.clientY;
-    }
-    else if (ev.pageX !== undefined) {
-      x = ev.pageX;
-      y = ev.pageY;
-    }
-  }
-  detail.currentX = x;
-  detail.currentY = y;
-};
-const now = (ev) => {
-  return ev.timeStamp || Date.now();
-};
-
-
-
-
-/***/ }),
-
-/***/ 1049:
-/*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-b3eecb14.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "B": () => (/* binding */ Build),
-/* harmony export */   "H": () => (/* binding */ Host),
-/* harmony export */   "N": () => (/* binding */ NAMESPACE),
-/* harmony export */   "a": () => (/* binding */ setMode),
-/* harmony export */   "b": () => (/* binding */ bootstrapLazy),
-/* harmony export */   "c": () => (/* binding */ writeTask),
-/* harmony export */   "d": () => (/* binding */ doc),
-/* harmony export */   "e": () => (/* binding */ createEvent),
-/* harmony export */   "f": () => (/* binding */ readTask),
-/* harmony export */   "g": () => (/* binding */ getMode),
-/* harmony export */   "h": () => (/* binding */ h),
-/* harmony export */   "i": () => (/* binding */ getElement),
-/* harmony export */   "j": () => (/* binding */ forceUpdate),
-/* harmony export */   "k": () => (/* binding */ getAssetPath),
-/* harmony export */   "p": () => (/* binding */ promiseResolve),
-/* harmony export */   "r": () => (/* binding */ registerInstance),
-/* harmony export */   "s": () => (/* binding */ setPlatformHelpers),
-/* harmony export */   "w": () => (/* binding */ win)
-/* harmony export */ });
-/* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-
-
-/*!
- * (C) Ionic http://ionicframework.com - MIT License
- */
-const NAMESPACE = 'ionic';
-let scopeId;
-let contentRef;
-let hostTagName;
-let useNativeShadowDom = false;
-let checkSlotFallbackVisibility = false;
-let checkSlotRelocate = false;
-let isSvgMode = false;
-let queuePending = false;
-const win = typeof window !== 'undefined' ? window : {};
-const doc = win.document || {
-  head: {}
-};
-const plt = {
-  $flags$: 0,
-  $resourcesUrl$: '',
-  jmp: h => h(),
-  raf: h => requestAnimationFrame(h),
-  ael: (el, eventName, listener, opts) => el.addEventListener(eventName, listener, opts),
-  rel: (el, eventName, listener, opts) => el.removeEventListener(eventName, listener, opts),
-  ce: (eventName, opts) => new CustomEvent(eventName, opts)
-};
-
-const setPlatformHelpers = helpers => {
-  Object.assign(plt, helpers);
-};
-
-const supportsShadow = true;
-
-const promiseResolve = v => Promise.resolve(v);
-
-const supportsConstructibleStylesheets = /*@__PURE__*/(() => {
-  try {
-    new CSSStyleSheet();
-    return typeof new CSSStyleSheet().replace === 'function';
-  } catch (e) {}
-
-  return false;
-})();
-
-const addHostEventListeners = (elm, hostRef, listeners, attachParentListeners) => {
-  if (listeners) {
-    listeners.map(([flags, name, method]) => {
-      const target = getHostListenerTarget(elm, flags);
-      const handler = hostListenerProxy(hostRef, method);
-      const opts = hostListenerOpts(flags);
-      plt.ael(target, name, handler, opts);
-      (hostRef.$rmListeners$ = hostRef.$rmListeners$ || []).push(() => plt.rel(target, name, handler, opts));
-    });
-  }
-};
-
-const hostListenerProxy = (hostRef, methodName) => ev => {
-  try {
-    {
-      if (hostRef.$flags$ & 256
-      /* isListenReady */
-      ) {
-        // instance is ready, let's call it's member method for this event
-        hostRef.$lazyInstance$[methodName](ev);
-      } else {
-        (hostRef.$queuedListeners$ = hostRef.$queuedListeners$ || []).push([methodName, ev]);
-      }
-    }
-  } catch (e) {
-    consoleError(e);
-  }
-};
-
-const getHostListenerTarget = (elm, flags) => {
-  if (flags & 4
-  /* TargetDocument */
-  ) return doc;
-  if (flags & 8
-  /* TargetWindow */
-  ) return win;
-  if (flags & 16
-  /* TargetBody */
-  ) return doc.body;
-  return elm;
-}; // prettier-ignore
-
-
-const hostListenerOpts = flags => (flags & 2
-/* Capture */
-) !== 0;
-
-const CONTENT_REF_ID = 'r';
-const ORG_LOCATION_ID = 'o';
-const SLOT_NODE_ID = 's';
-const TEXT_NODE_ID = 't';
-const HYDRATE_ID = 's-id';
-const HYDRATED_STYLE_ID = 'sty-id';
-const HYDRATE_CHILD_ID = 'c-id';
-const HYDRATED_CSS = '{visibility:hidden}.hydrated{visibility:inherit}';
-const XLINK_NS = 'http://www.w3.org/1999/xlink';
-
-const createTime = (fnName, tagName = '') => {
-  {
-    return () => {
-      return;
-    };
-  }
-};
-
-const uniqueTime = (key, measureText) => {
-  {
-    return () => {
-      return;
-    };
-  }
-};
-
-const rootAppliedStyles = new WeakMap();
-
-const registerStyle = (scopeId, cssText, allowCS) => {
-  let style = styles.get(scopeId);
-
-  if (supportsConstructibleStylesheets && allowCS) {
-    style = style || new CSSStyleSheet();
-    style.replace(cssText);
-  } else {
-    style = cssText;
-  }
-
-  styles.set(scopeId, style);
-};
-
-const addStyle = (styleContainerNode, cmpMeta, mode, hostElm) => {
-  let scopeId = getScopeId(cmpMeta, mode);
-  let style = styles.get(scopeId); // if an element is NOT connected then getRootNode() will return the wrong root node
-  // so the fallback is to always use the document for the root node in those cases
-
-  styleContainerNode = styleContainerNode.nodeType === 11
-  /* DocumentFragment */
-  ? styleContainerNode : doc;
-
-  if (style) {
-    if (typeof style === 'string') {
-      styleContainerNode = styleContainerNode.head || styleContainerNode;
-      let appliedStyles = rootAppliedStyles.get(styleContainerNode);
-      let styleElm;
-
-      if (!appliedStyles) {
-        rootAppliedStyles.set(styleContainerNode, appliedStyles = new Set());
-      }
-
-      if (!appliedStyles.has(scopeId)) {
-        if (styleContainerNode.host && (styleElm = styleContainerNode.querySelector(`[${HYDRATED_STYLE_ID}="${scopeId}"]`))) {
-          // This is only happening on native shadow-dom, do not needs CSS var shim
-          styleElm.innerHTML = style;
-        } else {
-          {
-            styleElm = doc.createElement('style');
-            styleElm.innerHTML = style;
-          }
-          styleContainerNode.insertBefore(styleElm, styleContainerNode.querySelector('link'));
-        }
-
-        if (appliedStyles) {
-          appliedStyles.add(scopeId);
-        }
-      }
-    } else if (!styleContainerNode.adoptedStyleSheets.includes(style)) {
-      styleContainerNode.adoptedStyleSheets = [...styleContainerNode.adoptedStyleSheets, style];
-    }
-  }
-
-  return scopeId;
-};
-
-const attachStyles = hostRef => {
-  const cmpMeta = hostRef.$cmpMeta$;
-  const elm = hostRef.$hostElement$;
-  const flags = cmpMeta.$flags$;
-  const endAttachStyles = createTime('attachStyles', cmpMeta.$tagName$);
-  const scopeId = addStyle(elm.shadowRoot ? elm.shadowRoot : elm.getRootNode(), cmpMeta, hostRef.$modeName$);
-
-  if (flags & 10
-  /* needsScopedEncapsulation */
-  ) {
-    // only required when we're NOT using native shadow dom (slot)
-    // or this browser doesn't support native shadow dom
-    // and this host element was NOT created with SSR
-    // let's pick out the inner content for slot projection
-    // create a node to represent where the original
-    // content was first placed, which is useful later on
-    // DOM WRITE!!
-    elm['s-sc'] = scopeId;
-    elm.classList.add(scopeId + '-h');
-
-    if (flags & 2
-    /* scopedCssEncapsulation */
-    ) {
-      elm.classList.add(scopeId + '-s');
-    }
-  }
-
-  endAttachStyles();
-};
-
-const getScopeId = (cmp, mode) => 'sc-' + (mode && cmp.$flags$ & 32
-/* hasMode */
-? cmp.$tagName$ + '-' + mode : cmp.$tagName$);
-
-const convertScopedToShadow = css => css.replace(/\/\*!@([^\/]+)\*\/[^\{]+\{/g, '$1{'); // Private
-
-
-const computeMode = elm => modeResolutionChain.map(h => h(elm)).find(m => !!m); // Public
-
-
-const setMode = handler => modeResolutionChain.push(handler);
-
-const getMode = ref => getHostRef(ref).$modeName$;
-/**
- * Default style mode id
- */
-
-/**
- * Reusable empty obj/array
- * Don't add values to these!!
- */
-
-
-const EMPTY_OBJ = {};
-/**
- * Namespaces
- */
-
-const SVG_NS = 'http://www.w3.org/2000/svg';
-const HTML_NS = 'http://www.w3.org/1999/xhtml';
-
-const isDef = v => v != null;
-
-const isComplexType = o => {
-  // https://jsperf.com/typeof-fn-object/5
-  o = typeof o;
-  return o === 'object' || o === 'function';
-};
-/**
- * Production h() function based on Preact by
- * Jason Miller (@developit)
- * Licensed under the MIT License
- * https://github.com/developit/preact/blob/master/LICENSE
- *
- * Modified for Stencil's compiler and vdom
- */
-// const stack: any[] = [];
-// export function h(nodeName: string | d.FunctionalComponent, vnodeData: d.PropsType, child?: d.ChildType): d.VNode;
-// export function h(nodeName: string | d.FunctionalComponent, vnodeData: d.PropsType, ...children: d.ChildType[]): d.VNode;
-
-
-const h = (nodeName, vnodeData, ...children) => {
-  let child = null;
-  let key = null;
-  let slotName = null;
-  let simple = false;
-  let lastSimple = false;
-  let vNodeChildren = [];
-
-  const walk = c => {
-    for (let i = 0; i < c.length; i++) {
-      child = c[i];
-
-      if (Array.isArray(child)) {
-        walk(child);
-      } else if (child != null && typeof child !== 'boolean') {
-        if (simple = typeof nodeName !== 'function' && !isComplexType(child)) {
-          child = String(child);
-        }
-
-        if (simple && lastSimple) {
-          // If the previous child was simple (string), we merge both
-          vNodeChildren[vNodeChildren.length - 1].$text$ += child;
-        } else {
-          // Append a new vNode, if it's text, we create a text vNode
-          vNodeChildren.push(simple ? newVNode(null, child) : child);
-        }
-
-        lastSimple = simple;
-      }
-    }
-  };
-
-  walk(children);
-
-  if (vnodeData) {
-    // normalize class / classname attributes
-    if (vnodeData.key) {
-      key = vnodeData.key;
-    }
-
-    if (vnodeData.name) {
-      slotName = vnodeData.name;
-    }
-
-    {
-      const classData = vnodeData.className || vnodeData.class;
-
-      if (classData) {
-        vnodeData.class = typeof classData !== 'object' ? classData : Object.keys(classData).filter(k => classData[k]).join(' ');
-      }
-    }
-  }
-
-  if (typeof nodeName === 'function') {
-    // nodeName is a functional component
-    return nodeName(vnodeData === null ? {} : vnodeData, vNodeChildren, vdomFnUtils);
-  }
-
-  const vnode = newVNode(nodeName, null);
-  vnode.$attrs$ = vnodeData;
-
-  if (vNodeChildren.length > 0) {
-    vnode.$children$ = vNodeChildren;
-  }
-
-  {
-    vnode.$key$ = key;
-  }
-  {
-    vnode.$name$ = slotName;
-  }
-  return vnode;
-};
-
-const newVNode = (tag, text) => {
-  const vnode = {
-    $flags$: 0,
-    $tag$: tag,
-    $text$: text,
-    $elm$: null,
-    $children$: null
-  };
-  {
-    vnode.$attrs$ = null;
-  }
-  {
-    vnode.$key$ = null;
-  }
-  {
-    vnode.$name$ = null;
-  }
-  return vnode;
-};
-
-const Host = {};
-
-const isHost = node => node && node.$tag$ === Host;
-
-const vdomFnUtils = {
-  forEach: (children, cb) => children.map(convertToPublic).forEach(cb),
-  map: (children, cb) => children.map(convertToPublic).map(cb).map(convertToPrivate)
-};
-
-const convertToPublic = node => ({
-  vattrs: node.$attrs$,
-  vchildren: node.$children$,
-  vkey: node.$key$,
-  vname: node.$name$,
-  vtag: node.$tag$,
-  vtext: node.$text$
-});
-
-const convertToPrivate = node => {
-  if (typeof node.vtag === 'function') {
-    const vnodeData = Object.assign({}, node.vattrs);
-
-    if (node.vkey) {
-      vnodeData.key = node.vkey;
-    }
-
-    if (node.vname) {
-      vnodeData.name = node.vname;
-    }
-
-    return h(node.vtag, vnodeData, ...(node.vchildren || []));
-  }
-
-  const vnode = newVNode(node.vtag, node.vtext);
-  vnode.$attrs$ = node.vattrs;
-  vnode.$children$ = node.vchildren;
-  vnode.$key$ = node.vkey;
-  vnode.$name$ = node.vname;
-  return vnode;
-};
-/**
- * Production setAccessor() function based on Preact by
- * Jason Miller (@developit)
- * Licensed under the MIT License
- * https://github.com/developit/preact/blob/master/LICENSE
- *
- * Modified for Stencil's compiler and vdom
- */
-
-
-const setAccessor = (elm, memberName, oldValue, newValue, isSvg, flags) => {
-  if (oldValue !== newValue) {
-    let isProp = isMemberInElement(elm, memberName);
-    let ln = memberName.toLowerCase();
-
-    if (memberName === 'class') {
-      const classList = elm.classList;
-      const oldClasses = parseClassList(oldValue);
-      const newClasses = parseClassList(newValue);
-      classList.remove(...oldClasses.filter(c => c && !newClasses.includes(c)));
-      classList.add(...newClasses.filter(c => c && !oldClasses.includes(c)));
-    } else if (memberName === 'style') {
-      // update style attribute, css properties and values
-      {
-        for (const prop in oldValue) {
-          if (!newValue || newValue[prop] == null) {
-            if (prop.includes('-')) {
-              elm.style.removeProperty(prop);
-            } else {
-              elm.style[prop] = '';
-            }
-          }
-        }
-      }
-
-      for (const prop in newValue) {
-        if (!oldValue || newValue[prop] !== oldValue[prop]) {
-          if (prop.includes('-')) {
-            elm.style.setProperty(prop, newValue[prop]);
-          } else {
-            elm.style[prop] = newValue[prop];
-          }
-        }
-      }
-    } else if (memberName === 'key') ;else if (memberName === 'ref') {
-      // minifier will clean this up
-      if (newValue) {
-        newValue(elm);
-      }
-    } else if (!isProp && memberName[0] === 'o' && memberName[1] === 'n') {
-      // Event Handlers
-      // so if the member name starts with "on" and the 3rd characters is
-      // a capital letter, and it's not already a member on the element,
-      // then we're assuming it's an event listener
-      if (memberName[2] === '-') {
-        // on- prefixed events
-        // allows to be explicit about the dom event to listen without any magic
-        // under the hood:
-        // <my-cmp on-click> // listens for "click"
-        // <my-cmp on-Click> // listens for "Click"
-        // <my-cmp on-ionChange> // listens for "ionChange"
-        // <my-cmp on-EVENTS> // listens for "EVENTS"
-        memberName = memberName.slice(3);
-      } else if (isMemberInElement(win, ln)) {
-        // standard event
-        // the JSX attribute could have been "onMouseOver" and the
-        // member name "onmouseover" is on the window's prototype
-        // so let's add the listener "mouseover", which is all lowercased
-        memberName = ln.slice(2);
-      } else {
-        // custom event
-        // the JSX attribute could have been "onMyCustomEvent"
-        // so let's trim off the "on" prefix and lowercase the first character
-        // and add the listener "myCustomEvent"
-        // except for the first character, we keep the event name case
-        memberName = ln[2] + memberName.slice(3);
-      }
-
-      if (oldValue) {
-        plt.rel(elm, memberName, oldValue, false);
-      }
-
-      if (newValue) {
-        plt.ael(elm, memberName, newValue, false);
-      }
-    } else {
-      // Set property if it exists and it's not a SVG
-      const isComplex = isComplexType(newValue);
-
-      if ((isProp || isComplex && newValue !== null) && !isSvg) {
-        try {
-          if (!elm.tagName.includes('-')) {
-            let n = newValue == null ? '' : newValue; // Workaround for Safari, moving the <input> caret when re-assigning the same valued
-
-            if (memberName === 'list') {
-              isProp = false;
-            } else if (oldValue == null || elm[memberName] != n) {
-              elm[memberName] = n;
-            }
-          } else {
-            elm[memberName] = newValue;
-          }
-        } catch (e) {}
-      }
-      /**
-       * Need to manually update attribute if:
-       * - memberName is not an attribute
-       * - if we are rendering the host element in order to reflect attribute
-       * - if it's a SVG, since properties might not work in <svg>
-       * - if the newValue is null/undefined or 'false'.
-       */
-
-
-      let xlink = false;
-      {
-        if (ln !== (ln = ln.replace(/^xlink\:?/, ''))) {
-          memberName = ln;
-          xlink = true;
-        }
-      }
-
-      if (newValue == null || newValue === false) {
-        if (newValue !== false || elm.getAttribute(memberName) === '') {
-          if (xlink) {
-            elm.removeAttributeNS(XLINK_NS, memberName);
-          } else {
-            elm.removeAttribute(memberName);
-          }
-        }
-      } else if ((!isProp || flags & 4
-      /* isHost */
-      || isSvg) && !isComplex) {
-        newValue = newValue === true ? '' : newValue;
-
-        if (xlink) {
-          elm.setAttributeNS(XLINK_NS, memberName, newValue);
-        } else {
-          elm.setAttribute(memberName, newValue);
-        }
-      }
-    }
-  }
-};
-
-const parseClassListRegex = /\s/;
-
-const parseClassList = value => !value ? [] : value.split(parseClassListRegex);
-
-const updateElement = (oldVnode, newVnode, isSvgMode, memberName) => {
-  // if the element passed in is a shadow root, which is a document fragment
-  // then we want to be adding attrs/props to the shadow root's "host" element
-  // if it's not a shadow root, then we add attrs/props to the same element
-  const elm = newVnode.$elm$.nodeType === 11
-  /* DocumentFragment */
-  && newVnode.$elm$.host ? newVnode.$elm$.host : newVnode.$elm$;
-  const oldVnodeAttrs = oldVnode && oldVnode.$attrs$ || EMPTY_OBJ;
-  const newVnodeAttrs = newVnode.$attrs$ || EMPTY_OBJ;
-  {
-    // remove attributes no longer present on the vnode by setting them to undefined
-    for (memberName in oldVnodeAttrs) {
-      if (!(memberName in newVnodeAttrs)) {
-        setAccessor(elm, memberName, oldVnodeAttrs[memberName], undefined, isSvgMode, newVnode.$flags$);
-      }
-    }
-  } // add new & update changed attributes
-
-  for (memberName in newVnodeAttrs) {
-    setAccessor(elm, memberName, oldVnodeAttrs[memberName], newVnodeAttrs[memberName], isSvgMode, newVnode.$flags$);
-  }
-};
-
-const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
-  // tslint:disable-next-line: prefer-const
-  let newVNode = newParentVNode.$children$[childIndex];
-  let i = 0;
-  let elm;
-  let childNode;
-  let oldVNode;
-
-  if (!useNativeShadowDom) {
-    // remember for later we need to check to relocate nodes
-    checkSlotRelocate = true;
-
-    if (newVNode.$tag$ === 'slot') {
-      if (scopeId) {
-        // scoped css needs to add its scoped id to the parent element
-        parentElm.classList.add(scopeId + '-s');
-      }
-
-      newVNode.$flags$ |= newVNode.$children$ ? // slot element has fallback content
-      2
-      /* isSlotFallback */
-      : // slot element does not have fallback content
-      1
-      /* isSlotReference */
-      ;
-    }
-  }
-
-  if (newVNode.$text$ !== null) {
-    // create text node
-    elm = newVNode.$elm$ = doc.createTextNode(newVNode.$text$);
-  } else if (newVNode.$flags$ & 1
-  /* isSlotReference */
-  ) {
-    // create a slot reference node
-    elm = newVNode.$elm$ = doc.createTextNode('');
-  } else {
-    if (!isSvgMode) {
-      isSvgMode = newVNode.$tag$ === 'svg';
-    } // create element
-
-
-    elm = newVNode.$elm$ = doc.createElementNS(isSvgMode ? SVG_NS : HTML_NS, newVNode.$flags$ & 2
-    /* isSlotFallback */
-    ? 'slot-fb' : newVNode.$tag$);
-
-    if (isSvgMode && newVNode.$tag$ === 'foreignObject') {
-      isSvgMode = false;
-    } // add css classes, attrs, props, listeners, etc.
-
-
-    {
-      updateElement(null, newVNode, isSvgMode);
-    }
-
-    if (isDef(scopeId) && elm['s-si'] !== scopeId) {
-      // if there is a scopeId and this is the initial render
-      // then let's add the scopeId as a css class
-      elm.classList.add(elm['s-si'] = scopeId);
-    }
-
-    if (newVNode.$children$) {
-      for (i = 0; i < newVNode.$children$.length; ++i) {
-        // create the node
-        childNode = createElm(oldParentVNode, newVNode, i, elm); // return node could have been null
-
-        if (childNode) {
-          // append our new node
-          elm.appendChild(childNode);
-        }
-      }
-    }
-
-    {
-      if (newVNode.$tag$ === 'svg') {
-        // Only reset the SVG context when we're exiting <svg> element
-        isSvgMode = false;
-      } else if (elm.tagName === 'foreignObject') {
-        // Reenter SVG context when we're exiting <foreignObject> element
-        isSvgMode = true;
-      }
-    }
-  }
-
-  {
-    elm['s-hn'] = hostTagName;
-
-    if (newVNode.$flags$ & (2
-    /* isSlotFallback */
-    | 1
-    /* isSlotReference */
-    )) {
-      // remember the content reference comment
-      elm['s-sr'] = true; // remember the content reference comment
-
-      elm['s-cr'] = contentRef; // remember the slot name, or empty string for default slot
-
-      elm['s-sn'] = newVNode.$name$ || ''; // check if we've got an old vnode for this slot
-
-      oldVNode = oldParentVNode && oldParentVNode.$children$ && oldParentVNode.$children$[childIndex];
-
-      if (oldVNode && oldVNode.$tag$ === newVNode.$tag$ && oldParentVNode.$elm$) {
-        // we've got an old slot vnode and the wrapper is being replaced
-        // so let's move the old slot content back to it's original location
-        putBackInOriginalLocation(oldParentVNode.$elm$, false);
-      }
-    }
-  }
-  return elm;
-};
-
-const putBackInOriginalLocation = (parentElm, recursive) => {
-  plt.$flags$ |= 1
-  /* isTmpDisconnected */
-  ;
-  const oldSlotChildNodes = parentElm.childNodes;
-
-  for (let i = oldSlotChildNodes.length - 1; i >= 0; i--) {
-    const childNode = oldSlotChildNodes[i];
-
-    if (childNode['s-hn'] !== hostTagName && childNode['s-ol']) {
-      // // this child node in the old element is from another component
-      // // remove this node from the old slot's parent
-      // childNode.remove();
-      // and relocate it back to it's original location
-      parentReferenceNode(childNode).insertBefore(childNode, referenceNode(childNode)); // remove the old original location comment entirely
-      // later on the patch function will know what to do
-      // and move this to the correct spot in need be
-
-      childNode['s-ol'].remove();
-      childNode['s-ol'] = undefined;
-      checkSlotRelocate = true;
-    }
-
-    if (recursive) {
-      putBackInOriginalLocation(childNode, recursive);
-    }
-  }
-
-  plt.$flags$ &= ~1
-  /* isTmpDisconnected */
-  ;
-};
-
-const addVnodes = (parentElm, before, parentVNode, vnodes, startIdx, endIdx) => {
-  let containerElm = parentElm['s-cr'] && parentElm['s-cr'].parentNode || parentElm;
-  let childNode;
-
-  if (containerElm.shadowRoot && containerElm.tagName === hostTagName) {
-    containerElm = containerElm.shadowRoot;
-  }
-
-  for (; startIdx <= endIdx; ++startIdx) {
-    if (vnodes[startIdx]) {
-      childNode = createElm(null, parentVNode, startIdx, parentElm);
-
-      if (childNode) {
-        vnodes[startIdx].$elm$ = childNode;
-        containerElm.insertBefore(childNode, referenceNode(before));
-      }
-    }
-  }
-};
-
-const removeVnodes = (vnodes, startIdx, endIdx, vnode, elm) => {
-  for (; startIdx <= endIdx; ++startIdx) {
-    if (vnode = vnodes[startIdx]) {
-      elm = vnode.$elm$;
-      callNodeRefs(vnode);
-      {
-        // we're removing this element
-        // so it's possible we need to show slot fallback content now
-        checkSlotFallbackVisibility = true;
-
-        if (elm['s-ol']) {
-          // remove the original location comment
-          elm['s-ol'].remove();
-        } else {
-          // it's possible that child nodes of the node
-          // that's being removed are slot nodes
-          putBackInOriginalLocation(elm, true);
-        }
-      } // remove the vnode's element from the dom
-
-      elm.remove();
-    }
-  }
-};
-
-const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
-  let oldStartIdx = 0;
-  let newStartIdx = 0;
-  let idxInOld = 0;
-  let i = 0;
-  let oldEndIdx = oldCh.length - 1;
-  let oldStartVnode = oldCh[0];
-  let oldEndVnode = oldCh[oldEndIdx];
-  let newEndIdx = newCh.length - 1;
-  let newStartVnode = newCh[0];
-  let newEndVnode = newCh[newEndIdx];
-  let node;
-  let elmToMove;
-
-  while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
-    if (oldStartVnode == null) {
-      // Vnode might have been moved left
-      oldStartVnode = oldCh[++oldStartIdx];
-    } else if (oldEndVnode == null) {
-      oldEndVnode = oldCh[--oldEndIdx];
-    } else if (newStartVnode == null) {
-      newStartVnode = newCh[++newStartIdx];
-    } else if (newEndVnode == null) {
-      newEndVnode = newCh[--newEndIdx];
-    } else if (isSameVnode(oldStartVnode, newStartVnode)) {
-      patch(oldStartVnode, newStartVnode);
-      oldStartVnode = oldCh[++oldStartIdx];
-      newStartVnode = newCh[++newStartIdx];
-    } else if (isSameVnode(oldEndVnode, newEndVnode)) {
-      patch(oldEndVnode, newEndVnode);
-      oldEndVnode = oldCh[--oldEndIdx];
-      newEndVnode = newCh[--newEndIdx];
-    } else if (isSameVnode(oldStartVnode, newEndVnode)) {
-      // Vnode moved right
-      if (oldStartVnode.$tag$ === 'slot' || newEndVnode.$tag$ === 'slot') {
-        putBackInOriginalLocation(oldStartVnode.$elm$.parentNode, false);
-      }
-
-      patch(oldStartVnode, newEndVnode);
-      parentElm.insertBefore(oldStartVnode.$elm$, oldEndVnode.$elm$.nextSibling);
-      oldStartVnode = oldCh[++oldStartIdx];
-      newEndVnode = newCh[--newEndIdx];
-    } else if (isSameVnode(oldEndVnode, newStartVnode)) {
-      // Vnode moved left
-      if (oldStartVnode.$tag$ === 'slot' || newEndVnode.$tag$ === 'slot') {
-        putBackInOriginalLocation(oldEndVnode.$elm$.parentNode, false);
-      }
-
-      patch(oldEndVnode, newStartVnode);
-      parentElm.insertBefore(oldEndVnode.$elm$, oldStartVnode.$elm$);
-      oldEndVnode = oldCh[--oldEndIdx];
-      newStartVnode = newCh[++newStartIdx];
-    } else {
-      // createKeyToOldIdx
-      idxInOld = -1;
-      {
-        for (i = oldStartIdx; i <= oldEndIdx; ++i) {
-          if (oldCh[i] && oldCh[i].$key$ !== null && oldCh[i].$key$ === newStartVnode.$key$) {
-            idxInOld = i;
-            break;
-          }
-        }
-      }
-
-      if (idxInOld >= 0) {
-        elmToMove = oldCh[idxInOld];
-
-        if (elmToMove.$tag$ !== newStartVnode.$tag$) {
-          node = createElm(oldCh && oldCh[newStartIdx], newVNode, idxInOld, parentElm);
-        } else {
-          patch(elmToMove, newStartVnode);
-          oldCh[idxInOld] = undefined;
-          node = elmToMove.$elm$;
-        }
-
-        newStartVnode = newCh[++newStartIdx];
-      } else {
-        // new element
-        node = createElm(oldCh && oldCh[newStartIdx], newVNode, newStartIdx, parentElm);
-        newStartVnode = newCh[++newStartIdx];
-      }
-
-      if (node) {
-        {
-          parentReferenceNode(oldStartVnode.$elm$).insertBefore(node, referenceNode(oldStartVnode.$elm$));
-        }
-      }
-    }
-  }
-
-  if (oldStartIdx > oldEndIdx) {
-    addVnodes(parentElm, newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].$elm$, newVNode, newCh, newStartIdx, newEndIdx);
-  } else if (newStartIdx > newEndIdx) {
-    removeVnodes(oldCh, oldStartIdx, oldEndIdx);
-  }
-};
-
-const isSameVnode = (vnode1, vnode2) => {
-  // compare if two vnode to see if they're "technically" the same
-  // need to have the same element tag, and same key to be the same
-  if (vnode1.$tag$ === vnode2.$tag$) {
-    if (vnode1.$tag$ === 'slot') {
-      return vnode1.$name$ === vnode2.$name$;
-    }
-
-    {
-      return vnode1.$key$ === vnode2.$key$;
-    }
-  }
-
-  return false;
-};
-
-const referenceNode = node => {
-  // this node was relocated to a new location in the dom
-  // because of some other component's slot
-  // but we still have an html comment in place of where
-  // it's original location was according to it's original vdom
-  return node && node['s-ol'] || node;
-};
-
-const parentReferenceNode = node => (node['s-ol'] ? node['s-ol'] : node).parentNode;
-
-const patch = (oldVNode, newVNode) => {
-  const elm = newVNode.$elm$ = oldVNode.$elm$;
-  const oldChildren = oldVNode.$children$;
-  const newChildren = newVNode.$children$;
-  const tag = newVNode.$tag$;
-  const text = newVNode.$text$;
-  let defaultHolder;
-
-  if (text === null) {
-    {
-      // test if we're rendering an svg element, or still rendering nodes inside of one
-      // only add this to the when the compiler sees we're using an svg somewhere
-      isSvgMode = tag === 'svg' ? true : tag === 'foreignObject' ? false : isSvgMode;
-    } // element node
-
-    {
-      if (tag === 'slot') ;else {
-        // either this is the first render of an element OR it's an update
-        // AND we already know it's possible it could have changed
-        // this updates the element's css classes, attrs, props, listeners, etc.
-        updateElement(oldVNode, newVNode, isSvgMode);
-      }
-    }
-
-    if (oldChildren !== null && newChildren !== null) {
-      // looks like there's child vnodes for both the old and new vnodes
-      updateChildren(elm, oldChildren, newVNode, newChildren);
-    } else if (newChildren !== null) {
-      // no old child vnodes, but there are new child vnodes to add
-      if (oldVNode.$text$ !== null) {
-        // the old vnode was text, so be sure to clear it out
-        elm.textContent = '';
-      } // add the new vnode children
-
-
-      addVnodes(elm, null, newVNode, newChildren, 0, newChildren.length - 1);
-    } else if (oldChildren !== null) {
-      // no new child vnodes, but there are old child vnodes to remove
-      removeVnodes(oldChildren, 0, oldChildren.length - 1);
-    }
-
-    if (isSvgMode && tag === 'svg') {
-      isSvgMode = false;
-    }
-  } else if (defaultHolder = elm['s-cr']) {
-    // this element has slotted content
-    defaultHolder.parentNode.textContent = text;
-  } else if (oldVNode.$text$ !== text) {
-    // update the text content for the text only vnode
-    // and also only if the text is different than before
-    elm.data = text;
-  }
-};
-
-const updateFallbackSlotVisibility = elm => {
-  // tslint:disable-next-line: prefer-const
-  let childNodes = elm.childNodes;
-  let childNode;
-  let i;
-  let ilen;
-  let j;
-  let slotNameAttr;
-  let nodeType;
-
-  for (i = 0, ilen = childNodes.length; i < ilen; i++) {
-    childNode = childNodes[i];
-
-    if (childNode.nodeType === 1
-    /* ElementNode */
-    ) {
-      if (childNode['s-sr']) {
-        // this is a slot fallback node
-        // get the slot name for this slot reference node
-        slotNameAttr = childNode['s-sn']; // by default always show a fallback slot node
-        // then hide it if there are other slots in the light dom
-
-        childNode.hidden = false;
-
-        for (j = 0; j < ilen; j++) {
-          nodeType = childNodes[j].nodeType;
-
-          if (childNodes[j]['s-hn'] !== childNode['s-hn'] || slotNameAttr !== '') {
-            // this sibling node is from a different component OR is a named fallback slot node
-            if (nodeType === 1
-            /* ElementNode */
-            && slotNameAttr === childNodes[j].getAttribute('slot')) {
-              childNode.hidden = true;
-              break;
-            }
-          } else {
-            // this is a default fallback slot node
-            // any element or text node (with content)
-            // should hide the default fallback slot node
-            if (nodeType === 1
-            /* ElementNode */
-            || nodeType === 3
-            /* TextNode */
-            && childNodes[j].textContent.trim() !== '') {
-              childNode.hidden = true;
-              break;
-            }
-          }
-        }
-      } // keep drilling down
-
-
-      updateFallbackSlotVisibility(childNode);
-    }
-  }
-};
-
-const relocateNodes = [];
-
-const relocateSlotContent = elm => {
-  // tslint:disable-next-line: prefer-const
-  let childNode;
-  let node;
-  let hostContentNodes;
-  let slotNameAttr;
-  let relocateNodeData;
-  let j;
-  let i = 0;
-  let childNodes = elm.childNodes;
-  let ilen = childNodes.length;
-
-  for (; i < ilen; i++) {
-    childNode = childNodes[i];
-
-    if (childNode['s-sr'] && (node = childNode['s-cr']) && node.parentNode) {
-      // first got the content reference comment node
-      // then we got it's parent, which is where all the host content is in now
-      hostContentNodes = node.parentNode.childNodes;
-      slotNameAttr = childNode['s-sn'];
-
-      for (j = hostContentNodes.length - 1; j >= 0; j--) {
-        node = hostContentNodes[j];
-
-        if (!node['s-cn'] && !node['s-nr'] && node['s-hn'] !== childNode['s-hn']) {
-          // let's do some relocating to its new home
-          // but never relocate a content reference node
-          // that is suppose to always represent the original content location
-          if (isNodeLocatedInSlot(node, slotNameAttr)) {
-            // it's possible we've already decided to relocate this node
-            relocateNodeData = relocateNodes.find(r => r.$nodeToRelocate$ === node); // made some changes to slots
-            // let's make sure we also double check
-            // fallbacks are correctly hidden or shown
-
-            checkSlotFallbackVisibility = true;
-            node['s-sn'] = node['s-sn'] || slotNameAttr;
-
-            if (relocateNodeData) {
-              // previously we never found a slot home for this node
-              // but turns out we did, so let's remember it now
-              relocateNodeData.$slotRefNode$ = childNode;
-            } else {
-              // add to our list of nodes to relocate
-              relocateNodes.push({
-                $slotRefNode$: childNode,
-                $nodeToRelocate$: node
-              });
-            }
-
-            if (node['s-sr']) {
-              relocateNodes.map(relocateNode => {
-                if (isNodeLocatedInSlot(relocateNode.$nodeToRelocate$, node['s-sn'])) {
-                  relocateNodeData = relocateNodes.find(r => r.$nodeToRelocate$ === node);
-
-                  if (relocateNodeData && !relocateNode.$slotRefNode$) {
-                    relocateNode.$slotRefNode$ = relocateNodeData.$slotRefNode$;
-                  }
-                }
-              });
-            }
-          } else if (!relocateNodes.some(r => r.$nodeToRelocate$ === node)) {
-            // so far this element does not have a slot home, not setting slotRefNode on purpose
-            // if we never find a home for this element then we'll need to hide it
-            relocateNodes.push({
-              $nodeToRelocate$: node
-            });
-          }
-        }
-      }
-    }
-
-    if (childNode.nodeType === 1
-    /* ElementNode */
-    ) {
-      relocateSlotContent(childNode);
-    }
-  }
-};
-
-const isNodeLocatedInSlot = (nodeToRelocate, slotNameAttr) => {
-  if (nodeToRelocate.nodeType === 1
-  /* ElementNode */
-  ) {
-    if (nodeToRelocate.getAttribute('slot') === null && slotNameAttr === '') {
-      return true;
-    }
-
-    if (nodeToRelocate.getAttribute('slot') === slotNameAttr) {
-      return true;
-    }
-
-    return false;
-  }
-
-  if (nodeToRelocate['s-sn'] === slotNameAttr) {
-    return true;
-  }
-
-  return slotNameAttr === '';
-};
-
-const callNodeRefs = vNode => {
-  {
-    vNode.$attrs$ && vNode.$attrs$.ref && vNode.$attrs$.ref(null);
-    vNode.$children$ && vNode.$children$.map(callNodeRefs);
-  }
-};
-
-const renderVdom = (hostRef, renderFnResults) => {
-  const hostElm = hostRef.$hostElement$;
-  const cmpMeta = hostRef.$cmpMeta$;
-  const oldVNode = hostRef.$vnode$ || newVNode(null, null);
-  const rootVnode = isHost(renderFnResults) ? renderFnResults : h(null, null, renderFnResults);
-  hostTagName = hostElm.tagName;
-
-  if (cmpMeta.$attrsToReflect$) {
-    rootVnode.$attrs$ = rootVnode.$attrs$ || {};
-    cmpMeta.$attrsToReflect$.map(([propName, attribute]) => rootVnode.$attrs$[attribute] = hostElm[propName]);
-  }
-
-  rootVnode.$tag$ = null;
-  rootVnode.$flags$ |= 4
-  /* isHost */
-  ;
-  hostRef.$vnode$ = rootVnode;
-  rootVnode.$elm$ = oldVNode.$elm$ = hostElm.shadowRoot || hostElm;
-  {
-    scopeId = hostElm['s-sc'];
-  }
-  {
-    contentRef = hostElm['s-cr'];
-    useNativeShadowDom = (cmpMeta.$flags$ & 1
-    /* shadowDomEncapsulation */
-    ) !== 0; // always reset
-
-    checkSlotFallbackVisibility = false;
-  } // synchronous patch
-
-  patch(oldVNode, rootVnode);
-  {
-    // while we're moving nodes around existing nodes, temporarily disable
-    // the disconnectCallback from working
-    plt.$flags$ |= 1
-    /* isTmpDisconnected */
-    ;
-
-    if (checkSlotRelocate) {
-      relocateSlotContent(rootVnode.$elm$);
-      let relocateData;
-      let nodeToRelocate;
-      let orgLocationNode;
-      let parentNodeRef;
-      let insertBeforeNode;
-      let refNode;
-      let i = 0;
-
-      for (; i < relocateNodes.length; i++) {
-        relocateData = relocateNodes[i];
-        nodeToRelocate = relocateData.$nodeToRelocate$;
-
-        if (!nodeToRelocate['s-ol']) {
-          // add a reference node marking this node's original location
-          // keep a reference to this node for later lookups
-          orgLocationNode = doc.createTextNode('');
-          orgLocationNode['s-nr'] = nodeToRelocate;
-          nodeToRelocate.parentNode.insertBefore(nodeToRelocate['s-ol'] = orgLocationNode, nodeToRelocate);
-        }
-      }
-
-      for (i = 0; i < relocateNodes.length; i++) {
-        relocateData = relocateNodes[i];
-        nodeToRelocate = relocateData.$nodeToRelocate$;
-
-        if (relocateData.$slotRefNode$) {
-          // by default we're just going to insert it directly
-          // after the slot reference node
-          parentNodeRef = relocateData.$slotRefNode$.parentNode;
-          insertBeforeNode = relocateData.$slotRefNode$.nextSibling;
-          orgLocationNode = nodeToRelocate['s-ol'];
-
-          while (orgLocationNode = orgLocationNode.previousSibling) {
-            refNode = orgLocationNode['s-nr'];
-
-            if (refNode && refNode['s-sn'] === nodeToRelocate['s-sn'] && parentNodeRef === refNode.parentNode) {
-              refNode = refNode.nextSibling;
-
-              if (!refNode || !refNode['s-nr']) {
-                insertBeforeNode = refNode;
-                break;
-              }
-            }
-          }
-
-          if (!insertBeforeNode && parentNodeRef !== nodeToRelocate.parentNode || nodeToRelocate.nextSibling !== insertBeforeNode) {
-            // we've checked that it's worth while to relocate
-            // since that the node to relocate
-            // has a different next sibling or parent relocated
-            if (nodeToRelocate !== insertBeforeNode) {
-              if (!nodeToRelocate['s-hn'] && nodeToRelocate['s-ol']) {
-                // probably a component in the index.html that doesn't have it's hostname set
-                nodeToRelocate['s-hn'] = nodeToRelocate['s-ol'].parentNode.nodeName;
-              } // add it back to the dom but in its new home
-
-
-              parentNodeRef.insertBefore(nodeToRelocate, insertBeforeNode);
-            }
-          }
-        } else {
-          // this node doesn't have a slot home to go to, so let's hide it
-          if (nodeToRelocate.nodeType === 1
-          /* ElementNode */
-          ) {
-            nodeToRelocate.hidden = true;
-          }
-        }
-      }
-    }
-
-    if (checkSlotFallbackVisibility) {
-      updateFallbackSlotVisibility(rootVnode.$elm$);
-    } // done moving nodes around
-    // allow the disconnect callback to work again
-
-
-    plt.$flags$ &= ~1
-    /* isTmpDisconnected */
-    ; // always reset
-
-    relocateNodes.length = 0;
-  }
-};
-
-const getElement = ref => getHostRef(ref).$hostElement$;
-
-const createEvent = (ref, name, flags) => {
-  const elm = getElement(ref);
-  return {
-    emit: detail => {
-      return emitEvent(elm, name, {
-        bubbles: !!(flags & 4
-        /* Bubbles */
-        ),
-        composed: !!(flags & 2
-        /* Composed */
-        ),
-        cancelable: !!(flags & 1
-        /* Cancellable */
-        ),
-        detail
-      });
-    }
-  };
-};
-/**
- * Helper function to create & dispatch a custom Event on a provided target
- * @param elm the target of the Event
- * @param name the name to give the custom Event
- * @param opts options for configuring a custom Event
- * @returns the custom Event
- */
-
-
-const emitEvent = (elm, name, opts) => {
-  const ev = plt.ce(name, opts);
-  elm.dispatchEvent(ev);
-  return ev;
-};
-
-const attachToAncestor = (hostRef, ancestorComponent) => {
-  if (ancestorComponent && !hostRef.$onRenderResolve$ && ancestorComponent['s-p']) {
-    ancestorComponent['s-p'].push(new Promise(r => hostRef.$onRenderResolve$ = r));
-  }
-};
-
-const scheduleUpdate = (hostRef, isInitialLoad) => {
-  {
-    hostRef.$flags$ |= 16
-    /* isQueuedForUpdate */
-    ;
-  }
-
-  if (hostRef.$flags$ & 4
-  /* isWaitingForChildren */
-  ) {
-    hostRef.$flags$ |= 512
-    /* needsRerender */
-    ;
-    return;
-  }
-
-  attachToAncestor(hostRef, hostRef.$ancestorComponent$); // there is no ancestor component or the ancestor component
-  // has already fired off its lifecycle update then
-  // fire off the initial update
-
-  const dispatch = () => dispatchHooks(hostRef, isInitialLoad);
-
-  return writeTask(dispatch);
-};
-
-const dispatchHooks = (hostRef, isInitialLoad) => {
-  const endSchedule = createTime('scheduleUpdate', hostRef.$cmpMeta$.$tagName$);
-  const instance = hostRef.$lazyInstance$;
-  let promise;
-
-  if (isInitialLoad) {
-    {
-      hostRef.$flags$ |= 256
-      /* isListenReady */
-      ;
-
-      if (hostRef.$queuedListeners$) {
-        hostRef.$queuedListeners$.map(([methodName, event]) => safeCall(instance, methodName, event));
-        hostRef.$queuedListeners$ = null;
-      }
-    }
-    {
-      promise = safeCall(instance, 'componentWillLoad');
-    }
-  }
-
-  {
-    promise = then(promise, () => safeCall(instance, 'componentWillRender'));
-  }
-  endSchedule();
-  return then(promise, () => updateComponent(hostRef, instance, isInitialLoad));
-};
-
-const updateComponent = /*#__PURE__*/function () {
-  var _ref = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (hostRef, instance, isInitialLoad) {
-    // updateComponent
-    const elm = hostRef.$hostElement$;
-    const endUpdate = createTime('update', hostRef.$cmpMeta$.$tagName$);
-    const rc = elm['s-rc'];
-
-    if (isInitialLoad) {
-      // DOM WRITE!
-      attachStyles(hostRef);
-    }
-
-    const endRender = createTime('render', hostRef.$cmpMeta$.$tagName$);
-    {
-      callRender(hostRef, instance);
-    }
-
-    if (rc) {
-      // ok, so turns out there are some child host elements
-      // waiting on this parent element to load
-      // let's fire off all update callbacks waiting
-      rc.map(cb => cb());
-      elm['s-rc'] = undefined;
-    }
-
-    endRender();
-    endUpdate();
-    {
-      const childrenPromises = elm['s-p'];
-
-      const postUpdate = () => postUpdateComponent(hostRef);
-
-      if (childrenPromises.length === 0) {
-        postUpdate();
-      } else {
-        Promise.all(childrenPromises).then(postUpdate);
-        hostRef.$flags$ |= 4
-        /* isWaitingForChildren */
-        ;
-        childrenPromises.length = 0;
-      }
-    }
-  });
-
-  return function updateComponent(_x, _x2, _x3) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-const callRender = (hostRef, instance, elm) => {
-  try {
-    instance = instance.render && instance.render();
-    {
-      hostRef.$flags$ &= ~16
-      /* isQueuedForUpdate */
-      ;
-    }
-    {
-      hostRef.$flags$ |= 2
-      /* hasRendered */
-      ;
-    }
-    {
-      {
-        // looks like we've got child nodes to render into this host element
-        // or we need to update the css class/attrs on the host element
-        // DOM WRITE!
-        {
-          renderVdom(hostRef, instance);
-        }
-      }
-    }
-  } catch (e) {
-    consoleError(e, hostRef.$hostElement$);
-  }
-
-  return null;
-};
-
-const postUpdateComponent = hostRef => {
-  const tagName = hostRef.$cmpMeta$.$tagName$;
-  const elm = hostRef.$hostElement$;
-  const endPostUpdate = createTime('postUpdate', tagName);
-  const instance = hostRef.$lazyInstance$;
-  const ancestorComponent = hostRef.$ancestorComponent$;
-  {
-    safeCall(instance, 'componentDidRender');
-  }
-
-  if (!(hostRef.$flags$ & 64
-  /* hasLoadedComponent */
-  )) {
-    hostRef.$flags$ |= 64
-    /* hasLoadedComponent */
-    ;
-    {
-      // DOM WRITE!
-      addHydratedFlag(elm);
-    }
-    {
-      safeCall(instance, 'componentDidLoad');
-    }
-    endPostUpdate();
-    {
-      hostRef.$onReadyResolve$(elm);
-
-      if (!ancestorComponent) {
-        appDidLoad();
-      }
-    }
-  } else {
-    {
-      safeCall(instance, 'componentDidUpdate');
-    }
-    endPostUpdate();
-  }
-
-  {
-    hostRef.$onInstanceResolve$(elm);
-  } // load events fire from bottom to top
-  // the deepest elements load first then bubbles up
-
-  {
-    if (hostRef.$onRenderResolve$) {
-      hostRef.$onRenderResolve$();
-      hostRef.$onRenderResolve$ = undefined;
-    }
-
-    if (hostRef.$flags$ & 512
-    /* needsRerender */
-    ) {
-      nextTick(() => scheduleUpdate(hostRef, false));
-    }
-
-    hostRef.$flags$ &= ~(4
-    /* isWaitingForChildren */
-    | 512
-    /* needsRerender */
-    );
-  } // ( •_•)
-  // ( •_•)>⌐■-■
-  // (⌐■_■)
-};
-
-const forceUpdate = ref => {
-  {
-    const hostRef = getHostRef(ref);
-    const isConnected = hostRef.$hostElement$.isConnected;
-
-    if (isConnected && (hostRef.$flags$ & (2
-    /* hasRendered */
-    | 16
-    /* isQueuedForUpdate */
-    )) === 2
-    /* hasRendered */
-    ) {
-      scheduleUpdate(hostRef, false);
-    } // Returns "true" when the forced update was successfully scheduled
-
-
-    return isConnected;
-  }
-};
-
-const appDidLoad = who => {
-  // on appload
-  // we have finish the first big initial render
-  {
-    addHydratedFlag(doc.documentElement);
-  }
-  nextTick(() => emitEvent(win, 'appload', {
-    detail: {
-      namespace: NAMESPACE
-    }
-  }));
-};
-
-const safeCall = (instance, method, arg) => {
-  if (instance && instance[method]) {
-    try {
-      return instance[method](arg);
-    } catch (e) {
-      consoleError(e);
-    }
-  }
-
-  return undefined;
-};
-
-const then = (promise, thenFn) => {
-  return promise && promise.then ? promise.then(thenFn) : thenFn();
-};
-
-const addHydratedFlag = elm => elm.classList.add('hydrated');
-
-const initializeClientHydrate = (hostElm, tagName, hostId, hostRef) => {
-  const endHydrate = createTime('hydrateClient', tagName);
-  const shadowRoot = hostElm.shadowRoot;
-  const childRenderNodes = [];
-  const slotNodes = [];
-  const shadowRootNodes = shadowRoot ? [] : null;
-  const vnode = hostRef.$vnode$ = newVNode(tagName, null);
-
-  if (!plt.$orgLocNodes$) {
-    initializeDocumentHydrate(doc.body, plt.$orgLocNodes$ = new Map());
-  }
-
-  hostElm[HYDRATE_ID] = hostId;
-  hostElm.removeAttribute(HYDRATE_ID);
-  clientHydrate(vnode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, hostElm, hostId);
-  childRenderNodes.map(c => {
-    const orgLocationId = c.$hostId$ + '.' + c.$nodeId$;
-    const orgLocationNode = plt.$orgLocNodes$.get(orgLocationId);
-    const node = c.$elm$;
-
-    if (orgLocationNode && supportsShadow && orgLocationNode['s-en'] === '') {
-      orgLocationNode.parentNode.insertBefore(node, orgLocationNode.nextSibling);
-    }
-
-    if (!shadowRoot) {
-      node['s-hn'] = tagName;
-
-      if (orgLocationNode) {
-        node['s-ol'] = orgLocationNode;
-        node['s-ol']['s-nr'] = node;
-      }
-    }
-
-    plt.$orgLocNodes$.delete(orgLocationId);
-  });
-
-  if (shadowRoot) {
-    shadowRootNodes.map(shadowRootNode => {
-      if (shadowRootNode) {
-        shadowRoot.appendChild(shadowRootNode);
-      }
-    });
-  }
-
-  endHydrate();
-};
-
-const clientHydrate = (parentVNode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, node, hostId) => {
-  let childNodeType;
-  let childIdSplt;
-  let childVNode;
-  let i;
-
-  if (node.nodeType === 1
-  /* ElementNode */
-  ) {
-    childNodeType = node.getAttribute(HYDRATE_CHILD_ID);
-
-    if (childNodeType) {
-      // got the node data from the element's attribute
-      // `${hostId}.${nodeId}.${depth}.${index}`
-      childIdSplt = childNodeType.split('.');
-
-      if (childIdSplt[0] === hostId || childIdSplt[0] === '0') {
-        childVNode = {
-          $flags$: 0,
-          $hostId$: childIdSplt[0],
-          $nodeId$: childIdSplt[1],
-          $depth$: childIdSplt[2],
-          $index$: childIdSplt[3],
-          $tag$: node.tagName.toLowerCase(),
-          $elm$: node,
-          $attrs$: null,
-          $children$: null,
-          $key$: null,
-          $name$: null,
-          $text$: null
-        };
-        childRenderNodes.push(childVNode);
-        node.removeAttribute(HYDRATE_CHILD_ID); // this is a new child vnode
-        // so ensure its parent vnode has the vchildren array
-
-        if (!parentVNode.$children$) {
-          parentVNode.$children$ = [];
-        } // add our child vnode to a specific index of the vnode's children
-
-
-        parentVNode.$children$[childVNode.$index$] = childVNode; // this is now the new parent vnode for all the next child checks
-
-        parentVNode = childVNode;
-
-        if (shadowRootNodes && childVNode.$depth$ === '0') {
-          shadowRootNodes[childVNode.$index$] = childVNode.$elm$;
-        }
-      }
-    } // recursively drill down, end to start so we can remove nodes
-
-
-    for (i = node.childNodes.length - 1; i >= 0; i--) {
-      clientHydrate(parentVNode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, node.childNodes[i], hostId);
-    }
-
-    if (node.shadowRoot) {
-      // keep drilling down through the shadow root nodes
-      for (i = node.shadowRoot.childNodes.length - 1; i >= 0; i--) {
-        clientHydrate(parentVNode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, node.shadowRoot.childNodes[i], hostId);
-      }
-    }
-  } else if (node.nodeType === 8
-  /* CommentNode */
-  ) {
-    // `${COMMENT_TYPE}.${hostId}.${nodeId}.${depth}.${index}`
-    childIdSplt = node.nodeValue.split('.');
-
-    if (childIdSplt[1] === hostId || childIdSplt[1] === '0') {
-      // comment node for either the host id or a 0 host id
-      childNodeType = childIdSplt[0];
-      childVNode = {
-        $flags$: 0,
-        $hostId$: childIdSplt[1],
-        $nodeId$: childIdSplt[2],
-        $depth$: childIdSplt[3],
-        $index$: childIdSplt[4],
-        $elm$: node,
-        $attrs$: null,
-        $children$: null,
-        $key$: null,
-        $name$: null,
-        $tag$: null,
-        $text$: null
-      };
-
-      if (childNodeType === TEXT_NODE_ID) {
-        childVNode.$elm$ = node.nextSibling;
-
-        if (childVNode.$elm$ && childVNode.$elm$.nodeType === 3
-        /* TextNode */
-        ) {
-          childVNode.$text$ = childVNode.$elm$.textContent;
-          childRenderNodes.push(childVNode); // remove the text comment since it's no longer needed
-
-          node.remove();
-
-          if (!parentVNode.$children$) {
-            parentVNode.$children$ = [];
-          }
-
-          parentVNode.$children$[childVNode.$index$] = childVNode;
-
-          if (shadowRootNodes && childVNode.$depth$ === '0') {
-            shadowRootNodes[childVNode.$index$] = childVNode.$elm$;
-          }
-        }
-      } else if (childVNode.$hostId$ === hostId) {
-        // this comment node is specifcally for this host id
-        if (childNodeType === SLOT_NODE_ID) {
-          // `${SLOT_NODE_ID}.${hostId}.${nodeId}.${depth}.${index}.${slotName}`;
-          childVNode.$tag$ = 'slot';
-
-          if (childIdSplt[5]) {
-            node['s-sn'] = childVNode.$name$ = childIdSplt[5];
-          } else {
-            node['s-sn'] = '';
-          }
-
-          node['s-sr'] = true;
-
-          if (shadowRootNodes) {
-            // browser support shadowRoot and this is a shadow dom component
-            // create an actual slot element
-            childVNode.$elm$ = doc.createElement(childVNode.$tag$);
-
-            if (childVNode.$name$) {
-              // add the slot name attribute
-              childVNode.$elm$.setAttribute('name', childVNode.$name$);
-            } // insert the new slot element before the slot comment
-
-
-            node.parentNode.insertBefore(childVNode.$elm$, node); // remove the slot comment since it's not needed for shadow
-
-            node.remove();
-
-            if (childVNode.$depth$ === '0') {
-              shadowRootNodes[childVNode.$index$] = childVNode.$elm$;
-            }
-          }
-
-          slotNodes.push(childVNode);
-
-          if (!parentVNode.$children$) {
-            parentVNode.$children$ = [];
-          }
-
-          parentVNode.$children$[childVNode.$index$] = childVNode;
-        } else if (childNodeType === CONTENT_REF_ID) {
-          // `${CONTENT_REF_ID}.${hostId}`;
-          if (shadowRootNodes) {
-            // remove the content ref comment since it's not needed for shadow
-            node.remove();
-          } else {
-            hostElm['s-cr'] = node;
-            node['s-cn'] = true;
-          }
-        }
-      }
-    }
-  } else if (parentVNode && parentVNode.$tag$ === 'style') {
-    const vnode = newVNode(null, node.textContent);
-    vnode.$elm$ = node;
-    vnode.$index$ = '0';
-    parentVNode.$children$ = [vnode];
-  }
-};
-
-const initializeDocumentHydrate = (node, orgLocNodes) => {
-  if (node.nodeType === 1
-  /* ElementNode */
-  ) {
-    let i = 0;
-
-    for (; i < node.childNodes.length; i++) {
-      initializeDocumentHydrate(node.childNodes[i], orgLocNodes);
-    }
-
-    if (node.shadowRoot) {
-      for (i = 0; i < node.shadowRoot.childNodes.length; i++) {
-        initializeDocumentHydrate(node.shadowRoot.childNodes[i], orgLocNodes);
-      }
-    }
-  } else if (node.nodeType === 8
-  /* CommentNode */
-  ) {
-    const childIdSplt = node.nodeValue.split('.');
-
-    if (childIdSplt[0] === ORG_LOCATION_ID) {
-      orgLocNodes.set(childIdSplt[1] + '.' + childIdSplt[2], node);
-      node.nodeValue = ''; // useful to know if the original location is
-      // the root light-dom of a shadow dom component
-
-      node['s-en'] = childIdSplt[3];
-    }
-  }
-};
-/**
- * Parse a new property value for a given property type.
- *
- * While the prop value can reasonably be expected to be of `any` type as far as TypeScript's type checker is concerned,
- * it is not safe to assume that the string returned by evaluating `typeof propValue` matches:
- *   1. `any`, the type given to `propValue` in the function signature
- *   2. the type stored from `propType`.
- *
- * This function provides the capability to parse/coerce a property's value to potentially any other JavaScript type.
- *
- * Property values represented in TSX preserve their type information. In the example below, the number 0 is passed to
- * a component. This `propValue` will preserve its type information (`typeof propValue === 'number'`). Note that is
- * based on the type of the value being passed in, not the type declared of the class member decorated with `@Prop`.
- * ```tsx
- * <my-cmp prop-val={0}></my-cmp>
- * ```
- *
- * HTML prop values on the other hand, will always a string
- *
- * @param propValue the new value to coerce to some type
- * @param propType the type of the prop, expressed as a binary number
- * @returns the parsed/coerced value
- */
-
-
-const parsePropertyValue = (propValue, propType) => {
-  // ensure this value is of the correct prop type
-  if (propValue != null && !isComplexType(propValue)) {
-    if (propType & 4
-    /* Boolean */
-    ) {
-      // per the HTML spec, any string value means it is a boolean true value
-      // but we'll cheat here and say that the string "false" is the boolean false
-      return propValue === 'false' ? false : propValue === '' || !!propValue;
-    }
-
-    if (propType & 2
-    /* Number */
-    ) {
-      // force it to be a number
-      return parseFloat(propValue);
-    }
-
-    if (propType & 1
-    /* String */
-    ) {
-      // could have been passed as a number or boolean
-      // but we still want it as a string
-      return String(propValue);
-    } // redundant return here for better minification
-
-
-    return propValue;
-  } // not sure exactly what type we want
-  // so no need to change to a different type
-
-
-  return propValue;
-};
-
-const getValue = (ref, propName) => getHostRef(ref).$instanceValues$.get(propName);
-
-const setValue = (ref, propName, newVal, cmpMeta) => {
-  // check our new property value against our internal value
-  const hostRef = getHostRef(ref);
-  const elm = hostRef.$hostElement$;
-  const oldVal = hostRef.$instanceValues$.get(propName);
-  const flags = hostRef.$flags$;
-  const instance = hostRef.$lazyInstance$;
-  newVal = parsePropertyValue(newVal, cmpMeta.$members$[propName][0]); // explicitly check for NaN on both sides, as `NaN === NaN` is always false
-
-  const areBothNaN = Number.isNaN(oldVal) && Number.isNaN(newVal);
-  const didValueChange = newVal !== oldVal && !areBothNaN;
-
-  if ((!(flags & 8
-  /* isConstructingInstance */
-  ) || oldVal === undefined) && didValueChange) {
-    // gadzooks! the property's value has changed!!
-    // set our new value!
-    hostRef.$instanceValues$.set(propName, newVal);
-
-    if (instance) {
-      // get an array of method names of watch functions to call
-      if (cmpMeta.$watchers$ && flags & 128
-      /* isWatchReady */
-      ) {
-        const watchMethods = cmpMeta.$watchers$[propName];
-
-        if (watchMethods) {
-          // this instance is watching for when this property changed
-          watchMethods.map(watchMethodName => {
-            try {
-              // fire off each of the watch methods that are watching this property
-              instance[watchMethodName](newVal, oldVal, propName);
-            } catch (e) {
-              consoleError(e, elm);
-            }
-          });
-        }
-      }
-
-      if ((flags & (2
-      /* hasRendered */
-      | 16
-      /* isQueuedForUpdate */
-      )) === 2
-      /* hasRendered */
-      ) {
-        // looks like this value actually changed, so we've got work to do!
-        // but only if we've already rendered, otherwise just chill out
-        // queue that we need to do an update, but don't worry about queuing
-        // up millions cuz this function ensures it only runs once
-        scheduleUpdate(hostRef, false);
-      }
-    }
-  }
-};
-
-const proxyComponent = (Cstr, cmpMeta, flags) => {
-  if (cmpMeta.$members$) {
-    if (Cstr.watchers) {
-      cmpMeta.$watchers$ = Cstr.watchers;
-    } // It's better to have a const than two Object.entries()
-
-
-    const members = Object.entries(cmpMeta.$members$);
-    const prototype = Cstr.prototype;
-    members.map(([memberName, [memberFlags]]) => {
-      if (memberFlags & 31
-      /* Prop */
-      || flags & 2
-      /* proxyState */
-      && memberFlags & 32
-      /* State */
-      ) {
-        // proxyComponent - prop
-        Object.defineProperty(prototype, memberName, {
-          get() {
-            // proxyComponent, get value
-            return getValue(this, memberName);
-          },
-
-          set(newValue) {
-            // proxyComponent, set value
-            setValue(this, memberName, newValue, cmpMeta);
-          },
-
-          configurable: true,
-          enumerable: true
-        });
-      } else if (flags & 1
-      /* isElementConstructor */
-      && memberFlags & 64
-      /* Method */
-      ) {
-        // proxyComponent - method
-        Object.defineProperty(prototype, memberName, {
-          value(...args) {
-            const ref = getHostRef(this);
-            return ref.$onInstancePromise$.then(() => ref.$lazyInstance$[memberName](...args));
-          }
-
-        });
-      }
-    });
-
-    if (flags & 1
-    /* isElementConstructor */
-    ) {
-      const attrNameToPropName = new Map();
-
-      prototype.attributeChangedCallback = function (attrName, _oldValue, newValue) {
-        plt.jmp(() => {
-          const propName = attrNameToPropName.get(attrName); //  In a web component lifecycle the attributeChangedCallback runs prior to connectedCallback
-          //  in the case where an attribute was set inline.
-          //  ```html
-          //    <my-component some-attribute="some-value"></my-component>
-          //  ```
-          //
-          //  There is an edge case where a developer sets the attribute inline on a custom element and then
-          //  programmatically changes it before it has been upgraded as shown below:
-          //
-          //  ```html
-          //    <!-- this component has _not_ been upgraded yet -->
-          //    <my-component id="test" some-attribute="some-value"></my-component>
-          //    <script>
-          //      // grab non-upgraded component
-          //      el = document.querySelector("#test");
-          //      el.someAttribute = "another-value";
-          //      // upgrade component
-          //      customElements.define('my-component', MyComponent);
-          //    </script>
-          //  ```
-          //  In this case if we do not unshadow here and use the value of the shadowing property, attributeChangedCallback
-          //  will be called with `newValue = "some-value"` and will set the shadowed property (this.someAttribute = "another-value")
-          //  to the value that was set inline i.e. "some-value" from above example. When
-          //  the connectedCallback attempts to unshadow it will use "some-value" as the initial value rather than "another-value"
-          //
-          //  The case where the attribute was NOT set inline but was not set programmatically shall be handled/unshadowed
-          //  by connectedCallback as this attributeChangedCallback will not fire.
-          //
-          //  https://developers.google.com/web/fundamentals/web-components/best-practices#lazy-properties
-          //
-          //  TODO(STENCIL-16) we should think about whether or not we actually want to be reflecting the attributes to
-          //  properties here given that this goes against best practices outlined here
-          //  https://developers.google.com/web/fundamentals/web-components/best-practices#avoid-reentrancy
-
-          if (this.hasOwnProperty(propName)) {
-            newValue = this[propName];
-            delete this[propName];
-          } else if (prototype.hasOwnProperty(propName) && typeof this[propName] === 'number' && this[propName] == newValue) {
-            // if the propName exists on the prototype of `Cstr`, this update may be a result of Stencil using native
-            // APIs to reflect props as attributes. Calls to `setAttribute(someElement, propName)` will result in
-            // `propName` to be converted to a `DOMString`, which may not be what we want for other primitive props.
-            return;
-          }
-
-          this[propName] = newValue === null && typeof this[propName] === 'boolean' ? false : newValue;
-        });
-      }; // create an array of attributes to observe
-      // and also create a map of html attribute name to js property name
-
-
-      Cstr.observedAttributes = members.filter(([_, m]) => m[0] & 15
-      /* HasAttribute */
-      ) // filter to only keep props that should match attributes
-      .map(([propName, m]) => {
-        const attrName = m[1] || propName;
-        attrNameToPropName.set(attrName, propName);
-
-        if (m[0] & 512
-        /* ReflectAttr */
-        ) {
-          cmpMeta.$attrsToReflect$.push([propName, attrName]);
-        }
-
-        return attrName;
-      });
-    }
-  }
-
-  return Cstr;
-};
-
-const initializeComponent = /*#__PURE__*/function () {
-  var _ref2 = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (elm, hostRef, cmpMeta, hmrVersionId, Cstr) {
-    // initializeComponent
-    if ((hostRef.$flags$ & 32
-    /* hasInitializedComponent */
-    ) === 0) {
-      {
-        // we haven't initialized this element yet
-        hostRef.$flags$ |= 32
-        /* hasInitializedComponent */
-        ; // lazy loaded components
-        // request the component's implementation to be
-        // wired up with the host element
-
-        Cstr = loadModule(cmpMeta);
-
-        if (Cstr.then) {
-          // Await creates a micro-task avoid if possible
-          const endLoad = uniqueTime();
-          Cstr = yield Cstr;
-          endLoad();
-        }
-
-        if (!Cstr.isProxied) {
-          // we've never proxied this Constructor before
-          // let's add the getters/setters to its prototype before
-          // the first time we create an instance of the implementation
-          {
-            cmpMeta.$watchers$ = Cstr.watchers;
-          }
-          proxyComponent(Cstr, cmpMeta, 2
-          /* proxyState */
-          );
-          Cstr.isProxied = true;
-        }
-
-        const endNewInstance = createTime('createInstance', cmpMeta.$tagName$); // ok, time to construct the instance
-        // but let's keep track of when we start and stop
-        // so that the getters/setters don't incorrectly step on data
-
-        {
-          hostRef.$flags$ |= 8
-          /* isConstructingInstance */
-          ;
-        } // construct the lazy-loaded component implementation
-        // passing the hostRef is very important during
-        // construction in order to directly wire together the
-        // host element and the lazy-loaded instance
-
-        try {
-          new Cstr(hostRef);
-        } catch (e) {
-          consoleError(e);
-        }
-
-        {
-          hostRef.$flags$ &= ~8
-          /* isConstructingInstance */
-          ;
-        }
-        {
-          hostRef.$flags$ |= 128
-          /* isWatchReady */
-          ;
-        }
-        endNewInstance();
-        fireConnectedCallback(hostRef.$lazyInstance$);
-      }
-
-      if (Cstr.style) {
-        // this component has styles but we haven't registered them yet
-        let style = Cstr.style;
-
-        if (typeof style !== 'string') {
-          style = style[hostRef.$modeName$ = computeMode(elm)];
-        }
-
-        const scopeId = getScopeId(cmpMeta, hostRef.$modeName$);
-
-        if (!styles.has(scopeId)) {
-          const endRegisterStyles = createTime('registerStyles', cmpMeta.$tagName$);
-          registerStyle(scopeId, style, !!(cmpMeta.$flags$ & 1
-          /* shadowDomEncapsulation */
-          ));
-          endRegisterStyles();
-        }
-      }
-    } // we've successfully created a lazy instance
-
-
-    const ancestorComponent = hostRef.$ancestorComponent$;
-
-    const schedule = () => scheduleUpdate(hostRef, true);
-
-    if (ancestorComponent && ancestorComponent['s-rc']) {
-      // this is the initial load and this component it has an ancestor component
-      // but the ancestor component has NOT fired its will update lifecycle yet
-      // so let's just cool our jets and wait for the ancestor to continue first
-      // this will get fired off when the ancestor component
-      // finally gets around to rendering its lazy self
-      // fire off the initial update
-      ancestorComponent['s-rc'].push(schedule);
-    } else {
-      schedule();
-    }
-  });
-
-  return function initializeComponent(_x4, _x5, _x6, _x7, _x8) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-const fireConnectedCallback = instance => {
-  {
-    safeCall(instance, 'connectedCallback');
-  }
-};
-
-const connectedCallback = elm => {
-  if ((plt.$flags$ & 1
-  /* isTmpDisconnected */
-  ) === 0) {
-    const hostRef = getHostRef(elm);
-    const cmpMeta = hostRef.$cmpMeta$;
-    const endConnected = createTime('connectedCallback', cmpMeta.$tagName$);
-
-    if (!(hostRef.$flags$ & 1
-    /* hasConnected */
-    )) {
-      // first time this component has connected
-      hostRef.$flags$ |= 1
-      /* hasConnected */
-      ;
-      let hostId;
-      {
-        hostId = elm.getAttribute(HYDRATE_ID);
-
-        if (hostId) {
-          if (cmpMeta.$flags$ & 1
-          /* shadowDomEncapsulation */
-          ) {
-            const scopeId = addStyle(elm.shadowRoot, cmpMeta, elm.getAttribute('s-mode'));
-            elm.classList.remove(scopeId + '-h', scopeId + '-s');
-          }
-
-          initializeClientHydrate(elm, cmpMeta.$tagName$, hostId, hostRef);
-        }
-      }
-
-      if (!hostId) {
-        // initUpdate
-        // if the slot polyfill is required we'll need to put some nodes
-        // in here to act as original content anchors as we move nodes around
-        // host element has been connected to the DOM
-        if (cmpMeta.$flags$ & (4
-        /* hasSlotRelocation */
-        | 8
-        /* needsShadowDomShim */
-        )) {
-          setContentReference(elm);
-        }
-      }
-
-      {
-        // find the first ancestor component (if there is one) and register
-        // this component as one of the actively loading child components for its ancestor
-        let ancestorComponent = elm;
-
-        while (ancestorComponent = ancestorComponent.parentNode || ancestorComponent.host) {
-          // climb up the ancestors looking for the first
-          // component that hasn't finished its lifecycle update yet
-          if (ancestorComponent.nodeType === 1
-          /* ElementNode */
-          && ancestorComponent.hasAttribute('s-id') && ancestorComponent['s-p'] || ancestorComponent['s-p']) {
-            // we found this components first ancestor component
-            // keep a reference to this component's ancestor component
-            attachToAncestor(hostRef, hostRef.$ancestorComponent$ = ancestorComponent);
-            break;
-          }
-        }
-      } // Lazy properties
-      // https://developers.google.com/web/fundamentals/web-components/best-practices#lazy-properties
-
-      if (cmpMeta.$members$) {
-        Object.entries(cmpMeta.$members$).map(([memberName, [memberFlags]]) => {
-          if (memberFlags & 31
-          /* Prop */
-          && elm.hasOwnProperty(memberName)) {
-            const value = elm[memberName];
-            delete elm[memberName];
-            elm[memberName] = value;
-          }
-        });
-      }
-
-      {
-        // connectedCallback, taskQueue, initialLoad
-        // angular sets attribute AFTER connectCallback
-        // https://github.com/angular/angular/issues/18909
-        // https://github.com/angular/angular/issues/19940
-        nextTick(() => initializeComponent(elm, hostRef, cmpMeta));
-      }
-    } else {
-      // not the first time this has connected
-      // reattach any event listeners to the host
-      // since they would have been removed when disconnected
-      addHostEventListeners(elm, hostRef, cmpMeta.$listeners$); // fire off connectedCallback() on component instance
-
-      fireConnectedCallback(hostRef.$lazyInstance$);
-    }
-
-    endConnected();
-  }
-};
-
-const setContentReference = elm => {
-  // only required when we're NOT using native shadow dom (slot)
-  // or this browser doesn't support native shadow dom
-  // and this host element was NOT created with SSR
-  // let's pick out the inner content for slot projection
-  // create a node to represent where the original
-  // content was first placed, which is useful later on
-  const contentRefElm = elm['s-cr'] = doc.createComment('');
-  contentRefElm['s-cn'] = true;
-  elm.insertBefore(contentRefElm, elm.firstChild);
-};
-
-const disconnectedCallback = elm => {
-  if ((plt.$flags$ & 1
-  /* isTmpDisconnected */
-  ) === 0) {
-    const hostRef = getHostRef(elm);
-    const instance = hostRef.$lazyInstance$;
-    {
-      if (hostRef.$rmListeners$) {
-        hostRef.$rmListeners$.map(rmListener => rmListener());
-        hostRef.$rmListeners$ = undefined;
-      }
-    }
-    {
-      safeCall(instance, 'disconnectedCallback');
-    }
-  }
-};
-
-const bootstrapLazy = (lazyBundles, options = {}) => {
-  const endBootstrap = createTime();
-  const cmpTags = [];
-  const exclude = options.exclude || [];
-  const customElements = win.customElements;
-  const head = doc.head;
-  const metaCharset = /*@__PURE__*/head.querySelector('meta[charset]');
-  const visibilityStyle = /*@__PURE__*/doc.createElement('style');
-  const deferredConnectedCallbacks = [];
-  const styles = /*@__PURE__*/doc.querySelectorAll(`[${HYDRATED_STYLE_ID}]`);
-  let appLoadFallback;
-  let isBootstrapping = true;
-  let i = 0;
-  Object.assign(plt, options);
-  plt.$resourcesUrl$ = new URL(options.resourcesUrl || './', doc.baseURI).href;
-  {
-    // If the app is already hydrated there is not point to disable the
-    // async queue. This will improve the first input delay
-    plt.$flags$ |= 2
-    /* appLoaded */
-    ;
-  }
-  {
-    for (; i < styles.length; i++) {
-      registerStyle(styles[i].getAttribute(HYDRATED_STYLE_ID), convertScopedToShadow(styles[i].innerHTML), true);
-    }
-  }
-  lazyBundles.map(lazyBundle => {
-    lazyBundle[1].map(compactMeta => {
-      const cmpMeta = {
-        $flags$: compactMeta[0],
-        $tagName$: compactMeta[1],
-        $members$: compactMeta[2],
-        $listeners$: compactMeta[3]
-      };
-      {
-        cmpMeta.$members$ = compactMeta[2];
-      }
-      {
-        cmpMeta.$listeners$ = compactMeta[3];
-      }
-      {
-        cmpMeta.$attrsToReflect$ = [];
-      }
-      {
-        cmpMeta.$watchers$ = {};
-      }
-      const tagName = cmpMeta.$tagName$;
-      const HostElement = class extends HTMLElement {
-        // StencilLazyHost
-        constructor(self) {
-          // @ts-ignore
-          super(self);
-          self = this;
-          registerHost(self, cmpMeta);
-
-          if (cmpMeta.$flags$ & 1
-          /* shadowDomEncapsulation */
-          ) {
-            // this component is using shadow dom
-            // and this browser supports shadow dom
-            // add the read-only property "shadowRoot" to the host element
-            // adding the shadow root build conditionals to minimize runtime
-            {
-              {
-                self.attachShadow({
-                  mode: 'open',
-                  delegatesFocus: !!(cmpMeta.$flags$ & 16
-                  /* shadowDelegatesFocus */
-                  )
-                });
-              }
-            }
-          }
-        }
-
-        connectedCallback() {
-          if (appLoadFallback) {
-            clearTimeout(appLoadFallback);
-            appLoadFallback = null;
-          }
-
-          if (isBootstrapping) {
-            // connectedCallback will be processed once all components have been registered
-            deferredConnectedCallbacks.push(this);
-          } else {
-            plt.jmp(() => connectedCallback(this));
-          }
-        }
-
-        disconnectedCallback() {
-          plt.jmp(() => disconnectedCallback(this));
-        }
-
-        componentOnReady() {
-          return getHostRef(this).$onReadyPromise$;
-        }
-
-      };
-      cmpMeta.$lazyBundleId$ = lazyBundle[0];
-
-      if (!exclude.includes(tagName) && !customElements.get(tagName)) {
-        cmpTags.push(tagName);
-        customElements.define(tagName, proxyComponent(HostElement, cmpMeta, 1
-        /* isElementConstructor */
-        ));
-      }
-    });
-  });
-  {
-    visibilityStyle.innerHTML = cmpTags + HYDRATED_CSS;
-    visibilityStyle.setAttribute('data-styles', '');
-    head.insertBefore(visibilityStyle, metaCharset ? metaCharset.nextSibling : head.firstChild);
-  } // Process deferred connectedCallbacks now all components have been registered
-
-  isBootstrapping = false;
-
-  if (deferredConnectedCallbacks.length) {
-    deferredConnectedCallbacks.map(host => host.connectedCallback());
-  } else {
-    {
-      plt.jmp(() => appLoadFallback = setTimeout(appDidLoad, 30));
-    }
-  } // Fallback appLoad event
-
-
-  endBootstrap();
-};
-
-const getAssetPath = path => {
-  const assetUrl = new URL(path, plt.$resourcesUrl$);
-  return assetUrl.origin !== win.location.origin ? assetUrl.href : assetUrl.pathname;
-};
-
-const hostRefs = new WeakMap();
-
-const getHostRef = ref => hostRefs.get(ref);
-
-const registerInstance = (lazyInstance, hostRef) => hostRefs.set(hostRef.$lazyInstance$ = lazyInstance, hostRef);
-
-const registerHost = (elm, cmpMeta) => {
-  const hostRef = {
-    $flags$: 0,
-    $hostElement$: elm,
-    $cmpMeta$: cmpMeta,
-    $instanceValues$: new Map()
-  };
-  {
-    hostRef.$onInstancePromise$ = new Promise(r => hostRef.$onInstanceResolve$ = r);
-  }
-  {
-    hostRef.$onReadyPromise$ = new Promise(r => hostRef.$onReadyResolve$ = r);
-    elm['s-p'] = [];
-    elm['s-rc'] = [];
-  }
-  addHostEventListeners(elm, hostRef, cmpMeta.$listeners$);
-  return hostRefs.set(elm, hostRef);
-};
-
-const isMemberInElement = (elm, memberName) => memberName in elm;
-
-const consoleError = (e, el) => (0, console.error)(e, el);
-
-const cmpModules = /*@__PURE__*/new Map();
-
-const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
-  // loadModuleImport
-  const exportName = cmpMeta.$tagName$.replace(/-/g, '_');
-  const bundleId = cmpMeta.$lazyBundleId$;
-  const module = cmpModules.get(bundleId);
-
-  if (module) {
-    return module[exportName];
-  }
-
-  return __webpack_require__(863)(`./${bundleId}.entry.js`).then(importedModule => {
-    {
-      cmpModules.set(bundleId, importedModule);
-    }
-    return importedModule[exportName];
-  }, consoleError);
-};
-
-const styles = new Map();
-const modeResolutionChain = [];
-const queueDomReads = [];
-const queueDomWrites = [];
-
-const queueTask = (queue, write) => cb => {
-  queue.push(cb);
-
-  if (!queuePending) {
-    queuePending = true;
-
-    if (write && plt.$flags$ & 4
-    /* queueSync */
-    ) {
-      nextTick(flush);
-    } else {
-      plt.raf(flush);
-    }
-  }
-};
-
-const consume = queue => {
-  for (let i = 0; i < queue.length; i++) {
-    try {
-      queue[i](performance.now());
-    } catch (e) {
-      consoleError(e);
-    }
-  }
-
-  queue.length = 0;
-};
-
-const flush = () => {
-  // always force a bunch of medium callbacks to run, but still have
-  // a throttle on how many can run in a certain time
-  // DOM READS!!!
-  consume(queueDomReads); // DOM WRITES!!!
-
-  {
-    consume(queueDomWrites);
-
-    if (queuePending = queueDomReads.length > 0) {
-      // still more to do yet, but we've run out of time
-      // let's let this thing cool off and try again in the next tick
-      plt.raf(flush);
-    }
-  }
-};
-
-const nextTick = /*@__PURE__*/cb => promiseResolve().then(cb);
-
-const readTask = /*@__PURE__*/queueTask(queueDomReads, false);
-const writeTask = /*@__PURE__*/queueTask(queueDomWrites, true);
-const Build = {
-  isDev: false,
-  isBrowser: true,
-  isServer: false,
-  isTesting: false
-};
-
-
-/***/ }),
-
-/***/ 8773:
-/*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-b5382161.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-2b839939.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -15212,9 +12458,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var _hardware_back_button_490df115_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hardware-back-button-490df115.js */ 159);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
-/* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
+/* harmony import */ var _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ionic-global-c74e4951.js */ 5823);
+/* harmony import */ var _animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./animation-4ff3f603.js */ 5933);
 
 
 /*!
@@ -15240,7 +12486,7 @@ const baseAnimation = isIos => {
    * from the same exit point. When they return, use the deceleration curve. On mobile,
    * this transition typically occurs over 300ms" -- MD Motion Guide
    */
-  return (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)().duration(isIos ? 400 : 300);
+  return (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__.c)().duration(isIos ? 400 : 300);
 };
 /**
  * Menu Overlay Type
@@ -15253,8 +12499,8 @@ const menuOverlayAnimation = menu => {
   let closedX;
   let openedX;
   const width = menu.width + 8;
-  const menuAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)();
-  const backdropAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)();
+  const menuAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__.c)();
+  const backdropAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__.c)();
 
   if (menu.isEndSide) {
     // right side
@@ -15267,7 +12513,7 @@ const menuOverlayAnimation = menu => {
   }
 
   menuAnimation.addElement(menu.menuInnerEl).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
-  const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
+  const mode = (0,_ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
   const isIos = mode === 'ios';
   const opacity = isIos ? 0.2 : 0.25;
   backdropAnimation.addElement(menu.backdropEl).fromTo('opacity', 0.01, opacity);
@@ -15283,7 +12529,7 @@ const menuOverlayAnimation = menu => {
 const menuPushAnimation = menu => {
   let contentOpenedX;
   let menuClosedX;
-  const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
+  const mode = (0,_ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
   const width = menu.width;
 
   if (menu.isEndSide) {
@@ -15294,9 +12540,9 @@ const menuPushAnimation = menu => {
     menuClosedX = -width + 'px';
   }
 
-  const menuAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.menuInnerEl).fromTo('transform', `translateX(${menuClosedX})`, 'translateX(0px)');
-  const contentAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.contentEl).fromTo('transform', 'translateX(0px)', `translateX(${contentOpenedX})`);
-  const backdropAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.backdropEl).fromTo('opacity', 0.01, 0.32);
+  const menuAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.menuInnerEl).fromTo('transform', `translateX(${menuClosedX})`, 'translateX(0px)');
+  const contentAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.contentEl).fromTo('transform', 'translateX(0px)', `translateX(${contentOpenedX})`);
+  const backdropAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.backdropEl).fromTo('opacity', 0.01, 0.32);
   return baseAnimation(mode === 'ios').addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
 };
 /**
@@ -15307,9 +12553,9 @@ const menuPushAnimation = menu => {
 
 
 const menuRevealAnimation = menu => {
-  const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
+  const mode = (0,_ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
   const openedX = menu.width * (menu.isEndSide ? -1 : 1) + 'px';
-  const contentOpen = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.contentEl) // REVIEW
+  const contentOpen = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.contentEl) // REVIEW
   .fromTo('transform', 'translateX(0px)', `translateX(${openedX})`);
   return baseAnimation(mode === 'ios').addAnimation(contentOpen);
 };
@@ -15568,7 +12814,7 @@ const createMenuController = () => {
   }();
 
   const _createAnimation = (type, menuCmp) => {
-    const animationBuilder = menuAnimations.get(type);
+    const animationBuilder = menuAnimations.get(type); // TODO(FW-2832): type
 
     if (!animationBuilder) {
       throw new Error('animation not registered');
@@ -15601,7 +12847,7 @@ const createMenuController = () => {
   };
 
   const waitUntilReady = () => {
-    return Promise.all(Array.from(document.querySelectorAll('ion-menu')).map(menu => new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__.c)(menu, resolve))));
+    return Promise.all(Array.from(document.querySelectorAll('ion-menu')).map(menu => new Promise(resolve => (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_2__.c)(menu, resolve))));
   };
 
   registerAnimation('reveal', menuRevealAnimation);
@@ -15610,6 +12856,7 @@ const createMenuController = () => {
 
   if (typeof document !== 'undefined') {
     document.addEventListener('ionBackButton', ev => {
+      // TODO(FW-2832): type
       const openMenu = _getOpenSync();
 
       if (openMenu) {
@@ -15647,9 +12894,3234 @@ const menuController = /*@__PURE__*/createMenuController();
 
 /***/ }),
 
-/***/ 1652:
+/***/ 2286:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-dff497fb.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-33ffec25.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "w": () => (/* binding */ win)
+/* harmony export */ });
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+/**
+ * When accessing the window, it is important
+ * to account for SSR applications where the
+ * window is not available. Code that accesses
+ * window when it is not available will crash.
+ * Even checking if `window === undefined` will cause
+ * apps to crash in SSR.
+ *
+ * Use win below to access an SSR-safe version
+ * of the window.
+ *
+ * Example 1:
+ * Before:
+ * if (window.innerWidth > 768) { ... }
+ *
+ * After:
+ * import { win } from 'path/to/this/file';
+ * if (win?.innerWidth > 768) { ... }
+ *
+ * Note: Code inside of this if-block will
+ * not run in an SSR environment.
+ */
+const win = typeof window !== 'undefined' ? window : undefined;
+
+
+
+
+/***/ }),
+
+/***/ 6366:
+/*!*************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/index-422b6e83.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GESTURE_CONTROLLER": () => (/* reexport safe */ _gesture_controller_17060b7c_js__WEBPACK_IMPORTED_MODULE_0__.G),
+/* harmony export */   "createGesture": () => (/* binding */ createGesture)
+/* harmony export */ });
+/* harmony import */ var _gesture_controller_17060b7c_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gesture-controller-17060b7c.js */ 6379);
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+
+
+
+const addEventListener = (el, // TODO(FW-2832): type
+eventName, callback, opts) => {
+  // use event listener options when supported
+  // otherwise it's just a boolean for the "capture" arg
+  const listenerOpts = supportsPassive(el)
+    ? {
+      capture: !!opts.capture,
+      passive: !!opts.passive,
+    }
+    : !!opts.capture;
+  let add;
+  let remove;
+  if (el['__zone_symbol__addEventListener']) {
+    add = '__zone_symbol__addEventListener';
+    remove = '__zone_symbol__removeEventListener';
+  }
+  else {
+    add = 'addEventListener';
+    remove = 'removeEventListener';
+  }
+  el[add](eventName, callback, listenerOpts);
+  return () => {
+    el[remove](eventName, callback, listenerOpts);
+  };
+};
+const supportsPassive = (node) => {
+  if (_sPassive === undefined) {
+    try {
+      const opts = Object.defineProperty({}, 'passive', {
+        get: () => {
+          _sPassive = true;
+        },
+      });
+      node.addEventListener('optsTest', () => {
+        return;
+      }, opts);
+    }
+    catch (e) {
+      _sPassive = false;
+    }
+  }
+  return !!_sPassive;
+};
+let _sPassive;
+
+const MOUSE_WAIT = 2000;
+// TODO(FW-2832): types
+const createPointerEvents = (el, pointerDown, pointerMove, pointerUp, options) => {
+  let rmTouchStart;
+  let rmTouchMove;
+  let rmTouchEnd;
+  let rmTouchCancel;
+  let rmMouseStart;
+  let rmMouseMove;
+  let rmMouseUp;
+  let lastTouchEvent = 0;
+  const handleTouchStart = (ev) => {
+    lastTouchEvent = Date.now() + MOUSE_WAIT;
+    if (!pointerDown(ev)) {
+      return;
+    }
+    if (!rmTouchMove && pointerMove) {
+      rmTouchMove = addEventListener(el, 'touchmove', pointerMove, options);
+    }
+    /**
+     * Events are dispatched on the element that is tapped and bubble up to
+     * the reference element in the gesture. In the event that the element this
+     * event was first dispatched on is removed from the DOM, the event will no
+     * longer bubble up to our reference element. This leaves the gesture in an
+     * unusable state. To account for this, the touchend and touchcancel listeners
+     * should be added to the event target so that they still fire even if the target
+     * is removed from the DOM.
+     */
+    if (!rmTouchEnd) {
+      rmTouchEnd = addEventListener(ev.target, 'touchend', handleTouchEnd, options);
+    }
+    if (!rmTouchCancel) {
+      rmTouchCancel = addEventListener(ev.target, 'touchcancel', handleTouchEnd, options);
+    }
+  };
+  const handleMouseDown = (ev) => {
+    if (lastTouchEvent > Date.now()) {
+      return;
+    }
+    if (!pointerDown(ev)) {
+      return;
+    }
+    if (!rmMouseMove && pointerMove) {
+      rmMouseMove = addEventListener(getDocument(el), 'mousemove', pointerMove, options);
+    }
+    if (!rmMouseUp) {
+      rmMouseUp = addEventListener(getDocument(el), 'mouseup', handleMouseUp, options);
+    }
+  };
+  const handleTouchEnd = (ev) => {
+    stopTouch();
+    if (pointerUp) {
+      pointerUp(ev);
+    }
+  };
+  const handleMouseUp = (ev) => {
+    stopMouse();
+    if (pointerUp) {
+      pointerUp(ev);
+    }
+  };
+  const stopTouch = () => {
+    if (rmTouchMove) {
+      rmTouchMove();
+    }
+    if (rmTouchEnd) {
+      rmTouchEnd();
+    }
+    if (rmTouchCancel) {
+      rmTouchCancel();
+    }
+    rmTouchMove = rmTouchEnd = rmTouchCancel = undefined;
+  };
+  const stopMouse = () => {
+    if (rmMouseMove) {
+      rmMouseMove();
+    }
+    if (rmMouseUp) {
+      rmMouseUp();
+    }
+    rmMouseMove = rmMouseUp = undefined;
+  };
+  const stop = () => {
+    stopTouch();
+    stopMouse();
+  };
+  const enable = (isEnabled = true) => {
+    if (!isEnabled) {
+      if (rmTouchStart) {
+        rmTouchStart();
+      }
+      if (rmMouseStart) {
+        rmMouseStart();
+      }
+      rmTouchStart = rmMouseStart = undefined;
+      stop();
+    }
+    else {
+      if (!rmTouchStart) {
+        rmTouchStart = addEventListener(el, 'touchstart', handleTouchStart, options);
+      }
+      if (!rmMouseStart) {
+        rmMouseStart = addEventListener(el, 'mousedown', handleMouseDown, options);
+      }
+    }
+  };
+  const destroy = () => {
+    enable(false);
+    pointerUp = pointerMove = pointerDown = undefined;
+  };
+  return {
+    enable,
+    stop,
+    destroy,
+  };
+};
+const getDocument = (node) => {
+  return node instanceof Document ? node : node.ownerDocument;
+};
+
+const createPanRecognizer = (direction, thresh, maxAngle) => {
+  const radians = maxAngle * (Math.PI / 180);
+  const isDirX = direction === 'x';
+  const maxCosine = Math.cos(radians);
+  const threshold = thresh * thresh;
+  let startX = 0;
+  let startY = 0;
+  let dirty = false;
+  let isPan = 0;
+  return {
+    start(x, y) {
+      startX = x;
+      startY = y;
+      isPan = 0;
+      dirty = true;
+    },
+    detect(x, y) {
+      if (!dirty) {
+        return false;
+      }
+      const deltaX = x - startX;
+      const deltaY = y - startY;
+      const distance = deltaX * deltaX + deltaY * deltaY;
+      if (distance < threshold) {
+        return false;
+      }
+      const hypotenuse = Math.sqrt(distance);
+      const cosine = (isDirX ? deltaX : deltaY) / hypotenuse;
+      if (cosine > maxCosine) {
+        isPan = 1;
+      }
+      else if (cosine < -maxCosine) {
+        isPan = -1;
+      }
+      else {
+        isPan = 0;
+      }
+      dirty = false;
+      return true;
+    },
+    isGesture() {
+      return isPan !== 0;
+    },
+    getDirection() {
+      return isPan;
+    },
+  };
+};
+
+// TODO(FW-2832): types
+const createGesture = (config) => {
+  let hasCapturedPan = false;
+  let hasStartedPan = false;
+  let hasFiredStart = true;
+  let isMoveQueued = false;
+  const finalConfig = Object.assign({ disableScroll: false, direction: 'x', gesturePriority: 0, passive: true, maxAngle: 40, threshold: 10 }, config);
+  const canStart = finalConfig.canStart;
+  const onWillStart = finalConfig.onWillStart;
+  const onStart = finalConfig.onStart;
+  const onEnd = finalConfig.onEnd;
+  const notCaptured = finalConfig.notCaptured;
+  const onMove = finalConfig.onMove;
+  const threshold = finalConfig.threshold;
+  const passive = finalConfig.passive;
+  const blurOnStart = finalConfig.blurOnStart;
+  const detail = {
+    type: 'pan',
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    currentX: 0,
+    currentY: 0,
+    velocityX: 0,
+    velocityY: 0,
+    deltaX: 0,
+    deltaY: 0,
+    currentTime: 0,
+    event: undefined,
+    data: undefined,
+  };
+  const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
+  const gesture = _gesture_controller_17060b7c_js__WEBPACK_IMPORTED_MODULE_0__.G.createGesture({
+    name: config.gestureName,
+    priority: config.gesturePriority,
+    disableScroll: config.disableScroll,
+  });
+  const pointerDown = (ev) => {
+    const timeStamp = now(ev);
+    if (hasStartedPan || !hasFiredStart) {
+      return false;
+    }
+    updateDetail(ev, detail);
+    detail.startX = detail.currentX;
+    detail.startY = detail.currentY;
+    detail.startTime = detail.currentTime = timeStamp;
+    detail.velocityX = detail.velocityY = detail.deltaX = detail.deltaY = 0;
+    detail.event = ev;
+    // Check if gesture can start
+    if (canStart && canStart(detail) === false) {
+      return false;
+    }
+    // Release fallback
+    gesture.release();
+    // Start gesture
+    if (!gesture.start()) {
+      return false;
+    }
+    hasStartedPan = true;
+    if (threshold === 0) {
+      return tryToCapturePan();
+    }
+    pan.start(detail.startX, detail.startY);
+    return true;
+  };
+  const pointerMove = (ev) => {
+    // fast path, if gesture is currently captured
+    // do minimum job to get user-land even dispatched
+    if (hasCapturedPan) {
+      if (!isMoveQueued && hasFiredStart) {
+        isMoveQueued = true;
+        calcGestureData(detail, ev);
+        requestAnimationFrame(fireOnMove);
+      }
+      return;
+    }
+    // gesture is currently being detected
+    calcGestureData(detail, ev);
+    if (pan.detect(detail.currentX, detail.currentY)) {
+      if (!pan.isGesture() || !tryToCapturePan()) {
+        abortGesture();
+      }
+    }
+  };
+  const fireOnMove = () => {
+    // Since fireOnMove is called inside a RAF, onEnd() might be called,
+    // we must double check hasCapturedPan
+    if (!hasCapturedPan) {
+      return;
+    }
+    isMoveQueued = false;
+    if (onMove) {
+      onMove(detail);
+    }
+  };
+  const tryToCapturePan = () => {
+    if (!gesture.capture()) {
+      return false;
+    }
+    hasCapturedPan = true;
+    hasFiredStart = false;
+    // reset start position since the real user-land event starts here
+    // If the pan detector threshold is big, not resetting the start position
+    // will cause a jump in the animation equal to the detector threshold.
+    // the array of positions used to calculate the gesture velocity does not
+    // need to be cleaned, more points in the positions array always results in a
+    // more accurate value of the velocity.
+    detail.startX = detail.currentX;
+    detail.startY = detail.currentY;
+    detail.startTime = detail.currentTime;
+    if (onWillStart) {
+      onWillStart(detail).then(fireOnStart);
+    }
+    else {
+      fireOnStart();
+    }
+    return true;
+  };
+  const blurActiveElement = () => {
+    if (typeof document !== 'undefined') {
+      const activeElement = document.activeElement;
+      if (activeElement === null || activeElement === void 0 ? void 0 : activeElement.blur) {
+        activeElement.blur();
+      }
+    }
+  };
+  const fireOnStart = () => {
+    if (blurOnStart) {
+      blurActiveElement();
+    }
+    if (onStart) {
+      onStart(detail);
+    }
+    hasFiredStart = true;
+  };
+  const reset = () => {
+    hasCapturedPan = false;
+    hasStartedPan = false;
+    isMoveQueued = false;
+    hasFiredStart = true;
+    gesture.release();
+  };
+  // END *************************
+  const pointerUp = (ev) => {
+    const tmpHasCaptured = hasCapturedPan;
+    const tmpHasFiredStart = hasFiredStart;
+    reset();
+    if (!tmpHasFiredStart) {
+      return;
+    }
+    calcGestureData(detail, ev);
+    // Try to capture press
+    if (tmpHasCaptured) {
+      if (onEnd) {
+        onEnd(detail);
+      }
+      return;
+    }
+    // Not captured any event
+    if (notCaptured) {
+      notCaptured(detail);
+    }
+  };
+  const pointerEvents = createPointerEvents(finalConfig.el, pointerDown, pointerMove, pointerUp, {
+    capture: false,
+    passive,
+  });
+  const abortGesture = () => {
+    reset();
+    pointerEvents.stop();
+    if (notCaptured) {
+      notCaptured(detail);
+    }
+  };
+  return {
+    enable(enable = true) {
+      if (!enable) {
+        if (hasCapturedPan) {
+          pointerUp(undefined);
+        }
+        reset();
+      }
+      pointerEvents.enable(enable);
+    },
+    destroy() {
+      gesture.destroy();
+      pointerEvents.destroy();
+    },
+  };
+};
+const calcGestureData = (detail, ev) => {
+  if (!ev) {
+    return;
+  }
+  const prevX = detail.currentX;
+  const prevY = detail.currentY;
+  const prevT = detail.currentTime;
+  updateDetail(ev, detail);
+  const currentX = detail.currentX;
+  const currentY = detail.currentY;
+  const timestamp = (detail.currentTime = now(ev));
+  const timeDelta = timestamp - prevT;
+  if (timeDelta > 0 && timeDelta < 100) {
+    const velocityX = (currentX - prevX) / timeDelta;
+    const velocityY = (currentY - prevY) / timeDelta;
+    detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
+    detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
+  }
+  detail.deltaX = currentX - detail.startX;
+  detail.deltaY = currentY - detail.startY;
+  detail.event = ev;
+};
+const updateDetail = (ev, detail) => {
+  // get X coordinates for either a mouse click
+  // or a touch depending on the given event
+  let x = 0;
+  let y = 0;
+  if (ev) {
+    const changedTouches = ev.changedTouches;
+    if (changedTouches && changedTouches.length > 0) {
+      const touch = changedTouches[0];
+      x = touch.clientX;
+      y = touch.clientY;
+    }
+    else if (ev.pageX !== undefined) {
+      x = ev.pageX;
+      y = ev.pageY;
+    }
+  }
+  detail.currentX = x;
+  detail.currentY = y;
+};
+const now = (ev) => {
+  return ev.timeStamp || Date.now();
+};
+
+
+
+
+/***/ }),
+
+/***/ 1559:
+/*!*************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/index-8e692445.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "B": () => (/* binding */ Build),
+/* harmony export */   "H": () => (/* binding */ Host),
+/* harmony export */   "N": () => (/* binding */ NAMESPACE),
+/* harmony export */   "a": () => (/* binding */ setMode),
+/* harmony export */   "b": () => (/* binding */ bootstrapLazy),
+/* harmony export */   "c": () => (/* binding */ writeTask),
+/* harmony export */   "d": () => (/* binding */ doc),
+/* harmony export */   "e": () => (/* binding */ createEvent),
+/* harmony export */   "f": () => (/* binding */ readTask),
+/* harmony export */   "g": () => (/* binding */ getMode),
+/* harmony export */   "h": () => (/* binding */ h),
+/* harmony export */   "i": () => (/* binding */ getElement),
+/* harmony export */   "j": () => (/* binding */ forceUpdate),
+/* harmony export */   "k": () => (/* binding */ getAssetPath),
+/* harmony export */   "p": () => (/* binding */ promiseResolve),
+/* harmony export */   "r": () => (/* binding */ registerInstance),
+/* harmony export */   "s": () => (/* binding */ setPlatformHelpers),
+/* harmony export */   "w": () => (/* binding */ win)
+/* harmony export */ });
+/* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+
+
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+const NAMESPACE = 'ionic';
+let scopeId;
+let contentRef;
+let hostTagName;
+let useNativeShadowDom = false;
+let checkSlotFallbackVisibility = false;
+let checkSlotRelocate = false;
+let isSvgMode = false;
+let queuePending = false;
+const win = typeof window !== 'undefined' ? window : {};
+const doc = win.document || {
+  head: {}
+};
+const plt = {
+  $flags$: 0,
+  $resourcesUrl$: '',
+  jmp: h => h(),
+  raf: h => requestAnimationFrame(h),
+  ael: (el, eventName, listener, opts) => el.addEventListener(eventName, listener, opts),
+  rel: (el, eventName, listener, opts) => el.removeEventListener(eventName, listener, opts),
+  ce: (eventName, opts) => new CustomEvent(eventName, opts)
+};
+
+const setPlatformHelpers = helpers => {
+  Object.assign(plt, helpers);
+};
+
+const supportsShadow = true;
+
+const promiseResolve = v => Promise.resolve(v);
+
+const supportsConstructableStylesheets = /*@__PURE__*/(() => {
+  try {
+    new CSSStyleSheet();
+    return typeof new CSSStyleSheet().replaceSync === 'function';
+  } catch (e) {}
+
+  return false;
+})();
+
+const addHostEventListeners = (elm, hostRef, listeners, attachParentListeners) => {
+  if (listeners) {
+    listeners.map(([flags, name, method]) => {
+      const target = getHostListenerTarget(elm, flags);
+      const handler = hostListenerProxy(hostRef, method);
+      const opts = hostListenerOpts(flags);
+      plt.ael(target, name, handler, opts);
+      (hostRef.$rmListeners$ = hostRef.$rmListeners$ || []).push(() => plt.rel(target, name, handler, opts));
+    });
+  }
+};
+
+const hostListenerProxy = (hostRef, methodName) => ev => {
+  try {
+    {
+      if (hostRef.$flags$ & 256
+      /* HOST_FLAGS.isListenReady */
+      ) {
+        // instance is ready, let's call it's member method for this event
+        hostRef.$lazyInstance$[methodName](ev);
+      } else {
+        (hostRef.$queuedListeners$ = hostRef.$queuedListeners$ || []).push([methodName, ev]);
+      }
+    }
+  } catch (e) {
+    consoleError(e);
+  }
+};
+
+const getHostListenerTarget = (elm, flags) => {
+  if (flags & 4
+  /* LISTENER_FLAGS.TargetDocument */
+  ) return doc;
+  if (flags & 8
+  /* LISTENER_FLAGS.TargetWindow */
+  ) return win;
+  if (flags & 16
+  /* LISTENER_FLAGS.TargetBody */
+  ) return doc.body;
+  return elm;
+}; // prettier-ignore
+
+
+const hostListenerOpts = flags => (flags & 2
+/* LISTENER_FLAGS.Capture */
+) !== 0;
+
+const CONTENT_REF_ID = 'r';
+const ORG_LOCATION_ID = 'o';
+const SLOT_NODE_ID = 's';
+const TEXT_NODE_ID = 't';
+const HYDRATE_ID = 's-id';
+const HYDRATED_STYLE_ID = 'sty-id';
+const HYDRATE_CHILD_ID = 'c-id';
+const HYDRATED_CSS = '{visibility:hidden}.hydrated{visibility:inherit}';
+const XLINK_NS = 'http://www.w3.org/1999/xlink';
+
+const createTime = (fnName, tagName = '') => {
+  {
+    return () => {
+      return;
+    };
+  }
+};
+
+const uniqueTime = (key, measureText) => {
+  {
+    return () => {
+      return;
+    };
+  }
+};
+
+const rootAppliedStyles = /*@__PURE__*/new WeakMap();
+
+const registerStyle = (scopeId, cssText, allowCS) => {
+  let style = styles.get(scopeId);
+
+  if (supportsConstructableStylesheets && allowCS) {
+    style = style || new CSSStyleSheet();
+
+    if (typeof style === 'string') {
+      style = cssText;
+    } else {
+      style.replaceSync(cssText);
+    }
+  } else {
+    style = cssText;
+  }
+
+  styles.set(scopeId, style);
+};
+
+const addStyle = (styleContainerNode, cmpMeta, mode, hostElm) => {
+  let scopeId = getScopeId(cmpMeta, mode);
+  const style = styles.get(scopeId); // if an element is NOT connected then getRootNode() will return the wrong root node
+  // so the fallback is to always use the document for the root node in those cases
+
+  styleContainerNode = styleContainerNode.nodeType === 11
+  /* NODE_TYPE.DocumentFragment */
+  ? styleContainerNode : doc;
+
+  if (style) {
+    if (typeof style === 'string') {
+      styleContainerNode = styleContainerNode.head || styleContainerNode;
+      let appliedStyles = rootAppliedStyles.get(styleContainerNode);
+      let styleElm;
+
+      if (!appliedStyles) {
+        rootAppliedStyles.set(styleContainerNode, appliedStyles = new Set());
+      }
+
+      if (!appliedStyles.has(scopeId)) {
+        if (styleContainerNode.host && (styleElm = styleContainerNode.querySelector(`[${HYDRATED_STYLE_ID}="${scopeId}"]`))) {
+          // This is only happening on native shadow-dom, do not needs CSS var shim
+          styleElm.innerHTML = style;
+        } else {
+          {
+            styleElm = doc.createElement('style');
+            styleElm.innerHTML = style;
+          }
+          styleContainerNode.insertBefore(styleElm, styleContainerNode.querySelector('link'));
+        }
+
+        if (appliedStyles) {
+          appliedStyles.add(scopeId);
+        }
+      }
+    } else if (!styleContainerNode.adoptedStyleSheets.includes(style)) {
+      styleContainerNode.adoptedStyleSheets = [...styleContainerNode.adoptedStyleSheets, style];
+    }
+  }
+
+  return scopeId;
+};
+
+const attachStyles = hostRef => {
+  const cmpMeta = hostRef.$cmpMeta$;
+  const elm = hostRef.$hostElement$;
+  const flags = cmpMeta.$flags$;
+  const endAttachStyles = createTime('attachStyles', cmpMeta.$tagName$);
+  const scopeId = addStyle(elm.shadowRoot ? elm.shadowRoot : elm.getRootNode(), cmpMeta, hostRef.$modeName$);
+
+  if (flags & 10
+  /* CMP_FLAGS.needsScopedEncapsulation */
+  ) {
+    // only required when we're NOT using native shadow dom (slot)
+    // or this browser doesn't support native shadow dom
+    // and this host element was NOT created with SSR
+    // let's pick out the inner content for slot projection
+    // create a node to represent where the original
+    // content was first placed, which is useful later on
+    // DOM WRITE!!
+    elm['s-sc'] = scopeId;
+    elm.classList.add(scopeId + '-h');
+
+    if (flags & 2
+    /* CMP_FLAGS.scopedCssEncapsulation */
+    ) {
+      elm.classList.add(scopeId + '-s');
+    }
+  }
+
+  endAttachStyles();
+};
+
+const getScopeId = (cmp, mode) => 'sc-' + (mode && cmp.$flags$ & 32
+/* CMP_FLAGS.hasMode */
+? cmp.$tagName$ + '-' + mode : cmp.$tagName$);
+
+const convertScopedToShadow = css => css.replace(/\/\*!@([^\/]+)\*\/[^\{]+\{/g, '$1{'); // Private
+
+
+const computeMode = elm => modeResolutionChain.map(h => h(elm)).find(m => !!m); // Public
+
+
+const setMode = handler => modeResolutionChain.push(handler);
+
+const getMode = ref => getHostRef(ref).$modeName$;
+/**
+ * Default style mode id
+ */
+
+/**
+ * Reusable empty obj/array
+ * Don't add values to these!!
+ */
+
+
+const EMPTY_OBJ = {};
+/**
+ * Namespaces
+ */
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const HTML_NS = 'http://www.w3.org/1999/xhtml';
+
+const isDef = v => v != null;
+
+const isComplexType = o => {
+  // https://jsperf.com/typeof-fn-object/5
+  o = typeof o;
+  return o === 'object' || o === 'function';
+};
+/**
+ * Production h() function based on Preact by
+ * Jason Miller (@developit)
+ * Licensed under the MIT License
+ * https://github.com/developit/preact/blob/master/LICENSE
+ *
+ * Modified for Stencil's compiler and vdom
+ */
+// const stack: any[] = [];
+// export function h(nodeName: string | d.FunctionalComponent, vnodeData: d.PropsType, child?: d.ChildType): d.VNode;
+// export function h(nodeName: string | d.FunctionalComponent, vnodeData: d.PropsType, ...children: d.ChildType[]): d.VNode;
+
+
+const h = (nodeName, vnodeData, ...children) => {
+  let child = null;
+  let key = null;
+  let slotName = null;
+  let simple = false;
+  let lastSimple = false;
+  const vNodeChildren = [];
+
+  const walk = c => {
+    for (let i = 0; i < c.length; i++) {
+      child = c[i];
+
+      if (Array.isArray(child)) {
+        walk(child);
+      } else if (child != null && typeof child !== 'boolean') {
+        if (simple = typeof nodeName !== 'function' && !isComplexType(child)) {
+          child = String(child);
+        }
+
+        if (simple && lastSimple) {
+          // If the previous child was simple (string), we merge both
+          vNodeChildren[vNodeChildren.length - 1].$text$ += child;
+        } else {
+          // Append a new vNode, if it's text, we create a text vNode
+          vNodeChildren.push(simple ? newVNode(null, child) : child);
+        }
+
+        lastSimple = simple;
+      }
+    }
+  };
+
+  walk(children);
+
+  if (vnodeData) {
+    // normalize class / classname attributes
+    if (vnodeData.key) {
+      key = vnodeData.key;
+    }
+
+    if (vnodeData.name) {
+      slotName = vnodeData.name;
+    }
+
+    {
+      const classData = vnodeData.className || vnodeData.class;
+
+      if (classData) {
+        vnodeData.class = typeof classData !== 'object' ? classData : Object.keys(classData).filter(k => classData[k]).join(' ');
+      }
+    }
+  }
+
+  if (typeof nodeName === 'function') {
+    // nodeName is a functional component
+    return nodeName(vnodeData === null ? {} : vnodeData, vNodeChildren, vdomFnUtils);
+  }
+
+  const vnode = newVNode(nodeName, null);
+  vnode.$attrs$ = vnodeData;
+
+  if (vNodeChildren.length > 0) {
+    vnode.$children$ = vNodeChildren;
+  }
+
+  {
+    vnode.$key$ = key;
+  }
+  {
+    vnode.$name$ = slotName;
+  }
+  return vnode;
+};
+
+const newVNode = (tag, text) => {
+  const vnode = {
+    $flags$: 0,
+    $tag$: tag,
+    $text$: text,
+    $elm$: null,
+    $children$: null
+  };
+  {
+    vnode.$attrs$ = null;
+  }
+  {
+    vnode.$key$ = null;
+  }
+  {
+    vnode.$name$ = null;
+  }
+  return vnode;
+};
+
+const Host = {};
+
+const isHost = node => node && node.$tag$ === Host;
+
+const vdomFnUtils = {
+  forEach: (children, cb) => children.map(convertToPublic).forEach(cb),
+  map: (children, cb) => children.map(convertToPublic).map(cb).map(convertToPrivate)
+};
+
+const convertToPublic = node => ({
+  vattrs: node.$attrs$,
+  vchildren: node.$children$,
+  vkey: node.$key$,
+  vname: node.$name$,
+  vtag: node.$tag$,
+  vtext: node.$text$
+});
+
+const convertToPrivate = node => {
+  if (typeof node.vtag === 'function') {
+    const vnodeData = Object.assign({}, node.vattrs);
+
+    if (node.vkey) {
+      vnodeData.key = node.vkey;
+    }
+
+    if (node.vname) {
+      vnodeData.name = node.vname;
+    }
+
+    return h(node.vtag, vnodeData, ...(node.vchildren || []));
+  }
+
+  const vnode = newVNode(node.vtag, node.vtext);
+  vnode.$attrs$ = node.vattrs;
+  vnode.$children$ = node.vchildren;
+  vnode.$key$ = node.vkey;
+  vnode.$name$ = node.vname;
+  return vnode;
+};
+/**
+ * Production setAccessor() function based on Preact by
+ * Jason Miller (@developit)
+ * Licensed under the MIT License
+ * https://github.com/developit/preact/blob/master/LICENSE
+ *
+ * Modified for Stencil's compiler and vdom
+ */
+
+
+const setAccessor = (elm, memberName, oldValue, newValue, isSvg, flags) => {
+  if (oldValue !== newValue) {
+    let isProp = isMemberInElement(elm, memberName);
+    let ln = memberName.toLowerCase();
+
+    if (memberName === 'class') {
+      const classList = elm.classList;
+      const oldClasses = parseClassList(oldValue);
+      const newClasses = parseClassList(newValue);
+      classList.remove(...oldClasses.filter(c => c && !newClasses.includes(c)));
+      classList.add(...newClasses.filter(c => c && !oldClasses.includes(c)));
+    } else if (memberName === 'style') {
+      // update style attribute, css properties and values
+      {
+        for (const prop in oldValue) {
+          if (!newValue || newValue[prop] == null) {
+            if (prop.includes('-')) {
+              elm.style.removeProperty(prop);
+            } else {
+              elm.style[prop] = '';
+            }
+          }
+        }
+      }
+
+      for (const prop in newValue) {
+        if (!oldValue || newValue[prop] !== oldValue[prop]) {
+          if (prop.includes('-')) {
+            elm.style.setProperty(prop, newValue[prop]);
+          } else {
+            elm.style[prop] = newValue[prop];
+          }
+        }
+      }
+    } else if (memberName === 'key') ;else if (memberName === 'ref') {
+      // minifier will clean this up
+      if (newValue) {
+        newValue(elm);
+      }
+    } else if (!isProp && memberName[0] === 'o' && memberName[1] === 'n') {
+      // Event Handlers
+      // so if the member name starts with "on" and the 3rd characters is
+      // a capital letter, and it's not already a member on the element,
+      // then we're assuming it's an event listener
+      if (memberName[2] === '-') {
+        // on- prefixed events
+        // allows to be explicit about the dom event to listen without any magic
+        // under the hood:
+        // <my-cmp on-click> // listens for "click"
+        // <my-cmp on-Click> // listens for "Click"
+        // <my-cmp on-ionChange> // listens for "ionChange"
+        // <my-cmp on-EVENTS> // listens for "EVENTS"
+        memberName = memberName.slice(3);
+      } else if (isMemberInElement(win, ln)) {
+        // standard event
+        // the JSX attribute could have been "onMouseOver" and the
+        // member name "onmouseover" is on the window's prototype
+        // so let's add the listener "mouseover", which is all lowercased
+        memberName = ln.slice(2);
+      } else {
+        // custom event
+        // the JSX attribute could have been "onMyCustomEvent"
+        // so let's trim off the "on" prefix and lowercase the first character
+        // and add the listener "myCustomEvent"
+        // except for the first character, we keep the event name case
+        memberName = ln[2] + memberName.slice(3);
+      }
+
+      if (oldValue) {
+        plt.rel(elm, memberName, oldValue, false);
+      }
+
+      if (newValue) {
+        plt.ael(elm, memberName, newValue, false);
+      }
+    } else {
+      // Set property if it exists and it's not a SVG
+      const isComplex = isComplexType(newValue);
+
+      if ((isProp || isComplex && newValue !== null) && !isSvg) {
+        try {
+          if (!elm.tagName.includes('-')) {
+            const n = newValue == null ? '' : newValue; // Workaround for Safari, moving the <input> caret when re-assigning the same valued
+
+            if (memberName === 'list') {
+              isProp = false;
+            } else if (oldValue == null || elm[memberName] != n) {
+              elm[memberName] = n;
+            }
+          } else {
+            elm[memberName] = newValue;
+          }
+        } catch (e) {}
+      }
+      /**
+       * Need to manually update attribute if:
+       * - memberName is not an attribute
+       * - if we are rendering the host element in order to reflect attribute
+       * - if it's a SVG, since properties might not work in <svg>
+       * - if the newValue is null/undefined or 'false'.
+       */
+
+
+      let xlink = false;
+      {
+        if (ln !== (ln = ln.replace(/^xlink\:?/, ''))) {
+          memberName = ln;
+          xlink = true;
+        }
+      }
+
+      if (newValue == null || newValue === false) {
+        if (newValue !== false || elm.getAttribute(memberName) === '') {
+          if (xlink) {
+            elm.removeAttributeNS(XLINK_NS, memberName);
+          } else {
+            elm.removeAttribute(memberName);
+          }
+        }
+      } else if ((!isProp || flags & 4
+      /* VNODE_FLAGS.isHost */
+      || isSvg) && !isComplex) {
+        newValue = newValue === true ? '' : newValue;
+
+        if (xlink) {
+          elm.setAttributeNS(XLINK_NS, memberName, newValue);
+        } else {
+          elm.setAttribute(memberName, newValue);
+        }
+      }
+    }
+  }
+};
+
+const parseClassListRegex = /\s/;
+
+const parseClassList = value => !value ? [] : value.split(parseClassListRegex);
+
+const updateElement = (oldVnode, newVnode, isSvgMode, memberName) => {
+  // if the element passed in is a shadow root, which is a document fragment
+  // then we want to be adding attrs/props to the shadow root's "host" element
+  // if it's not a shadow root, then we add attrs/props to the same element
+  const elm = newVnode.$elm$.nodeType === 11
+  /* NODE_TYPE.DocumentFragment */
+  && newVnode.$elm$.host ? newVnode.$elm$.host : newVnode.$elm$;
+  const oldVnodeAttrs = oldVnode && oldVnode.$attrs$ || EMPTY_OBJ;
+  const newVnodeAttrs = newVnode.$attrs$ || EMPTY_OBJ;
+  {
+    // remove attributes no longer present on the vnode by setting them to undefined
+    for (memberName in oldVnodeAttrs) {
+      if (!(memberName in newVnodeAttrs)) {
+        setAccessor(elm, memberName, oldVnodeAttrs[memberName], undefined, isSvgMode, newVnode.$flags$);
+      }
+    }
+  } // add new & update changed attributes
+
+  for (memberName in newVnodeAttrs) {
+    setAccessor(elm, memberName, oldVnodeAttrs[memberName], newVnodeAttrs[memberName], isSvgMode, newVnode.$flags$);
+  }
+};
+/**
+ * Create a DOM Node corresponding to one of the children of a given VNode.
+ *
+ * @param oldParentVNode the parent VNode from the previous render
+ * @param newParentVNode the parent VNode from the current render
+ * @param childIndex the index of the VNode, in the _new_ parent node's
+ * children, for which we will create a new DOM node
+ * @param parentElm the parent DOM node which our new node will be a child of
+ * @returns the newly created node
+ */
+
+
+const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
+  // tslint:disable-next-line: prefer-const
+  const newVNode = newParentVNode.$children$[childIndex];
+  let i = 0;
+  let elm;
+  let childNode;
+  let oldVNode;
+
+  if (!useNativeShadowDom) {
+    // remember for later we need to check to relocate nodes
+    checkSlotRelocate = true;
+
+    if (newVNode.$tag$ === 'slot') {
+      if (scopeId) {
+        // scoped css needs to add its scoped id to the parent element
+        parentElm.classList.add(scopeId + '-s');
+      }
+
+      newVNode.$flags$ |= newVNode.$children$ ? // slot element has fallback content
+      2
+      /* VNODE_FLAGS.isSlotFallback */
+      : // slot element does not have fallback content
+      1
+      /* VNODE_FLAGS.isSlotReference */
+      ;
+    }
+  }
+
+  if (newVNode.$text$ !== null) {
+    // create text node
+    elm = newVNode.$elm$ = doc.createTextNode(newVNode.$text$);
+  } else if (newVNode.$flags$ & 1
+  /* VNODE_FLAGS.isSlotReference */
+  ) {
+    // create a slot reference node
+    elm = newVNode.$elm$ = doc.createTextNode('');
+  } else {
+    if (!isSvgMode) {
+      isSvgMode = newVNode.$tag$ === 'svg';
+    } // create element
+
+
+    elm = newVNode.$elm$ = doc.createElementNS(isSvgMode ? SVG_NS : HTML_NS, newVNode.$flags$ & 2
+    /* VNODE_FLAGS.isSlotFallback */
+    ? 'slot-fb' : newVNode.$tag$);
+
+    if (isSvgMode && newVNode.$tag$ === 'foreignObject') {
+      isSvgMode = false;
+    } // add css classes, attrs, props, listeners, etc.
+
+
+    {
+      updateElement(null, newVNode, isSvgMode);
+    }
+
+    if (isDef(scopeId) && elm['s-si'] !== scopeId) {
+      // if there is a scopeId and this is the initial render
+      // then let's add the scopeId as a css class
+      elm.classList.add(elm['s-si'] = scopeId);
+    }
+
+    if (newVNode.$children$) {
+      for (i = 0; i < newVNode.$children$.length; ++i) {
+        // create the node
+        childNode = createElm(oldParentVNode, newVNode, i, elm); // return node could have been null
+
+        if (childNode) {
+          // append our new node
+          elm.appendChild(childNode);
+        }
+      }
+    }
+
+    {
+      if (newVNode.$tag$ === 'svg') {
+        // Only reset the SVG context when we're exiting <svg> element
+        isSvgMode = false;
+      } else if (elm.tagName === 'foreignObject') {
+        // Reenter SVG context when we're exiting <foreignObject> element
+        isSvgMode = true;
+      }
+    }
+  }
+
+  {
+    elm['s-hn'] = hostTagName;
+
+    if (newVNode.$flags$ & (2
+    /* VNODE_FLAGS.isSlotFallback */
+    | 1
+    /* VNODE_FLAGS.isSlotReference */
+    )) {
+      // remember the content reference comment
+      elm['s-sr'] = true; // remember the content reference comment
+
+      elm['s-cr'] = contentRef; // remember the slot name, or empty string for default slot
+
+      elm['s-sn'] = newVNode.$name$ || ''; // check if we've got an old vnode for this slot
+
+      oldVNode = oldParentVNode && oldParentVNode.$children$ && oldParentVNode.$children$[childIndex];
+
+      if (oldVNode && oldVNode.$tag$ === newVNode.$tag$ && oldParentVNode.$elm$) {
+        // we've got an old slot vnode and the wrapper is being replaced
+        // so let's move the old slot content back to it's original location
+        putBackInOriginalLocation(oldParentVNode.$elm$, false);
+      }
+    }
+  }
+  return elm;
+};
+
+const putBackInOriginalLocation = (parentElm, recursive) => {
+  plt.$flags$ |= 1
+  /* PLATFORM_FLAGS.isTmpDisconnected */
+  ;
+  const oldSlotChildNodes = parentElm.childNodes;
+
+  for (let i = oldSlotChildNodes.length - 1; i >= 0; i--) {
+    const childNode = oldSlotChildNodes[i];
+
+    if (childNode['s-hn'] !== hostTagName && childNode['s-ol']) {
+      // // this child node in the old element is from another component
+      // // remove this node from the old slot's parent
+      // childNode.remove();
+      // and relocate it back to it's original location
+      parentReferenceNode(childNode).insertBefore(childNode, referenceNode(childNode)); // remove the old original location comment entirely
+      // later on the patch function will know what to do
+      // and move this to the correct spot in need be
+
+      childNode['s-ol'].remove();
+      childNode['s-ol'] = undefined;
+      checkSlotRelocate = true;
+    }
+
+    if (recursive) {
+      putBackInOriginalLocation(childNode, recursive);
+    }
+  }
+
+  plt.$flags$ &= ~1
+  /* PLATFORM_FLAGS.isTmpDisconnected */
+  ;
+};
+
+const addVnodes = (parentElm, before, parentVNode, vnodes, startIdx, endIdx) => {
+  let containerElm = parentElm['s-cr'] && parentElm['s-cr'].parentNode || parentElm;
+  let childNode;
+
+  if (containerElm.shadowRoot && containerElm.tagName === hostTagName) {
+    containerElm = containerElm.shadowRoot;
+  }
+
+  for (; startIdx <= endIdx; ++startIdx) {
+    if (vnodes[startIdx]) {
+      childNode = createElm(null, parentVNode, startIdx, parentElm);
+
+      if (childNode) {
+        vnodes[startIdx].$elm$ = childNode;
+        containerElm.insertBefore(childNode, referenceNode(before));
+      }
+    }
+  }
+};
+
+const removeVnodes = (vnodes, startIdx, endIdx, vnode, elm) => {
+  for (; startIdx <= endIdx; ++startIdx) {
+    if (vnode = vnodes[startIdx]) {
+      elm = vnode.$elm$;
+      callNodeRefs(vnode);
+      {
+        // we're removing this element
+        // so it's possible we need to show slot fallback content now
+        checkSlotFallbackVisibility = true;
+
+        if (elm['s-ol']) {
+          // remove the original location comment
+          elm['s-ol'].remove();
+        } else {
+          // it's possible that child nodes of the node
+          // that's being removed are slot nodes
+          putBackInOriginalLocation(elm, true);
+        }
+      } // remove the vnode's element from the dom
+
+      elm.remove();
+    }
+  }
+};
+/**
+ * Reconcile the children of a new VNode with the children of an old VNode by
+ * traversing the two collections of children, identifying nodes that are
+ * conserved or changed, calling out to `patch` to make any necessary
+ * updates to the DOM, and rearranging DOM nodes as needed.
+ *
+ * The algorithm for reconciling children works by analyzing two 'windows' onto
+ * the two arrays of children (`oldCh` and `newCh`). We keep track of the
+ * 'windows' by storing start and end indices and references to the
+ * corresponding array entries. Initially the two 'windows' are basically equal
+ * to the entire array, but we progressively narrow the windows until there are
+ * no children left to update by doing the following:
+ *
+ * 1. Skip any `null` entries at the beginning or end of the two arrays, so
+ *    that if we have an initial array like the following we'll end up dealing
+ *    only with a window bounded by the highlighted elements:
+ *
+ *    [null, null, VNode1 , ... , VNode2, null, null]
+ *                 ^^^^^^         ^^^^^^
+ *
+ * 2. Check to see if the elements at the head and tail positions are equal
+ *    across the windows. This will basically detect elements which haven't
+ *    been added, removed, or changed position, i.e. if you had the following
+ *    VNode elements (represented as HTML):
+ *
+ *    oldVNode: `<div><p><span>HEY</span></p></div>`
+ *    newVNode: `<div><p><span>THERE</span></p></div>`
+ *
+ *    Then when comparing the children of the `<div>` tag we check the equality
+ *    of the VNodes corresponding to the `<p>` tags and, since they are the
+ *    same tag in the same position, we'd be able to avoid completely
+ *    re-rendering the subtree under them with a new DOM element and would just
+ *    call out to `patch` to handle reconciling their children and so on.
+ *
+ * 3. Check, for both windows, to see if the element at the beginning of the
+ *    window corresponds to the element at the end of the other window. This is
+ *    a heuristic which will let us identify _some_ situations in which
+ *    elements have changed position, for instance it _should_ detect that the
+ *    children nodes themselves have not changed but merely moved in the
+ *    following example:
+ *
+ *    oldVNode: `<div><element-one /><element-two /></div>`
+ *    newVNode: `<div><element-two /><element-one /></div>`
+ *
+ *    If we find cases like this then we also need to move the concrete DOM
+ *    elements corresponding to the moved children to write the re-order to the
+ *    DOM.
+ *
+ * 4. Finally, if VNodes have the `key` attribute set on them we check for any
+ *    nodes in the old children which have the same key as the first element in
+ *    our window on the new children. If we find such a node we handle calling
+ *    out to `patch`, moving relevant DOM nodes, and so on, in accordance with
+ *    what we find.
+ *
+ * Finally, once we've narrowed our 'windows' to the point that either of them
+ * collapse (i.e. they have length 0) we then handle any remaining VNode
+ * insertion or deletion that needs to happen to get a DOM state that correctly
+ * reflects the new child VNodes. If, for instance, after our window on the old
+ * children has collapsed we still have more nodes on the new children that
+ * we haven't dealt with yet then we need to add them, or if the new children
+ * collapse but we still have unhandled _old_ children then we need to make
+ * sure the corresponding DOM nodes are removed.
+ *
+ * @param parentElm the node into which the parent VNode is rendered
+ * @param oldCh the old children of the parent node
+ * @param newVNode the new VNode which will replace the parent
+ * @param newCh the new children of the parent node
+ */
+
+
+const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
+  let oldStartIdx = 0;
+  let newStartIdx = 0;
+  let idxInOld = 0;
+  let i = 0;
+  let oldEndIdx = oldCh.length - 1;
+  let oldStartVnode = oldCh[0];
+  let oldEndVnode = oldCh[oldEndIdx];
+  let newEndIdx = newCh.length - 1;
+  let newStartVnode = newCh[0];
+  let newEndVnode = newCh[newEndIdx];
+  let node;
+  let elmToMove;
+
+  while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+    if (oldStartVnode == null) {
+      // VNode might have been moved left
+      oldStartVnode = oldCh[++oldStartIdx];
+    } else if (oldEndVnode == null) {
+      oldEndVnode = oldCh[--oldEndIdx];
+    } else if (newStartVnode == null) {
+      newStartVnode = newCh[++newStartIdx];
+    } else if (newEndVnode == null) {
+      newEndVnode = newCh[--newEndIdx];
+    } else if (isSameVnode(oldStartVnode, newStartVnode)) {
+      // if the start nodes are the same then we should patch the new VNode
+      // onto the old one, and increment our `newStartIdx` and `oldStartIdx`
+      // indices to reflect that. We don't need to move any DOM Nodes around
+      // since things are matched up in order.
+      patch(oldStartVnode, newStartVnode);
+      oldStartVnode = oldCh[++oldStartIdx];
+      newStartVnode = newCh[++newStartIdx];
+    } else if (isSameVnode(oldEndVnode, newEndVnode)) {
+      // likewise, if the end nodes are the same we patch new onto old and
+      // decrement our end indices, and also likewise in this case we don't
+      // need to move any DOM Nodes.
+      patch(oldEndVnode, newEndVnode);
+      oldEndVnode = oldCh[--oldEndIdx];
+      newEndVnode = newCh[--newEndIdx];
+    } else if (isSameVnode(oldStartVnode, newEndVnode)) {
+      // case: "Vnode moved right"
+      //
+      // We've found that the last node in our window on the new children is
+      // the same VNode as the _first_ node in our window on the old children
+      // we're dealing with now. Visually, this is the layout of these two
+      // nodes:
+      //
+      // newCh: [..., newStartVnode , ... , newEndVnode , ...]
+      //                                    ^^^^^^^^^^^
+      // oldCh: [..., oldStartVnode , ... , oldEndVnode , ...]
+      //              ^^^^^^^^^^^^^
+      //
+      // In this situation we need to patch `newEndVnode` onto `oldStartVnode`
+      // and move the DOM element for `oldStartVnode`.
+      if (oldStartVnode.$tag$ === 'slot' || newEndVnode.$tag$ === 'slot') {
+        putBackInOriginalLocation(oldStartVnode.$elm$.parentNode, false);
+      }
+
+      patch(oldStartVnode, newEndVnode); // We need to move the element for `oldStartVnode` into a position which
+      // will be appropriate for `newEndVnode`. For this we can use
+      // `.insertBefore` and `oldEndVnode.$elm$.nextSibling`. If there is a
+      // sibling for `oldEndVnode.$elm$` then we want to move the DOM node for
+      // `oldStartVnode` between `oldEndVnode` and it's sibling, like so:
+      //
+      // <old-start-node />
+      // <some-intervening-node />
+      // <old-end-node />
+      // <!-- ->              <-- `oldStartVnode.$elm$` should be inserted here
+      // <next-sibling />
+      //
+      // If instead `oldEndVnode.$elm$` has no sibling then we just want to put
+      // the node for `oldStartVnode` at the end of the children of
+      // `parentElm`. Luckily, `Node.nextSibling` will return `null` if there
+      // aren't any siblings, and passing `null` to `Node.insertBefore` will
+      // append it to the children of the parent element.
+
+      parentElm.insertBefore(oldStartVnode.$elm$, oldEndVnode.$elm$.nextSibling);
+      oldStartVnode = oldCh[++oldStartIdx];
+      newEndVnode = newCh[--newEndIdx];
+    } else if (isSameVnode(oldEndVnode, newStartVnode)) {
+      // case: "Vnode moved left"
+      //
+      // We've found that the first node in our window on the new children is
+      // the same VNode as the _last_ node in our window on the old children.
+      // Visually, this is the layout of these two nodes:
+      //
+      // newCh: [..., newStartVnode , ... , newEndVnode , ...]
+      //              ^^^^^^^^^^^^^
+      // oldCh: [..., oldStartVnode , ... , oldEndVnode , ...]
+      //                                    ^^^^^^^^^^^
+      //
+      // In this situation we need to patch `newStartVnode` onto `oldEndVnode`
+      // (which will handle updating any changed attributes, reconciling their
+      // children etc) but we also need to move the DOM node to which
+      // `oldEndVnode` corresponds.
+      if (oldStartVnode.$tag$ === 'slot' || newEndVnode.$tag$ === 'slot') {
+        putBackInOriginalLocation(oldEndVnode.$elm$.parentNode, false);
+      }
+
+      patch(oldEndVnode, newStartVnode); // We've already checked above if `oldStartVnode` and `newStartVnode` are
+      // the same node, so since we're here we know that they are not. Thus we
+      // can move the element for `oldEndVnode` _before_ the element for
+      // `oldStartVnode`, leaving `oldStartVnode` to be reconciled in the
+      // future.
+
+      parentElm.insertBefore(oldEndVnode.$elm$, oldStartVnode.$elm$);
+      oldEndVnode = oldCh[--oldEndIdx];
+      newStartVnode = newCh[++newStartIdx];
+    } else {
+      // Here we do some checks to match up old and new nodes based on the
+      // `$key$` attribute, which is set by putting a `key="my-key"` attribute
+      // in the JSX for a DOM element in the implementation of a Stencil
+      // component.
+      //
+      // First we check to see if there are any nodes in the array of old
+      // children which have the same key as the first node in the new
+      // children.
+      idxInOld = -1;
+      {
+        for (i = oldStartIdx; i <= oldEndIdx; ++i) {
+          if (oldCh[i] && oldCh[i].$key$ !== null && oldCh[i].$key$ === newStartVnode.$key$) {
+            idxInOld = i;
+            break;
+          }
+        }
+      }
+
+      if (idxInOld >= 0) {
+        // We found a node in the old children which matches up with the first
+        // node in the new children! So let's deal with that
+        elmToMove = oldCh[idxInOld];
+
+        if (elmToMove.$tag$ !== newStartVnode.$tag$) {
+          // the tag doesn't match so we'll need a new DOM element
+          node = createElm(oldCh && oldCh[newStartIdx], newVNode, idxInOld, parentElm);
+        } else {
+          patch(elmToMove, newStartVnode); // invalidate the matching old node so that we won't try to update it
+          // again later on
+
+          oldCh[idxInOld] = undefined;
+          node = elmToMove.$elm$;
+        }
+
+        newStartVnode = newCh[++newStartIdx];
+      } else {
+        // We either didn't find an element in the old children that matches
+        // the key of the first new child OR the build is not using `key`
+        // attributes at all. In either case we need to create a new element
+        // for the new node.
+        node = createElm(oldCh && oldCh[newStartIdx], newVNode, newStartIdx, parentElm);
+        newStartVnode = newCh[++newStartIdx];
+      }
+
+      if (node) {
+        // if we created a new node then handle inserting it to the DOM
+        {
+          parentReferenceNode(oldStartVnode.$elm$).insertBefore(node, referenceNode(oldStartVnode.$elm$));
+        }
+      }
+    }
+  }
+
+  if (oldStartIdx > oldEndIdx) {
+    // we have some more new nodes to add which don't match up with old nodes
+    addVnodes(parentElm, newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].$elm$, newVNode, newCh, newStartIdx, newEndIdx);
+  } else if (newStartIdx > newEndIdx) {
+    // there are nodes in the `oldCh` array which no longer correspond to nodes
+    // in the new array, so lets remove them (which entails cleaning up the
+    // relevant DOM nodes)
+    removeVnodes(oldCh, oldStartIdx, oldEndIdx);
+  }
+};
+/**
+ * Compare two VNodes to determine if they are the same
+ *
+ * **NB**: This function is an equality _heuristic_ based on the available
+ * information set on the two VNodes and can be misleading under certain
+ * circumstances. In particular, if the two nodes do not have `key` attrs
+ * (available under `$key$` on VNodes) then the function falls back on merely
+ * checking that they have the same tag.
+ *
+ * So, in other words, if `key` attrs are not set on VNodes which may be
+ * changing order within a `children` array or something along those lines then
+ * we could obtain a false positive and then have to do needless re-rendering.
+ *
+ * @param leftVNode the first VNode to check
+ * @param rightVNode the second VNode to check
+ * @returns whether they're equal or not
+ */
+
+
+const isSameVnode = (leftVNode, rightVNode) => {
+  // compare if two vnode to see if they're "technically" the same
+  // need to have the same element tag, and same key to be the same
+  if (leftVNode.$tag$ === rightVNode.$tag$) {
+    if (leftVNode.$tag$ === 'slot') {
+      return leftVNode.$name$ === rightVNode.$name$;
+    } // this will be set if components in the build have `key` attrs set on them
+
+
+    {
+      return leftVNode.$key$ === rightVNode.$key$;
+    }
+  }
+
+  return false;
+};
+
+const referenceNode = node => {
+  // this node was relocated to a new location in the dom
+  // because of some other component's slot
+  // but we still have an html comment in place of where
+  // it's original location was according to it's original vdom
+  return node && node['s-ol'] || node;
+};
+
+const parentReferenceNode = node => (node['s-ol'] ? node['s-ol'] : node).parentNode;
+/**
+ * Handle reconciling an outdated VNode with a new one which corresponds to
+ * it. This function handles flushing updates to the DOM and reconciling the
+ * children of the two nodes (if any).
+ *
+ * @param oldVNode an old VNode whose DOM element and children we want to update
+ * @param newVNode a new VNode representing an updated version of the old one
+ */
+
+
+const patch = (oldVNode, newVNode) => {
+  const elm = newVNode.$elm$ = oldVNode.$elm$;
+  const oldChildren = oldVNode.$children$;
+  const newChildren = newVNode.$children$;
+  const tag = newVNode.$tag$;
+  const text = newVNode.$text$;
+  let defaultHolder;
+
+  if (text === null) {
+    {
+      // test if we're rendering an svg element, or still rendering nodes inside of one
+      // only add this to the when the compiler sees we're using an svg somewhere
+      isSvgMode = tag === 'svg' ? true : tag === 'foreignObject' ? false : isSvgMode;
+    }
+    {
+      if (tag === 'slot') ;else {
+        // either this is the first render of an element OR it's an update
+        // AND we already know it's possible it could have changed
+        // this updates the element's css classes, attrs, props, listeners, etc.
+        updateElement(oldVNode, newVNode, isSvgMode);
+      }
+    }
+
+    if (oldChildren !== null && newChildren !== null) {
+      // looks like there's child vnodes for both the old and new vnodes
+      // so we need to call `updateChildren` to reconcile them
+      updateChildren(elm, oldChildren, newVNode, newChildren);
+    } else if (newChildren !== null) {
+      // no old child vnodes, but there are new child vnodes to add
+      if (oldVNode.$text$ !== null) {
+        // the old vnode was text, so be sure to clear it out
+        elm.textContent = '';
+      } // add the new vnode children
+
+
+      addVnodes(elm, null, newVNode, newChildren, 0, newChildren.length - 1);
+    } else if (oldChildren !== null) {
+      // no new child vnodes, but there are old child vnodes to remove
+      removeVnodes(oldChildren, 0, oldChildren.length - 1);
+    }
+
+    if (isSvgMode && tag === 'svg') {
+      isSvgMode = false;
+    }
+  } else if (defaultHolder = elm['s-cr']) {
+    // this element has slotted content
+    defaultHolder.parentNode.textContent = text;
+  } else if (oldVNode.$text$ !== text) {
+    // update the text content for the text only vnode
+    // and also only if the text is different than before
+    elm.data = text;
+  }
+};
+
+const updateFallbackSlotVisibility = elm => {
+  // tslint:disable-next-line: prefer-const
+  const childNodes = elm.childNodes;
+  let childNode;
+  let i;
+  let ilen;
+  let j;
+  let slotNameAttr;
+  let nodeType;
+
+  for (i = 0, ilen = childNodes.length; i < ilen; i++) {
+    childNode = childNodes[i];
+
+    if (childNode.nodeType === 1
+    /* NODE_TYPE.ElementNode */
+    ) {
+      if (childNode['s-sr']) {
+        // this is a slot fallback node
+        // get the slot name for this slot reference node
+        slotNameAttr = childNode['s-sn']; // by default always show a fallback slot node
+        // then hide it if there are other slots in the light dom
+
+        childNode.hidden = false;
+
+        for (j = 0; j < ilen; j++) {
+          nodeType = childNodes[j].nodeType;
+
+          if (childNodes[j]['s-hn'] !== childNode['s-hn'] || slotNameAttr !== '') {
+            // this sibling node is from a different component OR is a named fallback slot node
+            if (nodeType === 1
+            /* NODE_TYPE.ElementNode */
+            && slotNameAttr === childNodes[j].getAttribute('slot')) {
+              childNode.hidden = true;
+              break;
+            }
+          } else {
+            // this is a default fallback slot node
+            // any element or text node (with content)
+            // should hide the default fallback slot node
+            if (nodeType === 1
+            /* NODE_TYPE.ElementNode */
+            || nodeType === 3
+            /* NODE_TYPE.TextNode */
+            && childNodes[j].textContent.trim() !== '') {
+              childNode.hidden = true;
+              break;
+            }
+          }
+        }
+      } // keep drilling down
+
+
+      updateFallbackSlotVisibility(childNode);
+    }
+  }
+};
+
+const relocateNodes = [];
+
+const relocateSlotContent = elm => {
+  // tslint:disable-next-line: prefer-const
+  let childNode;
+  let node;
+  let hostContentNodes;
+  let slotNameAttr;
+  let relocateNodeData;
+  let j;
+  let i = 0;
+  const childNodes = elm.childNodes;
+  const ilen = childNodes.length;
+
+  for (; i < ilen; i++) {
+    childNode = childNodes[i];
+
+    if (childNode['s-sr'] && (node = childNode['s-cr']) && node.parentNode) {
+      // first got the content reference comment node
+      // then we got it's parent, which is where all the host content is in now
+      hostContentNodes = node.parentNode.childNodes;
+      slotNameAttr = childNode['s-sn'];
+
+      for (j = hostContentNodes.length - 1; j >= 0; j--) {
+        node = hostContentNodes[j];
+
+        if (!node['s-cn'] && !node['s-nr'] && node['s-hn'] !== childNode['s-hn']) {
+          // let's do some relocating to its new home
+          // but never relocate a content reference node
+          // that is suppose to always represent the original content location
+          if (isNodeLocatedInSlot(node, slotNameAttr)) {
+            // it's possible we've already decided to relocate this node
+            relocateNodeData = relocateNodes.find(r => r.$nodeToRelocate$ === node); // made some changes to slots
+            // let's make sure we also double check
+            // fallbacks are correctly hidden or shown
+
+            checkSlotFallbackVisibility = true;
+            node['s-sn'] = node['s-sn'] || slotNameAttr;
+
+            if (relocateNodeData) {
+              // previously we never found a slot home for this node
+              // but turns out we did, so let's remember it now
+              relocateNodeData.$slotRefNode$ = childNode;
+            } else {
+              // add to our list of nodes to relocate
+              relocateNodes.push({
+                $slotRefNode$: childNode,
+                $nodeToRelocate$: node
+              });
+            }
+
+            if (node['s-sr']) {
+              relocateNodes.map(relocateNode => {
+                if (isNodeLocatedInSlot(relocateNode.$nodeToRelocate$, node['s-sn'])) {
+                  relocateNodeData = relocateNodes.find(r => r.$nodeToRelocate$ === node);
+
+                  if (relocateNodeData && !relocateNode.$slotRefNode$) {
+                    relocateNode.$slotRefNode$ = relocateNodeData.$slotRefNode$;
+                  }
+                }
+              });
+            }
+          } else if (!relocateNodes.some(r => r.$nodeToRelocate$ === node)) {
+            // so far this element does not have a slot home, not setting slotRefNode on purpose
+            // if we never find a home for this element then we'll need to hide it
+            relocateNodes.push({
+              $nodeToRelocate$: node
+            });
+          }
+        }
+      }
+    }
+
+    if (childNode.nodeType === 1
+    /* NODE_TYPE.ElementNode */
+    ) {
+      relocateSlotContent(childNode);
+    }
+  }
+};
+
+const isNodeLocatedInSlot = (nodeToRelocate, slotNameAttr) => {
+  if (nodeToRelocate.nodeType === 1
+  /* NODE_TYPE.ElementNode */
+  ) {
+    if (nodeToRelocate.getAttribute('slot') === null && slotNameAttr === '') {
+      return true;
+    }
+
+    if (nodeToRelocate.getAttribute('slot') === slotNameAttr) {
+      return true;
+    }
+
+    return false;
+  }
+
+  if (nodeToRelocate['s-sn'] === slotNameAttr) {
+    return true;
+  }
+
+  return slotNameAttr === '';
+};
+
+const callNodeRefs = vNode => {
+  {
+    vNode.$attrs$ && vNode.$attrs$.ref && vNode.$attrs$.ref(null);
+    vNode.$children$ && vNode.$children$.map(callNodeRefs);
+  }
+};
+
+const renderVdom = (hostRef, renderFnResults) => {
+  const hostElm = hostRef.$hostElement$;
+  const cmpMeta = hostRef.$cmpMeta$;
+  const oldVNode = hostRef.$vnode$ || newVNode(null, null);
+  const rootVnode = isHost(renderFnResults) ? renderFnResults : h(null, null, renderFnResults);
+  hostTagName = hostElm.tagName;
+
+  if (cmpMeta.$attrsToReflect$) {
+    rootVnode.$attrs$ = rootVnode.$attrs$ || {};
+    cmpMeta.$attrsToReflect$.map(([propName, attribute]) => rootVnode.$attrs$[attribute] = hostElm[propName]);
+  }
+
+  rootVnode.$tag$ = null;
+  rootVnode.$flags$ |= 4
+  /* VNODE_FLAGS.isHost */
+  ;
+  hostRef.$vnode$ = rootVnode;
+  rootVnode.$elm$ = oldVNode.$elm$ = hostElm.shadowRoot || hostElm;
+  {
+    scopeId = hostElm['s-sc'];
+  }
+  {
+    contentRef = hostElm['s-cr'];
+    useNativeShadowDom = (cmpMeta.$flags$ & 1
+    /* CMP_FLAGS.shadowDomEncapsulation */
+    ) !== 0; // always reset
+
+    checkSlotFallbackVisibility = false;
+  } // synchronous patch
+
+  patch(oldVNode, rootVnode);
+  {
+    // while we're moving nodes around existing nodes, temporarily disable
+    // the disconnectCallback from working
+    plt.$flags$ |= 1
+    /* PLATFORM_FLAGS.isTmpDisconnected */
+    ;
+
+    if (checkSlotRelocate) {
+      relocateSlotContent(rootVnode.$elm$);
+      let relocateData;
+      let nodeToRelocate;
+      let orgLocationNode;
+      let parentNodeRef;
+      let insertBeforeNode;
+      let refNode;
+      let i = 0;
+
+      for (; i < relocateNodes.length; i++) {
+        relocateData = relocateNodes[i];
+        nodeToRelocate = relocateData.$nodeToRelocate$;
+
+        if (!nodeToRelocate['s-ol']) {
+          // add a reference node marking this node's original location
+          // keep a reference to this node for later lookups
+          orgLocationNode = doc.createTextNode('');
+          orgLocationNode['s-nr'] = nodeToRelocate;
+          nodeToRelocate.parentNode.insertBefore(nodeToRelocate['s-ol'] = orgLocationNode, nodeToRelocate);
+        }
+      }
+
+      for (i = 0; i < relocateNodes.length; i++) {
+        relocateData = relocateNodes[i];
+        nodeToRelocate = relocateData.$nodeToRelocate$;
+
+        if (relocateData.$slotRefNode$) {
+          // by default we're just going to insert it directly
+          // after the slot reference node
+          parentNodeRef = relocateData.$slotRefNode$.parentNode;
+          insertBeforeNode = relocateData.$slotRefNode$.nextSibling;
+          orgLocationNode = nodeToRelocate['s-ol'];
+
+          while (orgLocationNode = orgLocationNode.previousSibling) {
+            refNode = orgLocationNode['s-nr'];
+
+            if (refNode && refNode['s-sn'] === nodeToRelocate['s-sn'] && parentNodeRef === refNode.parentNode) {
+              refNode = refNode.nextSibling;
+
+              if (!refNode || !refNode['s-nr']) {
+                insertBeforeNode = refNode;
+                break;
+              }
+            }
+          }
+
+          if (!insertBeforeNode && parentNodeRef !== nodeToRelocate.parentNode || nodeToRelocate.nextSibling !== insertBeforeNode) {
+            // we've checked that it's worth while to relocate
+            // since that the node to relocate
+            // has a different next sibling or parent relocated
+            if (nodeToRelocate !== insertBeforeNode) {
+              if (!nodeToRelocate['s-hn'] && nodeToRelocate['s-ol']) {
+                // probably a component in the index.html that doesn't have it's hostname set
+                nodeToRelocate['s-hn'] = nodeToRelocate['s-ol'].parentNode.nodeName;
+              } // add it back to the dom but in its new home
+
+
+              parentNodeRef.insertBefore(nodeToRelocate, insertBeforeNode);
+            }
+          }
+        } else {
+          // this node doesn't have a slot home to go to, so let's hide it
+          if (nodeToRelocate.nodeType === 1
+          /* NODE_TYPE.ElementNode */
+          ) {
+            nodeToRelocate.hidden = true;
+          }
+        }
+      }
+    }
+
+    if (checkSlotFallbackVisibility) {
+      updateFallbackSlotVisibility(rootVnode.$elm$);
+    } // done moving nodes around
+    // allow the disconnect callback to work again
+
+
+    plt.$flags$ &= ~1
+    /* PLATFORM_FLAGS.isTmpDisconnected */
+    ; // always reset
+
+    relocateNodes.length = 0;
+  }
+};
+
+const getElement = ref => getHostRef(ref).$hostElement$;
+
+const createEvent = (ref, name, flags) => {
+  const elm = getElement(ref);
+  return {
+    emit: detail => {
+      return emitEvent(elm, name, {
+        bubbles: !!(flags & 4
+        /* EVENT_FLAGS.Bubbles */
+        ),
+        composed: !!(flags & 2
+        /* EVENT_FLAGS.Composed */
+        ),
+        cancelable: !!(flags & 1
+        /* EVENT_FLAGS.Cancellable */
+        ),
+        detail
+      });
+    }
+  };
+};
+/**
+ * Helper function to create & dispatch a custom Event on a provided target
+ * @param elm the target of the Event
+ * @param name the name to give the custom Event
+ * @param opts options for configuring a custom Event
+ * @returns the custom Event
+ */
+
+
+const emitEvent = (elm, name, opts) => {
+  const ev = plt.ce(name, opts);
+  elm.dispatchEvent(ev);
+  return ev;
+};
+
+const attachToAncestor = (hostRef, ancestorComponent) => {
+  if (ancestorComponent && !hostRef.$onRenderResolve$ && ancestorComponent['s-p']) {
+    ancestorComponent['s-p'].push(new Promise(r => hostRef.$onRenderResolve$ = r));
+  }
+};
+
+const scheduleUpdate = (hostRef, isInitialLoad) => {
+  {
+    hostRef.$flags$ |= 16
+    /* HOST_FLAGS.isQueuedForUpdate */
+    ;
+  }
+
+  if (hostRef.$flags$ & 4
+  /* HOST_FLAGS.isWaitingForChildren */
+  ) {
+    hostRef.$flags$ |= 512
+    /* HOST_FLAGS.needsRerender */
+    ;
+    return;
+  }
+
+  attachToAncestor(hostRef, hostRef.$ancestorComponent$); // there is no ancestor component or the ancestor component
+  // has already fired off its lifecycle update then
+  // fire off the initial update
+
+  const dispatch = () => dispatchHooks(hostRef, isInitialLoad);
+
+  return writeTask(dispatch);
+};
+
+const dispatchHooks = (hostRef, isInitialLoad) => {
+  const endSchedule = createTime('scheduleUpdate', hostRef.$cmpMeta$.$tagName$);
+  const instance = hostRef.$lazyInstance$;
+  let promise;
+
+  if (isInitialLoad) {
+    {
+      hostRef.$flags$ |= 256
+      /* HOST_FLAGS.isListenReady */
+      ;
+
+      if (hostRef.$queuedListeners$) {
+        hostRef.$queuedListeners$.map(([methodName, event]) => safeCall(instance, methodName, event));
+        hostRef.$queuedListeners$ = null;
+      }
+    }
+    {
+      promise = safeCall(instance, 'componentWillLoad');
+    }
+  }
+
+  {
+    promise = then(promise, () => safeCall(instance, 'componentWillRender'));
+  }
+  endSchedule();
+  return then(promise, () => updateComponent(hostRef, instance, isInitialLoad));
+};
+
+const updateComponent = /*#__PURE__*/function () {
+  var _ref = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (hostRef, instance, isInitialLoad) {
+    // updateComponent
+    const elm = hostRef.$hostElement$;
+    const endUpdate = createTime('update', hostRef.$cmpMeta$.$tagName$);
+    const rc = elm['s-rc'];
+
+    if (isInitialLoad) {
+      // DOM WRITE!
+      attachStyles(hostRef);
+    }
+
+    const endRender = createTime('render', hostRef.$cmpMeta$.$tagName$);
+    {
+      callRender(hostRef, instance);
+    }
+
+    if (rc) {
+      // ok, so turns out there are some child host elements
+      // waiting on this parent element to load
+      // let's fire off all update callbacks waiting
+      rc.map(cb => cb());
+      elm['s-rc'] = undefined;
+    }
+
+    endRender();
+    endUpdate();
+    {
+      const childrenPromises = elm['s-p'];
+
+      const postUpdate = () => postUpdateComponent(hostRef);
+
+      if (childrenPromises.length === 0) {
+        postUpdate();
+      } else {
+        Promise.all(childrenPromises).then(postUpdate);
+        hostRef.$flags$ |= 4
+        /* HOST_FLAGS.isWaitingForChildren */
+        ;
+        childrenPromises.length = 0;
+      }
+    }
+  });
+
+  return function updateComponent(_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+const callRender = (hostRef, instance, elm) => {
+  try {
+    instance = instance.render && instance.render();
+    {
+      hostRef.$flags$ &= ~16
+      /* HOST_FLAGS.isQueuedForUpdate */
+      ;
+    }
+    {
+      hostRef.$flags$ |= 2
+      /* HOST_FLAGS.hasRendered */
+      ;
+    }
+    {
+      {
+        // looks like we've got child nodes to render into this host element
+        // or we need to update the css class/attrs on the host element
+        // DOM WRITE!
+        {
+          renderVdom(hostRef, instance);
+        }
+      }
+    }
+  } catch (e) {
+    consoleError(e, hostRef.$hostElement$);
+  }
+
+  return null;
+};
+
+const postUpdateComponent = hostRef => {
+  const tagName = hostRef.$cmpMeta$.$tagName$;
+  const elm = hostRef.$hostElement$;
+  const endPostUpdate = createTime('postUpdate', tagName);
+  const instance = hostRef.$lazyInstance$;
+  const ancestorComponent = hostRef.$ancestorComponent$;
+  {
+    safeCall(instance, 'componentDidRender');
+  }
+
+  if (!(hostRef.$flags$ & 64
+  /* HOST_FLAGS.hasLoadedComponent */
+  )) {
+    hostRef.$flags$ |= 64
+    /* HOST_FLAGS.hasLoadedComponent */
+    ;
+    {
+      // DOM WRITE!
+      addHydratedFlag(elm);
+    }
+    {
+      safeCall(instance, 'componentDidLoad');
+    }
+    endPostUpdate();
+    {
+      hostRef.$onReadyResolve$(elm);
+
+      if (!ancestorComponent) {
+        appDidLoad();
+      }
+    }
+  } else {
+    {
+      safeCall(instance, 'componentDidUpdate');
+    }
+    endPostUpdate();
+  }
+
+  {
+    hostRef.$onInstanceResolve$(elm);
+  } // load events fire from bottom to top
+  // the deepest elements load first then bubbles up
+
+  {
+    if (hostRef.$onRenderResolve$) {
+      hostRef.$onRenderResolve$();
+      hostRef.$onRenderResolve$ = undefined;
+    }
+
+    if (hostRef.$flags$ & 512
+    /* HOST_FLAGS.needsRerender */
+    ) {
+      nextTick(() => scheduleUpdate(hostRef, false));
+    }
+
+    hostRef.$flags$ &= ~(4
+    /* HOST_FLAGS.isWaitingForChildren */
+    | 512
+    /* HOST_FLAGS.needsRerender */
+    );
+  } // ( •_•)
+  // ( •_•)>⌐■-■
+  // (⌐■_■)
+};
+
+const forceUpdate = ref => {
+  {
+    const hostRef = getHostRef(ref);
+    const isConnected = hostRef.$hostElement$.isConnected;
+
+    if (isConnected && (hostRef.$flags$ & (2
+    /* HOST_FLAGS.hasRendered */
+    | 16
+    /* HOST_FLAGS.isQueuedForUpdate */
+    )) === 2
+    /* HOST_FLAGS.hasRendered */
+    ) {
+      scheduleUpdate(hostRef, false);
+    } // Returns "true" when the forced update was successfully scheduled
+
+
+    return isConnected;
+  }
+};
+
+const appDidLoad = who => {
+  // on appload
+  // we have finish the first big initial render
+  {
+    addHydratedFlag(doc.documentElement);
+  }
+  nextTick(() => emitEvent(win, 'appload', {
+    detail: {
+      namespace: NAMESPACE
+    }
+  }));
+};
+
+const safeCall = (instance, method, arg) => {
+  if (instance && instance[method]) {
+    try {
+      return instance[method](arg);
+    } catch (e) {
+      consoleError(e);
+    }
+  }
+
+  return undefined;
+};
+
+const then = (promise, thenFn) => {
+  return promise && promise.then ? promise.then(thenFn) : thenFn();
+};
+
+const addHydratedFlag = elm => elm.classList.add('hydrated');
+
+const initializeClientHydrate = (hostElm, tagName, hostId, hostRef) => {
+  const endHydrate = createTime('hydrateClient', tagName);
+  const shadowRoot = hostElm.shadowRoot;
+  const childRenderNodes = [];
+  const slotNodes = [];
+  const shadowRootNodes = shadowRoot ? [] : null;
+  const vnode = hostRef.$vnode$ = newVNode(tagName, null);
+
+  if (!plt.$orgLocNodes$) {
+    initializeDocumentHydrate(doc.body, plt.$orgLocNodes$ = new Map());
+  }
+
+  hostElm[HYDRATE_ID] = hostId;
+  hostElm.removeAttribute(HYDRATE_ID);
+  clientHydrate(vnode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, hostElm, hostId);
+  childRenderNodes.map(c => {
+    const orgLocationId = c.$hostId$ + '.' + c.$nodeId$;
+    const orgLocationNode = plt.$orgLocNodes$.get(orgLocationId);
+    const node = c.$elm$;
+
+    if (orgLocationNode && supportsShadow && orgLocationNode['s-en'] === '') {
+      orgLocationNode.parentNode.insertBefore(node, orgLocationNode.nextSibling);
+    }
+
+    if (!shadowRoot) {
+      node['s-hn'] = tagName;
+
+      if (orgLocationNode) {
+        node['s-ol'] = orgLocationNode;
+        node['s-ol']['s-nr'] = node;
+      }
+    }
+
+    plt.$orgLocNodes$.delete(orgLocationId);
+  });
+
+  if (shadowRoot) {
+    shadowRootNodes.map(shadowRootNode => {
+      if (shadowRootNode) {
+        shadowRoot.appendChild(shadowRootNode);
+      }
+    });
+  }
+
+  endHydrate();
+};
+
+const clientHydrate = (parentVNode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, node, hostId) => {
+  let childNodeType;
+  let childIdSplt;
+  let childVNode;
+  let i;
+
+  if (node.nodeType === 1
+  /* NODE_TYPE.ElementNode */
+  ) {
+    childNodeType = node.getAttribute(HYDRATE_CHILD_ID);
+
+    if (childNodeType) {
+      // got the node data from the element's attribute
+      // `${hostId}.${nodeId}.${depth}.${index}`
+      childIdSplt = childNodeType.split('.');
+
+      if (childIdSplt[0] === hostId || childIdSplt[0] === '0') {
+        childVNode = {
+          $flags$: 0,
+          $hostId$: childIdSplt[0],
+          $nodeId$: childIdSplt[1],
+          $depth$: childIdSplt[2],
+          $index$: childIdSplt[3],
+          $tag$: node.tagName.toLowerCase(),
+          $elm$: node,
+          $attrs$: null,
+          $children$: null,
+          $key$: null,
+          $name$: null,
+          $text$: null
+        };
+        childRenderNodes.push(childVNode);
+        node.removeAttribute(HYDRATE_CHILD_ID); // this is a new child vnode
+        // so ensure its parent vnode has the vchildren array
+
+        if (!parentVNode.$children$) {
+          parentVNode.$children$ = [];
+        } // add our child vnode to a specific index of the vnode's children
+
+
+        parentVNode.$children$[childVNode.$index$] = childVNode; // this is now the new parent vnode for all the next child checks
+
+        parentVNode = childVNode;
+
+        if (shadowRootNodes && childVNode.$depth$ === '0') {
+          shadowRootNodes[childVNode.$index$] = childVNode.$elm$;
+        }
+      }
+    } // recursively drill down, end to start so we can remove nodes
+
+
+    for (i = node.childNodes.length - 1; i >= 0; i--) {
+      clientHydrate(parentVNode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, node.childNodes[i], hostId);
+    }
+
+    if (node.shadowRoot) {
+      // keep drilling down through the shadow root nodes
+      for (i = node.shadowRoot.childNodes.length - 1; i >= 0; i--) {
+        clientHydrate(parentVNode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, node.shadowRoot.childNodes[i], hostId);
+      }
+    }
+  } else if (node.nodeType === 8
+  /* NODE_TYPE.CommentNode */
+  ) {
+    // `${COMMENT_TYPE}.${hostId}.${nodeId}.${depth}.${index}`
+    childIdSplt = node.nodeValue.split('.');
+
+    if (childIdSplt[1] === hostId || childIdSplt[1] === '0') {
+      // comment node for either the host id or a 0 host id
+      childNodeType = childIdSplt[0];
+      childVNode = {
+        $flags$: 0,
+        $hostId$: childIdSplt[1],
+        $nodeId$: childIdSplt[2],
+        $depth$: childIdSplt[3],
+        $index$: childIdSplt[4],
+        $elm$: node,
+        $attrs$: null,
+        $children$: null,
+        $key$: null,
+        $name$: null,
+        $tag$: null,
+        $text$: null
+      };
+
+      if (childNodeType === TEXT_NODE_ID) {
+        childVNode.$elm$ = node.nextSibling;
+
+        if (childVNode.$elm$ && childVNode.$elm$.nodeType === 3
+        /* NODE_TYPE.TextNode */
+        ) {
+          childVNode.$text$ = childVNode.$elm$.textContent;
+          childRenderNodes.push(childVNode); // remove the text comment since it's no longer needed
+
+          node.remove();
+
+          if (!parentVNode.$children$) {
+            parentVNode.$children$ = [];
+          }
+
+          parentVNode.$children$[childVNode.$index$] = childVNode;
+
+          if (shadowRootNodes && childVNode.$depth$ === '0') {
+            shadowRootNodes[childVNode.$index$] = childVNode.$elm$;
+          }
+        }
+      } else if (childVNode.$hostId$ === hostId) {
+        // this comment node is specifcally for this host id
+        if (childNodeType === SLOT_NODE_ID) {
+          // `${SLOT_NODE_ID}.${hostId}.${nodeId}.${depth}.${index}.${slotName}`;
+          childVNode.$tag$ = 'slot';
+
+          if (childIdSplt[5]) {
+            node['s-sn'] = childVNode.$name$ = childIdSplt[5];
+          } else {
+            node['s-sn'] = '';
+          }
+
+          node['s-sr'] = true;
+
+          if (shadowRootNodes) {
+            // browser support shadowRoot and this is a shadow dom component
+            // create an actual slot element
+            childVNode.$elm$ = doc.createElement(childVNode.$tag$);
+
+            if (childVNode.$name$) {
+              // add the slot name attribute
+              childVNode.$elm$.setAttribute('name', childVNode.$name$);
+            } // insert the new slot element before the slot comment
+
+
+            node.parentNode.insertBefore(childVNode.$elm$, node); // remove the slot comment since it's not needed for shadow
+
+            node.remove();
+
+            if (childVNode.$depth$ === '0') {
+              shadowRootNodes[childVNode.$index$] = childVNode.$elm$;
+            }
+          }
+
+          slotNodes.push(childVNode);
+
+          if (!parentVNode.$children$) {
+            parentVNode.$children$ = [];
+          }
+
+          parentVNode.$children$[childVNode.$index$] = childVNode;
+        } else if (childNodeType === CONTENT_REF_ID) {
+          // `${CONTENT_REF_ID}.${hostId}`;
+          if (shadowRootNodes) {
+            // remove the content ref comment since it's not needed for shadow
+            node.remove();
+          } else {
+            hostElm['s-cr'] = node;
+            node['s-cn'] = true;
+          }
+        }
+      }
+    }
+  } else if (parentVNode && parentVNode.$tag$ === 'style') {
+    const vnode = newVNode(null, node.textContent);
+    vnode.$elm$ = node;
+    vnode.$index$ = '0';
+    parentVNode.$children$ = [vnode];
+  }
+};
+
+const initializeDocumentHydrate = (node, orgLocNodes) => {
+  if (node.nodeType === 1
+  /* NODE_TYPE.ElementNode */
+  ) {
+    let i = 0;
+
+    for (; i < node.childNodes.length; i++) {
+      initializeDocumentHydrate(node.childNodes[i], orgLocNodes);
+    }
+
+    if (node.shadowRoot) {
+      for (i = 0; i < node.shadowRoot.childNodes.length; i++) {
+        initializeDocumentHydrate(node.shadowRoot.childNodes[i], orgLocNodes);
+      }
+    }
+  } else if (node.nodeType === 8
+  /* NODE_TYPE.CommentNode */
+  ) {
+    const childIdSplt = node.nodeValue.split('.');
+
+    if (childIdSplt[0] === ORG_LOCATION_ID) {
+      orgLocNodes.set(childIdSplt[1] + '.' + childIdSplt[2], node);
+      node.nodeValue = ''; // useful to know if the original location is
+      // the root light-dom of a shadow dom component
+
+      node['s-en'] = childIdSplt[3];
+    }
+  }
+};
+/**
+ * Parse a new property value for a given property type.
+ *
+ * While the prop value can reasonably be expected to be of `any` type as far as TypeScript's type checker is concerned,
+ * it is not safe to assume that the string returned by evaluating `typeof propValue` matches:
+ *   1. `any`, the type given to `propValue` in the function signature
+ *   2. the type stored from `propType`.
+ *
+ * This function provides the capability to parse/coerce a property's value to potentially any other JavaScript type.
+ *
+ * Property values represented in TSX preserve their type information. In the example below, the number 0 is passed to
+ * a component. This `propValue` will preserve its type information (`typeof propValue === 'number'`). Note that is
+ * based on the type of the value being passed in, not the type declared of the class member decorated with `@Prop`.
+ * ```tsx
+ * <my-cmp prop-val={0}></my-cmp>
+ * ```
+ *
+ * HTML prop values on the other hand, will always a string
+ *
+ * @param propValue the new value to coerce to some type
+ * @param propType the type of the prop, expressed as a binary number
+ * @returns the parsed/coerced value
+ */
+
+
+const parsePropertyValue = (propValue, propType) => {
+  // ensure this value is of the correct prop type
+  if (propValue != null && !isComplexType(propValue)) {
+    if (propType & 4
+    /* MEMBER_FLAGS.Boolean */
+    ) {
+      // per the HTML spec, any string value means it is a boolean true value
+      // but we'll cheat here and say that the string "false" is the boolean false
+      return propValue === 'false' ? false : propValue === '' || !!propValue;
+    }
+
+    if (propType & 2
+    /* MEMBER_FLAGS.Number */
+    ) {
+      // force it to be a number
+      return parseFloat(propValue);
+    }
+
+    if (propType & 1
+    /* MEMBER_FLAGS.String */
+    ) {
+      // could have been passed as a number or boolean
+      // but we still want it as a string
+      return String(propValue);
+    } // redundant return here for better minification
+
+
+    return propValue;
+  } // not sure exactly what type we want
+  // so no need to change to a different type
+
+
+  return propValue;
+};
+
+const getValue = (ref, propName) => getHostRef(ref).$instanceValues$.get(propName);
+
+const setValue = (ref, propName, newVal, cmpMeta) => {
+  // check our new property value against our internal value
+  const hostRef = getHostRef(ref);
+  const elm = hostRef.$hostElement$;
+  const oldVal = hostRef.$instanceValues$.get(propName);
+  const flags = hostRef.$flags$;
+  const instance = hostRef.$lazyInstance$;
+  newVal = parsePropertyValue(newVal, cmpMeta.$members$[propName][0]); // explicitly check for NaN on both sides, as `NaN === NaN` is always false
+
+  const areBothNaN = Number.isNaN(oldVal) && Number.isNaN(newVal);
+  const didValueChange = newVal !== oldVal && !areBothNaN;
+
+  if ((!(flags & 8
+  /* HOST_FLAGS.isConstructingInstance */
+  ) || oldVal === undefined) && didValueChange) {
+    // gadzooks! the property's value has changed!!
+    // set our new value!
+    hostRef.$instanceValues$.set(propName, newVal);
+
+    if (instance) {
+      // get an array of method names of watch functions to call
+      if (cmpMeta.$watchers$ && flags & 128
+      /* HOST_FLAGS.isWatchReady */
+      ) {
+        const watchMethods = cmpMeta.$watchers$[propName];
+
+        if (watchMethods) {
+          // this instance is watching for when this property changed
+          watchMethods.map(watchMethodName => {
+            try {
+              // fire off each of the watch methods that are watching this property
+              instance[watchMethodName](newVal, oldVal, propName);
+            } catch (e) {
+              consoleError(e, elm);
+            }
+          });
+        }
+      }
+
+      if ((flags & (2
+      /* HOST_FLAGS.hasRendered */
+      | 16
+      /* HOST_FLAGS.isQueuedForUpdate */
+      )) === 2
+      /* HOST_FLAGS.hasRendered */
+      ) {
+        // looks like this value actually changed, so we've got work to do!
+        // but only if we've already rendered, otherwise just chill out
+        // queue that we need to do an update, but don't worry about queuing
+        // up millions cuz this function ensures it only runs once
+        scheduleUpdate(hostRef, false);
+      }
+    }
+  }
+};
+
+const proxyComponent = (Cstr, cmpMeta, flags) => {
+  if (cmpMeta.$members$) {
+    if (Cstr.watchers) {
+      cmpMeta.$watchers$ = Cstr.watchers;
+    } // It's better to have a const than two Object.entries()
+
+
+    const members = Object.entries(cmpMeta.$members$);
+    const prototype = Cstr.prototype;
+    members.map(([memberName, [memberFlags]]) => {
+      if (memberFlags & 31
+      /* MEMBER_FLAGS.Prop */
+      || flags & 2
+      /* PROXY_FLAGS.proxyState */
+      && memberFlags & 32
+      /* MEMBER_FLAGS.State */
+      ) {
+        // proxyComponent - prop
+        Object.defineProperty(prototype, memberName, {
+          get() {
+            // proxyComponent, get value
+            return getValue(this, memberName);
+          },
+
+          set(newValue) {
+            // proxyComponent, set value
+            setValue(this, memberName, newValue, cmpMeta);
+          },
+
+          configurable: true,
+          enumerable: true
+        });
+      } else if (flags & 1
+      /* PROXY_FLAGS.isElementConstructor */
+      && memberFlags & 64
+      /* MEMBER_FLAGS.Method */
+      ) {
+        // proxyComponent - method
+        Object.defineProperty(prototype, memberName, {
+          value(...args) {
+            const ref = getHostRef(this);
+            return ref.$onInstancePromise$.then(() => ref.$lazyInstance$[memberName](...args));
+          }
+
+        });
+      }
+    });
+
+    if (flags & 1
+    /* PROXY_FLAGS.isElementConstructor */
+    ) {
+      const attrNameToPropName = new Map();
+
+      prototype.attributeChangedCallback = function (attrName, _oldValue, newValue) {
+        plt.jmp(() => {
+          const propName = attrNameToPropName.get(attrName); //  In a web component lifecycle the attributeChangedCallback runs prior to connectedCallback
+          //  in the case where an attribute was set inline.
+          //  ```html
+          //    <my-component some-attribute="some-value"></my-component>
+          //  ```
+          //
+          //  There is an edge case where a developer sets the attribute inline on a custom element and then
+          //  programmatically changes it before it has been upgraded as shown below:
+          //
+          //  ```html
+          //    <!-- this component has _not_ been upgraded yet -->
+          //    <my-component id="test" some-attribute="some-value"></my-component>
+          //    <script>
+          //      // grab non-upgraded component
+          //      el = document.querySelector("#test");
+          //      el.someAttribute = "another-value";
+          //      // upgrade component
+          //      customElements.define('my-component', MyComponent);
+          //    </script>
+          //  ```
+          //  In this case if we do not unshadow here and use the value of the shadowing property, attributeChangedCallback
+          //  will be called with `newValue = "some-value"` and will set the shadowed property (this.someAttribute = "another-value")
+          //  to the value that was set inline i.e. "some-value" from above example. When
+          //  the connectedCallback attempts to unshadow it will use "some-value" as the initial value rather than "another-value"
+          //
+          //  The case where the attribute was NOT set inline but was not set programmatically shall be handled/unshadowed
+          //  by connectedCallback as this attributeChangedCallback will not fire.
+          //
+          //  https://developers.google.com/web/fundamentals/web-components/best-practices#lazy-properties
+          //
+          //  TODO(STENCIL-16) we should think about whether or not we actually want to be reflecting the attributes to
+          //  properties here given that this goes against best practices outlined here
+          //  https://developers.google.com/web/fundamentals/web-components/best-practices#avoid-reentrancy
+
+          if (this.hasOwnProperty(propName)) {
+            newValue = this[propName];
+            delete this[propName];
+          } else if (prototype.hasOwnProperty(propName) && typeof this[propName] === 'number' && this[propName] == newValue) {
+            // if the propName exists on the prototype of `Cstr`, this update may be a result of Stencil using native
+            // APIs to reflect props as attributes. Calls to `setAttribute(someElement, propName)` will result in
+            // `propName` to be converted to a `DOMString`, which may not be what we want for other primitive props.
+            return;
+          }
+
+          this[propName] = newValue === null && typeof this[propName] === 'boolean' ? false : newValue;
+        });
+      }; // create an array of attributes to observe
+      // and also create a map of html attribute name to js property name
+
+
+      Cstr.observedAttributes = members.filter(([_, m]) => m[0] & 15
+      /* MEMBER_FLAGS.HasAttribute */
+      ) // filter to only keep props that should match attributes
+      .map(([propName, m]) => {
+        const attrName = m[1] || propName;
+        attrNameToPropName.set(attrName, propName);
+
+        if (m[0] & 512
+        /* MEMBER_FLAGS.ReflectAttr */
+        ) {
+          cmpMeta.$attrsToReflect$.push([propName, attrName]);
+        }
+
+        return attrName;
+      });
+    }
+  }
+
+  return Cstr;
+};
+
+const initializeComponent = /*#__PURE__*/function () {
+  var _ref2 = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (elm, hostRef, cmpMeta, hmrVersionId, Cstr) {
+    // initializeComponent
+    if ((hostRef.$flags$ & 32
+    /* HOST_FLAGS.hasInitializedComponent */
+    ) === 0) {
+      {
+        // we haven't initialized this element yet
+        hostRef.$flags$ |= 32
+        /* HOST_FLAGS.hasInitializedComponent */
+        ; // lazy loaded components
+        // request the component's implementation to be
+        // wired up with the host element
+
+        Cstr = loadModule(cmpMeta);
+
+        if (Cstr.then) {
+          // Await creates a micro-task avoid if possible
+          const endLoad = uniqueTime();
+          Cstr = yield Cstr;
+          endLoad();
+        }
+
+        if (!Cstr.isProxied) {
+          // we've never proxied this Constructor before
+          // let's add the getters/setters to its prototype before
+          // the first time we create an instance of the implementation
+          {
+            cmpMeta.$watchers$ = Cstr.watchers;
+          }
+          proxyComponent(Cstr, cmpMeta, 2
+          /* PROXY_FLAGS.proxyState */
+          );
+          Cstr.isProxied = true;
+        }
+
+        const endNewInstance = createTime('createInstance', cmpMeta.$tagName$); // ok, time to construct the instance
+        // but let's keep track of when we start and stop
+        // so that the getters/setters don't incorrectly step on data
+
+        {
+          hostRef.$flags$ |= 8
+          /* HOST_FLAGS.isConstructingInstance */
+          ;
+        } // construct the lazy-loaded component implementation
+        // passing the hostRef is very important during
+        // construction in order to directly wire together the
+        // host element and the lazy-loaded instance
+
+        try {
+          new Cstr(hostRef);
+        } catch (e) {
+          consoleError(e);
+        }
+
+        {
+          hostRef.$flags$ &= ~8
+          /* HOST_FLAGS.isConstructingInstance */
+          ;
+        }
+        {
+          hostRef.$flags$ |= 128
+          /* HOST_FLAGS.isWatchReady */
+          ;
+        }
+        endNewInstance();
+        fireConnectedCallback(hostRef.$lazyInstance$);
+      }
+
+      if (Cstr.style) {
+        // this component has styles but we haven't registered them yet
+        let style = Cstr.style;
+
+        if (typeof style !== 'string') {
+          style = style[hostRef.$modeName$ = computeMode(elm)];
+        }
+
+        const scopeId = getScopeId(cmpMeta, hostRef.$modeName$);
+
+        if (!styles.has(scopeId)) {
+          const endRegisterStyles = createTime('registerStyles', cmpMeta.$tagName$);
+          registerStyle(scopeId, style, !!(cmpMeta.$flags$ & 1
+          /* CMP_FLAGS.shadowDomEncapsulation */
+          ));
+          endRegisterStyles();
+        }
+      }
+    } // we've successfully created a lazy instance
+
+
+    const ancestorComponent = hostRef.$ancestorComponent$;
+
+    const schedule = () => scheduleUpdate(hostRef, true);
+
+    if (ancestorComponent && ancestorComponent['s-rc']) {
+      // this is the initial load and this component it has an ancestor component
+      // but the ancestor component has NOT fired its will update lifecycle yet
+      // so let's just cool our jets and wait for the ancestor to continue first
+      // this will get fired off when the ancestor component
+      // finally gets around to rendering its lazy self
+      // fire off the initial update
+      ancestorComponent['s-rc'].push(schedule);
+    } else {
+      schedule();
+    }
+  });
+
+  return function initializeComponent(_x4, _x5, _x6, _x7, _x8) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+const fireConnectedCallback = instance => {
+  {
+    safeCall(instance, 'connectedCallback');
+  }
+};
+
+const connectedCallback = elm => {
+  if ((plt.$flags$ & 1
+  /* PLATFORM_FLAGS.isTmpDisconnected */
+  ) === 0) {
+    const hostRef = getHostRef(elm);
+    const cmpMeta = hostRef.$cmpMeta$;
+    const endConnected = createTime('connectedCallback', cmpMeta.$tagName$);
+
+    if (!(hostRef.$flags$ & 1
+    /* HOST_FLAGS.hasConnected */
+    )) {
+      // first time this component has connected
+      hostRef.$flags$ |= 1
+      /* HOST_FLAGS.hasConnected */
+      ;
+      let hostId;
+      {
+        hostId = elm.getAttribute(HYDRATE_ID);
+
+        if (hostId) {
+          if (cmpMeta.$flags$ & 1
+          /* CMP_FLAGS.shadowDomEncapsulation */
+          ) {
+            const scopeId = addStyle(elm.shadowRoot, cmpMeta, elm.getAttribute('s-mode'));
+            elm.classList.remove(scopeId + '-h', scopeId + '-s');
+          }
+
+          initializeClientHydrate(elm, cmpMeta.$tagName$, hostId, hostRef);
+        }
+      }
+
+      if (!hostId) {
+        // initUpdate
+        // if the slot polyfill is required we'll need to put some nodes
+        // in here to act as original content anchors as we move nodes around
+        // host element has been connected to the DOM
+        if (cmpMeta.$flags$ & (4
+        /* CMP_FLAGS.hasSlotRelocation */
+        | 8
+        /* CMP_FLAGS.needsShadowDomShim */
+        )) {
+          setContentReference(elm);
+        }
+      }
+
+      {
+        // find the first ancestor component (if there is one) and register
+        // this component as one of the actively loading child components for its ancestor
+        let ancestorComponent = elm;
+
+        while (ancestorComponent = ancestorComponent.parentNode || ancestorComponent.host) {
+          // climb up the ancestors looking for the first
+          // component that hasn't finished its lifecycle update yet
+          if (ancestorComponent.nodeType === 1
+          /* NODE_TYPE.ElementNode */
+          && ancestorComponent.hasAttribute('s-id') && ancestorComponent['s-p'] || ancestorComponent['s-p']) {
+            // we found this components first ancestor component
+            // keep a reference to this component's ancestor component
+            attachToAncestor(hostRef, hostRef.$ancestorComponent$ = ancestorComponent);
+            break;
+          }
+        }
+      } // Lazy properties
+      // https://developers.google.com/web/fundamentals/web-components/best-practices#lazy-properties
+
+      if (cmpMeta.$members$) {
+        Object.entries(cmpMeta.$members$).map(([memberName, [memberFlags]]) => {
+          if (memberFlags & 31
+          /* MEMBER_FLAGS.Prop */
+          && elm.hasOwnProperty(memberName)) {
+            const value = elm[memberName];
+            delete elm[memberName];
+            elm[memberName] = value;
+          }
+        });
+      }
+
+      {
+        // connectedCallback, taskQueue, initialLoad
+        // angular sets attribute AFTER connectCallback
+        // https://github.com/angular/angular/issues/18909
+        // https://github.com/angular/angular/issues/19940
+        nextTick(() => initializeComponent(elm, hostRef, cmpMeta));
+      }
+    } else {
+      // not the first time this has connected
+      // reattach any event listeners to the host
+      // since they would have been removed when disconnected
+      addHostEventListeners(elm, hostRef, cmpMeta.$listeners$); // fire off connectedCallback() on component instance
+
+      fireConnectedCallback(hostRef.$lazyInstance$);
+    }
+
+    endConnected();
+  }
+};
+
+const setContentReference = elm => {
+  // only required when we're NOT using native shadow dom (slot)
+  // or this browser doesn't support native shadow dom
+  // and this host element was NOT created with SSR
+  // let's pick out the inner content for slot projection
+  // create a node to represent where the original
+  // content was first placed, which is useful later on
+  const contentRefElm = elm['s-cr'] = doc.createComment('');
+  contentRefElm['s-cn'] = true;
+  elm.insertBefore(contentRefElm, elm.firstChild);
+};
+
+const disconnectedCallback = elm => {
+  if ((plt.$flags$ & 1
+  /* PLATFORM_FLAGS.isTmpDisconnected */
+  ) === 0) {
+    const hostRef = getHostRef(elm);
+    const instance = hostRef.$lazyInstance$;
+    {
+      if (hostRef.$rmListeners$) {
+        hostRef.$rmListeners$.map(rmListener => rmListener());
+        hostRef.$rmListeners$ = undefined;
+      }
+    }
+    {
+      safeCall(instance, 'disconnectedCallback');
+    }
+  }
+};
+
+const bootstrapLazy = (lazyBundles, options = {}) => {
+  const endBootstrap = createTime();
+  const cmpTags = [];
+  const exclude = options.exclude || [];
+  const customElements = win.customElements;
+  const head = doc.head;
+  const metaCharset = /*@__PURE__*/head.querySelector('meta[charset]');
+  const visibilityStyle = /*@__PURE__*/doc.createElement('style');
+  const deferredConnectedCallbacks = [];
+  const styles = /*@__PURE__*/doc.querySelectorAll(`[${HYDRATED_STYLE_ID}]`);
+  let appLoadFallback;
+  let isBootstrapping = true;
+  let i = 0;
+  Object.assign(plt, options);
+  plt.$resourcesUrl$ = new URL(options.resourcesUrl || './', doc.baseURI).href;
+  {
+    // If the app is already hydrated there is not point to disable the
+    // async queue. This will improve the first input delay
+    plt.$flags$ |= 2
+    /* PLATFORM_FLAGS.appLoaded */
+    ;
+  }
+  {
+    for (; i < styles.length; i++) {
+      registerStyle(styles[i].getAttribute(HYDRATED_STYLE_ID), convertScopedToShadow(styles[i].innerHTML), true);
+    }
+  }
+  lazyBundles.map(lazyBundle => {
+    lazyBundle[1].map(compactMeta => {
+      const cmpMeta = {
+        $flags$: compactMeta[0],
+        $tagName$: compactMeta[1],
+        $members$: compactMeta[2],
+        $listeners$: compactMeta[3]
+      };
+      {
+        cmpMeta.$members$ = compactMeta[2];
+      }
+      {
+        cmpMeta.$listeners$ = compactMeta[3];
+      }
+      {
+        cmpMeta.$attrsToReflect$ = [];
+      }
+      {
+        cmpMeta.$watchers$ = {};
+      }
+      const tagName = cmpMeta.$tagName$;
+      const HostElement = class extends HTMLElement {
+        // StencilLazyHost
+        constructor(self) {
+          // @ts-ignore
+          super(self);
+          self = this;
+          registerHost(self, cmpMeta);
+
+          if (cmpMeta.$flags$ & 1
+          /* CMP_FLAGS.shadowDomEncapsulation */
+          ) {
+            // this component is using shadow dom
+            // and this browser supports shadow dom
+            // add the read-only property "shadowRoot" to the host element
+            // adding the shadow root build conditionals to minimize runtime
+            {
+              {
+                self.attachShadow({
+                  mode: 'open',
+                  delegatesFocus: !!(cmpMeta.$flags$ & 16
+                  /* CMP_FLAGS.shadowDelegatesFocus */
+                  )
+                });
+              }
+            }
+          }
+        }
+
+        connectedCallback() {
+          if (appLoadFallback) {
+            clearTimeout(appLoadFallback);
+            appLoadFallback = null;
+          }
+
+          if (isBootstrapping) {
+            // connectedCallback will be processed once all components have been registered
+            deferredConnectedCallbacks.push(this);
+          } else {
+            plt.jmp(() => connectedCallback(this));
+          }
+        }
+
+        disconnectedCallback() {
+          plt.jmp(() => disconnectedCallback(this));
+        }
+
+        componentOnReady() {
+          return getHostRef(this).$onReadyPromise$;
+        }
+
+      };
+      cmpMeta.$lazyBundleId$ = lazyBundle[0];
+
+      if (!exclude.includes(tagName) && !customElements.get(tagName)) {
+        cmpTags.push(tagName);
+        customElements.define(tagName, proxyComponent(HostElement, cmpMeta, 1
+        /* PROXY_FLAGS.isElementConstructor */
+        ));
+      }
+    });
+  });
+  {
+    visibilityStyle.innerHTML = cmpTags + HYDRATED_CSS;
+    visibilityStyle.setAttribute('data-styles', '');
+    head.insertBefore(visibilityStyle, metaCharset ? metaCharset.nextSibling : head.firstChild);
+  } // Process deferred connectedCallbacks now all components have been registered
+
+  isBootstrapping = false;
+
+  if (deferredConnectedCallbacks.length) {
+    deferredConnectedCallbacks.map(host => host.connectedCallback());
+  } else {
+    {
+      plt.jmp(() => appLoadFallback = setTimeout(appDidLoad, 30));
+    }
+  } // Fallback appLoad event
+
+
+  endBootstrap();
+};
+
+const getAssetPath = path => {
+  const assetUrl = new URL(path, plt.$resourcesUrl$);
+  return assetUrl.origin !== win.location.origin ? assetUrl.href : assetUrl.pathname;
+};
+
+const hostRefs = /*@__PURE__*/new WeakMap();
+
+const getHostRef = ref => hostRefs.get(ref);
+
+const registerInstance = (lazyInstance, hostRef) => hostRefs.set(hostRef.$lazyInstance$ = lazyInstance, hostRef);
+
+const registerHost = (elm, cmpMeta) => {
+  const hostRef = {
+    $flags$: 0,
+    $hostElement$: elm,
+    $cmpMeta$: cmpMeta,
+    $instanceValues$: new Map()
+  };
+  {
+    hostRef.$onInstancePromise$ = new Promise(r => hostRef.$onInstanceResolve$ = r);
+  }
+  {
+    hostRef.$onReadyPromise$ = new Promise(r => hostRef.$onReadyResolve$ = r);
+    elm['s-p'] = [];
+    elm['s-rc'] = [];
+  }
+  addHostEventListeners(elm, hostRef, cmpMeta.$listeners$);
+  return hostRefs.set(elm, hostRef);
+};
+
+const isMemberInElement = (elm, memberName) => memberName in elm;
+
+const consoleError = (e, el) => (0, console.error)(e, el);
+
+const cmpModules = /*@__PURE__*/new Map();
+
+const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
+  // loadModuleImport
+  const exportName = cmpMeta.$tagName$.replace(/-/g, '_');
+  const bundleId = cmpMeta.$lazyBundleId$;
+  const module = cmpModules.get(bundleId);
+
+  if (module) {
+    return module[exportName];
+  }
+  /*!__STENCIL_STATIC_IMPORT_SWITCH__*/
+
+
+  return __webpack_require__(863)(`./${bundleId}.entry.js`).then(importedModule => {
+    {
+      cmpModules.set(bundleId, importedModule);
+    }
+    return importedModule[exportName];
+  }, consoleError);
+};
+
+const styles = /*@__PURE__*/new Map();
+const modeResolutionChain = [];
+const queueDomReads = [];
+const queueDomWrites = [];
+
+const queueTask = (queue, write) => cb => {
+  queue.push(cb);
+
+  if (!queuePending) {
+    queuePending = true;
+
+    if (write && plt.$flags$ & 4
+    /* PLATFORM_FLAGS.queueSync */
+    ) {
+      nextTick(flush);
+    } else {
+      plt.raf(flush);
+    }
+  }
+};
+
+const consume = queue => {
+  for (let i = 0; i < queue.length; i++) {
+    try {
+      queue[i](performance.now());
+    } catch (e) {
+      consoleError(e);
+    }
+  }
+
+  queue.length = 0;
+};
+
+const flush = () => {
+  // always force a bunch of medium callbacks to run, but still have
+  // a throttle on how many can run in a certain time
+  // DOM READS!!!
+  consume(queueDomReads); // DOM WRITES!!!
+
+  {
+    consume(queueDomWrites);
+
+    if (queuePending = queueDomReads.length > 0) {
+      // still more to do yet, but we've run out of time
+      // let's let this thing cool off and try again in the next tick
+      plt.raf(flush);
+    }
+  }
+};
+
+const nextTick = /*@__PURE__*/cb => promiseResolve().then(cb);
+
+const readTask = /*@__PURE__*/queueTask(queueDomReads, false);
+const writeTask = /*@__PURE__*/queueTask(queueDomWrites, true);
+const Build = {
+  isDev: false,
+  isBrowser: true,
+  isServer: false,
+  isTesting: false
+};
+
+
+/***/ }),
+
+/***/ 3148:
+/*!*************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/index-eda38007.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -15736,6 +16208,7 @@ const sanitizeDOMString = (untrustedString) => {
  * and then recursively dig down into any child elements to
  * clean those up as well
  */
+// TODO(FW-2832): type (using Element triggers other type errors as well)
 const sanitizeElement = (element) => {
   // IE uses childNodes, so ignore nodes that are not elements
   if (element.nodeType && element.nodeType !== 1) {
@@ -15770,6 +16243,7 @@ const sanitizeElement = (element) => {
  * IE doesn't always support .children
  * so we revert to .childNodes instead
  */
+// TODO(FW-2832): type
 const getElementChildren = (el) => {
   return el.children != null ? el.children : el.childNodes;
 };
@@ -15809,51 +16283,53 @@ class IonicSafeString {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createAnimation": () => (/* reexport safe */ _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c),
-/* harmony export */   "iosTransitionAnimation": () => (/* reexport safe */ _ios_transition_248dea7c_js__WEBPACK_IMPORTED_MODULE_1__.iosTransitionAnimation),
-/* harmony export */   "mdTransitionAnimation": () => (/* reexport safe */ _md_transition_d04040a2_js__WEBPACK_IMPORTED_MODULE_2__.mdTransitionAnimation),
-/* harmony export */   "getTimeGivenProgression": () => (/* reexport safe */ _cubic_bezier_c313947a_js__WEBPACK_IMPORTED_MODULE_3__.g),
-/* harmony export */   "createGesture": () => (/* reexport safe */ _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_4__.createGesture),
-/* harmony export */   "getPlatforms": () => (/* reexport safe */ _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__.g),
-/* harmony export */   "initialize": () => (/* reexport safe */ _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__.i),
-/* harmony export */   "isPlatform": () => (/* reexport safe */ _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__.a),
-/* harmony export */   "componentOnReady": () => (/* reexport safe */ _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__.c),
-/* harmony export */   "IonicSafeString": () => (/* reexport safe */ _index_dff497fb_js__WEBPACK_IMPORTED_MODULE_7__.I),
-/* harmony export */   "LIFECYCLE_DID_ENTER": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.a),
-/* harmony export */   "LIFECYCLE_DID_LEAVE": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.c),
-/* harmony export */   "LIFECYCLE_WILL_ENTER": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.L),
-/* harmony export */   "LIFECYCLE_WILL_LEAVE": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.b),
-/* harmony export */   "LIFECYCLE_WILL_UNLOAD": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.d),
-/* harmony export */   "menuController": () => (/* reexport safe */ _index_b5382161_js__WEBPACK_IMPORTED_MODULE_9__.m),
-/* harmony export */   "actionSheetController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.b),
-/* harmony export */   "alertController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.a),
-/* harmony export */   "loadingController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.l),
-/* harmony export */   "modalController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.m),
-/* harmony export */   "pickerController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.p),
-/* harmony export */   "popoverController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.c),
-/* harmony export */   "toastController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.t),
+/* harmony export */   "createAnimation": () => (/* reexport safe */ _animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c),
+/* harmony export */   "iosTransitionAnimation": () => (/* reexport safe */ _ios_transition_4a0deed6_js__WEBPACK_IMPORTED_MODULE_1__.iosTransitionAnimation),
+/* harmony export */   "mdTransitionAnimation": () => (/* reexport safe */ _md_transition_0d261204_js__WEBPACK_IMPORTED_MODULE_2__.mdTransitionAnimation),
+/* harmony export */   "getTimeGivenProgression": () => (/* reexport safe */ _cubic_bezier_e78d1307_js__WEBPACK_IMPORTED_MODULE_3__.g),
+/* harmony export */   "createGesture": () => (/* reexport safe */ _index_422b6e83_js__WEBPACK_IMPORTED_MODULE_4__.createGesture),
+/* harmony export */   "getPlatforms": () => (/* reexport safe */ _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_5__.g),
+/* harmony export */   "initialize": () => (/* reexport safe */ _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_5__.i),
+/* harmony export */   "isPlatform": () => (/* reexport safe */ _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_5__.a),
+/* harmony export */   "componentOnReady": () => (/* reexport safe */ _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_6__.c),
+/* harmony export */   "IonicSafeString": () => (/* reexport safe */ _index_eda38007_js__WEBPACK_IMPORTED_MODULE_7__.I),
+/* harmony export */   "LIFECYCLE_DID_ENTER": () => (/* reexport safe */ _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_8__.a),
+/* harmony export */   "LIFECYCLE_DID_LEAVE": () => (/* reexport safe */ _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_8__.c),
+/* harmony export */   "LIFECYCLE_WILL_ENTER": () => (/* reexport safe */ _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_8__.L),
+/* harmony export */   "LIFECYCLE_WILL_LEAVE": () => (/* reexport safe */ _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_8__.b),
+/* harmony export */   "LIFECYCLE_WILL_UNLOAD": () => (/* reexport safe */ _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_8__.d),
+/* harmony export */   "menuController": () => (/* reexport safe */ _index_2b839939_js__WEBPACK_IMPORTED_MODULE_9__.m),
+/* harmony export */   "actionSheetController": () => (/* reexport safe */ _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__.b),
+/* harmony export */   "alertController": () => (/* reexport safe */ _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__.a),
+/* harmony export */   "loadingController": () => (/* reexport safe */ _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__.l),
+/* harmony export */   "modalController": () => (/* reexport safe */ _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__.m),
+/* harmony export */   "pickerController": () => (/* reexport safe */ _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__.p),
+/* harmony export */   "popoverController": () => (/* reexport safe */ _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__.c),
+/* harmony export */   "toastController": () => (/* reexport safe */ _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__.t),
 /* harmony export */   "IonicSlides": () => (/* binding */ IonicSlides),
 /* harmony export */   "IonicSwiper": () => (/* binding */ IonicSwiper),
 /* harmony export */   "getMode": () => (/* binding */ getMode),
 /* harmony export */   "setupConfig": () => (/* binding */ setupConfig)
 /* harmony export */ });
-/* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
-/* harmony import */ var _ios_transition_248dea7c_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ios.transition-248dea7c.js */ 1339);
-/* harmony import */ var _md_transition_d04040a2_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./md.transition-d04040a2.js */ 4250);
-/* harmony import */ var _cubic_bezier_c313947a_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cubic-bezier-c313947a.js */ 1077);
-/* harmony import */ var _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index-3f1a7d95.js */ 2172);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _index_dff497fb_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./index-dff497fb.js */ 1652);
-/* harmony import */ var _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index-2b53f989.js */ 4243);
-/* harmony import */ var _index_b5382161_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./index-b5382161.js */ 8773);
-/* harmony import */ var _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./overlays-ff47fddd.js */ 6523);
-/* harmony import */ var _gesture_controller_17e82006_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./gesture-controller-17e82006.js */ 607);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
-/* harmony import */ var _hardware_back_button_490df115_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./hardware-back-button-490df115.js */ 159);
+/* harmony import */ var _animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-4ff3f603.js */ 5933);
+/* harmony import */ var _ios_transition_4a0deed6_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ios.transition-4a0deed6.js */ 9078);
+/* harmony import */ var _md_transition_0d261204_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./md.transition-0d261204.js */ 4199);
+/* harmony import */ var _cubic_bezier_e78d1307_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cubic-bezier-e78d1307.js */ 1463);
+/* harmony import */ var _index_422b6e83_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index-422b6e83.js */ 6366);
+/* harmony import */ var _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ionic-global-c74e4951.js */ 5823);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
+/* harmony import */ var _index_eda38007_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./index-eda38007.js */ 3148);
+/* harmony import */ var _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index-27c7e5c4.js */ 919);
+/* harmony import */ var _index_2b839939_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./index-2b839939.js */ 7351);
+/* harmony import */ var _overlays_5fc09c9a_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./overlays-5fc09c9a.js */ 7580);
+/* harmony import */ var _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./index-33ffec25.js */ 2286);
+/* harmony import */ var _gesture_controller_17060b7c_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./gesture-controller-17060b7c.js */ 6379);
+/* harmony import */ var _index_8e692445_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./index-8e692445.js */ 1559);
+/* harmony import */ var _hardware_back_button_490df115_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./hardware-back-button-490df115.js */ 159);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
+
 
 
 
@@ -15960,12 +16436,12 @@ const setupSwiperInIonic = (swiper, watchForIonPageChanges = true) => {
        * We need an raf here so the update
        * is fired one tick after the overlay is shown.
        */
-      (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__.r)(() => {
+      (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_6__.r)(() => {
         swiperEl.swiper.update();
-        (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__.b)(modalOrPopover, eventName, overlayCallback);
+        (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_6__.b)(modalOrPopover, eventName, overlayCallback);
       });
     };
-    (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__.a)(modalOrPopover, eventName, overlayCallback);
+    (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_6__.a)(modalOrPopover, eventName, overlayCallback);
   }
   else {
     /**
@@ -16000,9 +16476,9 @@ const setupSwiperInIonic = (swiper, watchForIonPageChanges = true) => {
    */
   const onAppLoad = () => {
     swiperEl.swiper.update();
-    (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__.b)(window, 'appload', onAppLoad);
+    (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_6__.b)(window, 'appload', onAppLoad);
   };
-  (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__.a)(window, 'appload', onAppLoad);
+  (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_6__.a)(window, 'appload', onAppLoad);
 };
 const IonicSwiper = {
   name: 'ionic',
@@ -16119,9 +16595,9 @@ const IonicSlides = (opts) => {
 
 /***/ }),
 
-/***/ 7665:
+/***/ 5823:
 /*!********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/ionic-global-f1ce4d2d.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/ionic-global-c74e4951.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -16134,12 +16610,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "g": () => (/* binding */ getPlatforms),
 /* harmony export */   "i": () => (/* binding */ initialize)
 /* harmony export */ });
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-8e692445.js */ 1559);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
 
 
+// TODO(FW-2832): types
 class Config {
   constructor() {
     this.m = new Map();
@@ -16297,7 +16774,7 @@ const PLATFORMS_MAP = {
 
 let defaultMode;
 const getIonMode = (ref) => {
-  return (ref && (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.g)(ref)) || defaultMode;
+  return (ref && (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__.g)(ref)) || defaultMode;
 };
 const initialize = (userConfig = {}) => {
   if (typeof window === 'undefined') {
@@ -16316,7 +16793,7 @@ const initialize = (userConfig = {}) => {
   if (userConfig._ce) {
     platformHelpers.ce = userConfig._ce;
   }
-  (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.s)(platformHelpers);
+  (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__.s)(platformHelpers);
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
   const configObj = Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, configFromSession(win)), { persistConfig: false }), Ionic.config), configFromURL(win)), userConfig);
@@ -16339,7 +16816,7 @@ const initialize = (userConfig = {}) => {
   }
   const isIonicElement = (elm) => { var _a; return (_a = elm.tagName) === null || _a === void 0 ? void 0 : _a.startsWith('ION-'); };
   const isAllowedIonicModeValue = (elmMode) => ['ios', 'md'].includes(elmMode);
-  (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.a)((elm) => {
+  (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__.a)((elm) => {
     while (elm) {
       const elmMode = elm.mode || elm.getAttribute('mode');
       if (elmMode) {
@@ -16361,9 +16838,9 @@ const initialize = (userConfig = {}) => {
 
 /***/ }),
 
-/***/ 1339:
+/***/ 9078:
 /*!**********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/ios.transition-248dea7c.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/ios.transition-4a0deed6.js ***!
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -16373,10 +16850,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "iosTransitionAnimation": () => (/* binding */ iosTransitionAnimation),
 /* harmony export */   "shadow": () => (/* binding */ shadow)
 /* harmony export */ });
-/* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
-/* harmony import */ var _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-2b53f989.js */ 4243);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-4ff3f603.js */ 5933);
+/* harmony import */ var _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-27c7e5c4.js */ 919);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
+/* harmony import */ var _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-33ffec25.js */ 2286);
+/* harmony import */ var _index_8e692445_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index-8e692445.js */ 1559);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -16385,7 +16863,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const DURATION = 540;
+// TODO(FW-2832): types
 const getClonedElement = (tagName) => {
   return document.querySelector(`${tagName}.ion-cloned-element`);
 };
@@ -16484,8 +16964,8 @@ const animateBackButton = (rootAnimation, rtl, backDirection, backButtonEl, larg
     { offset: 1, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` },
   ];
   const ICON_KEYFRAMES = backDirection ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
-  const enteringBackButtonTextAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
-  const enteringBackButtonIconAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+  const enteringBackButtonTextAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+  const enteringBackButtonIconAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
   const clonedBackButtonEl = getClonedElement('ion-back-button');
   const backButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text');
   const backButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon');
@@ -16535,7 +17015,7 @@ const animateLargeTitle = (rootAnimation, rtl, backDirection, largeTitleEl, larg
   ];
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
   const clonedTitleEl = getClonedElement('ion-title');
-  const clonedLargeTitleAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+  const clonedLargeTitleAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
   clonedTitleEl.innerText = largeTitleEl.innerText;
   clonedTitleEl.size = largeTitleEl.size;
   clonedTitleEl.color = largeTitleEl.color;
@@ -16559,6 +17039,7 @@ const animateLargeTitle = (rootAnimation, rtl, backDirection, largeTitleEl, larg
   rootAnimation.addAnimation(clonedLargeTitleAnimation);
 };
 const iosTransitionAnimation = (navEl, opts) => {
+  var _a;
   try {
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';
     const OPACITY = 'opacity';
@@ -16574,16 +17055,16 @@ const iosTransitionAnimation = (navEl, opts) => {
     const contentEl = enteringEl.querySelector(':scope > ion-content');
     const headerEls = enteringEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
     const enteringToolBarEls = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
-    const rootAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
-    const enteringContentAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+    const rootAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+    const enteringContentAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
     rootAnimation
       .addElement(enteringEl)
-      .duration(opts.duration || DURATION)
+      .duration(((_a = opts.duration) !== null && _a !== void 0 ? _a : 0) || DURATION)
       .easing(opts.easing || EASING)
       .fill('both')
       .beforeRemoveClass('ion-page-invisible');
-    if (leavingEl && navEl) {
-      const navDecorAnimation = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+    if (leavingEl && navEl !== null && navEl !== undefined) {
+      const navDecorAnimation = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       navDecorAnimation.addElement(navEl);
       rootAnimation.addAnimation(navDecorAnimation);
     }
@@ -16612,9 +17093,9 @@ const iosTransitionAnimation = (navEl, opts) => {
       if (enteringTransitionEffectEl) {
         const enteringTransitionCoverEl = enteringTransitionEffectEl.querySelector('.transition-cover');
         const enteringTransitionShadowEl = enteringTransitionEffectEl.querySelector('.transition-shadow');
-        const enteringTransitionEffect = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
-        const enteringTransitionCover = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
-        const enteringTransitionShadow = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const enteringTransitionEffect = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const enteringTransitionCover = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const enteringTransitionShadow = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
         enteringTransitionEffect
           .addElement(enteringTransitionEffectEl)
           .beforeStyles({ opacity: '1', display: 'block' })
@@ -16634,12 +17115,12 @@ const iosTransitionAnimation = (navEl, opts) => {
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
     const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
     enteringToolBarEls.forEach((enteringToolBarEl) => {
-      const enteringToolBar = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+      const enteringToolBar = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       enteringToolBar.addElement(enteringToolBarEl);
       rootAnimation.addAnimation(enteringToolBar);
-      const enteringTitle = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+      const enteringTitle = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title')); // REVIEW
-      const enteringToolBarButtons = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+      const enteringToolBarButtons = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       const buttons = Array.from(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
       const parentHeader = enteringToolBarEl.closest('ion-header');
       const inactiveHeader = parentHeader === null || parentHeader === void 0 ? void 0 : parentHeader.classList.contains('header-collapse-condense-inactive');
@@ -16654,11 +17135,11 @@ const iosTransitionAnimation = (navEl, opts) => {
         buttonsToAnimate = buttons.filter((button) => !button.classList.contains('buttons-collapse'));
       }
       enteringToolBarButtons.addElement(buttonsToAnimate);
-      const enteringToolBarItems = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+      const enteringToolBarItems = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       enteringToolBarItems.addElement(enteringToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'));
-      const enteringToolBarBg = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+      const enteringToolBarBg = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       enteringToolBarBg.addElement(shadow(enteringToolBarEl).querySelector('.toolbar-background')); // REVIEW
-      const enteringBackButton = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+      const enteringBackButton = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
       if (backButtonEl) {
         enteringBackButton.addElement(backButtonEl);
@@ -16703,7 +17184,7 @@ const iosTransitionAnimation = (navEl, opts) => {
           enteringBackButton.fromTo(OPACITY, 0.01, 1);
         }
         if (backButtonEl && !forward) {
-          const enteringBackBtnText = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+          const enteringBackBtnText = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
           enteringBackBtnText
             .addElement(shadow(backButtonEl).querySelector('.button-text')) // REVIEW
             .fromTo(`transform`, isRTL ? 'translateX(-100px)' : 'translateX(100px)', 'translateX(0px)');
@@ -16713,7 +17194,7 @@ const iosTransitionAnimation = (navEl, opts) => {
     });
     // setup leaving view
     if (leavingEl) {
-      const leavingContent = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+      const leavingContent = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
       const leavingContentEl = leavingEl.querySelector(':scope > ion-content');
       const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
       const leavingHeaderEls = leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
@@ -16730,7 +17211,7 @@ const iosTransitionAnimation = (navEl, opts) => {
         leavingContent
           .beforeClearStyles([OPACITY])
           .fromTo('transform', `translateX(${CENTER})`, isRTL ? 'translateX(-100%)' : 'translateX(100%)');
-        const leavingPage = (0,_index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl);
+        const leavingPage = (0,_index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl);
         rootAnimation.afterAddWrite(() => {
           if (rootAnimation.getDirection() === 'normal') {
             leavingPage.style.setProperty('display', 'none');
@@ -16748,9 +17229,9 @@ const iosTransitionAnimation = (navEl, opts) => {
         if (leavingTransitionEffectEl) {
           const leavingTransitionCoverEl = leavingTransitionEffectEl.querySelector('.transition-cover');
           const leavingTransitionShadowEl = leavingTransitionEffectEl.querySelector('.transition-shadow');
-          const leavingTransitionEffect = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
-          const leavingTransitionCover = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
-          const leavingTransitionShadow = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+          const leavingTransitionEffect = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+          const leavingTransitionCover = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+          const leavingTransitionShadow = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
           leavingTransitionEffect
             .addElement(leavingTransitionEffectEl)
             .beforeStyles({ opacity: '1', display: 'block' })
@@ -16768,11 +17249,11 @@ const iosTransitionAnimation = (navEl, opts) => {
         }
       }
       leavingToolBarEls.forEach((leavingToolBarEl) => {
-        const leavingToolBar = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const leavingToolBar = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
         leavingToolBar.addElement(leavingToolBarEl);
-        const leavingTitle = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const leavingTitle = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
         leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title')); // REVIEW
-        const leavingToolBarButtons = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const leavingToolBarButtons = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
         const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
         const parentHeader = leavingToolBarEl.closest('ion-header');
         const inactiveHeader = parentHeader === null || parentHeader === void 0 ? void 0 : parentHeader.classList.contains('header-collapse-condense-inactive');
@@ -16781,14 +17262,14 @@ const iosTransitionAnimation = (navEl, opts) => {
           return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
         leavingToolBarButtons.addElement(buttonsToAnimate);
-        const leavingToolBarItems = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const leavingToolBarItems = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
         const leavingToolBarItemEls = leavingToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
         if (leavingToolBarItemEls.length > 0) {
           leavingToolBarItems.addElement(leavingToolBarItemEls);
         }
-        const leavingToolBarBg = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const leavingToolBarBg = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
         leavingToolBarBg.addElement(shadow(leavingToolBarEl).querySelector('.toolbar-background')); // REVIEW
-        const leavingBackButton = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+        const leavingBackButton = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
         const backButtonEl = leavingToolBarEl.querySelector('ion-back-button');
         if (backButtonEl) {
           leavingBackButton.addElement(backButtonEl);
@@ -16824,7 +17305,7 @@ const iosTransitionAnimation = (navEl, opts) => {
             leavingToolBarBg.fromTo('transform', 'translateX(0px)', isRTL ? 'translateX(-100%)' : 'translateX(100%)');
           }
           if (backButtonEl && !backward) {
-            const leavingBackBtnText = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+            const leavingBackBtnText = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
             leavingBackBtnText
               .addElement(shadow(backButtonEl).querySelector('.button-text')) // REVIEW
               .fromTo('transform', `translateX(${CENTER})`, `translateX(${(isRTL ? -124 : 124) + 'px'})`);
@@ -16871,9 +17352,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "defineCustomElements": () => (/* binding */ defineCustomElements)
 /* harmony export */ });
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
-/* harmony import */ var _app_globals_7511e593_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-globals-7511e593.js */ 9350);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-8e692445.js */ 1559);
+/* harmony import */ var _app_globals_a49ec076_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-globals-a49ec076.js */ 2963);
+/* harmony import */ var _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ionic-global-c74e4951.js */ 5823);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -16882,17 +17363,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /*
- Stencil Client Patch Esm v2.14.2 | MIT Licensed | https://stenciljs.com
+ Stencil Client Patch Esm v2.18.0 | MIT Licensed | https://stenciljs.com
  */
 const patchEsm = () => {
-    return (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.p)();
+    return (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__.p)();
 };
 
 const defineCustomElements = (win, options) => {
   if (typeof window === 'undefined') return Promise.resolve();
   return patchEsm().then(() => {
-  (0,_app_globals_7511e593_js__WEBPACK_IMPORTED_MODULE_1__.g)();
-  return (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.b)(JSON.parse("[[\"ion-menu_3\",[[33,\"ion-menu-button\",{\"color\":[513],\"disabled\":[4],\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"type\":[1],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]],[33,\"ion-menu\",{\"contentId\":[513,\"content-id\"],\"menuId\":[513,\"menu-id\"],\"type\":[1025],\"disabled\":[1028],\"side\":[513],\"swipeGesture\":[4,\"swipe-gesture\"],\"maxEdgeStart\":[2,\"max-edge-start\"],\"isPaneVisible\":[32],\"isEndSide\":[32],\"isOpen\":[64],\"isActive\":[64],\"open\":[64],\"close\":[64],\"toggle\":[64],\"setOpen\":[64]},[[16,\"ionSplitPaneVisible\",\"onSplitPaneChanged\"],[2,\"click\",\"onBackdropClick\"],[0,\"keydown\",\"onKeydown\"]]],[1,\"ion-menu-toggle\",{\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]]]],[\"ion-fab_3\",[[33,\"ion-fab-button\",{\"color\":[513],\"activated\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1],\"show\":[4],\"translucent\":[4],\"type\":[1],\"size\":[1],\"closeIcon\":[1,\"close-icon\"]}],[1,\"ion-fab\",{\"horizontal\":[1],\"vertical\":[1],\"edge\":[4],\"activated\":[1028],\"close\":[64]}],[1,\"ion-fab-list\",{\"activated\":[4],\"side\":[1]}]]],[\"ion-refresher_2\",[[0,\"ion-refresher-content\",{\"pullingIcon\":[1025,\"pulling-icon\"],\"pullingText\":[1,\"pulling-text\"],\"refreshingSpinner\":[1025,\"refreshing-spinner\"],\"refreshingText\":[1,\"refreshing-text\"]}],[32,\"ion-refresher\",{\"pullMin\":[2,\"pull-min\"],\"pullMax\":[2,\"pull-max\"],\"closeDuration\":[1,\"close-duration\"],\"snapbackDuration\":[1,\"snapback-duration\"],\"pullFactor\":[2,\"pull-factor\"],\"disabled\":[4],\"nativeRefresher\":[32],\"state\":[32],\"complete\":[64],\"cancel\":[64],\"getProgress\":[64]}]]],[\"ion-back-button\",[[33,\"ion-back-button\",{\"color\":[513],\"defaultHref\":[1025,\"default-href\"],\"disabled\":[516],\"icon\":[1],\"text\":[1],\"type\":[1],\"routerAnimation\":[16]}]]],[\"ion-toast\",[[33,\"ion-toast\",{\"overlayIndex\":[2,\"overlay-index\"],\"color\":[513],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"header\":[1],\"message\":[1],\"keyboardClose\":[4,\"keyboard-close\"],\"position\":[1],\"buttons\":[16],\"translucent\":[4],\"animated\":[4],\"icon\":[1],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-card_5\",[[33,\"ion-card\",{\"color\":[513],\"button\":[4],\"type\":[1],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}],[32,\"ion-card-content\"],[33,\"ion-card-header\",{\"color\":[513],\"translucent\":[4]}],[33,\"ion-card-subtitle\",{\"color\":[513]}],[33,\"ion-card-title\",{\"color\":[513]}]]],[\"ion-item-option_3\",[[33,\"ion-item-option\",{\"color\":[513],\"disabled\":[4],\"download\":[1],\"expandable\":[4],\"href\":[1],\"rel\":[1],\"target\":[1],\"type\":[1]}],[32,\"ion-item-options\",{\"side\":[1],\"fireSwipeEvent\":[64]}],[0,\"ion-item-sliding\",{\"disabled\":[4],\"state\":[32],\"getOpenAmount\":[64],\"getSlidingRatio\":[64],\"open\":[64],\"close\":[64],\"closeOpened\":[64]}]]],[\"ion-accordion_2\",[[49,\"ion-accordion\",{\"value\":[1],\"disabled\":[4],\"readonly\":[4],\"toggleIcon\":[1,\"toggle-icon\"],\"toggleIconSlot\":[1,\"toggle-icon-slot\"],\"state\":[32],\"isNext\":[32],\"isPrevious\":[32]}],[33,\"ion-accordion-group\",{\"animated\":[4],\"multiple\":[4],\"value\":[1025],\"disabled\":[4],\"readonly\":[4],\"expand\":[1],\"requestAccordionToggle\":[64],\"getAccordions\":[64]},[[0,\"keydown\",\"onKeydown\"]]]]],[\"ion-infinite-scroll_2\",[[32,\"ion-infinite-scroll-content\",{\"loadingSpinner\":[1025,\"loading-spinner\"],\"loadingText\":[1,\"loading-text\"]}],[0,\"ion-infinite-scroll\",{\"threshold\":[1],\"disabled\":[4],\"position\":[1],\"isLoading\":[32],\"complete\":[64]}]]],[\"ion-reorder_2\",[[33,\"ion-reorder\",null,[[2,\"click\",\"onClick\"]]],[0,\"ion-reorder-group\",{\"disabled\":[4],\"state\":[32],\"complete\":[64]}]]],[\"ion-segment_2\",[[33,\"ion-segment-button\",{\"disabled\":[4],\"layout\":[1],\"type\":[1],\"value\":[1],\"checked\":[32]}],[33,\"ion-segment\",{\"color\":[513],\"disabled\":[4],\"scrollable\":[4],\"swipeGesture\":[4,\"swipe-gesture\"],\"value\":[1025],\"selectOnFocus\":[4,\"select-on-focus\"],\"activated\":[32]},[[0,\"keydown\",\"onKeyDown\"]]]]],[\"ion-tab-bar_2\",[[33,\"ion-tab-button\",{\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"layout\":[1025],\"selected\":[1028],\"tab\":[1],\"target\":[1]},[[8,\"ionTabBarChanged\",\"onTabBarChanged\"]]],[33,\"ion-tab-bar\",{\"color\":[513],\"selectedTab\":[1,\"selected-tab\"],\"translucent\":[4],\"keyboardVisible\":[32]}]]],[\"ion-chip\",[[33,\"ion-chip\",{\"color\":[513],\"outline\":[4],\"disabled\":[4]}]]],[\"ion-searchbar\",[[34,\"ion-searchbar\",{\"color\":[513],\"animated\":[4],\"autocomplete\":[1],\"autocorrect\":[1],\"cancelButtonIcon\":[1,\"cancel-button-icon\"],\"cancelButtonText\":[1,\"cancel-button-text\"],\"clearIcon\":[1,\"clear-icon\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"placeholder\":[1],\"searchIcon\":[1,\"search-icon\"],\"showCancelButton\":[1,\"show-cancel-button\"],\"showClearButton\":[1,\"show-clear-button\"],\"spellcheck\":[4],\"type\":[1],\"value\":[1025],\"focused\":[32],\"noAnimate\":[32],\"setFocus\":[64],\"getInputElement\":[64]}]]],[\"ion-nav_2\",[[1,\"ion-nav\",{\"delegate\":[16],\"swipeGesture\":[1028,\"swipe-gesture\"],\"animated\":[4],\"animation\":[16],\"rootParams\":[16],\"root\":[1],\"push\":[64],\"insert\":[64],\"insertPages\":[64],\"pop\":[64],\"popTo\":[64],\"popToRoot\":[64],\"removeIndex\":[64],\"setRoot\":[64],\"setPages\":[64],\"setRouteId\":[64],\"getRouteId\":[64],\"getActive\":[64],\"getByIndex\":[64],\"canGoBack\":[64],\"getPrevious\":[64]}],[0,\"ion-nav-link\",{\"component\":[1],\"componentProps\":[16],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}]]],[\"ion-slide_2\",[[0,\"ion-slide\"],[36,\"ion-slides\",{\"options\":[8],\"pager\":[4],\"scrollbar\":[4],\"update\":[64],\"updateAutoHeight\":[64],\"slideTo\":[64],\"slideNext\":[64],\"slidePrev\":[64],\"getActiveIndex\":[64],\"getPreviousIndex\":[64],\"length\":[64],\"isEnd\":[64],\"isBeginning\":[64],\"startAutoplay\":[64],\"stopAutoplay\":[64],\"lockSwipeToNext\":[64],\"lockSwipeToPrev\":[64],\"lockSwipes\":[64],\"getSwiper\":[64]}]]],[\"ion-tab_2\",[[1,\"ion-tab\",{\"active\":[1028],\"delegate\":[16],\"tab\":[1],\"component\":[1],\"setActive\":[64]}],[1,\"ion-tabs\",{\"useRouter\":[1028,\"use-router\"],\"selectedTab\":[32],\"select\":[64],\"getTab\":[64],\"getSelected\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}]]],[\"ion-input\",[[34,\"ion-input\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"accept\":[1],\"autocapitalize\":[1],\"autocomplete\":[1],\"autocorrect\":[1],\"autofocus\":[4],\"clearInput\":[4,\"clear-input\"],\"clearOnEdit\":[4,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"enterkeyhint\":[1],\"inputmode\":[1],\"max\":[8],\"maxlength\":[2],\"min\":[8],\"minlength\":[2],\"multiple\":[4],\"name\":[1],\"pattern\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"step\":[1],\"size\":[2],\"type\":[1],\"value\":[1032],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-textarea\",[[34,\"ion-textarea\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"autocapitalize\":[1],\"autofocus\":[4],\"clearOnEdit\":[1028,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"maxlength\":[2],\"minlength\":[2],\"name\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"cols\":[2],\"rows\":[2],\"wrap\":[1],\"autoGrow\":[4,\"auto-grow\"],\"value\":[1025],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-backdrop\",[[33,\"ion-backdrop\",{\"visible\":[4],\"tappable\":[4],\"stopPropagation\":[4,\"stop-propagation\"]},[[2,\"click\",\"onMouseDown\"]]]]],[\"ion-loading\",[[34,\"ion-loading\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"message\":[1],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"spinner\":[1025],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-breadcrumb_2\",[[33,\"ion-breadcrumb\",{\"collapsed\":[4],\"last\":[4],\"showCollapsedIndicator\":[4,\"show-collapsed-indicator\"],\"color\":[1],\"active\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"separator\":[4],\"target\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}],[33,\"ion-breadcrumbs\",{\"color\":[1],\"maxItems\":[2,\"max-items\"],\"itemsBeforeCollapse\":[2,\"items-before-collapse\"],\"itemsAfterCollapse\":[2,\"items-after-collapse\"],\"collapsed\":[32],\"activeChanged\":[32]},[[0,\"collapsedClick\",\"onCollapsedClick\"]]]]],[\"ion-modal\",[[33,\"ion-modal\",{\"hasController\":[4,\"has-controller\"],\"overlayIndex\":[2,\"overlay-index\"],\"delegate\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"breakpoints\":[16],\"initialBreakpoint\":[2,\"initial-breakpoint\"],\"backdropBreakpoint\":[2,\"backdrop-breakpoint\"],\"handle\":[4],\"component\":[1],\"componentProps\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"animated\":[4],\"swipeToClose\":[4,\"swipe-to-close\"],\"presentingElement\":[16],\"htmlAttributes\":[16],\"isOpen\":[4,\"is-open\"],\"trigger\":[1],\"canDismiss\":[4,\"can-dismiss\"],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"setCurrentBreakpoint\":[64],\"getCurrentBreakpoint\":[64]}]]],[\"ion-route_4\",[[0,\"ion-route\",{\"url\":[1],\"component\":[1],\"componentProps\":[16],\"beforeLeave\":[16],\"beforeEnter\":[16]}],[0,\"ion-route-redirect\",{\"from\":[1],\"to\":[1]}],[0,\"ion-router\",{\"root\":[1],\"useHash\":[4,\"use-hash\"],\"canTransition\":[64],\"push\":[64],\"back\":[64],\"printDebug\":[64],\"navChanged\":[64]},[[8,\"popstate\",\"onPopState\"],[4,\"ionBackButton\",\"onBackButton\"]]],[1,\"ion-router-link\",{\"color\":[513],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}]]],[\"ion-avatar_3\",[[33,\"ion-avatar\"],[33,\"ion-badge\",{\"color\":[513]}],[1,\"ion-thumbnail\"]]],[\"ion-col_3\",[[1,\"ion-col\",{\"offset\":[1],\"offsetXs\":[1,\"offset-xs\"],\"offsetSm\":[1,\"offset-sm\"],\"offsetMd\":[1,\"offset-md\"],\"offsetLg\":[1,\"offset-lg\"],\"offsetXl\":[1,\"offset-xl\"],\"pull\":[1],\"pullXs\":[1,\"pull-xs\"],\"pullSm\":[1,\"pull-sm\"],\"pullMd\":[1,\"pull-md\"],\"pullLg\":[1,\"pull-lg\"],\"pullXl\":[1,\"pull-xl\"],\"push\":[1],\"pushXs\":[1,\"push-xs\"],\"pushSm\":[1,\"push-sm\"],\"pushMd\":[1,\"push-md\"],\"pushLg\":[1,\"push-lg\"],\"pushXl\":[1,\"push-xl\"],\"size\":[1],\"sizeXs\":[1,\"size-xs\"],\"sizeSm\":[1,\"size-sm\"],\"sizeMd\":[1,\"size-md\"],\"sizeLg\":[1,\"size-lg\"],\"sizeXl\":[1,\"size-xl\"]},[[9,\"resize\",\"onResize\"]]],[1,\"ion-grid\",{\"fixed\":[4]}],[1,\"ion-row\"]]],[\"ion-img\",[[1,\"ion-img\",{\"alt\":[1],\"src\":[1],\"loadSrc\":[32],\"loadError\":[32]}]]],[\"ion-progress-bar\",[[33,\"ion-progress-bar\",{\"type\":[1],\"reversed\":[4],\"value\":[2],\"buffer\":[2],\"color\":[513]}]]],[\"ion-range\",[[33,\"ion-range\",{\"color\":[513],\"debounce\":[2],\"name\":[1],\"dualKnobs\":[4,\"dual-knobs\"],\"min\":[2],\"max\":[2],\"pin\":[4],\"pinFormatter\":[16],\"snaps\":[4],\"step\":[2],\"ticks\":[4],\"disabled\":[4],\"value\":[1026],\"ratioA\":[32],\"ratioB\":[32],\"pressedKnob\":[32]}]]],[\"ion-split-pane\",[[33,\"ion-split-pane\",{\"contentId\":[513,\"content-id\"],\"disabled\":[4],\"when\":[8],\"visible\":[32]}]]],[\"ion-text\",[[1,\"ion-text\",{\"color\":[513]}]]],[\"ion-toggle\",[[33,\"ion-toggle\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"disabled\":[4],\"value\":[1],\"activated\":[32]}]]],[\"ion-virtual-scroll\",[[0,\"ion-virtual-scroll\",{\"approxItemHeight\":[2,\"approx-item-height\"],\"approxHeaderHeight\":[2,\"approx-header-height\"],\"approxFooterHeight\":[2,\"approx-footer-height\"],\"headerFn\":[16],\"footerFn\":[16],\"items\":[16],\"itemHeight\":[16],\"headerHeight\":[16],\"footerHeight\":[16],\"renderItem\":[16],\"renderHeader\":[16],\"renderFooter\":[16],\"nodeRender\":[16],\"domRender\":[16],\"totalHeight\":[32],\"positionForItem\":[64],\"checkRange\":[64],\"checkEnd\":[64]},[[9,\"resize\",\"onResize\"]]]]],[\"ion-picker-column-internal\",[[33,\"ion-picker-column-internal\",{\"items\":[16],\"value\":[1032],\"color\":[513],\"numericInput\":[4,\"numeric-input\"],\"isActive\":[32],\"scrollActiveItemIntoView\":[64]}]]],[\"ion-picker-internal\",[[33,\"ion-picker-internal\"]]],[\"ion-radio_2\",[[33,\"ion-radio\",{\"color\":[513],\"name\":[1],\"disabled\":[4],\"value\":[8],\"checked\":[32],\"buttonTabindex\":[32],\"setFocus\":[64],\"setButtonTabindex\":[64]}],[0,\"ion-radio-group\",{\"allowEmptySelection\":[4,\"allow-empty-selection\"],\"name\":[1],\"value\":[1032]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-ripple-effect\",[[1,\"ion-ripple-effect\",{\"type\":[1],\"addRipple\":[64]}]]],[\"ion-button_2\",[[33,\"ion-button\",{\"color\":[513],\"buttonType\":[1025,\"button-type\"],\"disabled\":[516],\"expand\":[513],\"fill\":[1537],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"download\":[1],\"href\":[1],\"rel\":[1],\"shape\":[513],\"size\":[513],\"strong\":[4],\"target\":[1],\"type\":[1]}],[1,\"ion-icon\",{\"mode\":[1025],\"color\":[1],\"ios\":[1],\"md\":[1],\"flipRtl\":[4,\"flip-rtl\"],\"name\":[513],\"src\":[1],\"icon\":[8],\"size\":[1],\"lazy\":[4],\"sanitize\":[4],\"svgContent\":[32],\"isVisible\":[32],\"ariaLabel\":[32]}]]],[\"ion-datetime_3\",[[33,\"ion-datetime\",{\"color\":[1],\"name\":[1],\"disabled\":[4],\"readonly\":[4],\"isDateEnabled\":[16],\"min\":[1025],\"max\":[1025],\"presentation\":[1],\"cancelText\":[1,\"cancel-text\"],\"doneText\":[1,\"done-text\"],\"clearText\":[1,\"clear-text\"],\"yearValues\":[8,\"year-values\"],\"monthValues\":[8,\"month-values\"],\"dayValues\":[8,\"day-values\"],\"hourValues\":[8,\"hour-values\"],\"minuteValues\":[8,\"minute-values\"],\"locale\":[1],\"firstDayOfWeek\":[2,\"first-day-of-week\"],\"value\":[1025],\"showDefaultTitle\":[4,\"show-default-title\"],\"showDefaultButtons\":[4,\"show-default-buttons\"],\"showClearButton\":[4,\"show-clear-button\"],\"showDefaultTimeLabel\":[4,\"show-default-time-label\"],\"hourCycle\":[1,\"hour-cycle\"],\"size\":[1],\"showMonthAndYear\":[32],\"activeParts\":[32],\"workingParts\":[32],\"isPresented\":[32],\"isTimePopoverOpen\":[32],\"confirm\":[64],\"reset\":[64],\"cancel\":[64]}],[34,\"ion-picker\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"columns\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"showBackdrop\":[4,\"show-backdrop\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"animated\":[4],\"htmlAttributes\":[16],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"getColumn\":[64]}],[32,\"ion-picker-column\",{\"col\":[16]}]]],[\"ion-action-sheet\",[[34,\"ion-action-sheet\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-alert\",[[34,\"ion-alert\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"buttons\":[16],\"inputs\":[1040],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-popover\",[[33,\"ion-popover\",{\"hasController\":[4,\"has-controller\"],\"delegate\":[16],\"overlayIndex\":[2,\"overlay-index\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"component\":[1],\"componentProps\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"event\":[8],\"showBackdrop\":[4,\"show-backdrop\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"triggerAction\":[1,\"trigger-action\"],\"trigger\":[1],\"size\":[1],\"dismissOnSelect\":[4,\"dismiss-on-select\"],\"reference\":[1],\"side\":[1],\"alignment\":[1025],\"arrow\":[4],\"isOpen\":[4,\"is-open\"],\"keyboardEvents\":[4,\"keyboard-events\"],\"presented\":[32],\"presentFromTrigger\":[64],\"present\":[64],\"dismiss\":[64],\"getParentPopover\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-checkbox\",[[33,\"ion-checkbox\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"indeterminate\":[1028],\"disabled\":[4],\"value\":[8]}]]],[\"ion-select_3\",[[33,\"ion-select\",{\"disabled\":[4],\"cancelText\":[1,\"cancel-text\"],\"okText\":[1,\"ok-text\"],\"placeholder\":[1],\"name\":[1],\"selectedText\":[1,\"selected-text\"],\"multiple\":[4],\"interface\":[1],\"interfaceOptions\":[8,\"interface-options\"],\"compareWith\":[1,\"compare-with\"],\"value\":[1032],\"isExpanded\":[32],\"open\":[64]}],[1,\"ion-select-option\",{\"disabled\":[4],\"value\":[8]}],[34,\"ion-select-popover\",{\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"multiple\":[4],\"options\":[16]},[[0,\"ionChange\",\"onSelect\"]]]]],[\"ion-app_8\",[[0,\"ion-app\",{\"setFocus\":[64]}],[1,\"ion-content\",{\"color\":[513],\"fullscreen\":[4],\"forceOverscroll\":[1028,\"force-overscroll\"],\"scrollX\":[4,\"scroll-x\"],\"scrollY\":[4,\"scroll-y\"],\"scrollEvents\":[4,\"scroll-events\"],\"getScrollElement\":[64],\"scrollToTop\":[64],\"scrollToBottom\":[64],\"scrollByPoint\":[64],\"scrollToPoint\":[64]},[[8,\"appload\",\"onAppLoad\"]]],[36,\"ion-footer\",{\"collapse\":[1],\"translucent\":[4]}],[36,\"ion-header\",{\"collapse\":[1],\"translucent\":[4]}],[1,\"ion-router-outlet\",{\"mode\":[1025],\"delegate\":[16],\"animated\":[4],\"animation\":[16],\"swipeHandler\":[16],\"commit\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}],[33,\"ion-title\",{\"color\":[513],\"size\":[1]}],[33,\"ion-toolbar\",{\"color\":[513]},[[0,\"ionStyle\",\"childrenStyle\"]]],[34,\"ion-buttons\",{\"collapse\":[4]}]]],[\"ion-spinner\",[[1,\"ion-spinner\",{\"color\":[513],\"duration\":[2],\"name\":[1],\"paused\":[4]}]]],[\"ion-item_8\",[[33,\"ion-item-divider\",{\"color\":[513],\"sticky\":[4]}],[32,\"ion-item-group\"],[1,\"ion-skeleton-text\",{\"animated\":[4]}],[32,\"ion-list\",{\"lines\":[1],\"inset\":[4],\"closeSlidingItems\":[64]}],[33,\"ion-list-header\",{\"color\":[513],\"lines\":[1]}],[49,\"ion-item\",{\"color\":[513],\"button\":[4],\"detail\":[4],\"detailIcon\":[1,\"detail-icon\"],\"disabled\":[4],\"download\":[1],\"fill\":[1],\"shape\":[1],\"href\":[1],\"rel\":[1],\"lines\":[1],\"counter\":[4],\"routerAnimation\":[16],\"routerDirection\":[1,\"router-direction\"],\"target\":[1],\"type\":[1],\"counterFormatter\":[16],\"multipleInputs\":[32],\"focusable\":[32],\"counterString\":[32]},[[0,\"ionChange\",\"handleIonChange\"],[0,\"ionColor\",\"labelColorChanged\"],[0,\"ionStyle\",\"itemStyle\"]]],[34,\"ion-label\",{\"color\":[513],\"position\":[1],\"noAnimate\":[32]}],[33,\"ion-note\",{\"color\":[513]}]]]]"), options);
+  (0,_app_globals_a49ec076_js__WEBPACK_IMPORTED_MODULE_1__.g)();
+  return (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__.b)(JSON.parse("[[\"ion-menu_3\",[[33,\"ion-menu-button\",{\"color\":[513],\"disabled\":[4],\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"type\":[1],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]],[33,\"ion-menu\",{\"contentId\":[513,\"content-id\"],\"menuId\":[513,\"menu-id\"],\"type\":[1025],\"disabled\":[1028],\"side\":[513],\"swipeGesture\":[4,\"swipe-gesture\"],\"maxEdgeStart\":[2,\"max-edge-start\"],\"isPaneVisible\":[32],\"isEndSide\":[32],\"isOpen\":[64],\"isActive\":[64],\"open\":[64],\"close\":[64],\"toggle\":[64],\"setOpen\":[64]},[[16,\"ionSplitPaneVisible\",\"onSplitPaneChanged\"],[2,\"click\",\"onBackdropClick\"],[0,\"keydown\",\"onKeydown\"]]],[1,\"ion-menu-toggle\",{\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]]]],[\"ion-fab_3\",[[33,\"ion-fab-button\",{\"color\":[513],\"activated\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1],\"show\":[4],\"translucent\":[4],\"type\":[1],\"size\":[1],\"closeIcon\":[1,\"close-icon\"]}],[1,\"ion-fab\",{\"horizontal\":[1],\"vertical\":[1],\"edge\":[4],\"activated\":[1028],\"close\":[64],\"toggle\":[64]}],[1,\"ion-fab-list\",{\"activated\":[4],\"side\":[1]}]]],[\"ion-refresher_2\",[[0,\"ion-refresher-content\",{\"pullingIcon\":[1025,\"pulling-icon\"],\"pullingText\":[1,\"pulling-text\"],\"refreshingSpinner\":[1025,\"refreshing-spinner\"],\"refreshingText\":[1,\"refreshing-text\"]}],[32,\"ion-refresher\",{\"pullMin\":[2,\"pull-min\"],\"pullMax\":[2,\"pull-max\"],\"closeDuration\":[1,\"close-duration\"],\"snapbackDuration\":[1,\"snapback-duration\"],\"pullFactor\":[2,\"pull-factor\"],\"disabled\":[4],\"nativeRefresher\":[32],\"state\":[32],\"complete\":[64],\"cancel\":[64],\"getProgress\":[64]}]]],[\"ion-back-button\",[[33,\"ion-back-button\",{\"color\":[513],\"defaultHref\":[1025,\"default-href\"],\"disabled\":[516],\"icon\":[1],\"text\":[1],\"type\":[1],\"routerAnimation\":[16]}]]],[\"ion-toast\",[[33,\"ion-toast\",{\"overlayIndex\":[2,\"overlay-index\"],\"color\":[513],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"header\":[1],\"message\":[1],\"keyboardClose\":[4,\"keyboard-close\"],\"position\":[1],\"buttons\":[16],\"translucent\":[4],\"animated\":[4],\"icon\":[1],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-card_5\",[[33,\"ion-card\",{\"color\":[513],\"button\":[4],\"type\":[1],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}],[32,\"ion-card-content\"],[33,\"ion-card-header\",{\"color\":[513],\"translucent\":[4]}],[33,\"ion-card-subtitle\",{\"color\":[513]}],[33,\"ion-card-title\",{\"color\":[513]}]]],[\"ion-item-option_3\",[[33,\"ion-item-option\",{\"color\":[513],\"disabled\":[4],\"download\":[1],\"expandable\":[4],\"href\":[1],\"rel\":[1],\"target\":[1],\"type\":[1]}],[32,\"ion-item-options\",{\"side\":[1],\"fireSwipeEvent\":[64]}],[0,\"ion-item-sliding\",{\"disabled\":[4],\"state\":[32],\"getOpenAmount\":[64],\"getSlidingRatio\":[64],\"open\":[64],\"close\":[64],\"closeOpened\":[64]}]]],[\"ion-accordion_2\",[[49,\"ion-accordion\",{\"value\":[1],\"disabled\":[4],\"readonly\":[4],\"toggleIcon\":[1,\"toggle-icon\"],\"toggleIconSlot\":[1,\"toggle-icon-slot\"],\"state\":[32],\"isNext\":[32],\"isPrevious\":[32]}],[33,\"ion-accordion-group\",{\"animated\":[4],\"multiple\":[4],\"value\":[1025],\"disabled\":[4],\"readonly\":[4],\"expand\":[1],\"requestAccordionToggle\":[64],\"getAccordions\":[64]},[[0,\"keydown\",\"onKeydown\"]]]]],[\"ion-breadcrumb_2\",[[33,\"ion-breadcrumb\",{\"collapsed\":[4],\"last\":[4],\"showCollapsedIndicator\":[4,\"show-collapsed-indicator\"],\"color\":[1],\"active\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"separator\":[4],\"target\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}],[33,\"ion-breadcrumbs\",{\"color\":[1],\"maxItems\":[2,\"max-items\"],\"itemsBeforeCollapse\":[2,\"items-before-collapse\"],\"itemsAfterCollapse\":[2,\"items-after-collapse\"],\"collapsed\":[32],\"activeChanged\":[32]},[[0,\"collapsedClick\",\"onCollapsedClick\"]]]]],[\"ion-infinite-scroll_2\",[[32,\"ion-infinite-scroll-content\",{\"loadingSpinner\":[1025,\"loading-spinner\"],\"loadingText\":[1,\"loading-text\"]}],[0,\"ion-infinite-scroll\",{\"threshold\":[1],\"disabled\":[4],\"position\":[1],\"isLoading\":[32],\"complete\":[64]}]]],[\"ion-reorder_2\",[[33,\"ion-reorder\",null,[[2,\"click\",\"onClick\"]]],[0,\"ion-reorder-group\",{\"disabled\":[4],\"state\":[32],\"complete\":[64]}]]],[\"ion-segment_2\",[[33,\"ion-segment-button\",{\"disabled\":[4],\"layout\":[1],\"type\":[1],\"value\":[1],\"checked\":[32],\"setFocus\":[64]}],[33,\"ion-segment\",{\"color\":[513],\"disabled\":[4],\"scrollable\":[4],\"swipeGesture\":[4,\"swipe-gesture\"],\"value\":[1025],\"selectOnFocus\":[4,\"select-on-focus\"],\"activated\":[32]},[[0,\"keydown\",\"onKeyDown\"]]]]],[\"ion-tab-bar_2\",[[33,\"ion-tab-button\",{\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"layout\":[1025],\"selected\":[1028],\"tab\":[1],\"target\":[1]},[[8,\"ionTabBarChanged\",\"onTabBarChanged\"]]],[33,\"ion-tab-bar\",{\"color\":[513],\"selectedTab\":[1,\"selected-tab\"],\"translucent\":[4],\"keyboardVisible\":[32]}]]],[\"ion-chip\",[[1,\"ion-chip\",{\"color\":[513],\"outline\":[4],\"disabled\":[4]}]]],[\"ion-datetime-button\",[[33,\"ion-datetime-button\",{\"color\":[513],\"disabled\":[516],\"datetime\":[1],\"datetimePresentation\":[32],\"dateText\":[32],\"timeText\":[32],\"datetimeActive\":[32],\"selectedButton\":[32]}]]],[\"ion-input\",[[34,\"ion-input\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"accept\":[1],\"autocapitalize\":[1],\"autocomplete\":[1],\"autocorrect\":[1],\"autofocus\":[4],\"clearInput\":[4,\"clear-input\"],\"clearOnEdit\":[4,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"enterkeyhint\":[1],\"inputmode\":[1],\"max\":[8],\"maxlength\":[2],\"min\":[8],\"minlength\":[2],\"multiple\":[4],\"name\":[1],\"pattern\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"step\":[1],\"size\":[2],\"type\":[1],\"value\":[1032],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-searchbar\",[[34,\"ion-searchbar\",{\"color\":[513],\"animated\":[4],\"autocomplete\":[1],\"autocorrect\":[1],\"cancelButtonIcon\":[1,\"cancel-button-icon\"],\"cancelButtonText\":[1,\"cancel-button-text\"],\"clearIcon\":[1,\"clear-icon\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"placeholder\":[1],\"searchIcon\":[1,\"search-icon\"],\"showCancelButton\":[1,\"show-cancel-button\"],\"showClearButton\":[1,\"show-clear-button\"],\"spellcheck\":[4],\"type\":[1],\"value\":[1025],\"focused\":[32],\"noAnimate\":[32],\"setFocus\":[64],\"getInputElement\":[64]}]]],[\"ion-toggle\",[[33,\"ion-toggle\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"disabled\":[4],\"value\":[1],\"enableOnOffLabels\":[4,\"enable-on-off-labels\"],\"activated\":[32]}]]],[\"ion-avatar_3\",[[33,\"ion-avatar\"],[33,\"ion-badge\",{\"color\":[513]}],[1,\"ion-thumbnail\"]]],[\"ion-textarea\",[[34,\"ion-textarea\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"autocapitalize\":[1],\"autofocus\":[4],\"clearOnEdit\":[1028,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"maxlength\":[2],\"minlength\":[2],\"name\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"cols\":[2],\"rows\":[2],\"wrap\":[1],\"autoGrow\":[516,\"auto-grow\"],\"value\":[1025],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-backdrop\",[[33,\"ion-backdrop\",{\"visible\":[4],\"tappable\":[4],\"stopPropagation\":[4,\"stop-propagation\"]},[[2,\"click\",\"onMouseDown\"]]]]],[\"ion-loading\",[[34,\"ion-loading\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"message\":[1],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"spinner\":[1025],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-modal\",[[33,\"ion-modal\",{\"hasController\":[4,\"has-controller\"],\"overlayIndex\":[2,\"overlay-index\"],\"delegate\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"breakpoints\":[16],\"initialBreakpoint\":[2,\"initial-breakpoint\"],\"backdropBreakpoint\":[2,\"backdrop-breakpoint\"],\"handle\":[4],\"handleBehavior\":[1,\"handle-behavior\"],\"component\":[1],\"componentProps\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"animated\":[4],\"swipeToClose\":[4,\"swipe-to-close\"],\"presentingElement\":[16],\"htmlAttributes\":[16],\"isOpen\":[4,\"is-open\"],\"trigger\":[1],\"keepContentsMounted\":[4,\"keep-contents-mounted\"],\"canDismiss\":[4,\"can-dismiss\"],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"setCurrentBreakpoint\":[64],\"getCurrentBreakpoint\":[64]}]]],[\"ion-route_4\",[[0,\"ion-route\",{\"url\":[1],\"component\":[1],\"componentProps\":[16],\"beforeLeave\":[16],\"beforeEnter\":[16]}],[0,\"ion-route-redirect\",{\"from\":[1],\"to\":[1]}],[0,\"ion-router\",{\"root\":[1],\"useHash\":[4,\"use-hash\"],\"canTransition\":[64],\"push\":[64],\"back\":[64],\"printDebug\":[64],\"navChanged\":[64]},[[8,\"popstate\",\"onPopState\"],[4,\"ionBackButton\",\"onBackButton\"]]],[1,\"ion-router-link\",{\"color\":[513],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}]]],[\"ion-col_3\",[[1,\"ion-col\",{\"offset\":[1],\"offsetXs\":[1,\"offset-xs\"],\"offsetSm\":[1,\"offset-sm\"],\"offsetMd\":[1,\"offset-md\"],\"offsetLg\":[1,\"offset-lg\"],\"offsetXl\":[1,\"offset-xl\"],\"pull\":[1],\"pullXs\":[1,\"pull-xs\"],\"pullSm\":[1,\"pull-sm\"],\"pullMd\":[1,\"pull-md\"],\"pullLg\":[1,\"pull-lg\"],\"pullXl\":[1,\"pull-xl\"],\"push\":[1],\"pushXs\":[1,\"push-xs\"],\"pushSm\":[1,\"push-sm\"],\"pushMd\":[1,\"push-md\"],\"pushLg\":[1,\"push-lg\"],\"pushXl\":[1,\"push-xl\"],\"size\":[1],\"sizeXs\":[1,\"size-xs\"],\"sizeSm\":[1,\"size-sm\"],\"sizeMd\":[1,\"size-md\"],\"sizeLg\":[1,\"size-lg\"],\"sizeXl\":[1,\"size-xl\"]},[[9,\"resize\",\"onResize\"]]],[1,\"ion-grid\",{\"fixed\":[4]}],[1,\"ion-row\"]]],[\"ion-nav_2\",[[1,\"ion-nav\",{\"delegate\":[16],\"swipeGesture\":[1028,\"swipe-gesture\"],\"animated\":[4],\"animation\":[16],\"rootParams\":[16],\"root\":[1],\"push\":[64],\"insert\":[64],\"insertPages\":[64],\"pop\":[64],\"popTo\":[64],\"popToRoot\":[64],\"removeIndex\":[64],\"setRoot\":[64],\"setPages\":[64],\"setRouteId\":[64],\"getRouteId\":[64],\"getActive\":[64],\"getByIndex\":[64],\"canGoBack\":[64],\"getPrevious\":[64]}],[0,\"ion-nav-link\",{\"component\":[1],\"componentProps\":[16],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}]]],[\"ion-slide_2\",[[0,\"ion-slide\"],[36,\"ion-slides\",{\"options\":[8],\"pager\":[4],\"scrollbar\":[4],\"update\":[64],\"updateAutoHeight\":[64],\"slideTo\":[64],\"slideNext\":[64],\"slidePrev\":[64],\"getActiveIndex\":[64],\"getPreviousIndex\":[64],\"length\":[64],\"isEnd\":[64],\"isBeginning\":[64],\"startAutoplay\":[64],\"stopAutoplay\":[64],\"lockSwipeToNext\":[64],\"lockSwipeToPrev\":[64],\"lockSwipes\":[64],\"getSwiper\":[64]}]]],[\"ion-tab_2\",[[1,\"ion-tab\",{\"active\":[1028],\"delegate\":[16],\"tab\":[1],\"component\":[1],\"setActive\":[64]}],[1,\"ion-tabs\",{\"useRouter\":[1028,\"use-router\"],\"selectedTab\":[32],\"select\":[64],\"getTab\":[64],\"getSelected\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}]]],[\"ion-img\",[[1,\"ion-img\",{\"alt\":[1],\"src\":[1],\"loadSrc\":[32],\"loadError\":[32]}]]],[\"ion-progress-bar\",[[33,\"ion-progress-bar\",{\"type\":[1],\"reversed\":[4],\"value\":[2],\"buffer\":[2],\"color\":[513]}]]],[\"ion-range\",[[33,\"ion-range\",{\"color\":[513],\"debounce\":[2],\"name\":[1],\"dualKnobs\":[4,\"dual-knobs\"],\"min\":[2],\"max\":[2],\"pin\":[4],\"pinFormatter\":[16],\"snaps\":[4],\"step\":[2],\"ticks\":[4],\"activeBarStart\":[1026,\"active-bar-start\"],\"disabled\":[4],\"value\":[1026],\"ratioA\":[32],\"ratioB\":[32],\"pressedKnob\":[32]}]]],[\"ion-split-pane\",[[33,\"ion-split-pane\",{\"contentId\":[513,\"content-id\"],\"disabled\":[4],\"when\":[8],\"visible\":[32]}]]],[\"ion-text\",[[1,\"ion-text\",{\"color\":[513]}]]],[\"ion-virtual-scroll\",[[0,\"ion-virtual-scroll\",{\"approxItemHeight\":[2,\"approx-item-height\"],\"approxHeaderHeight\":[2,\"approx-header-height\"],\"approxFooterHeight\":[2,\"approx-footer-height\"],\"headerFn\":[16],\"footerFn\":[16],\"items\":[16],\"itemHeight\":[16],\"headerHeight\":[16],\"footerHeight\":[16],\"renderItem\":[16],\"renderHeader\":[16],\"renderFooter\":[16],\"nodeRender\":[16],\"domRender\":[16],\"totalHeight\":[32],\"positionForItem\":[64],\"checkRange\":[64],\"checkEnd\":[64]},[[9,\"resize\",\"onResize\"]]]]],[\"ion-picker-column-internal\",[[33,\"ion-picker-column-internal\",{\"items\":[16],\"value\":[1032],\"color\":[513],\"numericInput\":[4,\"numeric-input\"],\"isActive\":[32],\"scrollActiveItemIntoView\":[64],\"setValue\":[64]}]]],[\"ion-picker-internal\",[[33,\"ion-picker-internal\",{\"exitInputMode\":[64]},[[1,\"touchstart\",\"preventTouchStartPropagation\"]]]]],[\"ion-radio_2\",[[33,\"ion-radio\",{\"color\":[513],\"name\":[1],\"disabled\":[4],\"value\":[8],\"checked\":[32],\"buttonTabindex\":[32],\"setFocus\":[64],\"setButtonTabindex\":[64]}],[0,\"ion-radio-group\",{\"allowEmptySelection\":[4,\"allow-empty-selection\"],\"name\":[1],\"value\":[1032]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-ripple-effect\",[[1,\"ion-ripple-effect\",{\"type\":[1],\"addRipple\":[64]}]]],[\"ion-button_2\",[[33,\"ion-button\",{\"color\":[513],\"buttonType\":[1025,\"button-type\"],\"disabled\":[516],\"expand\":[513],\"fill\":[1537],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"download\":[1],\"href\":[1],\"rel\":[1],\"shape\":[513],\"size\":[513],\"strong\":[4],\"target\":[1],\"type\":[1],\"form\":[1]}],[1,\"ion-icon\",{\"mode\":[1025],\"color\":[1],\"ios\":[1],\"md\":[1],\"flipRtl\":[4,\"flip-rtl\"],\"name\":[513],\"src\":[1],\"icon\":[8],\"size\":[1],\"lazy\":[4],\"sanitize\":[4],\"svgContent\":[32],\"isVisible\":[32],\"ariaLabel\":[32]}]]],[\"ion-datetime_3\",[[33,\"ion-datetime\",{\"color\":[1],\"name\":[1],\"disabled\":[4],\"readonly\":[4],\"isDateEnabled\":[16],\"min\":[1025],\"max\":[1025],\"presentation\":[1],\"cancelText\":[1,\"cancel-text\"],\"doneText\":[1,\"done-text\"],\"clearText\":[1,\"clear-text\"],\"yearValues\":[8,\"year-values\"],\"monthValues\":[8,\"month-values\"],\"dayValues\":[8,\"day-values\"],\"hourValues\":[8,\"hour-values\"],\"minuteValues\":[8,\"minute-values\"],\"locale\":[1],\"firstDayOfWeek\":[2,\"first-day-of-week\"],\"titleSelectedDatesFormatter\":[16],\"multiple\":[4],\"value\":[1025],\"showDefaultTitle\":[4,\"show-default-title\"],\"showDefaultButtons\":[4,\"show-default-buttons\"],\"showClearButton\":[4,\"show-clear-button\"],\"showDefaultTimeLabel\":[4,\"show-default-time-label\"],\"hourCycle\":[1,\"hour-cycle\"],\"size\":[1],\"preferWheel\":[4,\"prefer-wheel\"],\"showMonthAndYear\":[32],\"activeParts\":[32],\"workingParts\":[32],\"isPresented\":[32],\"isTimePopoverOpen\":[32],\"confirm\":[64],\"reset\":[64],\"cancel\":[64]}],[34,\"ion-picker\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"columns\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"showBackdrop\":[4,\"show-backdrop\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"animated\":[4],\"htmlAttributes\":[16],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"getColumn\":[64]}],[32,\"ion-picker-column\",{\"col\":[16]}]]],[\"ion-action-sheet\",[[34,\"ion-action-sheet\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-alert\",[[34,\"ion-alert\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"buttons\":[16],\"inputs\":[1040],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-popover\",[[33,\"ion-popover\",{\"hasController\":[4,\"has-controller\"],\"delegate\":[16],\"overlayIndex\":[2,\"overlay-index\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"component\":[1],\"componentProps\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"event\":[8],\"showBackdrop\":[4,\"show-backdrop\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"triggerAction\":[1,\"trigger-action\"],\"trigger\":[1],\"size\":[1],\"dismissOnSelect\":[4,\"dismiss-on-select\"],\"reference\":[1],\"side\":[1],\"alignment\":[1025],\"arrow\":[4],\"isOpen\":[4,\"is-open\"],\"keyboardEvents\":[4,\"keyboard-events\"],\"keepContentsMounted\":[4,\"keep-contents-mounted\"],\"presented\":[32],\"presentFromTrigger\":[64],\"present\":[64],\"dismiss\":[64],\"getParentPopover\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-checkbox\",[[33,\"ion-checkbox\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"indeterminate\":[1028],\"disabled\":[4],\"value\":[8]}]]],[\"ion-select_3\",[[33,\"ion-select\",{\"disabled\":[4],\"cancelText\":[1,\"cancel-text\"],\"okText\":[1,\"ok-text\"],\"placeholder\":[1],\"name\":[1],\"selectedText\":[1,\"selected-text\"],\"multiple\":[4],\"interface\":[1],\"interfaceOptions\":[8,\"interface-options\"],\"compareWith\":[1,\"compare-with\"],\"value\":[1032],\"isExpanded\":[32],\"open\":[64]}],[1,\"ion-select-option\",{\"disabled\":[4],\"value\":[8]}],[34,\"ion-select-popover\",{\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"multiple\":[4],\"options\":[16]},[[0,\"ionChange\",\"onSelect\"]]]]],[\"ion-app_8\",[[0,\"ion-app\",{\"setFocus\":[64]}],[1,\"ion-content\",{\"color\":[513],\"fullscreen\":[4],\"forceOverscroll\":[1028,\"force-overscroll\"],\"scrollX\":[4,\"scroll-x\"],\"scrollY\":[4,\"scroll-y\"],\"scrollEvents\":[4,\"scroll-events\"],\"getScrollElement\":[64],\"getBackgroundElement\":[64],\"scrollToTop\":[64],\"scrollToBottom\":[64],\"scrollByPoint\":[64],\"scrollToPoint\":[64]},[[8,\"appload\",\"onAppLoad\"]]],[36,\"ion-footer\",{\"collapse\":[1],\"translucent\":[4],\"keyboardVisible\":[32]}],[36,\"ion-header\",{\"collapse\":[1],\"translucent\":[4]}],[1,\"ion-router-outlet\",{\"mode\":[1025],\"delegate\":[16],\"animated\":[4],\"animation\":[16],\"swipeHandler\":[16],\"commit\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}],[33,\"ion-title\",{\"color\":[513],\"size\":[1]}],[33,\"ion-toolbar\",{\"color\":[513]},[[0,\"ionStyle\",\"childrenStyle\"]]],[34,\"ion-buttons\",{\"collapse\":[4]}]]],[\"ion-spinner\",[[1,\"ion-spinner\",{\"color\":[513],\"duration\":[2],\"name\":[1],\"paused\":[4]}]]],[\"ion-item_8\",[[33,\"ion-item-divider\",{\"color\":[513],\"sticky\":[4]}],[32,\"ion-item-group\"],[1,\"ion-skeleton-text\",{\"animated\":[4]}],[32,\"ion-list\",{\"lines\":[1],\"inset\":[4],\"closeSlidingItems\":[64]}],[33,\"ion-list-header\",{\"color\":[513],\"lines\":[1]}],[49,\"ion-item\",{\"color\":[513],\"button\":[4],\"detail\":[4],\"detailIcon\":[1,\"detail-icon\"],\"disabled\":[4],\"download\":[1],\"fill\":[1],\"shape\":[1],\"href\":[1],\"rel\":[1],\"lines\":[1],\"counter\":[4],\"routerAnimation\":[16],\"routerDirection\":[1,\"router-direction\"],\"target\":[1],\"type\":[1],\"counterFormatter\":[16],\"multipleInputs\":[32],\"focusable\":[32],\"counterString\":[32]},[[0,\"ionChange\",\"handleIonChange\"],[0,\"ionColor\",\"labelColorChanged\"],[0,\"ionStyle\",\"itemStyle\"]]],[34,\"ion-label\",{\"color\":[513],\"position\":[1],\"noAnimate\":[32]}],[33,\"ion-note\",{\"color\":[513]}]]]]"), options);
   });
 };
 
@@ -16901,9 +17382,9 @@ const defineCustomElements = (win, options) => {
 
 /***/ }),
 
-/***/ 4250:
+/***/ 4199:
 /*!*********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/md.transition-d04040a2.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/md.transition-0d261204.js ***!
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -16912,10 +17393,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "mdTransitionAnimation": () => (/* binding */ mdTransitionAnimation)
 /* harmony export */ });
-/* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
-/* harmony import */ var _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-2b53f989.js */ 4243);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-4ff3f603.js */ 5933);
+/* harmony import */ var _index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-27c7e5c4.js */ 919);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
+/* harmony import */ var _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-33ffec25.js */ 2286);
+/* harmony import */ var _index_8e692445_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index-8e692445.js */ 1559);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -16924,40 +17406,42 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const mdTransitionAnimation = (_, opts) => {
+  var _a, _b, _c;
   const OFF_BOTTOM = '40px';
   const CENTER = '0px';
   const backDirection = opts.direction === 'back';
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-  const ionPageElement = (0,_index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__.g)(enteringEl);
+  const ionPageElement = (0,_index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_1__.g)(enteringEl);
   const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
-  const rootTransition = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+  const rootTransition = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
   rootTransition.addElement(ionPageElement).fill('both').beforeRemoveClass('ion-page-invisible');
   // animate the component itself
   if (backDirection) {
-    rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+    rootTransition.duration(((_a = opts.duration) !== null && _a !== void 0 ? _a : 0) || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
   }
   else {
     rootTransition
-      .duration(opts.duration || 280)
+      .duration(((_b = opts.duration) !== null && _b !== void 0 ? _b : 0) || 280)
       .easing('cubic-bezier(0.36,0.66,0.04,1)')
       .fromTo('transform', `translateY(${OFF_BOTTOM})`, `translateY(${CENTER})`)
       .fromTo('opacity', 0.01, 1);
   }
   // Animate toolbar if it's there
   if (enteringToolbarEle) {
-    const enteringToolBar = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+    const enteringToolBar = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
     enteringToolBar.addElement(enteringToolbarEle);
     rootTransition.addAnimation(enteringToolBar);
   }
   // setup leaving view
   if (leavingEl && backDirection) {
     // leaving content
-    rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-    const leavingPage = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
+    rootTransition.duration(((_c = opts.duration) !== null && _c !== void 0 ? _c : 0) || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+    const leavingPage = (0,_animation_4ff3f603_js__WEBPACK_IMPORTED_MODULE_0__.c)();
     leavingPage
-      .addElement((0,_index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl))
+      .addElement((0,_index_27c7e5c4_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl))
       .onFinish((currentStep) => {
       if (currentStep === 1 && leavingPage.elements.length > 0) {
         leavingPage.elements[0].style.setProperty('display', 'none');
@@ -16975,9 +17459,9 @@ const mdTransitionAnimation = (_, opts) => {
 
 /***/ }),
 
-/***/ 6523:
+/***/ 7580:
 /*!****************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/overlays-ff47fddd.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/overlays-5fc09c9a.js ***!
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -16985,6 +17469,7 @@ const mdTransitionAnimation = (_, opts) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "B": () => (/* binding */ BACKDROP),
+/* harmony export */   "G": () => (/* binding */ GESTURE),
 /* harmony export */   "a": () => (/* binding */ alertController),
 /* harmony export */   "b": () => (/* binding */ actionSheetController),
 /* harmony export */   "c": () => (/* binding */ popoverController),
@@ -17003,9 +17488,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "t": () => (/* binding */ toastController)
 /* harmony export */ });
 /* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-c74e4951.js */ 5823);
 /* harmony import */ var _hardware_back_button_490df115_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hardware-back-button-490df115.js */ 159);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
 
 
 /*!
@@ -17072,15 +17557,27 @@ const createOverlay = (tagName, opts) => {
       })); // append the overlay element to the document body
 
       getAppRoot(document).appendChild(element);
-      return new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_3__.c)(element, resolve));
+      return new Promise(resolve => (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_3__.c)(element, resolve));
     });
   }
 
   return Promise.resolve();
 };
+/**
+ * This query string selects elements that
+ * are eligible to receive focus. We select
+ * interactive elements that meet the following
+ * criteria:
+ * 1. Element does not have a negative tabindex
+ * 2. Element does not have `hidden`
+ * 3. Element does not have `disabled` for non-Ionic components.
+ * 4. Element does not have `disabled` or `disabled="true"` for Ionic components.
+ * Note: We need this distinction because `disabled="false"` is
+ * valid usage for the disabled property on ion-button.
+ */
 
-const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
-const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
+
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 
 const focusFirstDescendant = (ref, overlay) => {
   let firstInput = ref.querySelector(focusableQueryString);
@@ -17088,11 +17585,11 @@ const focusFirstDescendant = (ref, overlay) => {
 
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
-    firstInput = shadowRoot.querySelector(innerFocusableQueryString) || firstInput;
+    firstInput = shadowRoot.querySelector(focusableQueryString) || firstInput;
   }
 
   if (firstInput) {
-    (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_3__.f)(firstInput);
+    (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_3__.f)(firstInput);
   } else {
     // Focus overlay instead of letting focus escape
     overlay.focus();
@@ -17108,7 +17605,7 @@ const focusLastDescendant = (ref, overlay) => {
 
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
-    lastInput = shadowRoot.querySelector(innerFocusableQueryString) || lastInput;
+    lastInput = shadowRoot.querySelector(focusableQueryString) || lastInput;
   }
 
   if (lastInput) {
@@ -17181,7 +17678,7 @@ const trapKeyboardFocus = (ev, doc) => {
        * We do not want to focus the traps, so get the overlay
        * wrapper element as the traps live outside of the wrapper.
        */
-      const overlayRoot = (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_3__.g)(lastOverlay);
+      const overlayRoot = (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_3__.g)(lastOverlay);
 
       if (!overlayRoot.contains(target)) {
         return;
@@ -17396,9 +17893,9 @@ const present = /*#__PURE__*/function () {
     overlay.presented = true;
     overlay.willPresent.emit();
     (_a = overlay.willPresentShorthand) === null || _a === void 0 ? void 0 : _a.emit();
-    const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay); // get the user's animation fn if one was provided
+    const mode = (0,_ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay); // get the user's animation fn if one was provided
 
-    const animationBuilder = overlay.enterAnimation ? overlay.enterAnimation : _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+    const animationBuilder = overlay.enterAnimation ? overlay.enterAnimation : _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
     const completed = yield overlayAnimation(overlay, animationBuilder, overlay.el, opts);
 
     if (completed) {
@@ -17418,8 +17915,15 @@ const present = /*#__PURE__*/function () {
     if (overlay.el.tagName !== 'ION-TOAST') {
       focusPreviousElementOnDismiss(overlay.el);
     }
+    /**
+     * If the focused element is already
+     * inside the overlay component then
+     * focus should not be moved from that
+     * to the overlay container.
+     */
 
-    if (overlay.keyboardClose) {
+
+    if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
       overlay.el.focus();
     }
   });
@@ -17452,7 +17956,7 @@ const focusPreviousElementOnDismiss = /*#__PURE__*/function () {
 
     if (shadowRoot) {
       // If there are no inner focusable elements, just focus the host element.
-      previousElement = shadowRoot.querySelector(innerFocusableQueryString) || previousElement;
+      previousElement = shadowRoot.querySelector(focusableQueryString) || previousElement;
     }
 
     yield overlayEl.onDidDismiss();
@@ -17486,10 +17990,10 @@ const dismiss = /*#__PURE__*/function () {
         data,
         role
       });
-      const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay);
-      const animationBuilder = overlay.leaveAnimation ? overlay.leaveAnimation : _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation); // If dismissed via gesture, no need to play leaving animation again
+      const mode = (0,_ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay);
+      const animationBuilder = overlay.leaveAnimation ? overlay.leaveAnimation : _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation); // If dismissed via gesture, no need to play leaving animation again
 
-      if (role !== 'gesture') {
+      if (role !== GESTURE) {
         yield overlayAnimation(overlay, animationBuilder, overlay.el, opts);
       }
 
@@ -17534,7 +18038,7 @@ const overlayAnimation = /*#__PURE__*/function () {
     const aniRoot = overlay.el;
     const animation = animationBuilder(aniRoot, opts);
 
-    if (!overlay.animated || !_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.getBoolean('animated', true)) {
+    if (!overlay.animated || !_ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_1__.c.getBoolean('animated', true)) {
       animation.duration(0);
     }
 
@@ -17570,11 +18074,11 @@ const eventMethod = (element, eventName) => {
 
 const onceEvent = (element, eventName, callback) => {
   const handler = ev => {
-    (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_3__.b)(element, eventName, handler);
+    (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_3__.b)(element, eventName, handler);
     callback(ev);
   };
 
-  (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_3__.a)(element, eventName, handler);
+  (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_3__.a)(element, eventName, handler);
 };
 
 const isCancel = role => {
@@ -17593,7 +18097,7 @@ const defaultGate = h => h();
 
 const safeCall = (handler, arg) => {
   if (typeof handler === 'function') {
-    const jmp = _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.get('_zoneGate', defaultGate);
+    const jmp = _ionic_global_c74e4951_js__WEBPACK_IMPORTED_MODULE_1__.c.get('_zoneGate', defaultGate);
     return jmp(() => {
       try {
         return handler(arg);
@@ -17607,6 +18111,7 @@ const safeCall = (handler, arg) => {
 };
 
 const BACKDROP = 'backdrop';
+const GESTURE = 'gesture';
 
 
 /***/ }),
@@ -24849,6 +25354,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "__rest": () => (/* binding */ __rest),
 /* harmony export */   "__decorate": () => (/* binding */ __decorate),
 /* harmony export */   "__param": () => (/* binding */ __param),
+/* harmony export */   "__esDecorate": () => (/* binding */ __esDecorate),
+/* harmony export */   "__runInitializers": () => (/* binding */ __runInitializers),
+/* harmony export */   "__propKey": () => (/* binding */ __propKey),
+/* harmony export */   "__setFunctionName": () => (/* binding */ __setFunctionName),
 /* harmony export */   "__metadata": () => (/* binding */ __metadata),
 /* harmony export */   "__awaiter": () => (/* binding */ __awaiter),
 /* harmony export */   "__generator": () => (/* binding */ __generator),
@@ -24935,6 +25444,51 @@ function __param(paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 }
 
+function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.push(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.push(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+
+function __runInitializers(thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+
+function __propKey(x) {
+    return typeof x === "symbol" ? x : "".concat(x);
+};
+
+function __setFunctionName(f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
 function __metadata(metadataKey, metadataValue) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
 }
@@ -24955,7 +25509,7 @@ function __generator(thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -25067,7 +25621,7 @@ function __asyncGenerator(thisArg, _arguments, generator) {
 function __asyncDelegator(o) {
     var i, p;
     return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v; } : f; }
 }
 
 function __asyncValues(o) {

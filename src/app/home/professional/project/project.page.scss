@@ -5,7 +5,7 @@ body {
     text-rendering        : optimizeLegibility;
     color                 : #444;
     background            : #eee;
-    font-size             : 10 px;
+    font-size             : 12 px !important;
 }
 
 $breakpoint-alpha: 800px; // adjust to your needs
@@ -14,18 +14,19 @@ $breakpoint-alpha: 800px; // adjust to your needs
     padding: 3px;
     height : 2rem;
     margin : 0rem;
-    width: 33%;
+    width  : 33%;
 }
 
 .project_update {
     padding: 3px;
     height : 2rem;
     margin : 5%;
-    width: 40%;
+    width  : 40%;
 }
 
 .rwd-table {
-    margin   : 1em 0;
+    margin: 1em 0;
+    width : 100%;
 
     tr {
         border-top   : 1px solid #ddd;
@@ -37,7 +38,8 @@ $breakpoint-alpha: 800px; // adjust to your needs
     }
 
     td {
-        display: block;
+        display    : block;
+        line-height: 1.5rem;
 
         &:first-child {
             padding-top: .5em;
@@ -50,10 +52,9 @@ $breakpoint-alpha: 800px; // adjust to your needs
         &:before {
             content    : attr(data-th)": "; // who knew you could do this? The internet, that's who.
             font-weight: bold;
-
             // optional stuff to make it look nicer
-            width  : 9.3em; // magic number :( adjust according to your own content
-            display: inline-block;
+            width      : 9.5em; // magic number :( adjust according to your own content
+            display    : inline-block;
             // end options
 
             @media (min-width: $breakpoint-alpha) {
@@ -68,7 +69,7 @@ $breakpoint-alpha: 800px; // adjust to your needs
 
         @media (min-width: $breakpoint-alpha) {
             display: table-cell;
-            padding: .25em .5em;
+            padding: .3em .5em;
 
             &:first-child {
                 padding-left: 0;

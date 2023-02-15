@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
+        <ion-back-button slot="start" (click)="goDashboard()" ></ion-back-button>
         <ion-title>Assessors Report</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -12,23 +12,20 @@
             <div class="scrollH">
                 <table class="table">
                     <tr>
-                        <th>Title</th>
-                        <!-- <th>Type</th> -->
-                        <th>client Name</th>
-                        <th>Leader Name</th>
-                        <th>Status</th>
-                        <th>PDF(certification)</th>
-                        <th>Action</th>
+                        <th>Report ID</th>
+                        <th>Assessor</th>
+                        <th>Report Type</th>
+                        <th>Create Date</th>
+                        <th>Report</th>
                     </tr>
                     <tr *ngFor="let project of projects">
-                        <td>{{project.title}}</td>
-                        <!-- <td>{{project.type}}</td> -->
-                        <td>{{project.client_name}}</td>
-                        <td>{{project.pl_name}}</td>
-                        <td>{{project.status}}</td>
-                        <td (click)="download('uploads', project.pratical_certification)"
-                            style="background-color: white;">Download</td>
-                        <td (click)="action(project, 'project')" style="background-color: lightgreen;">Verify</td>
+                        <td>{{project.id}}</td>
+                        <td>{{project.accessor}}</td>
+                        <td>{{project.report_type}}</td>
+                        <td>{{project.created_at}}</td>
+                        <td (click)="download(project.filename)" style="background-color: greenyellow;">
+                            Download
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -38,53 +35,43 @@
             <div class="scrollH">
                 <table class="table">
                     <tr>
-                        <th>Name</th>
-                        <!-- <th>Council</th> -->
-                        <th>Experience</th>
-                        <th>Job</th>
-                        <th>PDF(CV)</th>
-                        <th>Action</th>
+                        <th>Report ID</th>
+                        <th>Assessor</th>
+                        <th>Report Type</th>
+                        <th>Create Date</th>
+                        <th>Report</th>
                     </tr>
-                    <tr *ngFor="let profile of unverified_profiles">
-                        <td>{{profile.name}}</td>
-                        <!-- <td>{{profile.council}}</td> -->
-                        <td>{{profile.exp_year}}</td>
-                        <td>{{profile.jtitle}}</td>
-                        <td (click)="download('uploads', profile.cv)" style="background-color: white;">
-                            Download</td>
-                        <td (click)="action(profile, 'profile')" style="background-color: lightgreen;">Verify</td>
+                    <tr *ngFor="let profile of profiles">
+                        <td>{{profile.id}}</td>
+                        <td>{{profile.accessor}}</td>
+                        <td>{{profile.report_type}}</td>
+                        <td>{{profile.created_at}}</td>
+                        <td (click)="download(profile.filename)" style="background-color: greenyellow;">
+                            Download
+                        </td>
                     </tr>
                 </table>
             </div>
         </ion-card>
-        <ion-card *ngSwitchCase="'businessp'">
-            <h6>Business Submission</h6>
+        <ion-card *ngSwitchCase="'officep'">
+            <h6>Office Submission</h6>
             <div class="scrollH">
                 <table class="table">
                     <tr>
-                        <th>Business Name</th>
-                        <th>Council No</th>
-                        <th>Org Type</th>
-                        <th>Directors</th>
-                        <th>Office Type</th>
-                        <th>PDF</th>
-                        <th>Action</th>
+                        <th>Report ID</th>
+                        <th>Assessor</th>
+                        <th>Report Type</th>
+                        <th>Create Date</th>
+                        <th>Report</th>
                     </tr>
-                    <tr *ngFor="let business of unverified_business">
-                        <td>{{business.pname}}</td>
-                        <td>{{business.pcouncil}}</td>
-                        <td>{{business.ptype}}</td>
-                        <td>{{business.director}}</td>
-                        <ng-container *ngIf="business.is_head == '1'">
-                            <td>Head</td>
-                        </ng-container>
-                        <ng-container *ngIf="business.is_head != '1'">
-                            <td>Branch</td>
-                        </ng-container>
-                        <td (click)="download('uploads/office', business.filename)" style="background-color: white;">
+                    <tr *ngFor="let office of offices">
+                        <td>{{office.id}}</td>
+                        <td>{{office.accessor}}</td>
+                        <td>{{office.report_type}}</td>
+                        <td>{{office.created_at}}</td>
+                        <td (click)="download(office.filename)" style="background-color: greenyellow;">
                             Download
                         </td>
-                        <td (click)="download(business, 'business')" style="background-color: lightgreen;">Verify</td>
                     </tr>
                 </table>
             </div>
@@ -97,8 +84,8 @@
         <ion-segment-button value="profilep">
             <ion-label>Profile</ion-label>
         </ion-segment-button>
-        <ion-segment-button color="dark" value="businessp">
-            <ion-label>Business</ion-label>
+        <ion-segment-button color="dark" value="officep">
+            <ion-label>Office</ion-label>
         </ion-segment-button>
         <!-- <ion-segment-button color="dark" value="eplanp">
             <ion-label>Eplan</ion-label>

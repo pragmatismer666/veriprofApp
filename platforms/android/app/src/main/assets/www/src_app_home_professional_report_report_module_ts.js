@@ -80,10 +80,14 @@ let ReportPage = class ReportPage {
         this.restApi = restApi;
         this.navCtrl = navCtrl;
         this.authService = authService;
+        this.objs = [];
+        this.reports = [];
+        this.segment = "reports";
     }
     ngOnInit() {
-        // this.getReport();
-        this.getMyReport();
+        this.restApi.toast(`Your account plan is a ${this.authService.user.account_type}.`, 1500);
+        this.getMyPDFs();
+        this.getReport();
     }
     getMyStatus() {
         this.restApi.post('professional/get-profile', { user_id: this.authService.user.userId }).subscribe((res) => {
@@ -105,54 +109,47 @@ let ReportPage = class ReportPage {
                     }).then(toast => toast.present());
                 }
             }
-        }, error => {
+        }, (error) => {
             this.toastController.create({
-                message: 'Something went wrong.',
+                message: 'Something went wrong!',
                 duration: 2000
             }).then(toast => toast.present());
         });
     }
     getReport() {
-        this.restApi.post('professional/get-report', {}).subscribe((res) => {
+        this.restApi.post('professional/get-report', { user_id: this.authService.user.userId }).subscribe((res) => {
+            console.log("professional report getReport = : ", res);
             if (res && res.status) {
-                console.log(res.data);
-                if (res.status == 'success') {
-                    this.objs = res.data;
+                if (res.status == true) {
+                    this.reports = res.data;
                 }
                 else {
-                    this.toastController.create({
-                        message: res.message,
-                        duration: 2000
-                    }).then(toast => toast.present());
+                    this.restApi.toast(res.data, 2000);
                 }
             }
-        }, error => {
-            this.toastController.create({
-                message: 'Something went wrong.',
-                duration: 2000
-            }).then(toast => toast.present());
+            else {
+                this.restApi.toast("Invalid Database Connection!", 2000);
+            }
+        }, (error) => {
+            console.log("Report getReport error = : ", error);
+            this.restApi.toast("Something went wrong!", 2000);
         });
     }
     // Get my Bid and Plan Documents
-    getMyReport() {
-        this.restApi.post('professional/get-myReport', { user_id: this.authService.user.userId }).subscribe((res) => {
+    getMyPDFs() {
+        this.restApi.post("professional/get-myReport", { user_id: this.authService.user.userId }).subscribe((res) => {
             if (res && res.status) {
                 console.log(res.data);
-                if (res.status == 'success') {
+                if (res.status == "success") {
                     this.objs = res.data;
                 }
                 else {
-                    this.toastController.create({
-                        message: res.message,
-                        duration: 2000
-                    }).then(toast => toast.present());
+                    this.restApi.toast(res.message, 2000);
                 }
             }
-        }, error => {
-            this.toastController.create({
-                message: 'Something went wrong.',
-                duration: 2000
-            }).then(toast => toast.present());
+        }, (error) => {
+            console.log("Report getMyPDFs error = : ", error);
+            this.restApi.toast("Something went wrong!", 2000);
         });
     }
     download(filename) {
@@ -185,7 +182,7 @@ ReportPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
   \**********************************************************************/
 /***/ ((module) => {
 
-module.exports = ".footer {\n  font-size: 11px;\n  color: #6d6d6d;\n}\n\n.schedule_line {\n  margin: 15px;\n  margin-left: 30px;\n  margin-right: 30px;\n}\n\n.schedule_btn {\n  margin: auto;\n}\n\n.table {\n  margin: 1%;\n  width: 98%;\n  margin-top: 10px;\n  font-size: 14px;\n}\n\n.table th {\n  background: #8a8a8a;\n  padding: 5px;\n  color: #fff;\n  border: 1px solid #fff;\n}\n\n.table td {\n  background: #ccc;\n  padding: 5px;\n  color: #000;\n  border: 1px solid #fff;\n}\n\n.validation-errors {\n  color: #000;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlcG9ydC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxlQUFBO0VBQ0EsY0FBQTtBQUNKOztBQUVBO0VBQ0ksWUFBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7QUFDSjs7QUFFQTtFQUNJLFVBQUE7RUFDQSxVQUFBO0VBQ0EsZ0JBQUE7RUFDQSxlQUFBO0FBQ0o7O0FBQ0k7RUFDSSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxXQUFBO0VBQ0Esc0JBQUE7QUFDUjs7QUFFSTtFQUNJLGdCQUFBO0VBQ0EsWUFBQTtFQUNBLFdBQUE7RUFDQSxzQkFBQTtBQUFSOztBQUlBO0VBQ0ksV0FBQTtBQURKIiwiZmlsZSI6InJlcG9ydC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZm9vdGVyIHtcbiAgICBmb250LXNpemU6IDExcHg7XG4gICAgY29sb3IgICAgOiByZ2IoMTA5LCAxMDksIDEwOSk7XG59XG5cbi5zY2hlZHVsZV9saW5lIHtcbiAgICBtYXJnaW4gICAgICA6IDE1cHg7XG4gICAgbWFyZ2luLWxlZnQgOiAzMHB4O1xuICAgIG1hcmdpbi1yaWdodDogMzBweDtcbn1cblxuLnNjaGVkdWxlX2J0biB7XG4gICAgbWFyZ2luOiBhdXRvO1xufVxuXG4udGFibGUge1xuICAgIG1hcmdpbiAgICA6IDElO1xuICAgIHdpZHRoICAgICA6IDk4JTtcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xuICAgIGZvbnQtc2l6ZSA6IDE0cHg7XG5cbiAgICB0aCB7XG4gICAgICAgIGJhY2tncm91bmQ6ICM4YThhOGE7XG4gICAgICAgIHBhZGRpbmcgICA6IDVweDtcbiAgICAgICAgY29sb3IgICAgIDogI2ZmZjtcbiAgICAgICAgYm9yZGVyICAgIDogMXB4IHNvbGlkICNmZmY7XG4gICAgfVxuXG4gICAgdGQge1xuICAgICAgICBiYWNrZ3JvdW5kOiAjY2NjO1xuICAgICAgICBwYWRkaW5nICAgOiA1cHg7XG4gICAgICAgIGNvbG9yICAgICA6ICMwMDA7XG4gICAgICAgIGJvcmRlciAgICA6IDFweCBzb2xpZCAjZmZmO1xuICAgIH1cbn1cblxuLnZhbGlkYXRpb24tZXJyb3JzIHtcbiAgICBjb2xvcjogIzAwMDtcbn0iXX0= */";
+module.exports = ".rwd-table {\n  margin: 1em 0;\n  width: 100%;\n}\n.rwd-table tr {\n  border-top: 1px solid #ddd;\n  border-bottom: 1px solid #ddd;\n}\n.rwd-table th {\n  display: none;\n}\n.rwd-table td {\n  display: block;\n  line-height: 1.5rem;\n}\n.rwd-table td:first-child {\n  padding-top: 0.5em;\n}\n.rwd-table td:last-child {\n  padding-bottom: 0.5em;\n}\n.rwd-table td:before {\n  content: attr(data-th) \": \";\n  font-weight: bold;\n  width: 9.5em;\n  display: inline-block;\n}\n@media (min-width: 800px) {\n  .rwd-table td:before {\n    display: none;\n  }\n}\n.rwd-table th,\n.rwd-table td {\n  text-align: left;\n}\n@media (min-width: 800px) {\n  .rwd-table th,\n.rwd-table td {\n    display: table-cell;\n    padding: 0.3em 0.5em;\n  }\n  .rwd-table th:first-child,\n.rwd-table td:first-child {\n    padding-left: 0;\n  }\n  .rwd-table th:last-child,\n.rwd-table td:last-child {\n    padding-right: 0;\n  }\n}\n.rwd-table h1 {\n  font-weight: normal;\n  letter-spacing: -1px;\n  color: #34495E;\n}\n.rwd-table .rwd-table {\n  background: #34495E;\n  color: #fff;\n  border-radius: 0.4em;\n  overflow: hidden;\n}\n.rwd-table .rwd-table tr {\n  border-color: #46637f;\n}\n.rwd-table .rwd-table th,\n.rwd-table .rwd-table td {\n  margin: 0.5em 1em;\n}\n@media (min-width: 800px) {\n  .rwd-table .rwd-table th,\n.rwd-table .rwd-table td {\n    padding: 1em !important;\n  }\n}\n.rwd-table .rwd-table th,\n.rwd-table .rwd-table td:before {\n  color: #dd5;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlcG9ydC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUE7RUFDSSxhQUFBO0VBQ0EsV0FBQTtBQURKO0FBR0k7RUFDSSwwQkFBQTtFQUNBLDZCQUFBO0FBRFI7QUFJSTtFQUNJLGFBQUE7QUFGUjtBQUtJO0VBQ0ksY0FBQTtFQUNBLG1CQUFBO0FBSFI7QUFLUTtFQUNJLGtCQUFBO0FBSFo7QUFNUTtFQUNJLHFCQUFBO0FBSlo7QUFPUTtFQUNJLDJCQUFBO0VBQ0EsaUJBQUE7RUFFQSxZQUFBO0VBQ0EscUJBQUE7QUFOWjtBQVNZO0VBUko7SUFTUSxhQUFBO0VBTmQ7QUFDRjtBQVVJOztFQUVJLGdCQUFBO0FBUlI7QUFVUTtFQUpKOztJQUtRLG1CQUFBO0lBQ0Esb0JBQUE7RUFOVjtFQVFVOztJQUNJLGVBQUE7RUFMZDtFQVFVOztJQUNJLGdCQUFBO0VBTGQ7QUFDRjtBQVVJO0VBQ0ksbUJBQUE7RUFDQSxvQkFBQTtFQUNBLGNBQUE7QUFSUjtBQVdJO0VBQ0ksbUJBQUE7RUFDQSxXQUFBO0VBQ0Esb0JBQUE7RUFDQSxnQkFBQTtBQVRSO0FBV1E7RUFDSSxxQkFBQTtBQVRaO0FBWVE7O0VBRUksaUJBQUE7QUFWWjtBQVlZO0VBSko7O0lBS1EsdUJBQUE7RUFSZDtBQUNGO0FBV1E7O0VBRUksV0FBQTtBQVRaIiwiZmlsZSI6InJlcG9ydC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIkYnJlYWtwb2ludC1hbHBoYTogODAwcHg7IC8vIGFkanVzdCB0byB5b3VyIG5lZWRzXG5cbi5yd2QtdGFibGUge1xuICAgIG1hcmdpbjogMWVtIDA7XG4gICAgd2lkdGggOiAxMDAlO1xuXG4gICAgdHIge1xuICAgICAgICBib3JkZXItdG9wICAgOiAxcHggc29saWQgI2RkZDtcbiAgICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNkZGQ7XG4gICAgfVxuXG4gICAgdGgge1xuICAgICAgICBkaXNwbGF5OiBub25lOyAvLyBmb3IgYWNjZXNzaWJpbGl0eSwgdXNlIGEgdmlzdWFsbHkgaGlkZGVuIG1ldGhvZCBoZXJlIGluc3RlYWQhICBcbiAgICB9XG5cbiAgICB0ZCB7XG4gICAgICAgIGRpc3BsYXkgICAgOiBibG9jaztcbiAgICAgICAgbGluZS1oZWlnaHQ6IDEuNXJlbTtcblxuICAgICAgICAmOmZpcnN0LWNoaWxkIHtcbiAgICAgICAgICAgIHBhZGRpbmctdG9wOiAuNWVtO1xuICAgICAgICB9XG5cbiAgICAgICAgJjpsYXN0LWNoaWxkIHtcbiAgICAgICAgICAgIHBhZGRpbmctYm90dG9tOiAuNWVtO1xuICAgICAgICB9XG5cbiAgICAgICAgJjpiZWZvcmUge1xuICAgICAgICAgICAgY29udGVudCAgICA6IGF0dHIoZGF0YS10aClcIjogXCI7IC8vIHdobyBrbmV3IHlvdSBjb3VsZCBkbyB0aGlzPyBUaGUgaW50ZXJuZXQsIHRoYXQncyB3aG8uXG4gICAgICAgICAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICAgICAgICAgIC8vIG9wdGlvbmFsIHN0dWZmIHRvIG1ha2UgaXQgbG9vayBuaWNlclxuICAgICAgICAgICAgd2lkdGggICAgICA6IDkuNWVtOyAvLyBtYWdpYyBudW1iZXIgOiggYWRqdXN0IGFjY29yZGluZyB0byB5b3VyIG93biBjb250ZW50XG4gICAgICAgICAgICBkaXNwbGF5ICAgIDogaW5saW5lLWJsb2NrO1xuICAgICAgICAgICAgLy8gZW5kIG9wdGlvbnNcblxuICAgICAgICAgICAgQG1lZGlhIChtaW4td2lkdGg6ICRicmVha3BvaW50LWFscGhhKSB7XG4gICAgICAgICAgICAgICAgZGlzcGxheTogbm9uZTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgIH1cblxuICAgIHRoLFxuICAgIHRkIHtcbiAgICAgICAgdGV4dC1hbGlnbjogbGVmdDtcblxuICAgICAgICBAbWVkaWEgKG1pbi13aWR0aDogJGJyZWFrcG9pbnQtYWxwaGEpIHtcbiAgICAgICAgICAgIGRpc3BsYXk6IHRhYmxlLWNlbGw7XG4gICAgICAgICAgICBwYWRkaW5nOiAuM2VtIC41ZW07XG5cbiAgICAgICAgICAgICY6Zmlyc3QtY2hpbGQge1xuICAgICAgICAgICAgICAgIHBhZGRpbmctbGVmdDogMDtcbiAgICAgICAgICAgIH1cblxuICAgICAgICAgICAgJjpsYXN0LWNoaWxkIHtcbiAgICAgICAgICAgICAgICBwYWRkaW5nLXJpZ2h0OiAwO1xuICAgICAgICAgICAgfVxuICAgICAgICB9XG5cbiAgICB9XG5cbiAgICBoMSB7XG4gICAgICAgIGZvbnQtd2VpZ2h0ICAgOiBub3JtYWw7XG4gICAgICAgIGxldHRlci1zcGFjaW5nOiAtMXB4O1xuICAgICAgICBjb2xvciAgICAgICAgIDogIzM0NDk1RTtcbiAgICB9XG5cbiAgICAucndkLXRhYmxlIHtcbiAgICAgICAgYmFja2dyb3VuZCAgIDogIzM0NDk1RTtcbiAgICAgICAgY29sb3IgICAgICAgIDogI2ZmZjtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogLjRlbTtcbiAgICAgICAgb3ZlcmZsb3cgICAgIDogaGlkZGVuO1xuXG4gICAgICAgIHRyIHtcbiAgICAgICAgICAgIGJvcmRlci1jb2xvcjogbGlnaHRlbigjMzQ0OTVFLCAxMCUpO1xuICAgICAgICB9XG5cbiAgICAgICAgdGgsXG4gICAgICAgIHRkIHtcbiAgICAgICAgICAgIG1hcmdpbjogLjVlbSAxZW07XG5cbiAgICAgICAgICAgIEBtZWRpYSAobWluLXdpZHRoOiAkYnJlYWtwb2ludC1hbHBoYSkge1xuICAgICAgICAgICAgICAgIHBhZGRpbmc6IDFlbSAhaW1wb3J0YW50O1xuICAgICAgICAgICAgfVxuICAgICAgICB9XG5cbiAgICAgICAgdGgsXG4gICAgICAgIHRkOmJlZm9yZSB7XG4gICAgICAgICAgICBjb2xvcjogI2RkNTtcbiAgICAgICAgfVxuICAgIH1cbn0iXX0= */";
 
 /***/ }),
 
@@ -195,7 +192,7 @@ module.exports = ".footer {\n  font-size: 11px;\n  color: #6d6d6d;\n}\n\n.schedu
   \**********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n    <ion-toolbar color=\"dark\">\n        <ion-back-button slot=\"start\"></ion-back-button>\n        <ion-title>Report</ion-title>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-card>\n        <table class=\"table\">\n            <tr>\n                <!-- <th>ID</th>\n                <th>Assessor</th> -->\n                <th>Type</th>\n                <th>Client Name</th>\n                <th>Created at</th>\n                <th>Document</th>\n            </tr>\n            <tr *ngFor=\"let x of objs\">\n                <!-- <td>{{x.id}}</td>\n                <td>{{x.accessor}}</td>\n                <td>{{x.report_type}} Submission</td> -->\n                <td>{{x.type}}</td>\n                <td>{{x.client_name}}</td>\n                <td>{{x.created_at}}</td>\n                <td (click)=\"download(x.file)\" style=\"background-color: lightgreen;\">Download</td>\n            </tr>\n        </table>\n    </ion-card>\n</ion-content>\n\n<ion-footer color=\"dark\" class=\"footer\">\n    <ion-toolbar color=\"\">\n        <ion-title class=\"footer\">Copyright SIVAGO </ion-title>\n    </ion-toolbar>\n</ion-footer>";
+module.exports = "<ion-header class=\"h-50px\">\n    <ion-toolbar color=\"dark\" class=\"h-50px\">\n        <ion-back-button slot=\"start\" class=\"h-45px\"></ion-back-button>\n        <ion-title class=\"h-50px\">Report</ion-title>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-segment [(ngModel)]=\"segment\" color=\"light\" class=\"content-segment-head-area\">\n        <ion-segment-button value=\"reports\" class=\"dark\" enabled>\n            <ion-icon name=\"star\" class=\"dark\" color=\"dark\"></ion-icon>\n            <ion-label class=\"dark\" color=\"dark\">Reports</ion-label>\n        </ion-segment-button>\n        <ion-segment-button value=\"myDocs\">\n            <ion-icon name=\"star\" class=\"dark\" color=\"dark\"></ion-icon>\n            <ion-label class=\"dark\" color=\"dark\">My PDFs</ion-label>\n        </ion-segment-button>\n    </ion-segment>\n    <div [ngSwitch]=\"segment\">\n        <ion-card *ngSwitchCase=\"'reports'\" class=\"fixed-ion-card-area\">\n            <ion-card-content>\n                <h1>Reports</h1>\n                <table class=\"rwd-table\">\n                    <ng-container *ngIf=\"reports.length > 0\">\n                        <tr *ngFor=\"let x of reports\">\n                            <td data-th=\"Type\">{{x.report_type}}</td>\n                            <td data-th=\"Assesser Name\">{{x.accessor}}</td>\n                            <td data-th=\"Score\">{{x.score}}</td>\n                            <td data-th=\"Created at\">{{x.created_at}}</td>\n                            <td data-th=\"Document\">\n                                <ion-button size=\"small\" color=\"success\" class=\"down-btn-profe mt-2\"\n                                    (click)=\"download('create/report/'+ x.filename)\">\n                                    Download</ion-button>\n                            </td>\n                        </tr>\n                    </ng-container>\n                    <ng-container *ngIf=\"reports.length == 0\">\n                        <div class=\"text-center\">No reports, yet.</div>\n                    </ng-container>\n                </table>\n            </ion-card-content>\n        </ion-card>\n        <ion-card *ngSwitchCase=\"'myDocs'\" class=\"fixed-ion-card-area\">\n            <ion-card-content>\n                <h1>My PDFs</h1>\n                <table class=\"rwd-table\">\n                    <ng-container *ngIf=\"objs.length > 0\">\n                        <tr *ngFor=\"let x of objs\">\n                            <td data-th=\"Type\">{{x.type}}</td>\n                            <td data-th=\"Client Name\">{{x.client_name}}</td>\n                            <td data-th=\"Created at\">{{x.created_at}}</td>\n                            <td data-th=\"Document\">\n                                <ion-button size=\"small\" color=\"success\" class=\"down-btn-profe mt-2\"\n                                    (click)=\"download(x.file)\">\n                                    Download</ion-button>\n                            </td>\n                        </tr>\n                    </ng-container>\n                    <ng-container *ngIf=\"objs.length == 0\">\n                        <div class=\"text-center\">No DPDFs in eplan and bid.</div>\n                    </ng-container>\n                </table>\n            </ion-card-content>\n        </ion-card>\n    </div>\n</ion-content>\n\n<!-- <ion-footer color=\"dark\" class=\"footer\">\n    <ion-toolbar color=\"\">\n        <ion-title class=\"footer\">Copyright SIVAGO </ion-title>\n    </ion-toolbar>\n</ion-footer> -->";
 
 /***/ })
 

@@ -25,6 +25,8 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import "./theme/color.css";
+@import "./theme/position.css";
 
 // Element
 ion-content {
@@ -59,18 +61,68 @@ ion-item {
     position: fixed !important;
 }
 
+.content-segment-head-area {
+    height    : 65px !important;
+    margin-top: 5px !important;
+    bottom    : 5px;
+}
+
+.content-segment-area {
+    top: 120px !important;
+}
+
 .fixed-ion-card-area {
-    padding   : 5px;
-    margin    : 5px;
-    top       : 125px;
+    position  : fixed !important;
+    top       : 115px !important;
     left      : 5px;
     right     : 5px;
     bottom    : 5px;
+    margin    : 0px;
     overflow-y: scroll;
 }
 
+.h-68 {
+    height: 68%;
+}
+
+.h-55 {
+    height: 55%;
+}
+
+.h-15 {
+    height: 15%;
+}
+
+.h-50px {
+    height: 50px !important;
+}
+
+.h-45px {
+    height: 45px !important;
+}
+
+.h-10 {
+    height: 10%;
+}
+
 .w-80 {
-    width: 90%;
+    width: 80%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-45 {
+    width: 45%;
+}
+
+.mt-0px {
+    margin-top: 0px !important;
+}
+
+.mb-0px {
+    margin-bottom: 0px !important;
 }
 
 .scrollH {
@@ -106,13 +158,18 @@ h3 h5 {
 
 // common-button
 .button-common {
-    width : 90%;
-    height: 30px;
+    // width : 90%;
+    height: 2rem;
+}
+
+.button-common-assessor {
+    padding: 3px;
+    margin : 5%;
 }
 
 .down-btn-profe {
     height    : 1.2rem;
-    margin-top: -12px;
+    margin-top: -0.2rem;
     float     : right;
 }
 
@@ -160,6 +217,10 @@ h3 h5 {
 }
 
 // Margin
+.ml-auto {
+    margin-left: auto;
+}
+
 .marginTop-20px {
     margin-top: 20px !important;
 }

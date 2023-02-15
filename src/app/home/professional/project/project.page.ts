@@ -15,7 +15,6 @@ export class ProjectPage implements OnInit {
     current_status: string = "Ongoing";
     segment: string = "paper";
     name: string = "any";
-    completeFlag: number = 0;
     loadData: Array<any> = [];
     updateData: any
     form: any = {
@@ -45,7 +44,12 @@ export class ProjectPage implements OnInit {
         final_certification: "",
         final_account: "",
         status_verify: "0",
-    }
+    };
+
+    appointment: string = "";
+    pratical_certification: string = "";
+    final_certification: string = "";
+    final_account: string = "";
 
     updateProjectData: any = {
         title: "",
@@ -76,8 +80,8 @@ export class ProjectPage implements OnInit {
         });
     }
 
-    addProjects() {
-        let { title, prof_type, const_cost, prof_cost, final_cost, started_at, description, client_name, pl_name, pl_email, pl_phone, proj_address, proj_gps, proj_city, proj_state, proj_zip, status, appointment, pratical_certification, final_certification, final_account } = this.form;
+    addProjects(status_verify: Boolean) {
+        let { title, prof_type, const_cost, prof_cost, final_cost, started_at, description, client_name, pl_name, pl_email, pl_phone, proj_address, proj_gps, proj_city, proj_state, proj_zip, status, appointment, pratical_certification, final_certification, final_account, completed_at } = this.form;
         if (title.length == 0) { this.restApi.toast("Please fill title", 1200); return; }
         if (prof_type.length == 0) { this.restApi.toast("Please fill Type", 1200); return; }
         if (const_cost.length == 0) { this.restApi.toast("Please fill Construction Cost", 1200); return; }
@@ -94,13 +98,21 @@ export class ProjectPage implements OnInit {
         if (proj_state.length == 0) { this.restApi.toast("Please fill Project Location Province", 1200); return; }
         if (proj_zip.length == 0) { this.restApi.toast("Please fill Project Location Zipcode", 1200); return; }
         if (appointment.length == 0) { this.restApi.toast("Please input letter of appointment and wait for seconds.", 1200); return; }
-        if (pratical_certification.length == 0 && this.completeFlag == 1) { this.restApi.toast("Please input pratical completion certificate and wait for seconds.", 1200); return; }
-        if (final_certification.length == 0 && this.completeFlag == 1) { this.restApi.toast("Please input final completion certificate and wait for seconds.", 1200); return; }
-        if (final_account.length == 0 && (this.completeFlag == 1 || this.completeFlag == -1)) { this.restApi.toast("Please input final account and wait for seconds.", 1200); return; }
+
+        if (completed_at.length == 0 && status == "Completed") { this.restApi.toast("Please input completed date.", 1200); return; }
+        if (pratical_certification.length == 0 && status == "Completed") { this.restApi.toast("Please input pratical completion certificate and wait for seconds.", 1200); return; }
+        if (final_certification.length == 0 && status == "Completed") { this.restApi.toast("Please input final completion certificate and wait for seconds.", 1200); return; }
+
+        if (final_account.length == 0 && (status == "Completed" || status == "Cancelled")) { this.restApi.toast("Please input final account and wait for seconds.", 1200); return; }
         // if (!this.form.const_cost.includes("R")) { this.form.const_cost = this.form.const_cost.concat("R");}
         // if (!this.form.prof_cost.includes("R")) {this.form.prof_cost = this.form.prof_cost.concat("R");}
-        if (status != "Ongoing" && final_cost != "0" && final_cost != "") {
-            this.form.variable = ((parseInt(const_cost) - (parseInt(final_cost)) / parseInt(final_cost)) * 100).toFixed(2).toString();
+        if (status != "Ongoing" && final_cost != "") {
+            this.form.variable = ((1 - (parseInt(final_cost)) / parseInt(const_cost)) * 100).toFixed(2).toString();
+        } else if (status != "Ongoing") {
+            this.form.variable = "100.00";
+        }
+        if (status_verify) {
+            this.form.status_verify = "1";
         }
         this.restApi.post("professional/add-project", { user_id: this.authService.user.userId, data: this.form }).subscribe((res: any) => {
             if (res && res.status) {
@@ -143,11 +155,29 @@ export class ProjectPage implements OnInit {
         else if (act == "Ongoing") {
             this.updateStatus();
         } else if (act == "Update") {
+            // console.log("project action update => x : ", x);
+            this.appointment = this.getPDFName(x.appointment);
+            this.pratical_certification = this.getPDFName(x.pratical_certification);
+            this.final_certification = this.getPDFName(x.final_certification);
+            this.final_account = this.getPDFName(x.final_account);
             this.form = x;
             this.segment = "add-circle";
         } else if (act == "Verify") {
             this.request_verification(x.id);
         }
+    }
+
+    getPDFName(fileName: string) {
+        let pdfName = "";
+        try {
+            pdfName = fileName.split("/")[1];
+            let timeStamp = pdfName.split("_")[0];
+            pdfName = pdfName.replace(timeStamp, "").toString();
+            pdfName = pdfName.split("_").join(" ");
+        } catch (error) {
+            console.log("Project getPDFName error == : ", error);
+        }
+        return pdfName;
     }
 
     request_verification(project_id: string) {
@@ -187,16 +217,11 @@ export class ProjectPage implements OnInit {
     }
 
     change_status(event: any) {
-        if (event.detail.value == "Completed") {
-            this.completeFlag = 1;
-        } else if (event.detail.value == "Cancelled") {
-            this.completeFlag = -1;
-        } else if (event.detail.value == "Ongoing") {
-            this.completeFlag = 0;
-        }
+        this.form.status = event.detail.value;
     }
 
     changeListener($event: any, type: string): void {
+        console.log($event.target.files[0]);
         this.saveButtonFlag = true;
         let file = $event.target.files[0];
         if (file && file.type == "application/pdf") {

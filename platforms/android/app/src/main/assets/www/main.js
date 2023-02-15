@@ -216,7 +216,6 @@ var map = {
 	],
 	"./ion-avatar_3.entry.js": [
 		6655,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-avatar_3_entry_js"
 	],
 	"./ion-back-button.entry.js": [
@@ -235,30 +234,32 @@ var map = {
 	],
 	"./ion-button_2.entry.js": [
 		8308,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-button_2_entry_js"
 	],
 	"./ion-card_5.entry.js": [
 		4690,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-card_5_entry_js"
 	],
 	"./ion-checkbox.entry.js": [
 		4090,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-checkbox_entry_js"
 	],
 	"./ion-chip.entry.js": [
 		6214,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-chip_entry_js"
 	],
 	"./ion-col_3.entry.js": [
 		9447,
 		"node_modules_ionic_core_dist_esm_ion-col_3_entry_js"
 	],
+	"./ion-datetime-button.entry.js": [
+		7950,
+		"default-node_modules_ionic_core_dist_esm_data-cb72448c_js-node_modules_ionic_core_dist_esm_th-29e28e",
+		"node_modules_ionic_core_dist_esm_ion-datetime-button_entry_js"
+	],
 	"./ion-datetime_3.entry.js": [
 		9689,
+		"default-node_modules_ionic_core_dist_esm_data-cb72448c_js-node_modules_ionic_core_dist_esm_th-29e28e",
 		"common",
 		"node_modules_ionic_core_dist_esm_ion-datetime_3_entry_js"
 	],
@@ -293,7 +294,6 @@ var map = {
 	],
 	"./ion-loading.entry.js": [
 		2855,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-loading_entry_js"
 	],
 	"./ion-menu_3.entry.js": [
@@ -327,12 +327,10 @@ var map = {
 	],
 	"./ion-progress-bar.entry.js": [
 		8994,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-progress-bar_entry_js"
 	],
 	"./ion-radio_2.entry.js": [
 		3592,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-radio_2_entry_js"
 	],
 	"./ion-range.entry.js": [
@@ -356,7 +354,6 @@ var map = {
 	],
 	"./ion-route_4.entry.js": [
 		5534,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-route_4_entry_js"
 	],
 	"./ion-searchbar.entry.js": [
@@ -371,7 +368,6 @@ var map = {
 	],
 	"./ion-select_3.entry.js": [
 		8179,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-select_3_entry_js"
 	],
 	"./ion-slide_2.entry.js": [
@@ -399,17 +395,14 @@ var map = {
 	],
 	"./ion-text.entry.js": [
 		8395,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-text_entry_js"
 	],
 	"./ion-textarea.entry.js": [
 		6357,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-textarea_entry_js"
 	],
 	"./ion-toast.entry.js": [
 		8268,
-		"common",
 		"node_modules_ionic_core_dist_esm_ion-toast_entry_js"
 	],
 	"./ion-toggle.entry.js": [

@@ -1,0 +1,61 @@
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">Assessors Report Generator</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class="fixed-ion-card-area top-55px">
+        <ion-row class="pl-5 pr-5 h-45px">
+            <h4 class="m-auto">{{type}} Submission</h4>
+            <ion-button (click)="generate_report()" class="p-1">Generate</ion-button>
+            <!-- style="margin-top: -2%;padding: 5px;float: right;" -->
+        </ion-row>
+        <div class="scrollH">
+            <table class="table">
+                <tr>
+                    <th>No</th>
+                    <th>Required Content</th>
+                    <th>Returned Content</th>
+                    <th>Verification Status</th>
+                </tr>
+                <tr *ngFor="let each_row of report_data">
+                    <td>{{each_row.id}}</td>
+                    <td>{{each_row.key}}</td>
+                    <ng-container *ngIf="each_row.val == '0'">
+                        <td>No</td>
+                    </ng-container>
+                    <ng-container *ngIf="each_row.val == '1'">
+                        <td>Yes</td>
+                    </ng-container>
+                    <ng-container *ngIf="each_row.val != '1' && each_row.val != '0'">
+                        <td>{{each_row.val}}</td>
+                    </ng-container>
+                    <td class="d-flex">
+                        <ng-container *ngIf="each_row.status != 1">
+                            <ion-label color="danger" class="w-4rem">Unverified</ion-label>
+                        </ng-container>
+                        <ng-container *ngIf="each_row.status == 1">
+                            <ion-label color="dark" class="w-4rem">Verified</ion-label>
+                        </ng-container>
+                        <ion-button class="title-center p-1 report-verification-btn" color="success"
+                            (click)="change_status(each_row, true)"><ion-icon
+                                name="checkmark-outline"></ion-icon></ion-button>
+                        <ion-button class="title-center p-1 report-verification-btn" color="danger"
+                            (click)="change_status(each_row, false)"><ion-icon
+                                name="close-outline"></ion-icon></ion-button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <ion-card-content>
+            <table class="rwd-table">
+                <tr class="text-bold">
+                    <td data-th="Compliance Status">{{compliance_status}}</td>
+                    <td data-th="Compliance Rate">{{compliance_rate}}</td>
+                </tr>
+            </table>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

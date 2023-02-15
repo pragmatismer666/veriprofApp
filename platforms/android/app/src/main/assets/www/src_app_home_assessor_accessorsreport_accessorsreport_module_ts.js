@@ -27,11 +27,14 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     {
-        path: '',
+        path: "",
         component: _accessorsreport_page__WEBPACK_IMPORTED_MODULE_0__.AccessorsreportPage,
     },
-    { path: 'reportgenerator', loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_home_assessor_accessorsreport_reportgenerator_reportgenerator_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./reportgenerator/reportgenerator.module */ 868)).then(m => m.ReportgeneratorPageModule) },
-    // './reportgenerator/reportgenerator.module#ReportgeneratorPageModule'
+    // {
+    //     path: "reportgenerator",
+    //     loadChildren: () => import("../reportgenerator/reportgenerator.module").then(m => m.ReportgeneratorPageModule)
+    // },
+    // "./reportgenerator/reportgenerator.module#ReportgeneratorPageModule"
 ];
 let AccessorsreportPageModule = class AccessorsreportPageModule {
 };
@@ -66,15 +69,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AccessorsreportPage": () => (/* binding */ AccessorsreportPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _accessorsreport_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./accessorsreport.page.html?ngResource */ 2252);
 /* harmony import */ var _accessorsreport_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./accessorsreport.page.scss?ngResource */ 1671);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 3819);
 /* harmony import */ var src_app_services_rest_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/rest-api.service */ 4714);
 /* harmony import */ var src_app_services_authentication_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/authentication.service */ 7053);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ 587);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 2816);
 
 
 
@@ -82,181 +84,62 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+// import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
 
 
 
 let AccessorsreportPage = class AccessorsreportPage {
-    constructor(toastController, restApi, authService, formBuilder, loadingCtrl, nav, router) {
+    // eplans: Array<any>;
+    constructor(toastController, restApi, authService, loadingCtrl, nav, router, activatedRoute) {
         this.toastController = toastController;
         this.restApi = restApi;
         this.authService = authService;
-        this.formBuilder = formBuilder;
         this.loadingCtrl = loadingCtrl;
         this.nav = nav;
         this.router = router;
+        this.activatedRoute = activatedRoute;
         this.assessor_report = "projectp";
-        this.validation_messages = {
-            'report_title': [
-                { type: 'required', message: 'Report Title is required.' }
-            ],
-            'profess_name': [
-                { type: 'required', message: 'Professional Name is required.' }
-            ],
-            'report_content': [
-                { type: 'required', message: 'Report Content is required.' }
-            ]
-        };
+        this.activatedRoute.queryParams.subscribe(params => {
+            if (params && params.type) {
+                this.assessor_report = params.type + "p";
+            }
+        });
     }
     ngOnInit() {
-        this.report_form = this.formBuilder.group({
-            accessor: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required
-            ])),
-            report_type: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl(),
-            report_title: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required
-            ])),
-            profess_name: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required
-            ])),
-            report_content: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required
-            ]))
-        });
-        this.accessor_name = String(this.authService.user.name);
-        this.report_form.get('accessor').setValue(this.accessor_name);
-        this.getRegisteredProfess();
-        this.getProjects();
-        this.get_unverified_business();
-        this.get_unverified_profile();
-        this.get_eplan();
+        this.getReport();
     }
-    // project submission
-    getProjects() {
-        this.restApi.get('accessor/get-projects').subscribe((res) => {
+    goDashboard() {
+        this.router.navigate(["home/assessor"]);
+    }
+    getReport() {
+        this.restApi.post("accessor/get-report", {}).subscribe((res) => {
             if (res && res.status) {
-                console.log(res.data);
-                if (res.status == 'success') {
-                    this.projects = res.data;
-                }
-                else {
-                    this.restApi.toast('There is no projects.', 1200);
-                }
+                console.log(res);
+                this.profiles = res.profiles;
+                this.projects = res.projects;
+                this.offices = res.offices;
             }
         }, error => {
             console.log(error);
-            this.restApi.toast('Something went wrong.', 1200);
+            this.restApi.toast("Something went wrong.", 1200);
         });
     }
-    // Business Submission
-    get_unverified_business() {
-        this.restApi.get('accessor/get-unverifyBusiness').subscribe((res) => {
-            if (res && res.status) {
-                console.log(res.data);
-                if (res.status == 'success') {
-                    this.unverified_business = res.data;
-                }
-                else {
-                    this.restApi.toast('There is no projects.', 1200);
-                }
-            }
-        }, error => {
-            console.log(error);
-            this.restApi.toast('Something went wrong.', 1200);
-        });
-    }
-    // Profile Submission
-    get_unverified_profile() {
-        this.restApi.get('accessor/get-unverifyProfiles').subscribe((res) => {
-            console.log(res.data);
-            if (res && res.status) {
-                if (res.status == 'success') {
-                    this.unverified_profiles = res.data;
-                }
-                else {
-                    this.restApi.toast('There is no projects.', 1200);
-                }
-            }
-        }, error => {
-            console.log(error);
-            this.restApi.toast('Something went wrong.', 1200);
-        });
-    }
-    // Eplan Submission
-    get_eplan() {
-        this.restApi.get('accessor/get-eplans').subscribe((res) => {
-            if (res && res.status) {
-                if (res.status == 'success') {
-                    this.eplans = res.data;
-                }
-                else {
-                    this.restApi.toast('There is no projects.', 1200);
-                }
-            }
-        }, error => {
-            console.log(error);
-            this.restApi.toast('Something went wrong.', 1200);
-        });
-    }
-    // action 
-    action(data, type) {
-        let navigationExtras = {
-            queryParams: {
-                data: JSON.stringify(data),
-                type: type,
-            }
-        };
-        this.router.navigate(['home/assessor/accessorsreport/reportgenerator'], navigationExtras);
-    }
-    download(type, filename) {
-        this.restApi.downfile(type + '/', filename);
-    }
-    report_confirm(value) {
-        this.restApi.post('accessor/add-report', { user_id: this.authService.user.userId, user_name: this.authService.user.name, data: value }).subscribe((res) => {
-            if (res && res.status) {
-                if (res.data == "limited") {
-                    this.toastController.create({ message: res.message, duration: 2000 }).then(toast => toast.present());
-                }
-                else {
-                    this.toastController.create({ message: res.message, duration: 2000 }).then(toast => toast.present());
-                }
-                this.report_form.reset();
-                this.report_form.get('accessor').setValue(String(this.authService.user.name));
-                this.getRegisteredProfess();
-            }
-        }, error => {
-            this.toastController.create({
-                message: 'Something went wrong.',
-                duration: 2000
-            }).then(toast => toast.present());
-        });
-    }
-    getRegisteredProfess() {
-        this.restApi.get('professional/get-profess').subscribe((res) => {
-            if (res && res.status) {
-                this.profess = res.data;
-            }
-        }, error => {
-            this.toastController.create({
-                message: 'Something went wrong.',
-                duration: 2000
-            }).then(toast => toast.present());
-        });
+    download(filename) {
+        this.restApi.downfile("/create/report/", filename);
     }
 };
 AccessorsreportPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.ToastController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ToastController },
     { type: src_app_services_rest_api_service__WEBPACK_IMPORTED_MODULE_2__.RestApiService },
     { type: src_app_services_authentication_service__WEBPACK_IMPORTED_MODULE_3__.AuthenticateService },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormBuilder },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.LoadingController },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.Router }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.LoadingController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute }
 ];
-AccessorsreportPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
-        selector: 'app-accessorsreport',
+AccessorsreportPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+        selector: "app-accessorsreport",
         template: _accessorsreport_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_accessorsreport_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
@@ -282,7 +165,7 @@ module.exports = ".schedule_line {\n  margin-top: 25px !important;\n  margin-lef
   \************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n    <ion-toolbar color=\"dark\">\n        <ion-back-button slot=\"start\"></ion-back-button>\n        <ion-title>Assessors Report</ion-title>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-content-overflow-hidden\" padding color=\"dark\">\n    <div [ngSwitch]=\"assessor_report\" class=\"segPart\">\n        <ion-card class=\"mt-3\" *ngSwitchCase=\"'projectp'\">\n            <h6>Project Submission</h6>\n            <div class=\"scrollH\">\n                <table class=\"table\">\n                    <tr>\n                        <th>Title</th>\n                        <!-- <th>Type</th> -->\n                        <th>client Name</th>\n                        <th>Leader Name</th>\n                        <th>Status</th>\n                        <th>PDF(certification)</th>\n                        <th>Action</th>\n                    </tr>\n                    <tr *ngFor=\"let project of projects\">\n                        <td>{{project.title}}</td>\n                        <!-- <td>{{project.type}}</td> -->\n                        <td>{{project.client_name}}</td>\n                        <td>{{project.pl_name}}</td>\n                        <td>{{project.status}}</td>\n                        <td (click)=\"download('uploads', project.pratical_certification)\"\n                            style=\"background-color: white;\">Download</td>\n                        <td (click)=\"action(project, 'project')\" style=\"background-color: lightgreen;\">Verify</td>\n                    </tr>\n                </table>\n            </div>\n        </ion-card>\n        <ion-card *ngSwitchCase=\"'profilep'\">\n            <h6>Profile Submission</h6>\n            <div class=\"scrollH\">\n                <table class=\"table\">\n                    <tr>\n                        <th>Name</th>\n                        <!-- <th>Council</th> -->\n                        <th>Experience</th>\n                        <th>Job</th>\n                        <th>PDF(CV)</th>\n                        <th>Action</th>\n                    </tr>\n                    <tr *ngFor=\"let profile of unverified_profiles\">\n                        <td>{{profile.name}}</td>\n                        <!-- <td>{{profile.council}}</td> -->\n                        <td>{{profile.exp_year}}</td>\n                        <td>{{profile.jtitle}}</td>\n                        <td (click)=\"download('uploads', profile.cv)\" style=\"background-color: white;\">\n                            Download</td>\n                        <td (click)=\"action(profile, 'profile')\" style=\"background-color: lightgreen;\">Verify</td>\n                    </tr>\n                </table>\n            </div>\n        </ion-card>\n        <ion-card *ngSwitchCase=\"'businessp'\">\n            <h6>Business Submission</h6>\n            <div class=\"scrollH\">\n                <table class=\"table\">\n                    <tr>\n                        <th>Business Name</th>\n                        <th>Council No</th>\n                        <th>Org Type</th>\n                        <th>Directors</th>\n                        <th>Office Type</th>\n                        <th>PDF</th>\n                        <th>Action</th>\n                    </tr>\n                    <tr *ngFor=\"let business of unverified_business\">\n                        <td>{{business.pname}}</td>\n                        <td>{{business.pcouncil}}</td>\n                        <td>{{business.ptype}}</td>\n                        <td>{{business.director}}</td>\n                        <ng-container *ngIf=\"business.is_head == '1'\">\n                            <td>Head</td>\n                        </ng-container>\n                        <ng-container *ngIf=\"business.is_head != '1'\">\n                            <td>Branch</td>\n                        </ng-container>\n                        <td (click)=\"download('uploads/office', business.filename)\" style=\"background-color: white;\">\n                            Download\n                        </td>\n                        <td (click)=\"download(business, 'business')\" style=\"background-color: lightgreen;\">Verify</td>\n                    </tr>\n                </table>\n            </div>\n        </ion-card>\n    </div>\n    <ion-segment [(ngModel)]=\"assessor_report\" class=\"landTabs\">\n        <ion-segment-button value=\"projectp\">\n            <ion-label>Project</ion-label>\n        </ion-segment-button>\n        <ion-segment-button value=\"profilep\">\n            <ion-label>Profile</ion-label>\n        </ion-segment-button>\n        <ion-segment-button color=\"dark\" value=\"businessp\">\n            <ion-label>Business</ion-label>\n        </ion-segment-button>\n        <!-- <ion-segment-button color=\"dark\" value=\"eplanp\">\n            <ion-label>Eplan</ion-label>\n        </ion-segment-button>\n        <ion-segment-button color=\"dark\" value=\"newp\">\n            <ion-label>News</ion-label>\n        </ion-segment-button> -->\n    </ion-segment>\n</ion-content>";
+module.exports = "<ion-header>\n    <ion-toolbar color=\"dark\">\n        <ion-back-button slot=\"start\" (click)=\"goDashboard()\" ></ion-back-button>\n        <ion-title>Assessors Report</ion-title>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-content-overflow-hidden\" padding color=\"dark\">\n    <div [ngSwitch]=\"assessor_report\" class=\"segPart\">\n        <ion-card class=\"mt-3\" *ngSwitchCase=\"'projectp'\">\n            <h6>Project Submission</h6>\n            <div class=\"scrollH\">\n                <table class=\"table\">\n                    <tr>\n                        <th>Report ID</th>\n                        <th>Assessor</th>\n                        <th>Report Type</th>\n                        <th>Create Date</th>\n                        <th>Report</th>\n                    </tr>\n                    <tr *ngFor=\"let project of projects\">\n                        <td>{{project.id}}</td>\n                        <td>{{project.accessor}}</td>\n                        <td>{{project.report_type}}</td>\n                        <td>{{project.created_at}}</td>\n                        <td (click)=\"download(project.filename)\" style=\"background-color: greenyellow;\">\n                            Download\n                        </td>\n                    </tr>\n                </table>\n            </div>\n        </ion-card>\n        <ion-card *ngSwitchCase=\"'profilep'\">\n            <h6>Profile Submission</h6>\n            <div class=\"scrollH\">\n                <table class=\"table\">\n                    <tr>\n                        <th>Report ID</th>\n                        <th>Assessor</th>\n                        <th>Report Type</th>\n                        <th>Create Date</th>\n                        <th>Report</th>\n                    </tr>\n                    <tr *ngFor=\"let profile of profiles\">\n                        <td>{{profile.id}}</td>\n                        <td>{{profile.accessor}}</td>\n                        <td>{{profile.report_type}}</td>\n                        <td>{{profile.created_at}}</td>\n                        <td (click)=\"download(profile.filename)\" style=\"background-color: greenyellow;\">\n                            Download\n                        </td>\n                    </tr>\n                </table>\n            </div>\n        </ion-card>\n        <ion-card *ngSwitchCase=\"'officep'\">\n            <h6>Office Submission</h6>\n            <div class=\"scrollH\">\n                <table class=\"table\">\n                    <tr>\n                        <th>Report ID</th>\n                        <th>Assessor</th>\n                        <th>Report Type</th>\n                        <th>Create Date</th>\n                        <th>Report</th>\n                    </tr>\n                    <tr *ngFor=\"let office of offices\">\n                        <td>{{office.id}}</td>\n                        <td>{{office.accessor}}</td>\n                        <td>{{office.report_type}}</td>\n                        <td>{{office.created_at}}</td>\n                        <td (click)=\"download(office.filename)\" style=\"background-color: greenyellow;\">\n                            Download\n                        </td>\n                    </tr>\n                </table>\n            </div>\n        </ion-card>\n    </div>\n    <ion-segment [(ngModel)]=\"assessor_report\" class=\"landTabs\">\n        <ion-segment-button value=\"projectp\">\n            <ion-label>Project</ion-label>\n        </ion-segment-button>\n        <ion-segment-button value=\"profilep\">\n            <ion-label>Profile</ion-label>\n        </ion-segment-button>\n        <ion-segment-button color=\"dark\" value=\"officep\">\n            <ion-label>Office</ion-label>\n        </ion-segment-button>\n        <!-- <ion-segment-button color=\"dark\" value=\"eplanp\">\n            <ion-label>Eplan</ion-label>\n        </ion-segment-button>\n        <ion-segment-button color=\"dark\" value=\"newp\">\n            <ion-label>News</ion-label>\n        </ion-segment-button> -->\n    </ion-segment>\n</ion-content>";
 
 /***/ })
 

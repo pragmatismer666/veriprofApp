@@ -84,8 +84,17 @@ let AuthenticateService = class AuthenticateService {
         localStorage.setItem("business", JSON.stringify(businessProfile));
         localStorage.setItem("hoffice", JSON.stringify(hofficeProfile));
     }
-    getProfileData(type) {
+    getData(type) {
         return JSON.parse(localStorage.getItem(type));
+    }
+    saveData(data, type) {
+        this.storage.set(type, JSON.stringify(data));
+    }
+    getSavedData(type) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            let data = yield this.storage.get(type);
+            return JSON.parse(data);
+        });
     }
 };
 AuthenticateService.ctorParameters = () => [
@@ -137,16 +146,16 @@ let RestApiService = class RestApiService {
     }
     getHeader() {
         return {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": 'application/json',
-                "Access-Control-Allow-Origin": '*',
-            })
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders()
+                .set("Content-Type", "application/json")
+            // .set("Accept", "application/json")
+            // .set("Access-Control-Allow-Origin", "*")
+            // .set("Access-Control-Allow-Methods", "POST, GET, OPTIPN")
         };
     }
     post(endpoint, data) {
         let url = this.url(endpoint);
-        return this.http.post(url, data);
+        return this.http.post(url, data, this.getHeader());
     }
     get(endpoint) {
         let url = this.url(endpoint);
@@ -182,7 +191,7 @@ RestApiService.ctorParameters = () => [
 ];
 RestApiService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
-        providedIn: 'root'
+        providedIn: "root"
     })
 ], RestApiService);
 
@@ -190,9 +199,9 @@ RestApiService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 /***/ }),
 
-/***/ 9844:
+/***/ 5539:
 /*!*********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/button-active-70de495b.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/button-active-a4d897e8.js ***!
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -200,9 +209,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "c": () => (/* binding */ createButtonActiveGesture)
 /* harmony export */ });
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
-/* harmony import */ var _haptic_683b3b3c_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./haptic-683b3b3c.js */ 634);
-/* harmony import */ var _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-3f1a7d95.js */ 2172);
+/* harmony import */ var _index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-8e692445.js */ 1559);
+/* harmony import */ var _haptic_029a46f6_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./haptic-029a46f6.js */ 2815);
+/* harmony import */ var _index_422b6e83_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-422b6e83.js */ 6366);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -233,7 +242,7 @@ const createButtonActiveGesture = (el, isButton) => {
       initialTouchedButton = currentTouchedButton;
     }
     const buttonToModify = currentTouchedButton;
-    (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.add('ion-activated'));
+    (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.add('ion-activated'));
     hapticFeedbackFn();
   };
   const clearActiveButton = (dispatchClick = false) => {
@@ -241,7 +250,7 @@ const createButtonActiveGesture = (el, isButton) => {
       return;
     }
     const buttonToModify = currentTouchedButton;
-    (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.remove('ion-activated'));
+    (0,_index_8e692445_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.remove('ion-activated'));
     /**
      * Clicking on one button, but releasing on another button
      * does not dispatch a click event in browsers, so we
@@ -255,15 +264,15 @@ const createButtonActiveGesture = (el, isButton) => {
     }
     currentTouchedButton = undefined;
   };
-  return (0,_index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_2__.createGesture)({
+  return (0,_index_422b6e83_js__WEBPACK_IMPORTED_MODULE_2__.createGesture)({
     el,
     gestureName: 'buttonActiveDrag',
     threshold: 0,
-    onStart: (ev) => activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_683b3b3c_js__WEBPACK_IMPORTED_MODULE_1__.a),
-    onMove: (ev) => activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_683b3b3c_js__WEBPACK_IMPORTED_MODULE_1__.b),
+    onStart: (ev) => activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_029a46f6_js__WEBPACK_IMPORTED_MODULE_1__.a),
+    onMove: (ev) => activateButtonAtPoint(ev.currentX, ev.currentY, _haptic_029a46f6_js__WEBPACK_IMPORTED_MODULE_1__.b),
     onEnd: () => {
       clearActiveButton(true);
-      (0,_haptic_683b3b3c_js__WEBPACK_IMPORTED_MODULE_1__.h)();
+      (0,_haptic_029a46f6_js__WEBPACK_IMPORTED_MODULE_1__.h)();
       initialTouchedButton = undefined;
     },
   });
@@ -306,9 +315,9 @@ const isRTL = (hostEl) => {
 
 /***/ }),
 
-/***/ 9013:
+/***/ 9118:
 /*!*********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/focus-visible-5ad6825d.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/focus-visible-bd02518b.js ***!
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -356,8 +365,9 @@ const startFocusVisible = (rootEl) => {
     }
   };
   const onFocusin = (ev) => {
-    if (keyboardMode && ev.composedPath) {
+    if (keyboardMode && ev.composedPath !== undefined) {
       const toFocus = ev.composedPath().filter((el) => {
+        // TODO(FW-2832): type
         if (el.classList) {
           return el.classList.contains(ION_FOCUSABLE);
         }
@@ -394,9 +404,9 @@ const startFocusVisible = (rootEl) => {
 
 /***/ }),
 
-/***/ 2668:
+/***/ 539:
 /*!**************************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/framework-delegate-ce4f806c.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/framework-delegate-c3305a28.js ***!
   \**************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -407,13 +417,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "d": () => (/* binding */ detachComponent)
 /* harmony export */ });
 /* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
 
 
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
-
+ // TODO(FW-2832): types
 
 const attachComponent = /*#__PURE__*/function () {
   var _ref = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (delegate, container, component, cssClasses, componentProps, inline) {
@@ -438,7 +448,7 @@ const attachComponent = /*#__PURE__*/function () {
     }
 
     container.appendChild(el);
-    yield new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_1__.c)(el, resolve));
+    yield new Promise(resolve => (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_1__.c)(el, resolve));
     return el;
   });
 
@@ -499,16 +509,25 @@ const CoreDelegate = () => {
          */
 
         BaseComponent.appendChild(el);
-        yield new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_1__.c)(el, resolve));
+        yield new Promise(resolve => (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_1__.c)(el, resolve));
       } else if (BaseComponent.children.length > 0) {
-        // If there is no component, then we need to create a new parent
-        // element to apply the css classes to.
-        const el = (_b = BaseComponent.ownerDocument) === null || _b === void 0 ? void 0 : _b.createElement('div');
-        cssClasses.forEach(c => el.classList.add(c)); // Move each child from the original template to the new parent element.
+        const root = BaseComponent.children[0];
 
-        el.append(...BaseComponent.children); // Append the new parent element to the original parent element.
+        if (!root.classList.contains('ion-delegate-host')) {
+          /**
+           * If the root element is not a delegate host, it means
+           * that the overlay has not been presented yet and we need
+           * to create the containing element with the specified classes.
+           */
+          const el = (_b = BaseComponent.ownerDocument) === null || _b === void 0 ? void 0 : _b.createElement('div'); // Add a class to track if the root element was created by the delegate.
 
-        BaseComponent.appendChild(el);
+          el.classList.add('ion-delegate-host');
+          cssClasses.forEach(c => el.classList.add(c)); // Move each child from the original template to the new parent element.
+
+          el.append(...BaseComponent.children); // Append the new parent element to the original parent element.
+
+          BaseComponent.appendChild(el);
+        }
       }
       /**
        * Get the root of the app and
@@ -556,9 +575,9 @@ const CoreDelegate = () => {
 
 /***/ }),
 
-/***/ 634:
+/***/ 2815:
 /*!**************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/haptic-683b3b3c.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/haptic-029a46f6.js ***!
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -580,7 +599,25 @@ const HapticEngine = {
     return win.TapticEngine || (((_a = win.Capacitor) === null || _a === void 0 ? void 0 : _a.isPluginAvailable('Haptics')) && win.Capacitor.Plugins.Haptics);
   },
   available() {
-    return !!this.getEngine();
+    var _a;
+    const win = window;
+    const engine = this.getEngine();
+    if (!engine) {
+      return false;
+    }
+    /**
+     * Developers can manually import the
+     * Haptics plugin in their app which will cause
+     * getEngine to return the Haptics engine. However,
+     * the Haptics engine will throw an error if
+     * used in a web browser that does not support
+     * the Vibrate API. This check avoids that error
+     * if the browser does not support the Vibrate API.
+     */
+    if (((_a = win.Capacitor) === null || _a === void 0 ? void 0 : _a.getPlatform()) === 'web') {
+      return typeof navigator !== 'undefined' && navigator.vibrate !== undefined;
+    }
+    return true;
   },
   isCordova() {
     return !!window.TapticEngine;
@@ -646,37 +683,44 @@ const HapticEngine = {
   },
 };
 /**
+ * Check to see if the Haptic Plugin is available
+ * @return Returns `true` or false if the plugin is available
+ */
+const hapticAvailable = () => {
+  return HapticEngine.available();
+};
+/**
  * Trigger a selection changed haptic event. Good for one-time events
  * (not for gestures)
  */
 const hapticSelection = () => {
-  HapticEngine.selection();
+  hapticAvailable() && HapticEngine.selection();
 };
 /**
  * Tell the haptic engine that a gesture for a selection change is starting.
  */
 const hapticSelectionStart = () => {
-  HapticEngine.selectionStart();
+  hapticAvailable() && HapticEngine.selectionStart();
 };
 /**
  * Tell the haptic engine that a selection changed during a gesture.
  */
 const hapticSelectionChanged = () => {
-  HapticEngine.selectionChanged();
+  hapticAvailable() && HapticEngine.selectionChanged();
 };
 /**
  * Tell the haptic engine we are done with a gesture. This needs to be
  * called lest resources are not properly recycled.
  */
 const hapticSelectionEnd = () => {
-  HapticEngine.selectionEnd();
+  hapticAvailable() && HapticEngine.selectionEnd();
 };
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
 const hapticImpact = (options) => {
-  HapticEngine.impact(options);
+  hapticAvailable() && HapticEngine.impact(options);
 };
 
 
@@ -684,24 +728,92 @@ const hapticImpact = (options) => {
 
 /***/ }),
 
-/***/ 2929:
+/***/ 2880:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-3eb591f3.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-175a9345.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "a": () => (/* binding */ arrowBackSharp),
+/* harmony export */   "b": () => (/* binding */ closeCircle),
+/* harmony export */   "c": () => (/* binding */ chevronBack),
+/* harmony export */   "d": () => (/* binding */ closeSharp),
+/* harmony export */   "e": () => (/* binding */ searchSharp),
+/* harmony export */   "f": () => (/* binding */ checkmarkOutline),
+/* harmony export */   "g": () => (/* binding */ ellipseOutline),
+/* harmony export */   "h": () => (/* binding */ caretBackSharp),
+/* harmony export */   "i": () => (/* binding */ arrowDown),
+/* harmony export */   "j": () => (/* binding */ reorderThreeOutline),
+/* harmony export */   "k": () => (/* binding */ reorderTwoSharp),
+/* harmony export */   "l": () => (/* binding */ chevronDown),
+/* harmony export */   "m": () => (/* binding */ chevronForwardOutline),
+/* harmony export */   "n": () => (/* binding */ ellipsisHorizontal),
+/* harmony export */   "o": () => (/* binding */ chevronForward),
+/* harmony export */   "p": () => (/* binding */ caretUpSharp),
+/* harmony export */   "q": () => (/* binding */ caretDownSharp),
+/* harmony export */   "r": () => (/* binding */ removeOutline),
+/* harmony export */   "s": () => (/* binding */ searchOutline),
+/* harmony export */   "t": () => (/* binding */ close),
+/* harmony export */   "u": () => (/* binding */ menuOutline),
+/* harmony export */   "v": () => (/* binding */ menuSharp)
+/* harmony export */ });
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+/* Ionicons v6.1.1, ES Modules */
+const arrowBackSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='square' stroke-miterlimit='10' stroke-width='48' d='M244 400L100 256l144-144M120 256h292' class='ionicon-fill-none'/></svg>";
+const arrowDown = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 268l144 144 144-144M256 392V100' class='ionicon-fill-none'/></svg>";
+const caretBackSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M368 64L144 256l224 192V64z'/></svg>";
+const caretDownSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M64 144l192 224 192-224H64z'/></svg>";
+const caretUpSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M448 368L256 144 64 368h384z'/></svg>";
+const checkmarkOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' d='M416 128L192 384l-96-96' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
+const chevronBack = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M328 112L184 256l144 144' class='ionicon-fill-none'/></svg>";
+const chevronDown = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 184l144 144 144-144' class='ionicon-fill-none'/></svg>";
+const chevronForward = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M184 112l144 144-144 144' class='ionicon-fill-none'/></svg>";
+const chevronForwardOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M184 112l144 144-144 144' class='ionicon-fill-none'/></svg>";
+const close = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z'/></svg>";
+const closeCircle = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm75.31 260.69a16 16 0 11-22.62 22.62L256 278.63l-52.69 52.68a16 16 0 01-22.62-22.62L233.37 256l-52.68-52.69a16 16 0 0122.62-22.62L256 233.37l52.69-52.68a16 16 0 0122.62 22.62L278.63 256z'/></svg>";
+const closeSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M400 145.49L366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49z'/></svg>";
+const ellipseOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><circle cx='256' cy='256' r='192' stroke-linecap='round' stroke-linejoin='round' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
+const ellipsisHorizontal = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><circle cx='256' cy='256' r='48'/><circle cx='416' cy='256' r='48'/><circle cx='96' cy='256' r='48'/></svg>";
+const menuOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-miterlimit='10' d='M80 160h352M80 256h352M80 352h352' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
+const menuSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M64 384h384v-42.67H64zm0-106.67h384v-42.66H64zM64 128v42.67h384V128z'/></svg>";
+const removeOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' d='M400 256H112' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
+const reorderThreeOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='round' stroke-linejoin='round' d='M96 256h320M96 176h320M96 336h320' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
+const reorderTwoSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path stroke-linecap='square' stroke-linejoin='round' stroke-width='44' d='M118 304h276M118 208h276' class='ionicon-fill-none'/></svg>";
+const searchOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z' stroke-miterlimit='10' class='ionicon-fill-none ionicon-stroke-width'/><path stroke-linecap='round' stroke-miterlimit='10' d='M338.29 338.29L448 448' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
+const searchSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M464 428L339.92 303.9a160.48 160.48 0 0030.72-94.58C370.64 120.37 298.27 48 209.32 48S48 120.37 48 209.32s72.37 161.32 161.32 161.32a160.48 160.48 0 0094.58-30.72L428 464zM209.32 319.69a110.38 110.38 0 11110.37-110.37 110.5 110.5 0 01-110.37 110.37z'/></svg>";
+
+
+
+
+/***/ }),
+
+/***/ 4311:
+/*!*************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/index-e6d1a8be.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "I": () => (/* binding */ ION_CONTENT_ELEMENT_SELECTOR),
 /* harmony export */   "a": () => (/* binding */ findIonContent),
-/* harmony export */   "b": () => (/* binding */ scrollByPoint),
+/* harmony export */   "b": () => (/* binding */ ION_CONTENT_CLASS_SELECTOR),
+/* harmony export */   "c": () => (/* binding */ scrollByPoint),
+/* harmony export */   "d": () => (/* binding */ disableContentScrollY),
 /* harmony export */   "f": () => (/* binding */ findClosestIonContent),
 /* harmony export */   "g": () => (/* binding */ getScrollElement),
+/* harmony export */   "i": () => (/* binding */ isIonContent),
 /* harmony export */   "p": () => (/* binding */ printIonContentErrorMsg),
+/* harmony export */   "r": () => (/* binding */ resetContentScrollY),
 /* harmony export */   "s": () => (/* binding */ scrollToTop)
 /* harmony export */ });
 /* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _index_9ac92660_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-9ac92660.js */ 2141);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
+/* harmony import */ var _index_c4b11676_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-c4b11676.js */ 9273);
 
 
 /*!
@@ -722,7 +834,7 @@ const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
 
 const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
-const isIonContent = el => el && el.tagName === ION_CONTENT_TAG_NAME;
+const isIonContent = el => el.tagName === ION_CONTENT_TAG_NAME;
 /**
  * Waits for the element host fully initialize before
  * returning the inner scroll element.
@@ -738,7 +850,7 @@ const isIonContent = el => el && el.tagName === ION_CONTENT_TAG_NAME;
 const getScrollElement = /*#__PURE__*/function () {
   var _ref = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (el) {
     if (isIonContent(el)) {
-      yield new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_1__.c)(el, resolve));
+      yield new Promise(resolve => (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_1__.c)(el, resolve));
       return el.getScrollElement();
     }
 
@@ -781,6 +893,7 @@ const findClosestIonContent = el => {
  * Scrolls to the top of the element. If an `ion-content` is found, it will scroll
  * using the public API `scrollToTop` with a duration.
  */
+// TODO(FW-2832): type
 
 
 const scrollToTop = (el, durationMs) => {
@@ -820,123 +933,50 @@ const scrollByPoint = (el, x, y, durationMs) => {
 
 
 const printIonContentErrorMsg = el => {
-  return (0,_index_9ac92660_js__WEBPACK_IMPORTED_MODULE_2__.a)(el, ION_CONTENT_ELEMENT_SELECTOR);
-};
-
-
-
-/***/ }),
-
-/***/ 2141:
-/*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-9ac92660.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "a": () => (/* binding */ printRequiredElementError),
-/* harmony export */   "b": () => (/* binding */ printIonError),
-/* harmony export */   "p": () => (/* binding */ printIonWarning)
-/* harmony export */ });
-/*!
- * (C) Ionic http://ionicframework.com - MIT License
- */
-/**
- * Logs a warning to the console with an Ionic prefix
- * to indicate the library that is warning the developer.
- *
- * @param message - The string message to be logged to the console.
- */
-const printIonWarning = (message) => {
-  return console.warn(`[Ionic Warning]: ${message}`);
-};
-/*
- * Logs an error to the console with an Ionic prefix
- * to indicate the library that is warning the developer.
- *
- * @param message - The string message to be logged to the console.
- * @param params - Additional arguments to supply to the console.error.
- */
-const printIonError = (message, ...params) => {
-  return console.error(`[Ionic Error]: ${message}`, ...params);
+  return (0,_index_c4b11676_js__WEBPACK_IMPORTED_MODULE_2__.a)(el, ION_CONTENT_ELEMENT_SELECTOR);
 };
 /**
- * Prints an error informing developers that an implementation requires an element to be used
- * within a specific selector.
- *
- * @param el The web component element this is requiring the element.
- * @param targetSelectors The selector or selectors that were not found.
+ * Several components in Ionic need to prevent scrolling
+ * during a gesture (card modal, range, item sliding, etc).
+ * Use this utility to account for ion-content and custom content hosts.
  */
-const printRequiredElementError = (el, ...targetSelectors) => {
-  return console.error(`<${el.tagName.toLowerCase()}> must be used inside ${targetSelectors.join(' or ')}.`);
+
+
+const disableContentScrollY = contentEl => {
+  if (isIonContent(contentEl)) {
+    const ionContent = contentEl;
+    const initialScrollY = ionContent.scrollY;
+    ionContent.scrollY = false;
+    /**
+     * This should be passed into resetContentScrollY
+     * so that we can revert ion-content's scrollY to the
+     * correct state. For example, if scrollY = false
+     * initially, we do not want to enable scrolling
+     * when we call resetContentScrollY.
+     */
+
+    return initialScrollY;
+  } else {
+    contentEl.style.setProperty('overflow', 'hidden');
+    return true;
+  }
+};
+
+const resetContentScrollY = (contentEl, initialScrollY) => {
+  if (isIonContent(contentEl)) {
+    contentEl.scrollY = initialScrollY;
+  } else {
+    contentEl.style.removeProperty('overflow');
+  }
 };
 
 
 
-
 /***/ }),
 
-/***/ 341:
-/*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-e3f61316.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "a": () => (/* binding */ arrowBackSharp),
-/* harmony export */   "b": () => (/* binding */ closeCircle),
-/* harmony export */   "c": () => (/* binding */ chevronBack),
-/* harmony export */   "d": () => (/* binding */ closeSharp),
-/* harmony export */   "e": () => (/* binding */ searchSharp),
-/* harmony export */   "f": () => (/* binding */ caretBackSharp),
-/* harmony export */   "g": () => (/* binding */ arrowDown),
-/* harmony export */   "h": () => (/* binding */ reorderTwoSharp),
-/* harmony export */   "i": () => (/* binding */ chevronDown),
-/* harmony export */   "j": () => (/* binding */ chevronForwardOutline),
-/* harmony export */   "k": () => (/* binding */ ellipsisHorizontal),
-/* harmony export */   "l": () => (/* binding */ chevronForward),
-/* harmony export */   "m": () => (/* binding */ caretUpSharp),
-/* harmony export */   "n": () => (/* binding */ caretDownSharp),
-/* harmony export */   "o": () => (/* binding */ close),
-/* harmony export */   "p": () => (/* binding */ menuOutline),
-/* harmony export */   "q": () => (/* binding */ menuSharp),
-/* harmony export */   "r": () => (/* binding */ reorderThreeOutline),
-/* harmony export */   "s": () => (/* binding */ searchOutline)
-/* harmony export */ });
-/*!
- * (C) Ionic http://ionicframework.com - MIT License
- */
-/* Ionicons v6.0.0, ES Modules */
-const arrowBackSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Arrow Back</title><path stroke-linecap='square' stroke-miterlimit='10' stroke-width='48' d='M244 400L100 256l144-144M120 256h292' class='ionicon-fill-none'/></svg>";
-const arrowDown = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Arrow Down</title><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 268l144 144 144-144M256 392V100' class='ionicon-fill-none'/></svg>";
-const caretBackSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Caret Back</title><path d='M368 64L144 256l224 192V64z'/></svg>";
-const caretDownSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Caret Down</title><path d='M64 144l192 224 192-224H64z'/></svg>";
-const caretUpSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Caret Up</title><path d='M448 368L256 144 64 368h384z'/></svg>";
-const chevronBack = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Chevron Back</title><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M328 112L184 256l144 144' class='ionicon-fill-none'/></svg>";
-const chevronDown = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Chevron Down</title><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 184l144 144 144-144' class='ionicon-fill-none'/></svg>";
-const chevronForward = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Chevron Forward</title><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M184 112l144 144-144 144' class='ionicon-fill-none'/></svg>";
-const chevronForwardOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Chevron Forward</title><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M184 112l144 144-144 144' class='ionicon-fill-none'/></svg>";
-const close = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Close</title><path d='M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z'/></svg>";
-const closeCircle = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Close Circle</title><path d='M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm75.31 260.69a16 16 0 11-22.62 22.62L256 278.63l-52.69 52.68a16 16 0 01-22.62-22.62L233.37 256l-52.68-52.69a16 16 0 0122.62-22.62L256 233.37l52.69-52.68a16 16 0 0122.62 22.62L278.63 256z'/></svg>";
-const closeSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Close</title><path d='M400 145.49L366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49z'/></svg>";
-const ellipsisHorizontal = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Ellipsis Horizontal</title><circle cx='256' cy='256' r='48'/><circle cx='416' cy='256' r='48'/><circle cx='96' cy='256' r='48'/></svg>";
-const menuOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Menu</title><path stroke-linecap='round' stroke-miterlimit='10' d='M80 160h352M80 256h352M80 352h352' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
-const menuSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Menu</title><path d='M64 384h384v-42.67H64zm0-106.67h384v-42.66H64zM64 128v42.67h384V128z'/></svg>";
-const reorderThreeOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Reorder Three</title><path stroke-linecap='round' stroke-linejoin='round' d='M96 256h320M96 176h320M96 336h320' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
-const reorderTwoSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Reorder Two</title><path stroke-linecap='square' stroke-linejoin='round' stroke-width='44' d='M118 304h276M118 208h276' class='ionicon-fill-none'/></svg>";
-const searchOutline = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Search</title><path d='M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z' stroke-miterlimit='10' class='ionicon-fill-none ionicon-stroke-width'/><path stroke-linecap='round' stroke-miterlimit='10' d='M338.29 338.29L448 448' class='ionicon-fill-none ionicon-stroke-width'/></svg>";
-const searchSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Search</title><path d='M464 428L339.92 303.9a160.48 160.48 0 0030.72-94.58C370.64 120.37 298.27 48 209.32 48S48 120.37 48 209.32s72.37 161.32 161.32 161.32a160.48 160.48 0 0094.58-30.72L428 464zM209.32 319.69a110.38 110.38 0 11110.37-110.37 110.5 110.5 0 01-110.37 110.37z'/></svg>";
-
-
-
-
-/***/ }),
-
-/***/ 6524:
+/***/ 512:
 /*!****************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/keyboard-4d5544a0.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/keyboard-282b81b8.js ***!
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -960,6 +1000,7 @@ __webpack_require__.r(__webpack_exports__);
 const KEYBOARD_DID_OPEN = 'ionKeyboardDidShow';
 const KEYBOARD_DID_CLOSE = 'ionKeyboardDidHide';
 const KEYBOARD_THRESHOLD = 150;
+// TODO(FW-2832): types
 let previousVisualViewport = {};
 let currentVisualViewport = {};
 let keyboardOpen = false;
@@ -1079,6 +1120,61 @@ const copyVisualViewport = (visualViewport) => {
     pageLeft: visualViewport.pageLeft,
     scale: visualViewport.scale,
   };
+};
+
+
+
+
+/***/ }),
+
+/***/ 3963:
+/*!***************************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/keyboard-controller-73af62b2.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "c": () => (/* binding */ createKeyboardController)
+/* harmony export */ });
+/* harmony import */ var _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-33ffec25.js */ 2286);
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+
+
+/**
+ * Creates a controller that tracks and reacts to opening or closing the keyboard.
+ *
+ * @internal
+ * @param keyboardChangeCallback A function to call when the keyboard opens or closes.
+ */
+const createKeyboardController = (keyboardChangeCallback) => {
+  let keyboardWillShowHandler;
+  let keyboardWillHideHandler;
+  let keyboardVisible;
+  const init = () => {
+    keyboardWillShowHandler = () => {
+      keyboardVisible = true;
+      if (keyboardChangeCallback)
+        keyboardChangeCallback(true);
+    };
+    keyboardWillHideHandler = () => {
+      keyboardVisible = false;
+      if (keyboardChangeCallback)
+        keyboardChangeCallback(false);
+    };
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.addEventListener('keyboardWillShow', keyboardWillShowHandler);
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.addEventListener('keyboardWillHide', keyboardWillHideHandler);
+  };
+  const destroy = () => {
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.removeEventListener('keyboardWillShow', keyboardWillShowHandler);
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.removeEventListener('keyboardWillHide', keyboardWillHideHandler);
+    keyboardWillShowHandler = keyboardWillHideHandler = undefined;
+  };
+  const isKeyboardVisible = () => keyboardVisible;
+  init();
+  return { init, destroy, isKeyboardVisible };
 };
 
 
@@ -1245,9 +1341,9 @@ const SPINNERS = spinners;
 
 /***/ }),
 
-/***/ 1812:
+/***/ 1118:
 /*!******************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/swipe-back-fa30a130.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/swipe-back-a896f0bc.js ***!
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1255,10 +1351,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createSwipeBackGesture": () => (/* binding */ createSwipeBackGesture)
 /* harmony export */ });
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
+/* harmony import */ var _helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers-3b390e48.js */ 9234);
 /* harmony import */ var _dir_e8b767a8_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dir-e8b767a8.js */ 7481);
-/* harmony import */ var _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-3f1a7d95.js */ 2172);
-/* harmony import */ var _gesture_controller_17e82006_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gesture-controller-17e82006.js */ 607);
+/* harmony import */ var _index_422b6e83_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-422b6e83.js */ 6366);
+/* harmony import */ var _gesture_controller_17060b7c_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gesture-controller-17060b7c.js */ 6379);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -1313,14 +1409,9 @@ const createSwipeBackGesture = (el, canStartHandler, onStartHandler, onMoveHandl
       const dur = missingDistance / Math.abs(velocity);
       realDur = Math.min(dur, 540);
     }
-    /**
-     * TODO: stepValue can sometimes return negative values
-     * or values greater than 1 which should not be possible.
-     * Need to investigate more to find where the issue is.
-     */
-    onEndHandler(shouldComplete, stepValue <= 0 ? 0.01 : (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_0__.l)(0, stepValue, 0.9999), realDur);
+    onEndHandler(shouldComplete, stepValue <= 0 ? 0.01 : (0,_helpers_3b390e48_js__WEBPACK_IMPORTED_MODULE_0__.l)(0, stepValue, 0.9999), realDur);
   };
-  return (0,_index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_2__.createGesture)({
+  return (0,_index_422b6e83_js__WEBPACK_IMPORTED_MODULE_2__.createGesture)({
     el,
     gestureName: 'goback-swipe',
     gesturePriority: 40,
@@ -1332,83 +1423,6 @@ const createSwipeBackGesture = (el, canStartHandler, onStartHandler, onMoveHandl
   });
 };
 
-
-
-
-/***/ }),
-
-/***/ 320:
-/*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/theme-7670341c.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "c": () => (/* binding */ createColorClasses),
-/* harmony export */   "g": () => (/* binding */ getClassMap),
-/* harmony export */   "h": () => (/* binding */ hostContext),
-/* harmony export */   "o": () => (/* binding */ openURL)
-/* harmony export */ });
-/* harmony import */ var G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-
-
-/*!
- * (C) Ionic http://ionicframework.com - MIT License
- */
-const hostContext = (selector, el) => {
-  return el.closest(selector) !== null;
-};
-/**
- * Create the mode and color classes for the component based on the classes passed in
- */
-
-
-const createColorClasses = (color, cssClassMap) => {
-  return typeof color === 'string' && color.length > 0 ? Object.assign({
-    'ion-color': true,
-    [`ion-color-${color}`]: true
-  }, cssClassMap) : cssClassMap;
-};
-
-const getClassList = classes => {
-  if (classes !== undefined) {
-    const array = Array.isArray(classes) ? classes : classes.split(' ');
-    return array.filter(c => c != null).map(c => c.trim()).filter(c => c !== '');
-  }
-
-  return [];
-};
-
-const getClassMap = classes => {
-  const map = {};
-  getClassList(classes).forEach(c => map[c] = true);
-  return map;
-};
-
-const SCHEME = /^[a-z][a-z0-9+\-.]*:/;
-
-const openURL = /*#__PURE__*/function () {
-  var _ref = (0,G_ionic_updated_veriprof_veriprof_app_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (url, ev, direction, animation) {
-    if (url != null && url[0] !== '#' && !SCHEME.test(url)) {
-      const router = document.querySelector('ion-router');
-
-      if (router) {
-        if (ev != null) {
-          ev.preventDefault();
-        }
-
-        return router.push(url, direction, animation);
-      }
-    }
-
-    return false;
-  });
-
-  return function openURL(_x, _x2, _x3, _x4) {
-    return _ref.apply(this, arguments);
-  };
-}();
 
 
 

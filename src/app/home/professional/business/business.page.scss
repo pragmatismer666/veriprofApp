@@ -1,23 +1,8 @@
-.footer {
-    font-size: 11px;
-    color    : rgb(109, 109, 109);
-}
-
-.list {
-    font-size: 11px;
-
-}
-
-.project_verify {
-    font-size : 11px;
-    margin-top: -7px;
-}
+$breakpoint-alpha: 800px; // adjust to your needs
 
 .rwd-table {
-    margin-top   : 1em;
-    margin-left: 2%;
-    margin-right: 2%;
-    min-width: 96%; // adjust to your needs
+    margin: 1em 0;
+    width : 100%;
 
     tr {
         border-top   : 1px solid #ddd;
@@ -29,7 +14,8 @@
     }
 
     td {
-        display: block;
+        display    : block;
+        line-height: 1.5rem;
 
         &:first-child {
             padding-top: .5em;
@@ -42,13 +28,12 @@
         &:before {
             content    : attr(data-th)": "; // who knew you could do this? The internet, that's who.
             font-weight: bold;
-
             // optional stuff to make it look nicer
-            width  : 10em; // magic number :( adjust according to your own content
-            display: inline-block;
+            width      : 9.5em; // magic number :( adjust according to your own content
+            display    : inline-block;
             // end options
 
-            @media (min-width: 100%) {
+            @media (min-width: $breakpoint-alpha) {
                 display: none;
             }
         }
@@ -58,9 +43,9 @@
     td {
         text-align: left;
 
-        @media (min-width: 100%) {
+        @media (min-width: $breakpoint-alpha) {
             display: table-cell;
-            padding: .25em .5em;
+            padding: .3em .5em;
 
             &:first-child {
                 padding-left: 0;
@@ -93,7 +78,7 @@
         td {
             margin: .5em 1em;
 
-            @media (min-width: 100%) {
+            @media (min-width: $breakpoint-alpha) {
                 padding: 1em !important;
             }
         }

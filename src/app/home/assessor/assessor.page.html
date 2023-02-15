@@ -6,18 +6,32 @@
 </ion-header>
 
 <ion-content padding color="dark">
-    <ion-card>
+    <ion-card class="scroll-y mb-0 p-fixed w-80 h-55">
         <ion-segment>
             <ion-segment>
                 <ion-card (click)="unverifiedbiz()">
                     <ion-img src="../../../assets/biz.png"></ion-img>
-                    <ion-label class="inner">Business </ion-label>
+                    <ion-label class="inner">&nbsp;&nbsp;Business&nbsp;&nbsp; </ion-label>
                 </ion-card>
             </ion-segment>
             <ion-segment>
-                <ion-card (click)="unverifiedpers()">
+                <ion-card (click)="unverifiedoffice()">
+                    <ion-img src="../../../assets/network.png"></ion-img>
+                    <ion-label class="inner">Office</ion-label>
+                </ion-card>
+            </ion-segment>
+        </ion-segment>
+        <ion-segment>
+            <ion-segment>
+                <ion-card (click)="unverifiedproject()">
+                    <ion-img src="../../../assets/arch.png"></ion-img>
+                    <ion-label class="inner">&nbsp;&nbsp;&nbsp;Projects&nbsp;&nbsp;&nbsp;</ion-label>
+                </ion-card>
+            </ion-segment>
+            <ion-segment>
+                <ion-card (click)="unverifiedprof()">
                     <ion-img src="../../../assets/personal.png"></ion-img>
-                    <ion-label class="inner">Profess </ion-label>
+                    <ion-label class="inner">Professional</ion-label>
                 </ion-card>
             </ion-segment>
         </ion-segment>
@@ -25,7 +39,7 @@
             <ion-segment>
                 <ion-card (click)="schedules()">
                     <ion-img src="../../../assets/sched.png"></ion-img>
-                    <ion-label class="inner">Schedules </ion-label>
+                    <ion-label class="inner">Schedules</ion-label>
                 </ion-card>
             </ion-segment>
             <ion-segment>
@@ -38,10 +52,10 @@
     </ion-card>
 </ion-content>
 
-<ion-footer class="mb-0">
+<ion-footer class="mb-0" style="height: 20%;">
     <ion-label class="m-4" color="light">Assessors Verification Summary</ion-label>
     <ion-segment>
-        <ion-card style="width: 40%;">
+        <ion-card class="h-100">
             <div class="profileimage" *ngIf="image === 'assets/icon-66.png'">
                 <img src="assets/icon-66.png" alt="" (click)="cameraOption()">
             </div>
@@ -50,12 +64,18 @@
             </div>
         </ion-card>
         <ion-card>
-            <ion-label class="inner">Busis</ion-label>
-            <ion-label class="inner">{{biz_num}}</ion-label>
-        </ion-card>
-        <ion-card>
-            <ion-label class="inner">Prof's</ion-label>
-            <ion-label class="inner">{{profess_num}}</ion-label>
+            <ion-row>
+                <ion-label class="inner">Offices:</ion-label>
+                <ion-label class="inner">{{officeNum}}</ion-label>
+            </ion-row>
+            <ion-row>
+                <ion-label class="inner">Profiles:</ion-label>
+                <ion-label class="inner">{{profileNum}}</ion-label>
+            </ion-row>
+            <ion-row>
+                <ion-label class="inner">Projects:</ion-label>
+                <ion-label class="inner">{{projectNum}}</ion-label>
+            </ion-row>
         </ion-card>
     </ion-segment>
 </ion-footer>

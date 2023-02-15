@@ -1,60 +1,35 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
-        <ion-title>Schedules</ion-title>
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">Schedules</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-card class="p-2 m-2 scroll-y h-100">
-        <form class="p-2" [formGroup]="schedule_form" (ngSubmit)="schedule_confirm(schedule_form.value)">
-            <ion-item color="" class="mt-4">
-                <ion-label position="floating" color="grey" class="inner">UserName</ion-label>
-                <ion-input type="text" formControlName="name" color="" class="inner" [readonly]="true"
-                    value={{this.authService.userDetails().name}}></ion-input>
-            </ion-item>
-            <ion-item color="" class="">
-                <ion-label position="floating" color="gray" class="inner">Verify Target Email</ion-label>
-                <ion-input type="text" formControlName="verify_target" color="" class="inner"
-                    value={{schedule_form.verify_target}}></ion-input>
-            </ion-item>
-            <ion-item color="">
-                <ion-label position="floating" color="gray" class="inner">Location</ion-label>
-                <ion-input type="text" formControlName="location" color="" class="inner"
-                    value={{schedule_form.location}}>
-                </ion-input>
-            </ion-item>
-            <ion-segment>
-                <ion-datetime displayFormat="YYYY-MM-DDTHH:mm" formControlName="date" class="inner"
-                    placeholder="YYYY-MM-DDTHH:mm" value={{schedule_form.date}}></ion-datetime>
-                <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.profess">
-                        <div class="error-message"
-                            *ngIf="schedule_form.get('location').hasError(validation.type) && (schedule_form.get('location').dirty)">
-                            {{ validation.message }}
-                        </div>
-                    </ng-container>
-                </div>
-            </ion-segment>
-            <ion-segment>
-                <ion-button class="m-auto mt-1 w-100" type="submit" [disabled]="!schedule_form.valid" color="success">
-                    Confirm</ion-button>
-            </ion-segment>
-        </form>
         <div class="scrollH">
-            <table class="table mt-4 mb-2">
+            <table class="table mt-2">
                 <tbody>
                     <tr>
-                        <th>Name</th>
+                        <th>ID</th>
                         <th>Verify Target</th>
+                        <th>Profess Name</th>
+                        <th>Profess Email</th>
                         <th>DateTime</th>
-                        <th>Location</th>
+                        <th>Done</th>
                     </tr>
                     <tr *ngFor="let x of objs">
-                        <td>{{x.name}}</td>
+                        <td>{{x.id}}</td>
                         <td>{{x.verify_target}}</td>
-                        <td>{{x.date.split('.')[0]}}</td>
-                        <td>{{x.location}}</td>
+                        <td>{{x.name}}</td>
+                        <td>{{x.email}}</td>
+                        <td>{{x.date}}</td>
+                        <ng-container *ngIf="x.is_done == '0'">
+                            <td class="bg-danger">Not yet</td>
+                        </ng-container>
+                        <ng-container *ngIf="x.is_done == '1'">
+                            <td class="bg-success">Done</td>
+                        </ng-container>
                     </tr>
                 </tbody>
             </table>

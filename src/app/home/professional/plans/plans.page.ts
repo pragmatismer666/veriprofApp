@@ -52,40 +52,47 @@ export class PlansPage implements OnInit {
         project_province: "",
         project_zipcode: "",
         responsible_qs: "",
-        file: ""
+        file: "",
+        status_request: "No",
     };
 
+    saveButtonFlag: Boolean = false;
 
     constructor(public toastController: ToastController, public authService: AuthenticateService, public restApi: RestApiService) { }
 
     async ngOnInit() {
         this.getplanNo();
         this.getPlans();
-        await this.loadSavedPlans();
+        // await this.loadSavedPlans();
     }
 
     ngOnDestroy() {
         this.authService.saveData(this.plan, "plan");
     }
 
-    async loadSavedPlans(){
+    async loadSavedPlans() {
         let saved_plan = await this.authService.getSavedData("plan");
         // console.log( saved_plan);
-        if ( saved_plan != null ){
+        if (saved_plan != null) {
             this.plan = saved_plan;
         }
     }
 
-    submit() {
+    submit(status_request: Boolean) {
         for (let x in this.plan) {
+            // console.log(" plans.page.ts  submit  this.plan[x] = : ", this.plan[x]);
             if (this.plan[x].length == 0) {
                 let name = x.replace('_', ' ');
                 return this.restApi.toast("Please fill " + name, 1200);
             }
         }
+        if (status_request) {
+            this.plan.status_request = "Yes";
+        }
         if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.plan.contact_email) != true) { this.restApi.toast("Please input validated email.", 1500); }
         // console.log(this.plan, this.authService.user.userId);
         this.restApi.post("professional/add-plan", { user_id: this.authService.user.userId, data: this.plan }).subscribe((res: any) => {
+            console.log(res);
             if (res && res.status == "success") {
                 this.restApi.toast(res.message, 1200);
                 this.segment = "added";
@@ -97,6 +104,16 @@ export class PlansPage implements OnInit {
         }, error => {
             this.restApi.toast(error.message, 1200);
         });
+    }
+
+    async action(x: any, act: any) {
+        this.plan = x;
+        if (act) {
+            this.plan.status_request = "Yes";
+            this.submit(true);
+        } else {
+            this.segment = "paper";
+        }
     }
 
     getPlans() {
@@ -120,6 +137,7 @@ export class PlansPage implements OnInit {
     }
 
     changeListener($event: any): void {
+        this.saveButtonFlag = true;
         let file = $event.target.files[0];
         if (file && file.type == "application/pdf") {
             this.restApi.postFile(file, "/upload-file", "plan").subscribe(res => {
@@ -133,9 +151,10 @@ export class PlansPage implements OnInit {
         } else {
             this.restApi.toast("Only PDF supported", 1200);
         }
+        this.saveButtonFlag = false;
     }
 
-    download(filename: string) {
-        this.restApi.downfile("certificate/", filename);
+    download(filename: string, path: string) {
+        this.restApi.downfile(path, filename);
     }
 }

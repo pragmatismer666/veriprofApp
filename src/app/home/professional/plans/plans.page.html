@@ -1,12 +1,12 @@
-<ion-header>
-    <ion-toolbar color="dark">
-        <ion-back-button slot="start"></ion-back-button>
-        <ion-title>ePlan Filing</ion-title>
+<ion-header class="h-50px">
+    <ion-toolbar color="dark" class="h-50px">
+        <ion-back-button slot="start" class="h-45px"></ion-back-button>
+        <ion-title class="h-50px">EPlan Filing</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-segment [(ngModel)]="segment" color="light">
+    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
         <ion-segment-button value="paper" class="dark" enabled>
             <ion-icon name="add-circle" class="dark" color="dark"></ion-icon>
             <ion-label class="dark" color="dark">New Plans</ion-label>
@@ -17,189 +17,249 @@
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="segment">
-        <ion-card *ngSwitchCase="'paper'" class="p-fixed fixed-ion-card-area p-3">
-            <strong>Project Info</strong>
-            <ion-item>
-                <ion-label position="stacked">Client Name</ion-label>
-                <ion-input name="client_name" [(ngModel)]="plan.client_name" value=""></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked" style="margin-bottom: 10px;">Clients Contact Details</ion-label>
-                <ion-label position="stacked"></ion-label>
-                <ion-input placeholder="Address Line 1" name="client_address_line_1"
-                    [(ngModel)]="plan.client_address_line_1"></ion-input>
-                <ion-input placeholder="Address Line 2" name="client_address_line_2"
-                    [(ngModel)]="plan.client_address_line_2"></ion-input>
-                <ion-input placeholder="City" name="client_city" [(ngModel)]="plan.client_city"></ion-input>
-                <ion-select multiple="false" name="client_province" [(ngModel)]="plan.client_province"
-                    placeholder="Select Province">
-                    <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
-                    <ion-select-option value="Free State">Free State</ion-select-option>
-                    <ion-select-option value="Gauteng">Gauteng</ion-select-option>
-                    <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
-                    <ion-select-option value="Limpopo">Limpopo</ion-select-option>
-                    <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
-                    <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
-                    <ion-select-option value="North West">North West</ion-select-option>
-                    <ion-select-option value="Western Cape">Western Cape</ion-select-option>
-                </ion-select>
-                <ion-input placeholder="POSTAL Code" name="client_zipcode" [(ngModel)]="plan.client_zipcode">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Project Title</ion-label>
-                <ion-input name="project_title" [(ngModel)]="plan.project_title"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked" style="margin-bottom: 10px;">Project/Site Location</ion-label>
-                <ion-label position="stacked"></ion-label>
-                <ion-input placeholder="Address Line 1" name="project_address_line_1"
-                    [(ngModel)]="plan.project_address_line_1"></ion-input>
-                <ion-input placeholder="Address Line 2" name="project_address_line_2"
-                    [(ngModel)]="plan.project_address_line_2"></ion-input>
-                <ion-input placeholder="City" name="project_city" [(ngModel)]="plan.project_city"></ion-input>
-                <ion-select multiple="false" name="project_province" [(ngModel)]="plan.project_province"
-                    placeholder="Select Province">
-                    <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
-                    <ion-select-option value="Free State">Free State</ion-select-option>
-                    <ion-select-option value="Gauteng">Gauteng</ion-select-option>
-                    <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
-                    <ion-select-option value="Limpopo">Limpopo</ion-select-option>
-                    <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
-                    <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
-                    <ion-select-option value="North West">North West</ion-select-option>
-                    <ion-select-option value="Western Cape">Western Cape</ion-select-option>
-                </ion-select>
-                <ion-input placeholder="Zip Code" name="project_zipcode" [(ngModel)]="plan.project_zipcode">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Local Municipal</ion-label>
-                <ion-select multiple="false" placeholder="Municipal" [(ngModel)]="plan.municipal" name="municipal">
-                    <ion-select-option value="Abaqulusi Local Municipality">Abaqulusi Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Albert Luthuli Local Municipality">Albert Luthuli Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Alfred Duma Local Municipality">Alfred Duma Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Amahlathi Local Municipality">Amahlathi Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Ba-Phalaborwa Local Municipality">Ba-Phalaborwa Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Beaufort West Local Municipality">Beaufort West Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Bela-Bela Local Municipality">Bela-Bela Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Bergrivier Local Municipality">Bergrivier Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Big Five Hlabisa Local Municipality">Big Five Hlabisa Local
-                        Municipality</ion-select-option>
-                    <ion-select-option value="Bitou Local Municipality">Bitou Local Municipality</ion-select-option>
-                    <ion-select-option value="Blouberg Local Municipality">Blouberg Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Blue Crane Route Local Municipality">Blue Crane Route Local
-                        Municipality</ion-select-option>
-                    <ion-select-option value="Breede Valley Local Municipality">Breede Valley Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Buffalo City Metropolitan Municipality">Buffalo City Metropolitan
-                        Municipality</ion-select-option>
-                    <ion-select-option value="Bushbuckridge Local Municipality">Bushbuckridge Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Cape Agulhas Local Municipality">Cape Agulhas Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="Cederberg Local Municipality">Cederberg Local Municipality
-                    </ion-select-option>
-                    <ion-select-option value="City of Cape Town Metropolitan Municipality">City of Cape Town
-                        MetropolitanMunicipality</ion-select-option>
-                    <ion-select-option value="City of Johannesburg Metropolitan Municipality">City of Johannesburg
-                        MetropolitanMunicipality</ion-select-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">ERF No.</ion-label>
-                <ion-input [(ngModel)]="plan.erfno" name="erfno"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Occupancy</ion-label>
-                <ion-input name="occupancy" [(ngModel)]="plan.occupancy"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">HIA Sensitivity</ion-label>
-                <ion-input name="hia_sensitivity" [(ngModel)]="plan.hia_sensitivity"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Area/Size</ion-label>
-                <ion-input name="project_area" [(ngModel)]="plan.project_area"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Responsible QS</ion-label>
-                <ion-input name="responsible_qs" [(ngModel)]="plan.responsible_qs" value="{{plan.responsible_qs}}">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Responsible Professional</ion-label>
-                <ion-input name="professional" [(ngModel)]="plan.professional"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Prof. Registration Number</ion-label>
-                <ion-input name="professional_reg_number" [(ngModel)]="plan.professional_reg_number"
-                    value="{{plan.professional_reg_number}}"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Project Cost</ion-label>
-                <ion-input name="project_cost" [(ngModel)]="plan.project_cost" value="{{plan.project_cost}}">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Generated Plan No.</ion-label>
-                <ion-input name="project_plan_no" [(ngModel)]="plan.project_plan_no" value="{{plan.project_plan_no}}">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked" style="margin-bottom:12px;">Responsible Prof Contact Details</ion-label>
-                <ion-input placeholder="Address Line 1" name="contact_address_line_1"
-                    [(ngModel)]="plan.contact_address_line_1" value="{{plan.contact_address_line_1}}"></ion-input>
-                <ion-input placeholder="Address Line 2" name="contact_address_line_2"
-                    [(ngModel)]="plan.contact_address_line_2" value="{{plan.contact_address_line_2}}"></ion-input>
-                <ion-input placeholder="City" name="contact_city" [(ngModel)]="plan.contact_city"
-                    value="{{plan.contact_city}}"></ion-input>
-                <ion-input placeholder="Cost" name="contact_province" [(ngModel)]="plan.contact_province"
-                    value="{{plan.contact_province}}"></ion-input>
-                <ion-input placeholder="Zip Code" name="contact_zipcode" [(ngModel)]="plan.contact_zipcode"
-                    value="{{plan.contact_zipcode}}"></ion-input>
-                <ion-input placeholder="Contact Eamil" name="contact_email" [(ngModel)]="plan.contact_email"
-                    value="{{plan.contact_email}}"></ion-input>
-                <ion-input placeholder="Contact Phone" name="contact_phone" [(ngModel)]="plan.contact_phone"
-                    value="{{plan.phone}}"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked" style="margin-bottom: 10px;">Upload PDF Copy of plan
-                </ion-label>
+        <ion-card *ngSwitchCase="'paper'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <strong>Project Info</strong>
                 <ion-item>
-                    <ion-input name="file" id="myFileInput" type="file" accept="application/pdf"
-                        (change)="changeListener($event)"></ion-input>
+                    <ion-label position="stacked">Client Name</ion-label>
+                    <ion-input name="client_name" [(ngModel)]="plan.client_name" value=""></ion-input>
                 </ion-item>
-            </ion-item>
-            <div class="ion-padding">
-                <ion-button expand="block" type="submit" class="ion-no-margin" color="dark" (click)="submit()">
-                    FILE PLAN</ion-button>
-            </div>
+                <ion-item>
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Clients Contact Details</ion-label>
+                    <ion-label position="stacked"></ion-label>
+                    <ion-input placeholder="Address Line 1" name="client_address_line_1"
+                        [(ngModel)]="plan.client_address_line_1"></ion-input>
+                    <ion-input placeholder="Address Line 2" name="client_address_line_2"
+                        [(ngModel)]="plan.client_address_line_2"></ion-input>
+                    <ion-input placeholder="City" name="client_city" [(ngModel)]="plan.client_city"></ion-input>
+                    <ion-select multiple="false" name="client_province" [(ngModel)]="plan.client_province"
+                        placeholder="Select Province">
+                        <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
+                        <ion-select-option value="Free State">Free State</ion-select-option>
+                        <ion-select-option value="Gauteng">Gauteng</ion-select-option>
+                        <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
+                        <ion-select-option value="Limpopo">Limpopo</ion-select-option>
+                        <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
+                        <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
+                        <ion-select-option value="North West">North West</ion-select-option>
+                        <ion-select-option value="Western Cape">Western Cape</ion-select-option>
+                    </ion-select>
+                    <ion-input placeholder="POSTAL Code" name="client_zipcode" [(ngModel)]="plan.client_zipcode">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Project Title</ion-label>
+                    <ion-input name="project_title" [(ngModel)]="plan.project_title"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Project/Site Location</ion-label>
+                    <ion-label position="stacked"></ion-label>
+                    <ion-input placeholder="Address Line 1" name="project_address_line_1"
+                        [(ngModel)]="plan.project_address_line_1"></ion-input>
+                    <ion-input placeholder="Address Line 2" name="project_address_line_2"
+                        [(ngModel)]="plan.project_address_line_2"></ion-input>
+                    <ion-input placeholder="City" name="project_city" [(ngModel)]="plan.project_city"></ion-input>
+                    <ion-select multiple="false" name="project_province" [(ngModel)]="plan.project_province"
+                        placeholder="Select Province">
+                        <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
+                        <ion-select-option value="Free State">Free State</ion-select-option>
+                        <ion-select-option value="Gauteng">Gauteng</ion-select-option>
+                        <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
+                        <ion-select-option value="Limpopo">Limpopo</ion-select-option>
+                        <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
+                        <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
+                        <ion-select-option value="North West">North West</ion-select-option>
+                        <ion-select-option value="Western Cape">Western Cape</ion-select-option>
+                    </ion-select>
+                    <ion-input placeholder="Zip Code" name="project_zipcode" [(ngModel)]="plan.project_zipcode">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Local Municipal</ion-label>
+                    <ion-select multiple="false" placeholder="Municipal" [(ngModel)]="plan.municipal" name="municipal">
+                        <ion-select-option value="Abaqulusi Local Municipality">Abaqulusi Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Albert Luthuli Local Municipality">Albert Luthuli Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Alfred Duma Local Municipality">Alfred Duma Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Amahlathi Local Municipality">Amahlathi Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Ba-Phalaborwa Local Municipality">Ba-Phalaborwa Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Beaufort West Local Municipality">Beaufort West Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Bela-Bela Local Municipality">Bela-Bela Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Bergrivier Local Municipality">Bergrivier Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Big Five Hlabisa Local Municipality">Big Five Hlabisa Local
+                            Municipality</ion-select-option>
+                        <ion-select-option value="Bitou Local Municipality">Bitou Local Municipality</ion-select-option>
+                        <ion-select-option value="Blouberg Local Municipality">Blouberg Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Blue Crane Route Local Municipality">Blue Crane Route Local
+                            Municipality</ion-select-option>
+                        <ion-select-option value="Breede Valley Local Municipality">Breede Valley Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Buffalo City Metropolitan Municipality">Buffalo City Metropolitan
+                            Municipality</ion-select-option>
+                        <ion-select-option value="Bushbuckridge Local Municipality">Bushbuckridge Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Cape Agulhas Local Municipality">Cape Agulhas Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="Cederberg Local Municipality">Cederberg Local Municipality
+                        </ion-select-option>
+                        <ion-select-option value="City of Cape Town Metropolitan Municipality">City of Cape Town
+                            MetropolitanMunicipality</ion-select-option>
+                        <ion-select-option value="City of Johannesburg Metropolitan Municipality">City of Johannesburg
+                            MetropolitanMunicipality</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">ERF No.</ion-label>
+                    <ion-input [(ngModel)]="plan.erfno" name="erfno"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Occupancy</ion-label>
+                    <ion-input name="occupancy" [(ngModel)]="plan.occupancy"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">HIA Sensitivity</ion-label>
+                    <ion-input name="hia_sensitivity" [(ngModel)]="plan.hia_sensitivity"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Area/Size</ion-label>
+                    <ion-input name="project_area" [(ngModel)]="plan.project_area"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Responsible QS</ion-label>
+                    <ion-input name="responsible_qs" [(ngModel)]="plan.responsible_qs" value="{{plan.responsible_qs}}">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Responsible Professional</ion-label>
+                    <ion-input name="professional" [(ngModel)]="plan.professional"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Prof. Registration Number</ion-label>
+                    <ion-input name="professional_reg_number" [(ngModel)]="plan.professional_reg_number"
+                        value="{{plan.professional_reg_number}}"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Project Cost</ion-label>
+                    <ion-input name="project_cost" [(ngModel)]="plan.project_cost" value="{{plan.project_cost}}">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Generated Plan No.</ion-label>
+                    <ion-input name="project_plan_no" [(ngModel)]="plan.project_plan_no"
+                        value="{{plan.project_plan_no}}">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked" style="margin-bottom:12px;">Responsible Prof Contact
+                        Details</ion-label>
+                    <ion-input placeholder="Address Line 1" name="contact_address_line_1"
+                        [(ngModel)]="plan.contact_address_line_1" value="{{plan.contact_address_line_1}}"></ion-input>
+                    <ion-input placeholder="Address Line 2" name="contact_address_line_2"
+                        [(ngModel)]="plan.contact_address_line_2" value="{{plan.contact_address_line_2}}"></ion-input>
+                    <ion-input placeholder="City" name="contact_city" [(ngModel)]="plan.contact_city"
+                        value="{{plan.contact_city}}"></ion-input>
+                    <ion-select multiple="false" name="contact_province" [(ngModel)]="plan.contact_province"
+                        placeholder="Select Contact Province">
+                        <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
+                        <ion-select-option value="Free State">Free State</ion-select-option>
+                        <ion-select-option value="Gauteng">Gauteng</ion-select-option>
+                        <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
+                        <ion-select-option value="Limpopo">Limpopo</ion-select-option>
+                        <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
+                        <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
+                        <ion-select-option value="North West">North West</ion-select-option>
+                        <ion-select-option value="Western Cape">Western Cape</ion-select-option>
+                    </ion-select>
+                    <ion-input placeholder="Zip Code" name="contact_zipcode" [(ngModel)]="plan.contact_zipcode"
+                        value="{{plan.contact_zipcode}}"></ion-input>
+                    <ion-input placeholder="Contact Eamil" name="contact_email" [(ngModel)]="plan.contact_email"
+                        value="{{plan.contact_email}}"></ion-input>
+                    <ion-input placeholder="Contact Phone Number" name="contact_phone" [(ngModel)]="plan.contact_phone"
+                        value="{{plan.phone}}"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked" style="margin-bottom: 10px;">Upload PDF Copy of plan
+                    </ion-label>
+                    <ion-item>
+                        <ion-input name="file" id="myFileInput" type="file" accept="application/pdf"
+                            (change)="changeListener($event)"></ion-input>
+                    </ion-item>
+                </ion-item>
+                <ion-item>
+                    <ng-container *ngIf="saveButtonFlag">
+                        <ion-button class="button-common w-50" color="medium" disabled={{saveButtonFlag}}>
+                            Uploading
+                            File
+                        </ion-button>
+                        <ion-button class="button-common w-50" color="medium" disabled={{saveButtonFlag}}>
+                            Uploading
+                            File
+                        </ion-button>
+                    </ng-container>
+                    <ng-container *ngIf="!saveButtonFlag">
+                        <ion-button (click)="submit(false)" class="button-common" color="primary"
+                            disabled={{saveButtonFlag}}>Save
+                            Project
+                        </ion-button>
+                        <ion-button (click)="submit(true)" class="button-common ml-auto" color="success"
+                            disabled={{saveButtonFlag}}><span class="inner">Required Verification</span>
+                        </ion-button>
+                    </ng-container>
+                    <br>
+                </ion-item>
+            </ion-card-content>
         </ion-card>
-        <ion-card *ngSwitchCase="'added'">
-            <table class="table-common" style="width: 100%;">
-                <tr>
-                    <th>Title</th>
-                    <th>Profess Email</th>
-                    <th>DateTime</th>
-                    <th>Download</th>
-                </tr>
-                <tr *ngFor="let x of Plans">
-                    <td>{{x.project_title}}</td>
-                    <td>{{x.contact_email}}</td>
-                    <td>{{x.created_at}}</td>
-                    <td class="d-flex" class="td-download-bg" (click)="download(x.certificate)">Download</td>
-                </tr>
-            </table>
+        <ion-card *ngSwitchCase="'added'" class="fixed-ion-card-area">
+            <ion-card-content>
+                <h1>My eplans</h1>
+                <table class="rwd-table">
+                    <ng-container *ngIf="Plans.length > 0">
+                        <tr *ngFor="let x of Plans">
+                            <td data-th="Plan Title">{{x.project_title}}</td>
+                            <td data-th="Profess Email">{{x.contact_email}}</td>
+                            <td data-th="Plan Document">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.file, 'uploads/')">
+                                    Download</ion-button>
+                            </td>
+                            <td data-th="Created DateTime">{{x.created_at}}</td>
+                            <td data-th="Certificate Document">
+                                <ion-button size="small" color="success" class="down-btn-profe"
+                                    (click)="download(x.certificate, 'certificate/')">
+                                    Download</ion-button>
+                            </td>
+                            <td data-th="Request Verification">
+                                <ion-label color="danger">{{x.status_request}}</ion-label>
+                            </td>
+                            <ng-container *ngIf="x.status_request == 'Yes'">
+                                <ion-button size="small" color="medium" class="down-btn-profe mt-2" disabled="true"
+                                    (click)="download(x.certificate)">Update</ion-button>
+                                <ion-button size="small" color="medium" class="down-btn-profe mt-2" disabled="true"
+                                    (click)="download(x.certificate)">Request Verification</ion-button>
+                            </ng-container>
+                            <ng-container *ngIf="x.status_request == 'No'">
+                                <ion-button size="small" color="primary" class="down-btn-profe mt-2"
+                                    (click)="action(x, false)">
+                                    Update</ion-button>
+                                <ion-button size="small" color="success" class="down-btn-profe mt-2"
+                                    (click)="action(x, true)">
+                                    Request Verification</ion-button>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="loadData.length == 0">
+                        <div class="text-center">No project or No connection.</div>
+                    </ng-container>
+                </table>
+            </ion-card-content>
         </ion-card>
     </div>
     <br>

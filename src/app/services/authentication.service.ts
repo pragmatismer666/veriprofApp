@@ -38,6 +38,7 @@ export class AuthenticateService {
     async logoutUser() {
         localStorage.clear();
         this.storage.remove("token");
+        localStorage.removeItem("user");
         this.navCtrl.navigateRoot("/landing");
     }
 
