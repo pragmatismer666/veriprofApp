@@ -7,24 +7,59 @@
 
 <ion-content>
     <ion-card class="fixed-ion-card-area top-55px">
-        <ion-card-content>
-            <table class="rwd-table">
-                <ng-container *ngIf="objs.length > 0">
-                    <tr *ngFor="let x of objs">
-                        <td data-th="Project Name">{{x.pname}}</td>
-                        <td data-th="Project Type">{{x.ptype}}</td>
-                        <td data-th="Project Council">{{x.pcouncil}}</td>
-                        <td data-th="CIPC Reg No">{{x.pcipc_reg_no}}</td>
-                        <td data-th="Updated">{{x.updated_at}}</td>
-                        <td data-th="Status">{{x.status}}</td>
-                    </tr>
-                </ng-container>
-                <ng-container *ngIf="objs.length == 0">
-                    <div class="text-center">No business</div>
-                </ng-container>
-            </table>
-        </ion-card-content>
+        <ng-container *ngIf="objs.length > 0">
+            <ion-card-content *ngFor="let x of objs">
+                <ion-button class="w-100" expand="block" [color]="x.status == 'Verified' ? 'success' : 'danger'"
+                    (click)="openAssessorBusiness(x)">
+                    <ion-label class="btn-text ml-2 mr-2">{{x.pname}}</ion-label>
+                </ion-button>
+            </ion-card-content>
+        </ng-container>
+        <ng-container *ngIf="objs.length == 0">
+            <ion-card-content class="text-center">No business</ion-card-content>
+        </ng-container>
     </ion-card>
+    <ion-modal [isOpen]="isAssessorBusiness">
+        <ng-template>
+            <ion-toolbar color="dark">
+                <ion-title>Business Information</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button (click)="closeAssessorBusiness()">Close</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+            <ion-content class="ion-padding">
+                <ng-container *ngIf="selectedBusiness != {}">
+                    <table class="rwd-table">
+                        <tr>
+                            <td data-th="Business Name">{{selectedBusiness.pname}}</td>
+                            <td data-th="Project Type">{{selectedBusiness.ptype}}</td>
+                            <td data-th="Project Council">{{selectedBusiness.pcouncil}}</td>
+                            <td data-th="CIPC Reg No">{{selectedBusiness.pcipc_reg_no}}</td>
+                            <td data-th="Updated">{{selectedBusiness.updated_at}}</td>
+                            <td data-th="Status">{{selectedBusiness.status}}</td>
+                        </tr>
+                        <ng-container *ngIf="selectedBusiness.office != undefind">
+                            <tr *ngFor="let office of selectedBusiness.office">
+                                <ng-container *ngIf="office.is_head == '1'">
+                                    <td data-th="Head Office"></td>
+                                </ng-container>
+                                <ng-container *ngIf="office.is_head != '1'">
+                                    <td data-th="Branch Office"></td>
+                                </ng-container>
+                                <td class="pl-2" data-th="Address">{{office.address}}</td>
+                                <td class="pl-2" data-th="Phone Number">{{office.phone}}</td>
+                                <td class="pl-2" data-th="Email">{{office.email}}</td>
+                                <td class="pl-2" data-th="Status">{{office.status}}</td>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </ng-container>
+                <ng-container *ngIf="selectedBusiness == {}">
+                    Invalid Selected Business, Please select again!
+                </ng-container>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
 </ion-content>
 <!-- <ion-modal [keepContentsMounted]="true">
     <ng-template>

@@ -184,6 +184,12 @@ h3 h5 {
     width          : 25px;
 }
 
+.btn-text {
+    overflow     : hidden;
+    white-space  : nowrap;
+    text-overflow: ellipsis;
+}
+
 // Common Table CSS
 .td-download-bg {
     background-color: #2dd36f !important;
@@ -228,3 +234,8 @@ h3 h5 {
 // .margin-5% {
 //     margin-top: 20px !important;
 // }
+
+// Padding
+.pl-2 {
+    padding-left: 5% !important;
+}

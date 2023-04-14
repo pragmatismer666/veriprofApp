@@ -18,6 +18,8 @@ export class UnverifiedbizPage implements OnInit {
     schedules: Array<any>;
     x: any;
     action: any;
+    isAssessorBusiness: Boolean = false;
+    selectedBusiness: any = {};
 
     constructor(
         public toastController: ToastController,
@@ -29,6 +31,16 @@ export class UnverifiedbizPage implements OnInit {
 
     ngOnInit() {
         this.getBusiness();
+    }
+
+    openAssessorBusiness(x : any){
+        this.selectedBusiness = x;
+        this.isAssessorBusiness = true;
+    }
+
+    closeAssessorBusiness (){
+        this.isAssessorBusiness = false;
+        this.selectedBusiness = {};
     }
 
     getBusiness() {

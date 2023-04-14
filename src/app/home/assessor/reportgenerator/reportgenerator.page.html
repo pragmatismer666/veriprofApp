@@ -12,7 +12,7 @@
             <ion-button (click)="generate_report()" class="p-1">Generate</ion-button>
             <!-- style="margin-top: -2%;padding: 5px;float: right;" -->
         </ion-row>
-        <div class="scrollH">
+        <!-- <div class="scrollH">
             <table class="table">
                 <tr>
                     <th>No</th>
@@ -48,14 +48,44 @@
                     </td>
                 </tr>
             </table>
-        </div>
-        <ion-card-content>
+        </div> -->
+        <ion-row class="">
+            <table class="rwd-table mt-0">
+                <tr *ngFor="let each_row of report_data">
+                    <td data-th="Required Content">{{each_row.key}}</td>
+                    <td data-th="Returned Content">
+                        <ng-container *ngIf="each_row.val == '0'">
+                            No
+                        </ng-container>
+                        <ng-container *ngIf="each_row.val == '1'">
+                            Yes
+                        </ng-container>
+                        <ng-container *ngIf="each_row.val != '1' && each_row.val != '0'">
+                            {{each_row.val}}
+                        </ng-container>
+                    </td>
+                    <td data-th="Verification Status" class="d-flex">
+                        <ng-container *ngIf="each_row.status != 1">
+                            <ion-label color="danger" class="w-4rem">Unverified</ion-label>
+                        </ng-container>
+                        <ng-container *ngIf="each_row.status == 1">
+                            <ion-label color="dark" class="w-4rem">Verified</ion-label>
+                        </ng-container>
+                        <ion-button class="title-center p-0 m-0 m-auto report-verification-btn" color="success"
+                            (click)="change_status(each_row, true)"><ion-icon
+                                name="checkmark-outline"></ion-icon></ion-button>
+                        <ion-button class="title-center p-0 m-0 m-auto report-verification-btn" color="danger"
+                            (click)="change_status(each_row, false)"><ion-icon
+                                name="close-outline"></ion-icon></ion-button>
+                    </td>
+                </tr>
+            </table>
             <table class="rwd-table">
                 <tr class="text-bold">
                     <td data-th="Compliance Status">{{compliance_status}}</td>
                     <td data-th="Compliance Rate">{{compliance_rate}}</td>
                 </tr>
             </table>
-        </ion-card-content>
+        </ion-row>
     </ion-card>
 </ion-content>

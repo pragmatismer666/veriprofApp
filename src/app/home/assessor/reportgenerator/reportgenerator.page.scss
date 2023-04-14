@@ -69,12 +69,13 @@ ion-content ion-card ion-item {
 $breakpoint-alpha: 800px; // adjust to your needs
 
 .rwd-table {
-    margin: 1em 0;
+    margin: 1em 0.5rem;
     width : 100%;
 
     tr {
-        border-top   : 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
+        background   : #ccc;
+        border-radius: 0.5rem !important;
+        border       : 1px solid #fff;
     }
 
     th {
@@ -82,10 +83,11 @@ $breakpoint-alpha: 800px; // adjust to your needs
     }
 
     td {
-        display    : block;
-        text-align : left;
-        line-height: 1.5rem;
-        font-weight: bold;
+        padding-left: 0.2rem;
+        display     : block;
+        text-align  : left;
+        line-height : 1.5rem;
+        font-weight : bold;
 
         // &:first-child {
         //     width      : 11em;

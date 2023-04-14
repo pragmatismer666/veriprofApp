@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
+    <!-- <ion-segment [(ngModel)]="segment" color="light" class="content-segment-head-area">
         <ion-segment-button value="reports" class="dark" enabled>
             <ion-icon name="star" class="dark" color="dark"></ion-icon>
             <ion-label class="dark" color="dark">Reports</ion-label>
@@ -15,9 +15,10 @@
             <ion-icon name="star" class="dark" color="dark"></ion-icon>
             <ion-label class="dark" color="dark">My PDFs</ion-label>
         </ion-segment-button>
-    </ion-segment>
-    <div [ngSwitch]="segment">
-        <ion-card *ngSwitchCase="'reports'" class="fixed-ion-card-area">
+    </ion-segment> -->
+    <!-- <div [ngSwitch]="segment"> -->
+        <!-- <ion-card *ngSwitchCase="'reports'" class="fixed-ion-card-area"> -->
+        <ion-card class="fixed-ion-card-area top-55px">
             <ion-card-content>
                 <h1>Reports</h1>
                 <table class="rwd-table">
@@ -40,7 +41,7 @@
                 </table>
             </ion-card-content>
         </ion-card>
-        <ion-card *ngSwitchCase="'myDocs'" class="fixed-ion-card-area">
+        <!-- <ion-card *ngSwitchCase="'myDocs'" class="fixed-ion-card-area">
             <ion-card-content>
                 <h1>My PDFs</h1>
                 <table class="rwd-table">
@@ -61,8 +62,8 @@
                     </ng-container>
                 </table>
             </ion-card-content>
-        </ion-card>
-    </div>
+        </ion-card> -->
+    <!-- </div> -->
 </ion-content>
 
 <!-- <ion-footer color="dark" class="footer">

@@ -210,7 +210,7 @@
                             Project
                         </ion-button>
                         <ion-button (click)="submit(true)" class="button-common ml-auto" color="success"
-                            disabled={{saveButtonFlag}}><span class="inner">Required Verification</span>
+                            disabled={{saveButtonFlag}}><span class="inner">Require Verification</span>
                         </ion-button>
                     </ng-container>
                     <br>
@@ -231,19 +231,19 @@
                                     Download</ion-button>
                             </td>
                             <td data-th="Created DateTime">{{x.created_at}}</td>
-                            <td data-th="Certificate Document">
+                            <td data-th="Certification Doc">
                                 <ion-button size="small" color="success" class="down-btn-profe"
                                     (click)="download(x.certificate, 'certificate/')">
                                     Download</ion-button>
                             </td>
-                            <td data-th="Request Verification">
+                            <td data-th="Verification Required">
                                 <ion-label color="danger">{{x.status_request}}</ion-label>
                             </td>
                             <ng-container *ngIf="x.status_request == 'Yes'">
                                 <ion-button size="small" color="medium" class="down-btn-profe mt-2" disabled="true"
                                     (click)="download(x.certificate)">Update</ion-button>
                                 <ion-button size="small" color="medium" class="down-btn-profe mt-2" disabled="true"
-                                    (click)="download(x.certificate)">Request Verification</ion-button>
+                                    (click)="download(x.certificate)">Verification Require</ion-button>
                             </ng-container>
                             <ng-container *ngIf="x.status_request == 'No'">
                                 <ion-button size="small" color="primary" class="down-btn-profe mt-2"
@@ -251,7 +251,7 @@
                                     Update</ion-button>
                                 <ion-button size="small" color="success" class="down-btn-profe mt-2"
                                     (click)="action(x, true)">
-                                    Request Verification</ion-button>
+                                    Verification Require</ion-button>
                             </ng-container>
                         </tr>
                     </ng-container>

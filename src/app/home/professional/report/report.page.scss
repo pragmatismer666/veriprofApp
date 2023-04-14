@@ -1,5 +1,9 @@
 $breakpoint-alpha: 800px; // adjust to your needs
 
+.top-55px {
+    top: 55px !important;
+}
+
 .rwd-table {
     margin: 1em 0;
     width : 100%;
@@ -7,6 +11,9 @@ $breakpoint-alpha: 800px; // adjust to your needs
     tr {
         border-top   : 1px solid #ddd;
         border-bottom: 1px solid #ddd;
+        // background   : #ccc;
+        // border-radius: 0.5rem !important;
+        // border       : 1px solid #fff;
     }
 
     th {
